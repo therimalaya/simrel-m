@@ -14,15 +14,14 @@ classoption: authoryear
 colorlinks: yes
 fontsize: 12pt
 geometry: margin=1in
-keywords: \footnotesize `simrel-2.0`, `simrel` package in r, data simulation, linear
-  model
+keywords: \footnotesize `simrel-2.0`, `simrel` package in r, data simulation, linear model, `simrel-m`
 link-citations: yes
 mathpazo: yes
 natbib: yes
 numbersections: yes
 bibliography:
-- ref-db.bib
-- packages.bib
+  - ref-db.bib
+  - packages.bib
 papersize: a4paper
 site: bookdown::bookdown_site
 spacing: onehalfspacing

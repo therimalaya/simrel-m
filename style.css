@@ -122,9 +122,33 @@
 #TOC .has-sub ul li.last > a {
   border-bottom: 0;
 }
-
+dl {
+  font-size: 1.4em;
+  width: 55%;
+}
+dt{
+  padding-top: 10px;
+}
+.mjx-box{
+  font-size: larger;
+}
+.mjx-itable{
+  margin-left:-5em!important;
+}
 .title, .author, .author_afil{
   line-height: 1.2em;
   text-align: center;
   font-family: "Palatino", serif; 
+}
+button.btn.btn-default {
+    width: 150px;
+    height: 50px;
+    font-size: large;
+    color: darkgray;
+    box-shadow: darkgrey 0px 0px 6px;
+    text-transform: uppercase;
+    font-weight: 800;
+    border: none;
+    background: whitesmoke;
+    border-radius: 50px;
 }
