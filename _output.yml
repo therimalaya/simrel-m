@@ -1,0 +1,12 @@
+bookdown::tufte_html_book:
+  toc: yes
+  md_extensions: +latex_macros
+  number_sections: yes
+  css: style.css
+bookdown::pdf_book:
+  citation_package: natbib
+  md_extensions: -autolink_bare_uris
+  template: template.tex
+  keep_tex: yes
+bookdown::epub_book: default
+rmarkdown::word_document: default

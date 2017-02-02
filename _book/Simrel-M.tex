@@ -1,0 +1,337 @@
+\documentclass[12pt,a4paperpaper,authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
+%%% Begin My package additions %%%%%%%%%%%%%%%%%%%
+\usepackage[hyphens]{url}
+\usepackage{lineno} % add
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{mathpazo}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\biboptions{sort&compress} % For natbib
+\usepackage{graphicx}
+\usepackage{booktabs} % book-quality tables
+%% Redefines the elsarticle footer
+%\makeatletter
+%\def\ps@pprintTitle{%
+% \let\@oddhead\@empty
+% \let\@evenhead\@empty
+% \def\@oddfoot{\it \hfill\today}%
+% \let\@evenfoot\@oddfoot}
+%\makeatother
+
+% A modified page layout
+\textwidth 6.75in
+\oddsidemargin -0.15in
+\evensidemargin -0.15in
+\textheight 9in
+\topmargin -0.5in
+%%%%%%%%%%%%%%%% end my additions to header
+
+\usepackage[T1]{fontenc}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \usepackage{fontspec}
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{natbib}
+\bibliographystyle{model5-names}
+\usepackage{longtable}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true, colorlinks]{hyperref}
+\fi
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Pandoc toggle for numbering sections (defaults to be off)
+% Pandoc header
+
+
+\usepackage[nomarkers]{endfloat}
+
+%% My customizations %%%%%%%%
+%% Loading Packages
+\usepackage[inline]{enumitem}
+\usepackage{float}
+\usepackage{xfrac}
+\usepackage{tabularx}
+\usepackage{tabularx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pgf, tikz}
+\usepackage{amsthm}
+\newtheorem{mydef}{Definition}
+
+%% Custom macros
+\newcommand{\bs}[1]{\ensuremath{\boldsymbol{#1}}}
+\newcommand{\diag}[1]{\mathrm{diag}\left(#1\right)}
+\newcommand{\seq}[3][1]{\ensuremath{#2_{#1},\ldots,\,#2_{#3}}}
+\newcommand{\note}[1]{\marginpar{\scriptsize\tt{\color{RoyalBlue}#1}}}
+\newcommand{\edit}[1]{{\color{OrangeRed} #1}}
+
+%% Custom Lengths
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{9pt}
+
+%% Define Colors
+\newcommand\myshade{85}
+\colorlet{mylinkcolor}{violet}
+\colorlet{mycitecolor}{YellowOrange}
+\colorlet{myurlcolor}{Aquamarine}
+
+%% Hyperlink Setup
+\AtBeginDocument{%
+  \hypersetup{breaklinks=true,
+              bookmarks=true,
+              pdfauthor={},
+              pdftitle={simrel-m -- A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space},
+              colorlinks=true,
+              urlcolor=myurlcolor!\myshade!black,
+              linkcolor=mylinkcolor!\myshade!black,
+              citecolor=mycitecolor!\myshade!black,
+              pdfborder={0 0 0}}
+}
+% \urlstyle{same}  % don't use monospace font for urls
+% 
+%% End my customizations %%%%%%%%%
+
+\begin{document}
+\begin{frontmatter}
+
+  \title{simrel-m -- A versatile tool for data simulation for multi-response
+linear model data based on the concept of relevant subspace of predictor
+space}
+    \author[Norwegian University of Life Sciences]{Raju Rimal}
+  
+  
+    \author[Norwegian University of Life Sciences]{Trygve Almøy}
+  
+  
+    \author[Norwegian University of Life Sciences]{Solve Sæbø\corref{c1}}
+  
+   \cortext[c1]{Dep. of Chemistry and Food Science, NMBU, Ås
+(\href{http://nmbu.no}{nmbu.no})}
+    
+  \begin{abstract}
+  \small
+  Data science is generating enormous amounts of data, and new and
+  advanced analytical methods are constantly being developed to cope with
+  the challenge of extracting information from such ``big-data''.
+  Researchers often use simulated data to assess and document the
+  properties of these new methods, and in this paper we present
+  \texttt{simrel-m}, which is a versatile and transparent tool for
+  simulating linear model data with extensive range of adjustable
+  properties. The method is based on the concept of relevant components
+  \citet{helland1994comparison}, which is equivalent to the envelope model
+  \citet{cook2013envelopes}. It is a multi-response extension of
+  \texttt{simrel} \citet{saebo2015simrel}, and as \texttt{simrel} the new
+  approach is essentially based on random rotations of latent relevant
+  components to obtain a predictor matrix \(\mathbf{X}\), but in addition
+  we introduce random rotations of latent components spanning a response
+  space in order to obtain a multivariate response matrix \(\mathbf{Y}\).
+  The properties of the linear relation between \(\mathbf{X}\) and
+  \(\mathbf{Y}\) are defined by a small set of input parameters which
+  allow versatile and adjustable simulations. Sub-space rotations also
+  allow for generating data suitable for testing variable selection
+  methods in multi-response settings. The method is implemented as an
+  R-package which serves as an extension of the existing \texttt{simrel}
+  packages \citet{saebo2015simrel}.
+  \end{abstract}
+   \begin{keyword} \footnotesize \texttt{simrel-2.0}, \texttt{simrel} package in r, data
+simulation, linear model \sep \end{keyword}
+ \end{frontmatter}
+
+\section{Acknoledgement}\label{acknoledgement}
+
+\section{Introduction}\label{introduction}
+
+\emph{General aspects}
+
+Technological advancement has opened a door for complex and
+sophisticated scientific experiments that was not possible before. Due
+to this change, enormous amounts of raw data are generated which
+contains massive information but difficult to excavate. Finding
+information and performing scientific research on these raw data is now
+becoming another problem. In order to tackle this situation new methods
+are being developed. However, before implementing any methods, it is
+essential to test its performance. Often, researchers use simulated data
+for the purpose which itself is a time-consuming process. The main focus
+of this paper is to present a simulation method, along with an r-package
+called \texttt{simrel-m}, that is versatile in nature and yet simple to
+use.
+
+The method is based on principal of relevant space for prediction which
+assumes that there exists a subspace in the complete space of responses
+that is spanned by a subset of eigenvectors of predictor variables. The
+method and the r-package based on this principle not only has ability to
+simulate wide range of multi-response linear model data but also let
+researcher to specify which components of predictors \((\mathbf{X})\)
+are relevant for a component of responses \(\mathbf{Y}\). This enables
+the possibility to construct data for evaluating methods developed for
+variable selection.
+
+A vast literature on simulation is present but most of them are
+developed to address the specific problems their study was dealing with.
+\citet{saebo2015simrel} has presented a generic tool that is capable of
+simulating linear model data as an r-package \texttt{simrel}. This paper
+extends the methods to simulate multivariate response.
+
+\emph{Application of \texttt{simrel-m}}
+
+The simple interface of \texttt{simrel-m} for sophisticated simulation
+opens for numerous applications in various disciplines among which some
+of them are discussed below.
+
+\begin{description}
+\tightlist
+\item[\emph{Educational Purpose:}]
+Explaining multivariate statistics and edify people is a difficult and
+strategic task. Instructors spend lots of time just to find suitable
+datasets for explaining some issue. For instance --
+\item[\emph{Model and methods testing:}]
+Imagine a situation where a researcher is collecting enormous amount of
+data which takes both time and money. Before going into extensive
+sampling, a pilot project is started and samples were collected using
+various techniques. Each of them are modelled with different estimation
+methods. The researcher would like to compare the sampling methods or
+estimation procedures that will the suitable for the final project. A
+simulated dataset based on the pilot project may help to identify the
+most appropriate sampling methods or estimation procedures.
+\item[\emph{Understanding and developing multivariate statistics:}]
+New estimation methods are being developed to address mordern and
+complicated situations. A new method or technique could be difficult to
+understand. For example, the envelope model \citet{cook2015foundations},
+a recent estimation technique based on maximum likelihood, attempts to
+find a response envelope (relevant subspace) that contains all the
+information that the corresponding predictors can explain. Here, one can
+make use of \texttt{simrel-m} to simulate data with underlying
+informative response space. In addition, new methods such as CPLS based
+on PLS are steadily being developed. Understanding population latent
+structure enables assessment of such models.
+\end{description}
+
+\subsection{Model Specification}\label{model-specification}
+
+A multi-response multivariate general linear model in
+equation-\eqref{eq:model1} is conidered as a simulation model.
+
+Being an extension of \texttt{simrel} package, a quick summary of the
+procedure used in that package helps to underestand the literature in
+this paper.
+
+\subsubsection{\texorpdfstring{An overview of
+\texttt{simrel}}{An overview of simrel}}\label{an-overview-of-simrel}
+
+\texttt{Simrel} is based on uni-response linear model as in
+equation\textasciitilde{}\eqref{eq:simrel-model}.
+
+\begin{equation}
+\label{eq:simrel-model}
+  \begin{bmatrix}
+    y \\ \mathbf{X}
+  \end{bmatrix} \sim
+  \mathcal{N}\left(
+    \begin{bmatrix}
+      \mu_y \\ \boldsymbol{\mu_X}
+    \end{bmatrix},
+    \begin{bmatrix}
+      \sigma_y^2               & \boldsymbol{\sigma_{Xy}}^t \\
+      \boldsymbol{\sigma_{Xy}} & \boldsymbol{\Sigma_{XX}}
+    \end{bmatrix}
+  \right)
+\end{equation}
+
+\begin{equation}
+  \mathbf{Y} = \boldsymbol{\mu}_Y + \boldsymbol{B}^t (\mathbf{X} - \boldsymbol{\mu}_X) + \boldsymbol{\epsilon}
+  \label{eq:model1}
+\end{equation}
+
+where \(\mathbf{Y}\) is a response matrix with \(m\) response vector
+\(y_1, y_2, \ldots y_m\), \(\mathbf{X}\) is multivariate predictor
+matrix with \(p\) predictor variables and the random error term
+\(\boldsymbol{\epsilon}\) is assumed to follow
+\(N(\boldsymbol{0},\; \boldsymbol{\Sigma}_{Y|X})\). Equivalently,
+
+\begin{equation}
+  \begin{bmatrix}\mathbf{Y}\\ \mathbf{X}\end{bmatrix} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})
+  = N \left(
+    \begin{bmatrix}
+      \boldsymbol{\mu}_Y \\
+      \boldsymbol{\mu}_X
+    \end{bmatrix},
+    \begin{bmatrix}
+      \boldsymbol{\Sigma}_{YY} & \boldsymbol{\Sigma}_{XY}^t \\
+      \boldsymbol{\Sigma}_{XY} & \boldsymbol{\Sigma}_{XX}
+    \end{bmatrix}
+  \right)
+  \label{eq:model2}
+\end{equation}
+
+Here,
+
+\(\boldsymbol{\Sigma}_{YY}\) : Covariance Matrix of response
+\(\mathbf{Y}\) without given \(\mathbf{X}\)\\
+\(\boldsymbol{\Sigma}_{XY}\) : Covariance Matrix between \(\mathbf{X}\)
+and \(\mathbf{Y}\)\\
+\(\boldsymbol{\Sigma}_{XX}\) : Covariance matrix of predictor variables
+\(\mathbf{X}\)\\
+\(\boldsymbol{\mu}_X\) and \(\boldsymbol{\mu}_Y\) : Mean vectors of
+response \(\mathbf{Y}\) and predictor \(\mathbf{X}\) respective
+
+According to the theory of Multivariate Normal Distribution, we can
+express different parameters interms of \(\mathbf{X}\), \(\mathbf{Y}\)
+and the covariance structure.
+
+\subsubsection{Model Parameterization}\label{model-parameterization}
+
+\texttt{Simrel-m} uses model parameterization which is based on the
+concept of relevant components \citet{helland1994comparison} where it is
+assumed that a subspace of response \(\mathbf{Y}\) is spanned by a
+subset of eigenvectors corresponding to predictor space. A response
+space can be thought to have two mutually orthogonal space -- relevant
+and irrelevant. Here the relevant space of response matrix is termed as
+response components, and we assume that each response component is
+spanned by an exclusive subset of predictor variables. In this way we
+can construct a set of predictor variables which has non-zero regression
+coefficients. This also enables user to have uninformative predictors
+which can be detected during variable selection procedure. In addition,
+user can control signal-to-noise ratio for each response components with
+a vector of population coefficient of determination
+\(\rho_1, \ldots, \rho_q\). Further, the collinearity between predictor
+variables can also be controlled by a factor \(\gamma\) which guides the
+decay pattern of eigenvalue of \(\mathbf{X}\) matrix.
+\citet{helland1994comparison} showed that if the direction of large
+variablity (i.e., component corresponding to large eigenvalues) are also
+relevant relevant predictor space, prediction is relatively easy. In
+contrast, if the relevant predictors are on the direction of low
+varibility, prediction becomes difficult.
+
+\emph{Parameter Definition:}
+
+Before continuing any further, it is necessary to define the parameters
+used here,
+
+\section{Stat Model}\label{stat-model}
+
+\bibliography{packages.bib,ref-db.bib}
+
+\end{document}

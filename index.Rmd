@@ -1,0 +1,44 @@
+---
+title: simrel-m -- A versatile tool for data simulation for multi-response linear
+  model data based on the concept of relevant subspace of predictor space
+author:
+- affiliation: Norwegian University of Life Sciences
+  name: Raju Rimal
+- affiliation: Norwegian University of Life Sciences
+  name: Trygve Almøy
+- affiliation: Norwegian University of Life Sciences
+  footnote: Dep. of Chemistry and Food Science, NMBU, Ås ([nmbu.no](http://nmbu.no))
+  name: Solve Sæbø
+biblio-style: model5-names
+classoption: authoryear
+colorlinks: yes
+fontsize: 12pt
+geometry: margin=1in
+keywords: \footnotesize `simrel-2.0`, `simrel` package in r, data simulation, linear
+  model
+link-citations: yes
+mathpazo: yes
+natbib: yes
+numbersections: yes
+bibliography:
+- ref-db.bib
+- packages.bib
+papersize: a4paper
+site: bookdown::bookdown_site
+spacing: onehalfspacing
+abstract: |
+  \small
+  Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such "big-data". Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present `simrel-m`, which is a versatile and transparent tool for simulating linear model data with extensive range of adjustable properties.
+  The method is based on the concept of relevant components @helland1994comparison, which is equivalent to the envelope model @cook2013envelopes. It is a multi-response extension of `simrel` @saebo2015simrel, and as `simrel` the new approach is essentially based on random rotations of latent relevant components to obtain a predictor matrix $\mathbf{X}$, but in addition we introduce random rotations of latent components spanning a response space in order to obtain a multivariate response matrix $\mathbf{Y}$.
+  The properties of the linear relation between $\mathbf{X}$ and $\mathbf{Y}$ are defined by a small set of input parameters which allow versatile and adjustable simulations. Sub-space rotations also allow for generating data suitable for testing variable selection methods in multi-response settings.
+  The method is implemented as an R-package which serves as an extension of the existing `simrel` packages @saebo2015simrel.
+---
+
+# Acknoledgement
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space">
+
+<title>simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+
+
+<style type="text/css">
+  p.abstract{
+    text-align: center;
+    font-weight: bold;
+  }
+  div.abstract{
+    margin: auto;
+    width: 90%;
+  }
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#acknoledgement"><span class="toc-section-number">1</span> Acknoledgement</a></li>
+<li class="has-sub"><a href="2-introduction.html#introduction"><span class="toc-section-number">2</span> Introduction</a><ul>
+<li class="has-sub"><a href="2-1-model-specification.html#model-specification"><span class="toc-section-number">2.1</span> Model Specification</a><ul>
+<li><a href="2-1-model-specification.html#an-overview-of-simrel"><span class="toc-section-number">2.1.1</span> An overview of <code>simrel</code></a></li>
+<li><a href="2-1-model-specification.html#model-parameterization"><span class="toc-section-number">2.1.2</span> Model Parameterization</a></li>
+</ul></li>
+</ul></li>
+<li><a href="3-stat-model.html#stat-model"><span class="toc-section-number">3</span> Stat Model</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="introduction" class="section level1">
+<h1><span class="header-section-number">2</span> Introduction</h1>
+<p><em>General aspects</em></p>
+<p>Technological advancement has opened a door for complex and sophisticated scientific experiments that was not possible before. Due to this change, enormous amounts of raw data are generated which contains massive information but difficult to excavate. Finding information and performing scientific research on these raw data is now becoming another problem. In order to tackle this situation new methods are being developed. However, before implementing any methods, it is essential to test its performance. Often, researchers use simulated data for the purpose which itself is a time-consuming process. The main focus of this paper is to present a simulation method, along with an r-package called <code>simrel-m</code>, that is versatile in nature and yet simple to use.</p>
+<p>The method is based on principal of relevant space for prediction which assumes that there exists a subspace in the complete space of responses that is spanned by a subset of eigenvectors of predictor variables. The method and the r-package based on this principle not only has ability to simulate wide range of multi-response linear model data but also let researcher to specify which components of predictors <span class="math inline">\((\mathbf{X})\)</span> are relevant for a component of responses <span class="math inline">\(\mathbf{Y}\)</span>. This enables the possibility to construct data for evaluating methods developed for variable selection.</p>
+<p>A vast literature on simulation is present but most of them are developed to address the specific problems their study was dealing with. <span class="citation">Sæbø, Almøy, and Helland (<label for="tufte-mn-5" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle">2015<span class="marginnote">Sæbø, Solve, Trygve Almøy, and Inge S Helland. 2015. “Simrel-a Versatile Tool for Linear Model Data Simulation Based on the Concept of a Relevant Subspace and Relevant Predictors.” <em>Chemometrics and Intelligent Laboratory Systems</em>. Elsevier.</span>)</span> has presented a generic tool that is capable of simulating linear model data as an r-package <code>simrel</code>. This paper extends the methods to simulate multivariate response.</p>
+<p><em>Application of <code>simrel-m</code></em></p>
+<p>The simple interface of <code>simrel-m</code> for sophisticated simulation opens for numerous applications in various disciplines among which some of them are discussed below.</p>
+<dl>
+<dt><em>Educational Purpose:</em></dt>
+<dd>Explaining multivariate statistics and edify people is a difficult and strategic task. Instructors spend lots of time just to find suitable datasets for explaining some issue. For instance –
+</dd>
+<dt><em>Model and methods testing:</em></dt>
+<dd>Imagine a situation where a researcher is collecting enormous amount of data which takes both time and money. Before going into extensive sampling, a pilot project is started and samples were collected using various techniques. Each of them are modelled with different estimation methods. The researcher would like to compare the sampling methods or estimation procedures that will the suitable for the final project. A simulated dataset based on the pilot project may help to identify the most appropriate sampling methods or estimation procedures.
+</dd>
+<dt><em>Understanding and developing multivariate statistics:</em></dt>
+<dd>New estimation methods are being developed to address mordern and complicated situations. A new method or technique could be difficult to understand. For example, the envelope model <span class="citation">R. D. Cook and Zhang (<label for="tufte-mn-6" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle">2015<span class="marginnote">Cook, R Dennis, and Xin Zhang. 2015. “Foundations for Envelope Models and Methods.” <em>Journal of the American Statistical Association</em> 110 (510). Taylor &amp; Francis: 599–611.</span>)</span>, a recent estimation technique based on maximum likelihood, attempts to find a response envelope (relevant subspace) that contains all the information that the corresponding predictors can explain. Here, one can make use of <code>simrel-m</code> to simulate data with underlying informative response space. In addition, new methods such as CPLS based on PLS are steadily being developed. Understanding population latent structure enables assessment of such models.
+</dd>
+</dl> 
+</div>
+<p style="text-align: center;">
+<a href="index.html"><button class="btn btn-default">Previous</button></a>
+<a href="2-1-model-specification.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>
