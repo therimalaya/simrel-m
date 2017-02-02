@@ -1,3 +1,4 @@
+output_dir: docs
 book_filename: "Simrel-M"
 #chapter_name: ""
 rmd_files: [
