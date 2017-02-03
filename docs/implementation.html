@@ -1,15 +1,45 @@
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html >
 
 <head>
 
-<meta charset="utf-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="pandoc" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta property="og:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
-<meta property="og:type" content="book" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="statistical-model.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 
 
 
@@ -17,77 +47,217 @@
 
 
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: { equationNumbers: { autoNumber: "AMS" } }
-});
-</script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
-
-<meta name="description" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space">
-
-<title>simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</title>
-
-<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 
 
-
-<style type="text/css">
-  p.abstract{
-    text-align: center;
-    font-weight: bold;
-  }
-  div.abstract{
-    margin: auto;
-    width: 90%;
-  }
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
-
 </head>
 
 <body>
 
 
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
 
-<div class="row">
-<div class="col-sm-12">
-<div id="TOC">
-<ul>
-<li><a href="index.html#preface">Preface</a></li>
-<li class="has-sub"><a href="introduction.html#introduction">Introduction</a><ul>
-<li class="has-sub"><a href="model-specification.html#model-specification">Model Specification</a><ul>
-<li><a href="model-specification.html#an-overview-of-simrel">An overview of <code>simrel</code></a></li>
-<li><a href="model-specification.html#model-parameterization">Model Parameterization</a></li>
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#model-specification"><i class="fa fa-check"></i>Model Specification</a><ul>
+<li><a href="introduction.html#an-overview-of-simrel">An overview of <code>simrel</code></a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#model-parameterization"><i class="fa fa-check"></i>Model Parameterization</a></li>
 </ul></li>
 </ul></li>
-<li class="has-sub"><a href="statistical-model.html#statistical-model">Statistical Model</a><ul>
-<li><a href="model-parameter-relevant-components.html#model-parameter-relevant-components">Model parameterization and relevant components</a></li>
-<li><a href="data-simulation.html#data-simulation">Data Simulation</a></li>
-<li><a href="rotation-predictor-space.html#rotation-predictor-space">Rotation of predictor space</a></li>
-<li><a href="rotation-response-space.html#rotation-response-space">Rotation of response space</a></li>
+<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html"><i class="fa fa-check"></i>Statistical Model</a><ul>
+<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#model-parameter-relevant-components"><i class="fa fa-check"></i>Model parameterization and relevant components</a></li>
+<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#data-simulation"><i class="fa fa-check"></i>Data Simulation</a></li>
+<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#rotation-predictor-space"><i class="fa fa-check"></i>Rotation of predictor space</a></li>
+<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#rotation-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
 </ul></li>
-<li class="has-sub"><a href="implementation.html#implementation">Implementation</a><ul>
-<li><a href="example.html#example">Example of model comparison with simulated data from {simrel-m package}</a></li>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a><ul>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#example"><i class="fa fa-check"></i>Example of model comparison with simulated data from {simrel-m package}</a></li>
 </ul></li>
 </ul>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-sm-12">
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
 <div id="implementation" class="section level1">
-<h1>Implementation</h1> 
-</div>
-<p style="text-align: center;">
-<a href="rotation-response-space.html"><button class="btn btn-default">Previous</button></a>
-<a href="example.html"><button class="btn btn-default">Next</button></a>
+<h1>Implementation</h1>
+<div id="example" class="section level2">
+<h2>Example of model comparison with simulated data from {simrel-m package}</h2>
+<p>In this section, <code>simrel-m</code> is implemented to simulate multi-response linear model dataset and use it to compare Principal Components Regression (PCR), Partial Least Squared Regression (PLS), Cannonically Powered Partial Least Squared Regression (CPPLS), Maximum Likelihood under Envelope Estimation and Ordinary Least Squared Regression (OLS) on the basis of their prediction ability of test observations. Here two design of parameters as in Table-<a href="implementation.html#tab:parameter-settings">2</a> are implemented for the simulation.</p>
+<table>
+<caption><span id="tab:parameter-settings">Table 2: </span>Parameter setting of simulated data for model comparison</caption>
+<thead>
+<tr class="header">
+<th align="right">Parameters</th>
+<th align="center">Design1</th>
+<th align="center">Design2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">Number of observations</td>
+<td align="center">100</td>
+<td align="center">50</td>
+</tr>
+<tr class="even">
+<td align="right">Number of predictors</td>
+<td align="center">20</td>
+<td align="center">40</td>
+</tr>
+<tr class="odd">
+<td align="right">Relevant number of predictors</td>
+<td align="center">5, 5, 7</td>
+<td align="center">15, 15, 9</td>
+</tr>
+<tr class="even">
+<td align="right">Number of responses</td>
+<td align="center">6</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="right">Position of relevant components</td>
+<td align="center">1, 2; 3, 4, 6; 5</td>
+<td align="center">1, 2; 3, 4; 5, 7</td>
+</tr>
+<tr class="even">
+<td align="right">Gamma (decay of eigenvalues)</td>
+<td align="center">0.9</td>
+<td align="center">0.4</td>
+</tr>
+<tr class="odd">
+<td align="right">Coefficient of Determination</td>
+<td align="center">0.8, 0.9, 0.7</td>
+<td align="center">0.8, 0.9, 0.5</td>
+</tr>
+<tr class="even">
+<td align="right">Position of response components</td>
+<td align="center">1, 4; 2, 6; 3, 5</td>
+<td align="center">1, 4; 2, 5; 3</td>
+</tr>
+<tr class="odd">
+<td align="right">Number of test observations</td>
+<td align="center">1000</td>
+<td align="center">1000</td>
+</tr>
+</tbody>
+</table>
+<p>Here, the first design has large number of observations as compared to the number of variables while the number of variables in second design is nearly equals to its number of observations. Both the models have three informative response components from which first design generates 6 responses and the second design generates 5 responses. In addition, the eigenvalues of predictors decreases sharply in the first design than the second one. The prediction error are compared on the basis of 1000 test samples.</p>
+<p>Prediction error is measured as mean squared error of prediction (MSEP) using the expression in equation~<a href="implementation.html#eq:msep">(8)</a>.</p>
+<span class="math display" id="eq:msep">\[\begin{align}
+  \text{MSEP}_\text{train} &amp;= \frac{\mathbf{Y}_\text{train} - 
+    \hat{\mathbf{Y}}_\text{train}}{n_\text{train}} \nonumber \\
+  \text{MSEP}_\text{test}  &amp;= \frac{\mathbf{Y}_\text{test} - 
+    \hat{\mathbf{Y}}_\text{test}}{n_\text{test}}
+  \tag{8}
+\end{align}\]</span>
+<p>where, <span class="math inline">\(\hat{\mathbf{Y}}_\text{train} = \mathbf{X}_\text{train} \boldsymbol{\beta}\)</span> and <span class="math inline">\(\hat{\mathbf{Y}}_\text{test} = \mathbf{X}_\text{test} \boldsymbol{\beta}\)</span></p>
+<div class="figure"><span id="fig:pred-plot-1"></span>
+<img src="Simrel-M_files/figure-html/pred-plot-1-1.png" alt="Model comparison based on prediction error for each response." width="672" />
+<p class="caption">
+Figure 1: Model comparison based on prediction error for each response.
 </p>
 </div>
+<div class="figure"><span id="fig:pred-plot-2"></span>
+<img src="Simrel-M_files/figure-html/pred-plot-2-1.png" alt="Train and test prediction error for different response comparing models under comparison" width="672" />
+<p class="caption">
+Figure 2: Train and test prediction error for different response comparing models under comparison
+</p>
 </div>
 
+<div id="refs" class="references">
+<div>
+<p>Anderson, Theodore W, Ingram Olkin, and Les G Underhill. 1987. “Generation of Random Orthogonal Matrices.” <em>SIAM Journal on Scientific and Statistical Computing</em> 8 (4). SIAM: 625–29.</p>
+</div>
+<div>
+<p>Cook, R Dennis, and Xin Zhang. 2015. “Foundations for Envelope Models and Methods.” <em>Journal of the American Statistical Association</em> 110 (510). Taylor &amp; Francis: 599–611.</p>
+</div>
+<div>
+<p>Cook, RD, IS Helland, and Z Su. 2013. “Envelopes and Partial Least Squares Regression.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 75 (5). Wiley Online Library: 851–77.</p>
+</div>
+<div>
+<p>Heiberger, Richard M. 1978. “Algorithm as 127: Generation of Random Orthogonal Matrices.” <em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em> 27 (2). JSTOR: 199–206.</p>
+</div>
+<div>
+<p>Helland, Inge S, and Trygve Almøy. 1994. “Comparison of Prediction Methods When Only a Few Components Are Relevant.” <em>Journal of the American Statistical Association</em> 89 (426). Taylor &amp;amp; Francis Group: 583–91.</p>
+</div>
+<div>
+<p>Sæbø, Solve, Trygve Almøy, and Inge S Helland. 2015. “Simrel-a Versatile Tool for Linear Model Data Simulation Based on the Concept of a Relevant Subspace and Relevant Predictors.” <em>Chemometrics and Intelligent Laboratory Systems</em>. Elsevier.</p>
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="statistical-model.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
 
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["Simrel-M.pdf", "Simrel-M.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
+
 </html>
