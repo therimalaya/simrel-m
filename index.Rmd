@@ -1,4 +1,5 @@
 ---
+site: bookdown::bookdown_site
 title: simrel-m -- A versatile tool for data simulation for multi-response linear
   model data based on the concept of relevant subspace of predictor space
 author:
@@ -7,24 +8,27 @@ author:
 - affiliation: Norwegian University of Life Sciences
   name: Trygve Almøy
 - affiliation: Norwegian University of Life Sciences
-  footnote: Dep. of Chemistry and Food Science, NMBU, Ås ([nmbu.no](http://nmbu.no))
   name: Solve Sæbø
-biblio-style: model5-names
-classoption: authoryear
-colorlinks: yes
-fontsize: 12pt
-geometry: margin=1in
-keywords: \footnotesize `simrel-2.0`, `simrel` package in r, data simulation, linear model, `simrel-m`
-link-citations: yes
-mathpazo: yes
-natbib: yes
-numbersections: yes
+  footnote: Dep. of Chemistry and Food Science, NMBU, Ås ([nmbu.no](http://nmbu.no))
 bibliography:
   - ref-db.bib
   - packages.bib
+biblio-style: model5-names
+biblio-title: References
+documentclass: elsarticle
+classoption: authoryear
+geometry: margin=1in
 papersize: a4paper
-site: bookdown::bookdown_site
 spacing: onehalfspacing
+fontsize: 12pt
+colorlinks: yes
+link-citations: yes
+mathpazo: yes
+natbib: yes
+numbersections: no
+linenumber: yes
+keywords: |
+  \footnotesize `simrel-2.0`, `simrel` package in r, data simulation, linear model, `simrel-m`
 abstract: |
   \small
   Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such "big-data". Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present `simrel-m`, which is a versatile and transparent tool for simulating linear model data with extensive range of adjustable properties.
@@ -33,7 +37,7 @@ abstract: |
   The method is implemented as an R-package which serves as an extension of the existing `simrel` packages @saebo2015simrel.
 ---
 
-# Acknoledgement
+# Preface {-}
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

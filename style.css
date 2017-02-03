@@ -122,9 +122,9 @@
 #TOC .has-sub ul li.last > a {
   border-bottom: 0;
 }
-dl {
+dd, dt {
   font-size: 1.4em;
-  width: 55%;
+  line-height: 1.4em;
 }
 dt{
   padding-top: 10px;

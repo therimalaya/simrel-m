@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space">
+
+<title>simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+
+
+<style type="text/css">
+  p.abstract{
+    text-align: center;
+    font-weight: bold;
+  }
+  div.abstract{
+    margin: auto;
+    width: 90%;
+  }
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface">Preface</a></li>
+<li class="has-sub"><a href="introduction.html#introduction">Introduction</a><ul>
+<li class="has-sub"><a href="model-specification.html#model-specification">Model Specification</a><ul>
+<li><a href="model-specification.html#an-overview-of-simrel">An overview of <code>simrel</code></a></li>
+<li><a href="model-specification.html#model-parameterization">Model Parameterization</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="statistical-model.html#statistical-model">Statistical Model</a><ul>
+<li><a href="model-parameter-relevant-components.html#model-parameter-relevant-components">Model parameterization and relevant components</a></li>
+<li><a href="data-simulation.html#data-simulation">Data Simulation</a></li>
+<li><a href="rotation-predictor-space.html#rotation-predictor-space">Rotation of predictor space</a></li>
+<li><a href="rotation-response-space.html#rotation-response-space">Rotation of response space</a></li>
+</ul></li>
+<li class="has-sub"><a href="implementation.html#implementation">Implementation</a><ul>
+<li><a href="example.html#example">Example of model comparison with simulated data from {simrel-m package}</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="rotation-predictor-space" class="section level2">
+<h2>Rotation of predictor space</h2>
+<p>Simulation of predictor variables from principal components requires a construction of a rotation matrix <span class="math inline">\(\mathbf{R}\)</span> that defines a new basis for the same space as is spanned by the principle components. As any rotation matrix can be considered as <span class="math inline">\(\mathbf{R}\)</span>, an eigenvalue matrix from eigenvalue decomposition of <span class="math inline">\(\boldsymbol{\Sigma}_{XX}\)</span> can be a candidate. Since simulation is a reverse engineering, the underlying covariance structure for the predictors are unknown. So, the method is free to construct a real valued orthogonal matrix that can serve for the purpose.</p>
+<p>Among several methods <span class="citation">(Anderson, Olkin, and Underhill <label for="tufte-mn-12" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-12" class="margin-toggle">1987<span class="marginnote">Anderson, Theodore W, Ingram Olkin, and Les G Underhill. 1987. “Generation of Random Orthogonal Matrices.” <em>SIAM Journal on Scientific and Statistical Computing</em> 8 (4). SIAM: 625–29.</span>; Heiberger <label for="tufte-mn-13" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-13" class="margin-toggle">1978<span class="marginnote">Heiberger, Richard M. 1978. “Algorithm as 127: Generation of Random Orthogonal Matrices.” <em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em> 27 (2). JSTOR: 199–206.</span>)</span> to generate random orthogonal matrix the same method as is used in <span class="citation">Sæbø, Almøy, and Helland (<label for="tufte-mn-14" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-14" class="margin-toggle">2015<span class="marginnote">Sæbø, Solve, Trygve Almøy, and Inge S Helland. 2015. “Simrel-a Versatile Tool for Linear Model Data Simulation Based on the Concept of a Relevant Subspace and Relevant Predictors.” <em>Chemometrics and Intelligent Laboratory Systems</em>. Elsevier.</span>)</span> is implemented here. The <span class="math inline">\(\mathcal{Q}\)</span> matrix obtained from QR-decomposition of a matrix filled with standard normal variates can serve as the rotation matrix <span class="math inline">\(\mathbf{R}\)</span>.</p>
+<p>The rotation can be a) unrestricted and b) restricted. The former one rotates all <span class="math inline">\(p\)</span> predictors making them some what relevant for the all response conponents and consequently all responses. However, only <span class="math inline">\(q_i \le p\)</span> predictors are relevant for for <span class="math inline">\(i^\text{th}\)</span> response component, the resticted rotation is implemented in <code>simrel-M</code>. This also ensure that <span class="math inline">\(p-q_i\)</span> predictors does not contribute anything on response component <span class="math inline">\(i\)</span> and consequently the simulated data can also be used for testing variable selection methods.</p>
+</div>
+<p style="text-align: center;">
+<a href="data-simulation.html"><button class="btn btn-default">Previous</button></a>
+<a href="rotation-response-space.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

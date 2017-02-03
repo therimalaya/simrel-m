@@ -55,14 +55,22 @@ MathJax.Hub.Config({
 <div class="col-sm-12">
 <div id="TOC">
 <ul>
-<li><a href="index.html#acknoledgement"><span class="toc-section-number">1</span> Acknoledgement</a></li>
-<li class="has-sub"><a href="2-introduction.html#introduction"><span class="toc-section-number">2</span> Introduction</a><ul>
-<li class="has-sub"><a href="2-1-model-specification.html#model-specification"><span class="toc-section-number">2.1</span> Model Specification</a><ul>
-<li><a href="2-1-model-specification.html#an-overview-of-simrel"><span class="toc-section-number">2.1.1</span> An overview of <code>simrel</code></a></li>
-<li><a href="2-1-model-specification.html#model-parameterization"><span class="toc-section-number">2.1.2</span> Model Parameterization</a></li>
+<li><a href="index.html#preface">Preface</a></li>
+<li class="has-sub"><a href="introduction.html#introduction">Introduction</a><ul>
+<li class="has-sub"><a href="model-specification.html#model-specification">Model Specification</a><ul>
+<li><a href="model-specification.html#an-overview-of-simrel">An overview of <code>simrel</code></a></li>
+<li><a href="model-specification.html#model-parameterization">Model Parameterization</a></li>
 </ul></li>
 </ul></li>
-<li><a href="3-stat-model.html#stat-model"><span class="toc-section-number">3</span> Stat Model</a></li>
+<li class="has-sub"><a href="statistical-model.html#statistical-model">Statistical Model</a><ul>
+<li><a href="model-parameter-relevant-components.html#model-parameter-relevant-components">Model parameterization and relevant components</a></li>
+<li><a href="data-simulation.html#data-simulation">Data Simulation</a></li>
+<li><a href="rotation-predictor-space.html#rotation-predictor-space">Rotation of predictor space</a></li>
+<li><a href="rotation-response-space.html#rotation-response-space">Rotation of response space</a></li>
+</ul></li>
+<li class="has-sub"><a href="implementation.html#implementation">Implementation</a><ul>
+<li><a href="example.html#example">Example of model comparison with simulated data from {simrel-m package}</a></li>
+</ul></li>
 </ul>
 </div>
 </div>
@@ -70,7 +78,7 @@ MathJax.Hub.Config({
 <div class="row">
 <div class="col-sm-12">
 <div id="introduction" class="section level1">
-<h1><span class="header-section-number">2</span> Introduction</h1>
+<h1>Introduction</h1>
 <p><em>General aspects</em></p>
 <p>Technological advancement has opened a door for complex and sophisticated scientific experiments that was not possible before. Due to this change, enormous amounts of raw data are generated which contains massive information but difficult to excavate. Finding information and performing scientific research on these raw data is now becoming another problem. In order to tackle this situation new methods are being developed. However, before implementing any methods, it is essential to test its performance. Often, researchers use simulated data for the purpose which itself is a time-consuming process. The main focus of this paper is to present a simulation method, along with an r-package called <code>simrel-m</code>, that is versatile in nature and yet simple to use.</p>
 <p>The method is based on principal of relevant space for prediction which assumes that there exists a subspace in the complete space of responses that is spanned by a subset of eigenvectors of predictor variables. The method and the r-package based on this principle not only has ability to simulate wide range of multi-response linear model data but also let researcher to specify which components of predictors <span class="math inline">\((\mathbf{X})\)</span> are relevant for a component of responses <span class="math inline">\(\mathbf{Y}\)</span>. This enables the possibility to construct data for evaluating methods developed for variable selection.</p>
@@ -91,7 +99,7 @@ MathJax.Hub.Config({
 </div>
 <p style="text-align: center;">
 <a href="index.html"><button class="btn btn-default">Previous</button></a>
-<a href="2-1-model-specification.html"><button class="btn btn-default">Next</button></a>
+<a href="model-specification.html"><button class="btn btn-default">Next</button></a>
 </p>
 </div>
 </div>

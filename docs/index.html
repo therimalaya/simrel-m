@@ -55,14 +55,22 @@ MathJax.Hub.Config({
 <div class="col-sm-12">
 <div id="TOC">
 <ul>
-<li><a href="index.html#acknoledgement"><span class="toc-section-number">1</span> Acknoledgement</a></li>
-<li class="has-sub"><a href="2-introduction.html#introduction"><span class="toc-section-number">2</span> Introduction</a><ul>
-<li class="has-sub"><a href="2-1-model-specification.html#model-specification"><span class="toc-section-number">2.1</span> Model Specification</a><ul>
-<li><a href="2-1-model-specification.html#an-overview-of-simrel"><span class="toc-section-number">2.1.1</span> An overview of <code>simrel</code></a></li>
-<li><a href="2-1-model-specification.html#model-parameterization"><span class="toc-section-number">2.1.2</span> Model Parameterization</a></li>
+<li><a href="index.html#preface">Preface</a></li>
+<li class="has-sub"><a href="introduction.html#introduction">Introduction</a><ul>
+<li class="has-sub"><a href="model-specification.html#model-specification">Model Specification</a><ul>
+<li><a href="model-specification.html#an-overview-of-simrel">An overview of <code>simrel</code></a></li>
+<li><a href="model-specification.html#model-parameterization">Model Parameterization</a></li>
 </ul></li>
 </ul></li>
-<li><a href="3-stat-model.html#stat-model"><span class="toc-section-number">3</span> Stat Model</a></li>
+<li class="has-sub"><a href="statistical-model.html#statistical-model">Statistical Model</a><ul>
+<li><a href="model-parameter-relevant-components.html#model-parameter-relevant-components">Model parameterization and relevant components</a></li>
+<li><a href="data-simulation.html#data-simulation">Data Simulation</a></li>
+<li><a href="rotation-predictor-space.html#rotation-predictor-space">Rotation of predictor space</a></li>
+<li><a href="rotation-response-space.html#rotation-response-space">Rotation of response space</a></li>
+</ul></li>
+<li class="has-sub"><a href="implementation.html#implementation">Implementation</a><ul>
+<li><a href="example.html#example">Example of model comparison with simulated data from {simrel-m package}</a></li>
+</ul></li>
 </ul>
 </div>
 </div>
@@ -82,12 +90,12 @@ Norwegian University of Life Sciences<br></div>
 <p class="abstract">Abstract</p>
 <p>Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such “big-data”. Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present <code>simrel-m</code>, which is a versatile and transparent tool for simulating linear model data with extensive range of adjustable properties. The method is based on the concept of relevant components <span class="citation">I. S. Helland and Almøy (<label for="tufte-mn-1" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle">1994<span class="marginnote">Helland, Inge S, and Trygve Almøy. 1994. “Comparison of Prediction Methods When Only a Few Components Are Relevant.” <em>Journal of the American Statistical Association</em> 89 (426). Taylor &amp;amp; Francis Group: 583–91.</span>)</span>, which is equivalent to the envelope model <span class="citation">R. Cook, Helland, and Su (<label for="tufte-mn-2" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle">2013<span class="marginnote">Cook, RD, IS Helland, and Z Su. 2013. “Envelopes and Partial Least Squares Regression.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 75 (5). Wiley Online Library: 851–77.</span>)</span>. It is a multi-response extension of <code>simrel</code> <span class="citation">Sæbø, Almøy, and Helland (<label for="tufte-mn-3" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle">2015<span class="marginnote">Sæbø, Solve, Trygve Almøy, and Inge S Helland. 2015. “Simrel-a Versatile Tool for Linear Model Data Simulation Based on the Concept of a Relevant Subspace and Relevant Predictors.” <em>Chemometrics and Intelligent Laboratory Systems</em>. Elsevier.</span>)</span>, and as <code>simrel</code> the new approach is essentially based on random rotations of latent relevant components to obtain a predictor matrix <span class="math inline">\(\mathbf{X}\)</span>, but in addition we introduce random rotations of latent components spanning a response space in order to obtain a multivariate response matrix <span class="math inline">\(\mathbf{Y}\)</span>. The properties of the linear relation between <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> are defined by a small set of input parameters which allow versatile and adjustable simulations. Sub-space rotations also allow for generating data suitable for testing variable selection methods in multi-response settings. The method is implemented as an R-package which serves as an extension of the existing <code>simrel</code> packages <span class="citation">Sæbø, Almøy, and Helland (<label for="tufte-mn-4" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-4" class="margin-toggle">2015<span class="marginnote">Sæbø, Solve, Trygve Almøy, and Inge S Helland. 2015. “Simrel-a Versatile Tool for Linear Model Data Simulation Based on the Concept of a Relevant Subspace and Relevant Predictors.” <em>Chemometrics and Intelligent Laboratory Systems</em>. Elsevier.</span>)</span>.</p>
 </div>
-<div id="acknoledgement" class="section level1">
-<h1><span class="header-section-number">1</span> Acknoledgement</h1>
+<div id="preface" class="section level1 unnumbered">
+<h1>Preface</h1>
 
 </div>
 <p style="text-align: center;">
-<a href="2-introduction.html"><button class="btn btn-default">Next</button></a>
+<a href="introduction.html"><button class="btn btn-default">Next</button></a>
 </p>
 </div>
 </div>

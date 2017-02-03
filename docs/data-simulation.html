@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space">
+
+<title>simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+
+
+<style type="text/css">
+  p.abstract{
+    text-align: center;
+    font-weight: bold;
+  }
+  div.abstract{
+    margin: auto;
+    width: 90%;
+  }
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface">Preface</a></li>
+<li class="has-sub"><a href="introduction.html#introduction">Introduction</a><ul>
+<li class="has-sub"><a href="model-specification.html#model-specification">Model Specification</a><ul>
+<li><a href="model-specification.html#an-overview-of-simrel">An overview of <code>simrel</code></a></li>
+<li><a href="model-specification.html#model-parameterization">Model Parameterization</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="statistical-model.html#statistical-model">Statistical Model</a><ul>
+<li><a href="model-parameter-relevant-components.html#model-parameter-relevant-components">Model parameterization and relevant components</a></li>
+<li><a href="data-simulation.html#data-simulation">Data Simulation</a></li>
+<li><a href="rotation-predictor-space.html#rotation-predictor-space">Rotation of predictor space</a></li>
+<li><a href="rotation-response-space.html#rotation-response-space">Rotation of response space</a></li>
+</ul></li>
+<li class="has-sub"><a href="implementation.html#implementation">Implementation</a><ul>
+<li><a href="example.html#example">Example of model comparison with simulated data from {simrel-m package}</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="data-simulation" class="section level2">
+<h2>Data Simulation</h2>
+<p>After the construction of <span class="math inline">\(\boldsymbol{\Xi}_{WZ}\)</span>, <span class="math inline">\(n\)</span> samples are generated from standard normal distribution of<span class="math inline">\(\left(\mathbf{W}, \mathbf{Z} \right)\)</span> considering their mean to be zero, i.e.<span class="math inline">\(\boldsymbol{\mu}_W = 0\)</span> and<span class="math inline">\(\boldsymbol{\mu}_Z=0\)</span>. Since<span class="math inline">\(\boldsymbol{\Xi}_{WZ}\)</span> is positive definite,<span class="math inline">\(\boldsymbol{\Xi}_{WZ}^{1/2}\)</span> obtained from its Cholesky decomposition, can serve as one of its square root. The simulation process constitute of following steps,</p>
+<ol style="list-style-type: decimal">
+<li>A matrix <span class="math inline">\(\mathbf{U}_{n\times (p + q)}\)</span> is sampled from standard normal distribution</li>
+<li>Compute <span class="math inline">\(\mathbf{G} = \boldsymbol{U\Xi}_{WZ}^{1/2}\)</span></li>
+</ol>
+<p>Here, first <span class="math inline">\(m\)</span> columns of <span class="math inline">\(\mathbf{G}\)</span> will serve as <span class="math inline">\(\mathbf{W}\)</span> and remaining <span class="math inline">\(p\)</span> columns will serve as <span class="math inline">\(\mathbf{Z}\)</span>. Further, each row of <span class="math inline">\(\mathbf{G}\)</span> will be a vector sampled independently from joint normal distribution of <span class="math inline">\(\left(\mathbf{W}, \mathbf{Z}\right)\)</span>. The final step to generate <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> from <span class="math inline">\(\mathbf{Z}\)</span> and <span class="math inline">\(\mathbf{W}\)</span> requires corresponding rotation matrices which is discusses on following section.</p>
+</div>
+<p style="text-align: center;">
+<a href="model-parameter-relevant-components.html"><button class="btn btn-default">Previous</button></a>
+<a href="rotation-predictor-space.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

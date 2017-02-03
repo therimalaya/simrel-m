@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space">
+
+<title>simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+
+
+<style type="text/css">
+  p.abstract{
+    text-align: center;
+    font-weight: bold;
+  }
+  div.abstract{
+    margin: auto;
+    width: 90%;
+  }
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface">Preface</a></li>
+<li class="has-sub"><a href="introduction.html#introduction">Introduction</a><ul>
+<li class="has-sub"><a href="model-specification.html#model-specification">Model Specification</a><ul>
+<li><a href="model-specification.html#an-overview-of-simrel">An overview of <code>simrel</code></a></li>
+<li><a href="model-specification.html#model-parameterization">Model Parameterization</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="statistical-model.html#statistical-model">Statistical Model</a><ul>
+<li><a href="model-parameter-relevant-components.html#model-parameter-relevant-components">Model parameterization and relevant components</a></li>
+<li><a href="data-simulation.html#data-simulation">Data Simulation</a></li>
+<li><a href="rotation-predictor-space.html#rotation-predictor-space">Rotation of predictor space</a></li>
+<li><a href="rotation-response-space.html#rotation-response-space">Rotation of response space</a></li>
+</ul></li>
+<li class="has-sub"><a href="implementation.html#implementation">Implementation</a><ul>
+<li><a href="example.html#example">Example of model comparison with simulated data from {simrel-m package}</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="example" class="section level2">
+<h2>Example of model comparison with simulated data from {simrel-m package}</h2>
+<p>In this section, <code>simrel-m</code> is implemented to simulate multi-response linear model dataset and use it to compare Principal Components Regression (PCR), Partial Least Squared Regression (PLS), Cannonically Powered Partial Least Squared Regression (CPPLS), Maximum Likelihood under Envelope Estimation and Ordinary Least Squared Regression (OLS) on the basis of their prediction ability of test observations. Here two design of parameters as in Table-<a href="example.html#tab:parameter-settings">2</a> are implemented for the simulation.</p>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:parameter-settings">Table 2: </span>Parameter setting of simulated data for model comparison</span><!--</caption>--></p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Parameters</th>
+<th align="center">Design1</th>
+<th align="center">Design2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">Number of observations</td>
+<td align="center">100</td>
+<td align="center">50</td>
+</tr>
+<tr class="even">
+<td align="right">Number of predictors</td>
+<td align="center">20</td>
+<td align="center">40</td>
+</tr>
+<tr class="odd">
+<td align="right">Relevant number of predictors</td>
+<td align="center">5, 5, 7</td>
+<td align="center">15, 15, 9</td>
+</tr>
+<tr class="even">
+<td align="right">Number of responses</td>
+<td align="center">6</td>
+<td align="center">5</td>
+</tr>
+<tr class="odd">
+<td align="right">Position of relevant components</td>
+<td align="center">1, 2; 3, 4, 6; 5</td>
+<td align="center">1, 2; 3, 4; 5, 7</td>
+</tr>
+<tr class="even">
+<td align="right">Gamma (decay of eigenvalues)</td>
+<td align="center">0.9</td>
+<td align="center">0.4</td>
+</tr>
+<tr class="odd">
+<td align="right">Coefficient of Determination</td>
+<td align="center">0.8, 0.9, 0.7</td>
+<td align="center">0.8, 0.9, 0.5</td>
+</tr>
+<tr class="even">
+<td align="right">Position of response components</td>
+<td align="center">1, 4; 2, 6; 3, 5</td>
+<td align="center">1, 4; 2, 5; 3</td>
+</tr>
+<tr class="odd">
+<td align="right">Number of test observations</td>
+<td align="center">1000</td>
+<td align="center">1000</td>
+</tr>
+</tbody>
+</table>
+<p>Here, the first design has large number of observations as compared to the number of variables while the number of variables in second design is nearly equals to its number of observations. Both the models have three informative response components from which first design generates 6 responses and the second design generates 5 responses. In addition, the eigenvalues of predictors decreases sharply in the first design than the second one. The prediction error are compared on the basis of 1000 test samples.</p>
+<p>Prediction error is measured as mean squared error of prediction (MSEP) using the expression in equation~<a href="example.html#eq:msep">(8)</a>.</p>
+<span class="math display" id="eq:msep">\[\begin{align}
+  \text{MSEP}_\text{train} &amp;= \frac{\mathbf{Y}_\text{train} - 
+    \hat{\mathbf{Y}}_\text{train}}{n_\text{train}} \nonumber \\
+  \text{MSEP}_\text{test}  &amp;= \frac{\mathbf{Y}_\text{test} - 
+    \hat{\mathbf{Y}}_\text{test}}{n_\text{test}}
+  \tag{8}
+\end{align}\]</span>
+<p>where, <span class="math inline">\(\hat{\mathbf{Y}}_\text{train} = \mathbf{X}_\text{train} \boldsymbol{\beta}\)</span> and <span class="math inline">\(\hat{\mathbf{Y}}_\text{test} = \mathbf{X}_\text{test} \boldsymbol{\beta}\)</span></p>
+<div class="figure fullwidth"><span id="fig:pred-plot-1"></span>
+<img src="Simrel-M_files/figure-html/pred-plot-1-1.png" alt="Model comparison based on prediction error for each response." width="672"  />
+<p class="caption marginnote shownote">
+Figure 1: Model comparison based on prediction error for each response.
+</p>
+</div>
+<div class="figure fullwidth"><span id="fig:pred-plot-2"></span>
+<img src="Simrel-M_files/figure-html/pred-plot-2-1.png" alt="Train and test prediction error for different response comparing models under comparison" width="672"  />
+<p class="caption marginnote shownote">
+Figure 2: Train and test prediction error for different response comparing models under comparison
+</p>
+</div>
+
+</div>
+<!-- </div> -->
+<p style="text-align: center;">
+<a href="implementation.html"><button class="btn btn-default">Previous</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

@@ -1,8 +1,9 @@
 output_dir: docs
 book_filename: "Simrel-M"
-#chapter_name: ""
+split_by: "none"
 rmd_files: [
   "index.Rmd", 
   "Includes/01-Introduction.Rmd",
   "Includes/02-StatisticalModel.Rmd",
+  "Includes/03-Implementation.Rmd",
   ]

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space">
+
+<title>simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+
+
+<style type="text/css">
+  p.abstract{
+    text-align: center;
+    font-weight: bold;
+  }
+  div.abstract{
+    margin: auto;
+    width: 90%;
+  }
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface">Preface</a></li>
+<li class="has-sub"><a href="introduction.html#introduction">Introduction</a><ul>
+<li class="has-sub"><a href="model-specification.html#model-specification">Model Specification</a><ul>
+<li><a href="model-specification.html#an-overview-of-simrel">An overview of <code>simrel</code></a></li>
+<li><a href="model-specification.html#model-parameterization">Model Parameterization</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="statistical-model.html#statistical-model">Statistical Model</a><ul>
+<li><a href="model-parameter-relevant-components.html#model-parameter-relevant-components">Model parameterization and relevant components</a></li>
+<li><a href="data-simulation.html#data-simulation">Data Simulation</a></li>
+<li><a href="rotation-predictor-space.html#rotation-predictor-space">Rotation of predictor space</a></li>
+<li><a href="rotation-response-space.html#rotation-response-space">Rotation of response space</a></li>
+</ul></li>
+<li class="has-sub"><a href="implementation.html#implementation">Implementation</a><ul>
+<li><a href="example.html#example">Example of model comparison with simulated data from {simrel-m package}</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="statistical-model" class="section level1">
+<h1>Statistical Model</h1>
+<dl>
+<dt>Regression Coefficients <span class="math inline">\(\left(\boldsymbol{B}\right)\)</span></dt>
+<dd>The measurement of effect of each predictor variables in the individual response are the regression coefficients. Predictors having regression coefficients closer to zero have lower impact on the response.
+<span class="math display">\[\begin{equation}
+\mathbf{B} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1}
+  \end{equation}\]</span>
+</dd>
+<dt>Error Variance <span class="math inline">\(\left(\boldsymbol{\Sigma}_{Y|X}\right)\)</span></dt>
+<dd>Error variance comprises the variation that is present in response but is not explained by the model. The true error variance can be written as,
+<span class="math display">\[\begin{equation}
+\boldsymbol{\Sigma}_{Y|X} = \boldsymbol{\Sigma}_{YY} - 
+  \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1} \boldsymbol{\Sigma}_{XY}
+  \end{equation}\]</span>
+</dd>
+<dt>Population Coefficient of Determination <span class="math inline">\(\left(\boldsymbol{\mathcal{R}}_{XY}\right)\)</span></dt>
+<dd>Coefficient of determination measure how much the predictors explains the variation present in response matrix. The coefficient of determination in the case of <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> relationship is,
+<span class="math display">\[\begin{equation}
+\boldsymbol{\mathcal{R}}^2_{XY} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1}
+  \boldsymbol{\Sigma}_{XY} \boldsymbol{\Sigma}_{YY}^{-1}
+  \end{equation}\]</span>
+</dd>
+</dl>
+<p>Simulation of <span class="math inline">\((\mathbf{Y, X})\)</span> for model~<a href="model-specification.html#eq:model2">(3)</a> requires the fact that – a set of latent variable spanning <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> will contain same information in different structure. With two matrices <span class="math inline">\(\mathbf{R}_{p\times p}\)</span> and <span class="math inline">\(\mathbf{Q}_{q \times q}\)</span> with rank <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> respectively, lets define a transformation as <span class="math inline">\(\mathbf{Z} = \mathbf{RX}\)</span> and <span class="math inline">\(\mathbf{W} = \mathbf{QY}\)</span> so that,</p>
+<span class="math display" id="eq:model3">\[\begin{align}
+  \begin{bmatrix}\mathbf{W} \\ 
+  \boldsymbol{Z}\end{bmatrix}  &amp; \sim N \left(
+    \begin{bmatrix}
+      \boldsymbol{\mu}_W \\ \boldsymbol{\mu}_Z
+    \end{bmatrix},
+    \begin{bmatrix}
+      \boldsymbol{\Sigma}_{WW} &amp; \boldsymbol{\Sigma}_{WZ}^t \\
+      \boldsymbol{\Sigma}_{ZW} &amp; \boldsymbol{\Sigma}_{ZZ}
+    \end{bmatrix} \right) \nonumber \\
+  &amp; = N \left(
+    \begin{bmatrix}
+      \boldsymbol{Q\mu}_Y \\
+      \boldsymbol{R\mu}_X
+    \end{bmatrix},
+    \begin{bmatrix}
+      \boldsymbol{Q\Sigma}_{YY}\boldsymbol{Q}^t &amp; \boldsymbol{Q\Sigma}_{XY}^t\mathbf{R}^t \\
+      \boldsymbol{R\Sigma}_{XY}\boldsymbol{Q}^t &amp; \boldsymbol{R\Sigma}_{XX}\mathbf{R}^t
+    \end{bmatrix}
+  \right)
+  \tag{4}
+\end{align}\]</span>
+<p>Further, if both <span class="math inline">\(\mathbf{Q}\)</span> and <span class="math inline">\(\mathbf{R}\)</span> are orthogonal matrix their inverse equales to their transpose, i.e. <span class="math inline">\(\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q\)</span> and <span class="math inline">\(\mathbf{R}^t\mathbf{R} = \mathbf{I}_p\)</span>. The inverse transformation can be defined as,</p>
+<span class="math display" id="eq:cov-yx-wz">\[\begin{align}
+\boldsymbol{\Sigma}_{XX}                                                                                                                                                                          = \boldsymbol{R}^t\boldsymbol{\Sigma}_{ZZ}  \boldsymbol{R}, &amp; \boldsymbol{\Sigma}_{XY}
+    = \boldsymbol{R}^t \boldsymbol{\Sigma}_{ZW} \boldsymbol{Q} \nonumber \\
+\boldsymbol{\Sigma}_{YY}                                                                                                                                                                          = \boldsymbol{Q}^t\boldsymbol{\Sigma}_{WW} \boldsymbol{Q}, &amp; \boldsymbol{\Sigma}_{YX} = \boldsymbol{Q}^t \boldsymbol{\Sigma}_{WZ} \boldsymbol{R}
+\tag{5}
+\end{align}\]</span>
+<p>The relationship above allows us to define the linear model relation in equation~<a href="model-specification.html#eq:model1">(2)</a> in terms of <span class="math inline">\(\mathbf{W}\)</span> and <span class="math inline">\(athbf{Z}\)</span> as in equation~<a href="statistical-model.html#eq:latent-model">(6)</a>,</p>
+<span class="math display" id="eq:latent-model">\[\begin{equation}
+  \mathbf{W} =  \boldsymbol{\mu}_W + \mathbf{A}^t \left(\mathbf{Z} - \boldsymbol{\mu}_Z\right) + \boldsymbol{\tau}; \qquad
+  \boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{W|Z}\right)
+  \tag{6}
+\end{equation}\]</span>
+<p>Here, in this setting the model parameters can be defined as follows where each of them can be related to the model parameter for model in equation~<a href="model-specification.html#eq:model1">(2)</a> using the ortogonal matrices <span class="math inline">\(\mathbf{P}\)</span> and <span class="math inline">\(\mathbf{Q}\)</span>.</p>
+<dl>
+<dt>Regression Coefficients <span class="math inline">\(\left(\mathbf{A}\right)\)</span></dt>
+<dd>Using the transformation matrix <span class="math inline">\(\mathbf{P}\)</span> and <span class="math inline">\(\mathbf{Q}\)</span>, we can obtain the regression coefficients corresponding to the latent structure of predictors.
+<span class="math display">\[\begin{align}
+\mathbf{A}  &amp;   = \boldsymbol{\Sigma}_{WZ} \boldsymbol{\Sigma}_{ZZ}^{-1}
+              = \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{XX}\mathbf{R}^t\right]^{-1}
+              = \boldsymbol{Q\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}R^t = \mathbf{QBR}^t
+  \end{align}\]</span>
+</dd>
+<dt>Error Variance <span class="math inline">\(\left(\boldsymbol{\Sigma}_{W|Z}\right)\)</span></dt>
+<dd>The true unexplained variation present in population that the model between the latent structure of predictors and responses can also be expressed with the rotation matrix and the error variance <span class="math inline">\(\Sigma_{Y|X}\)</span>.
+<span class="math display">\[\begin{align}
+\boldsymbol{\Sigma}_{W|Z}
+&amp;=  \boldsymbol{Q\Sigma}_{YY}\mathbf{Q}^t -
+\boldsymbol{Q \Sigma}_{YX}\mathbf{R}^t \left[\boldsymbol{R\Sigma}_{XX}\boldsymbol{R}^t\right]^{-1}
+  \boldsymbol{R\Sigma}_{XY}\mathbf{Q}^t \nonumber \\
+&amp;=  \boldsymbol{Q\Sigma}_{YY}\mathbf{Q}^t - \boldsymbol{Q \Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\boldsymbol{\Sigma}_{XY}\mathbf{Q}^t \nonumber \\
+&amp;=  \mathbf{Q}\left[\boldsymbol{\Sigma}_{YY} -
+  \boldsymbol{\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\boldsymbol{\Sigma}_{XY}\right]\mathbf{Q}^{t} \nonumber \\
+&amp;=  \mathbf{Q} \boldsymbol{\Sigma}_{Y|X}\mathbf{Q}^t
+  \end{align}\]</span>
+Since, <span class="math inline">\(\mathbf{Y}\)</span> is generated from orthogonal random rotation matrix <span class="math inline">\(\mathbf{Q}\)</span>, the error variance depends on <span class="math inline">\(\mathbf{Q}\)</span>. Further, the coefficient of determination is,
+</dd>
+<dt>Population Coefficient of Determination <span class="math inline">\(\left(\boldsymbol{\mathcal{R}}_{WZ}^{2}\right)\)</span></dt>
+<dd><span class="math display">\[\begin{align}
+\boldsymbol{\mathcal{R}}^2_{XY} &amp; =
+                          \mathbf{Q}^t\boldsymbol{\Sigma}_{WZ}\boldsymbol{\Sigma}^{-1}_{ZZ}\boldsymbol{\Sigma}_{ZW}\boldsymbol{\Sigma}_{WW}^{-1}\boldsymbol{Q} \nonumber \\
+                        &amp; = \mathbf{Q}^t\boldsymbol{\mathcal{R}}^2_{WZ}\mathbf{Q} \nonumber \\
+\text{i.e. }\boldsymbol{\mathcal{R}}^2_{WZ} &amp;= \mathbf{Q}\boldsymbol{\mathcal{R}}^2_{XY}\mathbf{Q}^t
+\end{align}\]</span>
+</dd>
+</dl>
+<p>Thus, on the basis of these mathematical backgrounds, the simulation strategy follows,</p>
+<ol style="list-style-type: lower-alpha">
+<li>Construct covariance structure of <span class="math inline">\(\mathbf{W}\)</span> and <span class="math inline">\(\mathbf{Z}\)</span> satisfying given parameters</li>
+<li>Simulate <span class="math inline">\(\mathbf{W}\)</span> and <span class="math inline">\(\mathbf{Z}\)</span> from random standard normal distribution</li>
+<li>Rotation <span class="math inline">\(\mathbf{Z}\)</span> by orthonormal matrix <span class="math inline">\(\mathbf{R}\)</span> to yield <span class="math inline">\(\mathbf{X} = \mathbf{R}^t \mathbf{Z}\)</span></li>
+<li>Rotation of <span class="math inline">\(\mathbf{W}\)</span> by orthogonal matrix <span class="math inline">\(\mathbf{Q}\)</span> to yield <span class="math inline">\(\mathbf{Y} = \mathbf{Q}^t \mathbf{W}\)</span></li>
+<li>For simplification, we assume that no common components of <span class="math inline">\(\mathbf{X}\)</span>, i.e. <span class="math inline">\(\mathbf{Z}\)</span>, relevant for <span class="math inline">\(\mathbf{W}\)</span>. For example, if component 1 and component 2 are relevant for <span class="math inline">\(\mathbf{W}_1\)</span>, they are not relevant for other <span class="math inline">\(\mathbf{W}\)</span>’s.</li>
+</ol> 
+</div>
+<p style="text-align: center;">
+<a href="model-specification.html"><button class="btn btn-default">Previous</button></a>
+<a href="model-parameter-relevant-components.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>
