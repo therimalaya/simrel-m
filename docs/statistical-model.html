@@ -5,20 +5,20 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</title>
+  <title>simrel-m: A versatile tool for simulating multi-response linear model data</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-  <meta name="description" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space">
+  <meta name="description" content="<code>simrel-m</code>: A versatile tool for simulating multi-response linear model data">
   <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
-  <meta property="og:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
+  <meta property="og:title" content="simrel-m: A versatile tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://therimalaya.github.io/simrel-m" />
   
   
-  
-  
+  <meta name="github-repo" content="therimalaya/simrel-m" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
+  <meta name="twitter:title" content="simrel-m: A versatile tool for simulating multi-response linear model data" />
   
   
   
@@ -62,6 +62,8 @@
       <nav role="navigation">
 
 <ul class="summary">
+<li><a href="./index.html">Simrel-M: A versatile Simulation Tool</a></li>
+<li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#model-specification"><i class="fa fa-check"></i>Model Specification</a><ul>
@@ -76,8 +78,15 @@
 <li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#rotation-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a><ul>
-<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#example"><i class="fa fa-check"></i>Example of model comparison with simulated data from {simrel-m package}</a></li>
+<li><a href="implementation.html#example">Example of model comparison with simulated data from <code>simrel-m</code> package</a></li>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#comparison-of-estimation-methods-based-on-prediction-error"><i class="fa fa-check"></i>Comparison of Estimation Methods based on Prediction error</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#comprehensive-explanation-of-notation"><i class="fa fa-check"></i>Comprehensive Explanation of Notation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>
 </ul>
 
       </nav>
@@ -87,7 +96,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><code>simrel-m</code>: A versatile tool for simulating multi-response linear model data</a>
           </h1>
         </div>
 
@@ -291,10 +300,10 @@ Since, <span class="math inline">\(\mathbf{Y}\)</span> is generated from orthogo
 require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
-"google": false,
+"google": true,
 "weibo": false,
 "instapper": false,
 "vk": false,
@@ -309,9 +318,9 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["Simrel-M.pdf", "Simrel-M.epub"],
+"download": ["Simrel-M.epub", "Simrel-M.mobi"],
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

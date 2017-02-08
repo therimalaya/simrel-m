@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="introduction.html">
+<link rel="prev" href="implementation.html">
+<link rel="next" href="references.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -104,24 +104,84 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title"><code>simrel-m</code>: A versatile tool for simulating multi-response linear model data</h1>
-<h4 class="author"><em>Raju Rimal</em></h4>
-<h4 class="author"><em>Trygve Almøy</em></h4>
-<h4 class="author"><em>Solve Sæbø</em></h4>
-<address class="author_afil">
-Norwegian University of Life Sciences<br></div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
+<div id="appendix" class="section level1">
+<h1>Appendix</h1>
+<div id="comprehensive-explanation-of-notation" class="section level2">
+<h2>Comprehensive Explanation of Notation</h2>
+<p>Following table present a comprehensive notation used in this paper.</p>
+<table>
+<caption><span id="tab:notation">Table 3: </span> Notation used in this study</caption>
+<colgroup>
+<col width="43%" />
+<col width="56%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Symbol Definition</th>
+<th>Symbols</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">Response</td>
+<td><span class="math inline">\(y_1\)</span>, <span class="math inline">\(y_2\)</span>, , <span class="math inline">\(y_m\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">Response Components</td>
+<td><span class="math inline">\(W_1\)</span>, <span class="math inline">\(W_2\)</span>, , <span class="math inline">\(W_l\)</span>, <span class="math inline">\(W_{l+1}\)</span> , <span class="math inline">\(W_m\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">Number of Predictors relevent for each response components</td>
+<td><span class="math inline">\(q_1\)</span>, <span class="math inline">\(q_2\)</span>, , <span class="math inline">\(q_l\)</span>, 0, , 0</td>
+</tr>
+<tr class="even">
+<td align="right">Number of <span class="math inline">\(\mathbf{X}\)</span> components relevant for each response components</td>
+<td><span class="math inline">\(c_1\)</span>, <span class="math inline">\(c_2\)</span>, , <span class="math inline">\(c_l\)</span>, 0, , 0</td>
+</tr>
+<tr class="odd">
+<td align="right">Set of position index of relevant components</td>
+<td><span class="math inline">\(\mathcal{P}_1\)</span>, <span class="math inline">\(\mathcal{P}_2\)</span>, , <span class="math inline">\(\mathcal{P}_l\)</span>, <span class="math inline">\(\varnothing\)</span>, , <span class="math inline">\(\varnothing\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">Coefficient of determination for each response components</td>
+<td><span class="math inline">\(\mathcal{R}_1^2\)</span>, <span class="math inline">\(\mathcal{R}_2^2\)</span>, , <span class="math inline">\(\mathcal{R}_l^2\)</span>, 0, , 0</td>
+</tr>
+<tr class="odd">
+<td align="right">Set of extra components index sampled randomly</td>
+<td><span class="math inline">\(\mathcal{Q}_1\)</span>, <span class="math inline">\(\mathcal{Q}_2\)</span>, , <span class="math inline">\(\mathcal{Q}_l\)</span>, <span class="math inline">\(\varnothing\)</span>, , <span class="math inline">\(\varnothing\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Some properties and details of terms in Table~<a href="appendix.html#tab:notation">3</a> is explained below:</p>
+<ul>
+<li>Total number of relevant predictors (<span class="math inline">\(\sum{q_i}\)</span>) is less than or equals to total number of predictor variables (<span class="math inline">\(p\)</span>). Similarly, Total number of relevant predictor components (<span class="math inline">\(\sum{c_i}\)</span>) is not greater than the total number of relevant predictor for that response component. In addition, the number of the relevant predictor components for each response never exceed the total number of relevant predictor for that component.
+<span class="math display">\[\begin{align*}
+\sum{q_i} \le p, &amp;&amp; \sum{c_i} \le \sum{q_i}, &amp;&amp; c_i \le q_i, &amp;&amp; \text{ and }, &amp;&amp;  n(\mathcal{P}_i) = c_i
+  \end{align*}\]</span></li>
+<li>In <code>simrel-m</code>, we have assumed that none of the predictor components are relevant for multiple response components, i.e.
+<span class="math display">\[\begin{equation*}
+\text{For }i \ne j,\;  n(\mathcal{P}_i \cup \mathcal{P}_j) = 0
+  \end{equation*}\]</span></li>
+<li>Since, a predictor components can have lower dimension than predicotrs, i.e., a predictors can be spanned by lower dimensional subspace, the extra components required for orthogonal rotaion during simulation are sampled from the uninformative standard normal variates.
+<span class="math display">\[\begin{equation*}
+n(\mathcal{Q}_i) = q_i - c_i
+  \end{equation*}\]</span></li>
+<li>In <code>simrel-m</code>, the sampling is done without replacement.
+<span class="math display">\[\begin{equation*}
+n(\mathcal{P}_i \cup \mathcal{Q}_i) = q_i \text{ and } (\mathcal{P}_i \cup \mathcal{Q}_i) \cap (\mathcal{P}_j \cup \mathcal{Q}_j) = \varnothing
+  \end{equation*}\]</span></li>
+</ul>
 
+<!-- # References {-} -->
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="implementation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>

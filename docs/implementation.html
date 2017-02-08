@@ -5,20 +5,20 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</title>
+  <title>simrel-m: A versatile tool for simulating multi-response linear model data</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-  <meta name="description" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space">
+  <meta name="description" content="<code>simrel-m</code>: A versatile tool for simulating multi-response linear model data">
   <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
-  <meta property="og:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
+  <meta property="og:title" content="simrel-m: A versatile tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
+  <meta property="og:url" content="http://therimalaya.github.io/simrel-m" />
   
   
-  
-  
+  <meta name="github-repo" content="therimalaya/simrel-m" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space" />
+  <meta name="twitter:title" content="simrel-m: A versatile tool for simulating multi-response linear model data" />
   
   
   
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="statistical-model.html">
-
+<link rel="next" href="appendix.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -62,6 +62,8 @@
       <nav role="navigation">
 
 <ul class="summary">
+<li><a href="./index.html">Simrel-M: A versatile Simulation Tool</a></li>
+<li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#model-specification"><i class="fa fa-check"></i>Model Specification</a><ul>
@@ -76,8 +78,15 @@
 <li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#rotation-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a><ul>
-<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#example"><i class="fa fa-check"></i>Example of model comparison with simulated data from {simrel-m package}</a></li>
+<li><a href="implementation.html#example">Example of model comparison with simulated data from <code>simrel-m</code> package</a></li>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#comparison-of-estimation-methods-based-on-prediction-error"><i class="fa fa-check"></i>Comparison of Estimation Methods based on Prediction error</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
+<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#comprehensive-explanation-of-notation"><i class="fa fa-check"></i>Comprehensive Explanation of Notation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>
 </ul>
 
       </nav>
@@ -87,7 +96,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">simrel-m – A versatile tool for data simulation for multi-response linear model data based on the concept of relevant subspace of predictor space</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><code>simrel-m</code>: A versatile tool for simulating multi-response linear model data</a>
           </h1>
         </div>
 
@@ -98,108 +107,87 @@
 <div id="implementation" class="section level1">
 <h1>Implementation</h1>
 <div id="example" class="section level2">
-<h2>Example of model comparison with simulated data from {simrel-m package}</h2>
+<h2>Example of model comparison with simulated data from <code>simrel-m</code> package</h2>
 <p>In this section, <code>simrel-m</code> is implemented to simulate multi-response linear model dataset and use it to compare Principal Components Regression (PCR), Partial Least Squared Regression (PLS), Cannonically Powered Partial Least Squared Regression (CPPLS), Maximum Likelihood under Envelope Estimation and Ordinary Least Squared Regression (OLS) on the basis of their prediction ability of test observations. Here two design of parameters as in Table-<a href="implementation.html#tab:parameter-settings">2</a> are implemented for the simulation.</p>
 <table>
 <caption><span id="tab:parameter-settings">Table 2: </span>Parameter setting of simulated data for model comparison</caption>
 <thead>
 <tr class="header">
 <th align="right">Parameters</th>
-<th align="center">Design1</th>
-<th align="center">Design2</th>
+<th align="right">Design1</th>
+<th align="right">Design2</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="right">Number of observations</td>
-<td align="center">100</td>
-<td align="center">50</td>
+<td align="right">100</td>
+<td align="right">50</td>
 </tr>
 <tr class="even">
 <td align="right">Number of predictors</td>
-<td align="center">20</td>
-<td align="center">40</td>
+<td align="right">20</td>
+<td align="right">40</td>
 </tr>
 <tr class="odd">
 <td align="right">Relevant number of predictors</td>
-<td align="center">5, 5, 7</td>
-<td align="center">15, 15, 9</td>
+<td align="right">5, 5, 7</td>
+<td align="right">15, 15, 9</td>
 </tr>
 <tr class="even">
 <td align="right">Number of responses</td>
-<td align="center">6</td>
-<td align="center">5</td>
+<td align="right">6</td>
+<td align="right">5</td>
 </tr>
 <tr class="odd">
 <td align="right">Position of relevant components</td>
-<td align="center">1, 2; 3, 4, 6; 5</td>
-<td align="center">1, 2; 3, 4; 5, 7</td>
+<td align="right">1, 2, 3, 4, 6, 5</td>
+<td align="right">1, 2, 3, 4, 5, 7</td>
 </tr>
 <tr class="even">
 <td align="right">Gamma (decay of eigenvalues)</td>
-<td align="center">0.9</td>
-<td align="center">0.4</td>
+<td align="right">0.9</td>
+<td align="right">0.4</td>
 </tr>
 <tr class="odd">
 <td align="right">Coefficient of Determination</td>
-<td align="center">0.8, 0.9, 0.7</td>
-<td align="center">0.8, 0.9, 0.5</td>
+<td align="right">0.8, 0.9, 0.7</td>
+<td align="right">0.8, 0.9, 0.5</td>
 </tr>
 <tr class="even">
 <td align="right">Position of response components</td>
-<td align="center">1, 4; 2, 6; 3, 5</td>
-<td align="center">1, 4; 2, 5; 3</td>
+<td align="right">1, 4, 2, 6, 3, 5</td>
+<td align="right">1, 4, 2, 5, 3</td>
 </tr>
 <tr class="odd">
 <td align="right">Number of test observations</td>
-<td align="center">1000</td>
-<td align="center">1000</td>
+<td align="right">1000</td>
+<td align="right">1000</td>
 </tr>
 </tbody>
 </table>
 <p>Here, the first design has large number of observations as compared to the number of variables while the number of variables in second design is nearly equals to its number of observations. Both the models have three informative response components from which first design generates 6 responses and the second design generates 5 responses. In addition, the eigenvalues of predictors decreases sharply in the first design than the second one. The prediction error are compared on the basis of 1000 test samples.</p>
 <p>Prediction error is measured as mean squared error of prediction (MSEP) using the expression in equation~<a href="implementation.html#eq:msep">(8)</a>.</p>
-<span class="math display" id="eq:msep">\[\begin{align}
-  \text{MSEP}_\text{train} &amp;= \frac{\mathbf{Y}_\text{train} - 
-    \hat{\mathbf{Y}}_\text{train}}{n_\text{train}} \nonumber \\
-  \text{MSEP}_\text{test}  &amp;= \frac{\mathbf{Y}_\text{test} - 
-    \hat{\mathbf{Y}}_\text{test}}{n_\text{test}}
-  \tag{8}
-\end{align}\]</span>
+<span class="math display" id="eq:msep">\[\begin{equation}
+\text{MSEP}_\text{train} = \frac{\mathbf{Y}_\text{train} - 
+  \hat{\mathbf{Y}}_\text{train}}{n_\text{train}} \nonumber \text{ and }
+\text{MSEP}_\text{test}  = \frac{\mathbf{Y}_\text{test} - 
+  \hat{\mathbf{Y}}_\text{test}}{n_\text{test}}
+\tag{8}
+\end{equation}\]</span>
 <p>where, <span class="math inline">\(\hat{\mathbf{Y}}_\text{train} = \mathbf{X}_\text{train} \boldsymbol{\beta}\)</span> and <span class="math inline">\(\hat{\mathbf{Y}}_\text{test} = \mathbf{X}_\text{test} \boldsymbol{\beta}\)</span></p>
-<div class="figure"><span id="fig:pred-plot-1"></span>
-<img src="Simrel-M_files/figure-html/pred-plot-1-1.png" alt="Model comparison based on prediction error for each response." width="672" />
+</div>
+<div id="comparison-of-estimation-methods-based-on-prediction-error" class="section level2">
+<h2>Comparison of Estimation Methods based on Prediction error</h2>
+<p>Figure-<a href="implementation.html#fig:prediction-error-plot">1</a> shows the performance of different models with components 1 to 10 …</p>
+<div class="figure"><span id="fig:prediction-error-plot"></span>
+<img src="Simrel-M_files/figure-html/prediction-error-plot-1.png" alt="Model comparison based on test prediction error" width="100%" />
 <p class="caption">
-Figure 1: Model comparison based on prediction error for each response.
+Figure 1: Model comparison based on test prediction error
 </p>
 </div>
-<div class="figure"><span id="fig:pred-plot-2"></span>
-<img src="Simrel-M_files/figure-html/pred-plot-2-1.png" alt="Train and test prediction error for different response comparing models under comparison" width="672" />
-<p class="caption">
-Figure 2: Train and test prediction error for different response comparing models under comparison
-</p>
-</div>
+<p>Some more text and more and more</p>
 
-<div id="refs" class="references">
-<div>
-<p>Anderson, Theodore W, Ingram Olkin, and Les G Underhill. 1987. “Generation of Random Orthogonal Matrices.” <em>SIAM Journal on Scientific and Statistical Computing</em> 8 (4). SIAM: 625–29.</p>
-</div>
-<div>
-<p>Cook, R Dennis, and Xin Zhang. 2015. “Foundations for Envelope Models and Methods.” <em>Journal of the American Statistical Association</em> 110 (510). Taylor &amp; Francis: 599–611.</p>
-</div>
-<div>
-<p>Cook, RD, IS Helland, and Z Su. 2013. “Envelopes and Partial Least Squares Regression.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 75 (5). Wiley Online Library: 851–77.</p>
-</div>
-<div>
-<p>Heiberger, Richard M. 1978. “Algorithm as 127: Generation of Random Orthogonal Matrices.” <em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em> 27 (2). JSTOR: 199–206.</p>
-</div>
-<div>
-<p>Helland, Inge S, and Trygve Almøy. 1994. “Comparison of Prediction Methods When Only a Few Components Are Relevant.” <em>Journal of the American Statistical Association</em> 89 (426). Taylor &amp;amp; Francis Group: 583–91.</p>
-</div>
-<div>
-<p>Sæbø, Solve, Trygve Almøy, and Inge S Helland. 2015. “Simrel-a Versatile Tool for Linear Model Data Simulation Based on the Concept of a Relevant Subspace and Relevant Predictors.” <em>Chemometrics and Intelligent Laboratory Systems</em>. Elsevier.</p>
-</div>
-</div>
 </div>
 </div>
             </section>
@@ -207,8 +195,8 @@ Figure 2: Train and test prediction error for different response comparing model
           </div>
         </div>
       </div>
-<a href="statistical-model.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="statistical-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -221,10 +209,10 @@ Figure 2: Train and test prediction error for different response comparing model
 require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
-"google": false,
+"google": true,
 "weibo": false,
 "instapper": false,
 "vk": false,
@@ -239,9 +227,9 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["Simrel-M.pdf", "Simrel-M.epub"],
+"download": ["Simrel-M.epub", "Simrel-M.mobi"],
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
 }
 });
 });

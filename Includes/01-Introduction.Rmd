@@ -77,7 +77,7 @@ $\boldsymbol{\Sigma}_{YY}$ :                    Covariance Matrix of response $\
 $\boldsymbol{\Sigma}_{XY}$ :                    Covariance Matrix between $\mathbf{X}$ and $\mathbf{Y}$                      
 $\boldsymbol{\Sigma}_{XX}$ :                    Covariance matrix of predictor variables $\mathbf{X}$                            
 $\boldsymbol{\mu}_X$ and $\boldsymbol{\mu}_Y$ : Mean vectors of response $\mathbf{Y}$ and predictor $\mathbf{X}$ respective 
-                                                                                                                                     
+
 According to the theory of Multivariate Normal Distribution, we can express different parameters interms of $\mathbf{X}$, $\mathbf{Y}$ and the covariance structure.
 
 ### Model Parameterization

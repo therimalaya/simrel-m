@@ -10,19 +10,22 @@ knitr::opts_chunk$set(
 ```
 
 ```{r LoadingPackages}
-pkgs <- c("pls", "envlp", "data.table", "ggplot2", "purrr", "abind", "simulatr")
-for (pkg in pkgs) require(pkg, quietly = T, warn.conflicts = F, character.only = T)
+pkgs <- c("pls", "envlp", "simulatr", "data.table", "pander", "magrittr", "purrr", "ggplot2")
+for (pkg in pkgs) 
+  suppressPackageStartupMessages(require(pkg, quietly = T, 
+                                         warn.conflicts = F, 
+                                         character.only = T))
 ```
 
 ```{r SourceScript}
 source("functions.R")
 ```
 
-## Example of model comparison with simulated data from {\tt simrel-m package} {#example}
+## Example of model comparison with simulated data from `simrel-m` package {#example}
 
 In this section, `simrel-m` is implemented to simulate multi-response linear model dataset and use it to compare Principal Components Regression (PCR), Partial Least Squared Regression (PLS), Cannonically Powered Partial Least Squared Regression (CPPLS), Maximum Likelihood under Envelope Estimation and Ordinary Least Squared Regression (OLS) on the basis of their prediction ability of test observations. Here two design of parameters as in Table-\@ref(tab:parameter-settings) are implemented for the simulation.
 
-```{r MakingDesign}
+```{r MakingDesign, results='hide'}
 set.seed(225)
 opts <- list(
   n = c(100, 50),
@@ -39,13 +42,15 @@ opts <- list(
   ntest = rep(1000, 2)
 )
 design <- as.data.table(.prepare_design(opts))
+design[, type := "multivariate"]
 mdls <- c("OLS", "PCR", "PLS", "Envelope", "CPPLS")
 ```
 
 
 ```{r parameter-settings}
-design_table <- setnames(as.data.table(transpose(opts)),
-                         paste0("V", 1:2), paste0("Design", 1:2))[]
+design_table <- t(design) %>% 
+  as.data.table(keep.rownames = TRUE) %>% 
+  setnames(c("parameters", paste0("Design", 1:2)))
 design_desc <- c(
   "Number of observations",
   "Number of predictors",
@@ -57,7 +62,8 @@ design_desc <- c(
   "Position of response components",
   "Number of test observations"
 )
-knitr::kable(data.frame(Parameters = design_desc, design_table), align = "rcc",
+design_table <- cbind(Parameters = design_desc, design_table[-.N, -"parameters"])
+knitr::kable(design_table, align = "rrr",
              caption = "Parameter setting of simulated data for model comparison",
              booktabs = TRUE)
 ```
@@ -66,22 +72,27 @@ Here, the first design has large number of observations as compared to the numbe
 
 Prediction error is measured as mean squared error of prediction (MSEP) using the expression in equation~\@ref(eq:msep).
 
-\begin{align}
-  \text{MSEP}_\text{train} &= \frac{\mathbf{Y}_\text{train} - 
-    \hat{\mathbf{Y}}_\text{train}}{n_\text{train}} \nonumber \\
-  \text{MSEP}_\text{test}  &= \frac{\mathbf{Y}_\text{test} - 
-    \hat{\mathbf{Y}}_\text{test}}{n_\text{test}}
-  (\#eq:msep)
-\end{align}
+
+\begin{equation}
+\text{MSEP}_\text{train} = \frac{\mathbf{Y}_\text{train} - 
+  \hat{\mathbf{Y}}_\text{train}}{n_\text{train}} \nonumber \text{ and }
+\text{MSEP}_\text{test}  = \frac{\mathbf{Y}_\text{test} - 
+  \hat{\mathbf{Y}}_\text{test}}{n_\text{test}}
+(\#eq:msep)
+\end{equation}
 
 where, $\hat{\mathbf{Y}}_\text{train} = \mathbf{X}_\text{train} \boldsymbol{\beta}$ and $\hat{\mathbf{Y}}_\text{test} = \mathbf{X}_\text{test} \boldsymbol{\beta}$
 
 ```{r Simulation, results='hide'}
-fit_obj <- design[, .(sim_obj = apply(.SD, 1, function(x){
-  x$type <- "multivariate"
-  do.call(simulatr, x)
-})), by = .I]
-fit_obj[, c("Train", "Test") := list(
+load_if_not("sim_obj", expression = {
+  set.seed(7777)
+  design %>% 
+    apply(1, function(x) do.call(simulatr, x)) %>% 
+    data.table %>% 
+    setnames("sim_obj") %>% 
+    cbind(design)
+})
+sim_obj[, c("Train", "Test") := list(
   lapply(sim_obj, function(obj) {
     data.frame(x = I(obj$X), y = I(obj$Y))
   }),
@@ -89,53 +100,74 @@ fit_obj[, c("Train", "Test") := list(
     data.frame(x = I(obj$testX), y = I(obj$testY))
   })
 )]
+
+## ---- Writing Matlab file ----------------------------------------
+R.matlab::writeMat(
+  "sim-data.mat", 
+    Train1 = I(sim_obj[1, Train][[1]]),
+    Test1 = I(sim_obj[1, Test][[1]]),
+    Train2 = I(sim_obj[2, Train][[1]]),
+    Test2 = I(sim_obj[2, Test][[1]])
+)
 ```
+
+```{r, fitSimulEnv}
+# matlabr::run_matlab_script('FitSimulEnv.m') #! Important Don't delete it
+senv.fit <- R.matlab::readMat("sim-fit-obj.mat")
+senv <- data.table(senvelope = lapply(senv.fit, function(x) {
+  out <- list(
+    beta = x["beta", , ],
+    Gyhat = x["Gyhat", , ],
+    Gxhat = x["Gxhat", , ]
+  )
+  out <- lapply(out, `dimnames<-`, 
+                list(paste0("compX", 1:10), 
+                     paste0("compY", 1:4)))
+}))
+```
+
 
 ```{r ModelFitting, results='hide'}
-fit_obj[, (mdls) := sapply(mdls, function(mdl){
-  list(lapply(Train, fit_me, tolower(mdl), ncomp = 15))
-})]
+fit <- copy(sim_obj)
+fit <- fit[, .(sim_obj = sim_obj)][, design := 1:.N]
+fit[, ols := lapply(sim_obj, fit_ols)]
+fit[, pcr := lapply(sim_obj, fit_mvr, mvr_fun = "pcr", ncomp = 10)]
+fit[, pls := lapply(sim_obj, fit_mvr, mvr_fun = "plsr", ncomp = 10)]
+fit[, cppls := lapply(sim_obj, fit_mvr, mvr_fun = "cppls", ncomp = 10)]
+fit[, xenv := lapply(sim_obj, fit_env)]
+fit[, yenv := lapply(sim_obj, fit_env, type = "y", ncomp = 3)]
+fit[, senvelope := senv]
 ```
+
 
 ```{r PredictionError, results='hide'}
-pred_err <- map_df(1:nrow(fit_obj), function(row){
-  map_df(mdls, function(mdl){
-    out <- fit_obj[row, c("Train", "Test", mdl), with = F]
-    out[, do.call(get_pred_error, t(.SD))]
-  }, .id = "Model")
-}, .id = "Design")
-pred_err[, Model := mdls[as.numeric(Model)]]
-pred_err[, Design := as.numeric(Design)]
-pred_err <- melt(pred_err, c(1:3, 6),
-                 variable.name = "Estimate",
-                 value.name = "MSEP")
-setnames(pred_err, "response", "Response")
-pred_err[, Estimate := gsub("^t", "T", Estimate)]
+mdls <- names(fit)[-c(1:2)]
+pred_error  <- map_df(mdls, function(mdl){
+  fit[, map2_df(.SD[["sim_obj"]], .SD[[mdl]], ~get_pred_error(.x, .y, mdl)), 
+      by = design, .SDcols = c("sim_obj", mdl)]
+}, .id = "Model")
+pred_error[, Model := mdls[as.numeric(Model)]]
+pred_error[, comp := as.numeric(gsub('[a-zA-Z]', '', comp))]
 ```
 
-```{r pred-plot-fun}
-getPredPlot <- function(dgn, ymin = 0, ymax = 1.5){
-  dta <- pred_err[Design == dgn]
-  ggplot(dta[Model != "OLS"], aes(ncomp, MSEP, color = Model)) +
-    facet_grid(Estimate ~ Response, labeller = label_both) +
-    geom_line() + geom_point(size = 0.5, shape = 4) +
-    theme(legend.position = "top",
-          panel.grid.minor = element_blank()) +
-    coord_cartesian(xlim = c(0, 15), ylim = c(ymin, ymax)) +
-    scale_x_continuous(breaks = seq(0, 15, 3)) +
-    labs(x = "Number of Components",
-         y = "Mean square error of prediction") +
-    geom_hline(data = dta[Model == "OLS" & ncomp != 0],
-               aes(yintercept = MSEP, color = Model)) +
-    scale_color_brewer("Model", palette = "Set1")
-}
+```{r PredictionErrorPropOLS}
+pe.wide <- dcast(pred_error, design + comp ~ Model, value.var = 'pred_err') %>% 
+  .[, ols := ols[1], by = design]
+predProp <- pe.wide[, .SD/pls, by = .(design, comp)] %>% 
+  melt(1:2, variable.name = "Methods", value.name = "PropPredError") %>% 
+  na.omit()
 ```
 
-```{r pred-plot-1, fig.height = 4, fig.cap = "Model comparison based on prediction error for each response.", fig.width = 7, fig.pos = 'H', fig.fullwidth=TRUE}
-getPredPlot(1, ymin = 0.3, ymax = 1.2)
+## Comparison of Estimation Methods based on Prediction error
+Figure-\@ref(fig:prediction-error-plot) shows the performance of different models with components 1 to 10 ...
+
+```{r prediction-error-plot, fig.cap='Model comparison based on test prediction error', fig.asp=0.4, out.width="100%", fig.pos='H'}
+ggplot(pred_error[pred_err <= 2.5], aes(comp, pred_err, color = Model)) +
+  geom_line(aes(group = Model)) +
+  geom_point(size = 1) +
+  facet_grid(.~design, labeller = label_both) +
+  scale_x_continuous(breaks = 1:10) +
+  labs(x = 'Number of Components', y = expression(paste('||', alpha, '||'[F])))
 ```
 
-
-```{r pred-plot-2, fig.height = 4, fig.cap = "Train and test prediction error for different response comparing models under comparison", fig.width = 7, fig.pos = 'H', fig.fullwidth=TRUE}
-getPredPlot(2)
-```
+Some more text and more and more

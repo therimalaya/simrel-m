@@ -1,12 +1,14 @@
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{elsarticle} %review=doublespace preprint=single 5p=2 column
 %%% Begin My package additions %%%%%%%%%%%%%%%%%%%
+%% Other Customizations
 \usepackage[hyphens]{url}
 \usepackage{lineno} % add
+\usepackage{caption}
+
+
+$if(linespacing)$
 \usepackage{setspace}
-$if(spacing)$
-\$spacing$
-$else$
-\singlespacing
+\setstretch{$linespacing$}
 $endif$
 
 $if(mathpazo)$
@@ -16,22 +18,23 @@ $else$
 $endif$
 
 $if(linenumbers)$
-  \linenumbers % turns line numbering on
+\linenumbers % turns line numbering on
 $endif$
+
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \biboptions{sort&compress} % For natbib
-\usepackage{graphicx}
 \usepackage{booktabs} % book-quality tables
-%% Redefines the elsarticle footer
-%\makeatletter
-%\def\ps@pprintTitle{%
-% \let\@oddhead\@empty
-% \let\@evenhead\@empty
-% \def\@oddfoot{\it \hfill\today}%
-% \let\@evenfoot\@oddfoot}
-%\makeatother
+
+% Redefines the elsarticle footer
+\makeatletter
+\def\ps@pprintTitle{%
+  \let\@oddhead\@empty
+  \let\@evenhead\@empty
+  \def\@oddfoot{\it \hfill\today}%
+  \let\@evenfoot\@oddfoot}
+\makeatother
 
 % A modified page layout
 \textwidth 6.75in
@@ -43,33 +46,43 @@ $endif$
 
 \usepackage[T1]{fontenc}
 \usepackage{amssymb,amsmath}
+
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage[utf8]{inputenc}
 $if(euro)$
-  \usepackage{eurosym}
+\usepackage{eurosym}
 $endif$
 \else % if luatex or xelatex
-  \usepackage{fontspec}
-  \ifxetex
-    \usepackage{xltxtra,xunicode}
-  \fi
-  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
-  \newcommand{\euro}{€}
+\usepackage{fontspec}
+\ifxetex
+\usepackage{xltxtra,xunicode}
+\fi
+\defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\newcommand{\euro}{€}
 $if(mainfont)$
-    \setmainfont{$mainfont$}
+\setmainfont{$mainfont$}
 $endif$
 $if(sansfont)$
-    \setsansfont{$sansfont$}
+\setsansfont{$sansfont$}
 $endif$
 $if(monofont)$
-    \setmonofont{$monofont$}
+\setmonofont{$monofont$}
 $endif$
 $if(mathfont)$
-    \setmathfont{$mathfont$}
+\setmathfont{$mathfont$}
 $endif$
 \fi
 % use microtype if available
@@ -79,12 +92,12 @@ $if(geometry)$
 $endif$
 $if(natbib)$
 \usepackage{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+\bibliographystyle{plainnat}
 $endif$
 $if(biblatex)$
 \usepackage{biblatex}
-$if(bibliographys)$
-\bibliography{$bibliographys$}
+$if(biblio-files)$
+\bibliography{$biblio-files$}
 $endif$
 $endif$
 $if(listings)$
@@ -109,18 +122,19 @@ $if(graphics)$
 % are scaled down if they would overflow the margins.
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
-\else\Gin@nat@width\fi}
+  \else\Gin@nat@width\fi}
 \makeatother
 \let\Oldincludegraphics\includegraphics
 \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=\maxwidth]{#1}}
 $endif$
 \ifxetex
-  \usepackage[setpagesize=false, % page size defined by xetex
-              unicode=false, % unicode breaks when used with xetex
-              xetex]{hyperref}
+\usepackage[setpagesize=false, % page size defined by xetex
+unicode=false, % unicode breaks when used with xetex
+xetex]{hyperref}
 \else
-  \usepackage[unicode=true, $if(colorlinks)$colorlinks$endif$]{hyperref}
+\usepackage[unicode=true]{hyperref}
 \fi
+
 $if(strikeout)$
 \usepackage[normalem]{ulem}
 % avoid problems with \sout in headers with hyperref:
@@ -139,10 +153,10 @@ $if(verbatim-in-note)$
 $endif$
 $if(lang)$
 \ifxetex
-  \usepackage{polyglossia}
-  \setmainlanguage{$mainlang$}
+\usepackage{polyglossia}
+\setmainlanguage{$mainlang$}
 \else
-  \usepackage[$lang$]{babel}
+\usepackage[$lang$]{babel}
 \fi
 $endif$
 $for(header-includes)$
@@ -159,21 +173,19 @@ $header-includes$
 $endfor$
 
 
-\usepackage[nomarkers]{endfloat}
+% \usepackage[nomarkers]{endfloat}
 
 %% My customizations %%%%%%%%
 %% Loading Packages
 \usepackage[inline]{enumitem}
 \usepackage{float}
-\usepackage{xfrac}
-\usepackage{tabularx}
 \usepackage{tabularx}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{pgf, tikz}
 \usepackage{amsthm}
-\newtheorem{mydef}{Definition}
 
 %% Custom macros
+\newtheorem{mydef}{Definition}
 \newcommand{\bs}[1]{\ensuremath{\boldsymbol{#1}}}
 \newcommand{\diag}[1]{\mathrm{diag}\left(#1\right)}
 \newcommand{\seq}[3][1]{\ensuremath{#2_{#1},\ldots,\,#2_{#3}}}
@@ -193,20 +205,21 @@ $endfor$
 %% Hyperlink Setup
 \AtBeginDocument{%
   \hypersetup{breaklinks=true,
-              bookmarks=true,
-              pdfauthor={$author-meta$},
-              pdftitle={$title-meta$},
-              colorlinks=true,
-              urlcolor=$if(urlcolor)$$urlcolor$$else$myurlcolor!\myshade!black$endif$,
-              linkcolor=$if(linkcolor)$$linkcolor$$else$mylinkcolor!\myshade!black$endif$,
-              citecolor=$if(citecolor)$$citecolor$$else$mycitecolor!\myshade!black$endif$,
-              pdfborder={0 0 0}}
+    bookmarks=true,
+    pdfauthor={$author-meta$},
+    pdftitle={$title-meta$},
+    colorlinks=true,
+    urlcolor=$if(urlcolor)$$urlcolor$$else$myurlcolor!\myshade!black$endif$,
+    linkcolor=$if(linkcolor)$$linkcolor$$else$mylinkcolor!\myshade!black$endif$,
+    citecolor=$if(citecolor)$$citecolor$$else$mycitecolor!\myshade!black$endif$,
+    pdfborder={0 0 0}}
 }
-% \urlstyle{same}  % don't use monospace font for urls
-% $if(links-as-notes)$
-% % Make links footnotes instead of hotlinks:
-% \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
-% $endif$
+
+\urlstyle{same}  % don't use monospace font for urls
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
 
 %% End my customizations %%%%%%%%%
 
@@ -224,12 +237,13 @@ $endfor$
   $endfor$
 
   \begin{abstract}
-  $abstract$
+    $abstract$
   \end{abstract}
   $if(keywords)$ \begin{keyword} $for(keywords)$$keywords$ \sep $endfor$\end{keyword}$endif$
- \end{frontmatter}
+\end{frontmatter}
 
 $body$
+
 
 $if(natbib)$
 $if(bibliography)$
@@ -246,10 +260,10 @@ $endif$
 $endif$
 $if(biblatex)$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-
 $endif$
+
 $for(include-after)$
 $include-after$
-
 $endfor$
+
 \end{document}

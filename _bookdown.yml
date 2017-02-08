@@ -1,9 +1,12 @@
-output_dir: docs
 book_filename: "Simrel-M"
-split_by: "none"
+repo: https://github.com/therimalaya/simrel-m/
+output_dir: docs
+clean: [packages.bib, bookdown.bbl]
 rmd_files: [
   "index.Rmd", 
   "Includes/01-Introduction.Rmd",
   "Includes/02-StatisticalModel.Rmd",
   "Includes/03-Implementation.Rmd",
+  "Includes/04-appendix.Rmd",
+  "Includes/05-references.Rmd",
   ]

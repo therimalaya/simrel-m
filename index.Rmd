@@ -1,32 +1,33 @@
 ---
 site: bookdown::bookdown_site
-title: simrel-m -- A versatile tool for data simulation for multi-response linear
-  model data based on the concept of relevant subspace of predictor space
+title: '`simrel-m`: A versatile tool for simulating multi-response linear model data'
+data: "`r Sys.Date()`"
 author:
-- affiliation: Norwegian University of Life Sciences
-  name: Raju Rimal
-- affiliation: Norwegian University of Life Sciences
-  name: Trygve Almøy
-- affiliation: Norwegian University of Life Sciences
-  name: Solve Sæbø
+- name: Raju Rimal
+- name: Trygve Almøy
+- name: Solve Sæbø
+  affiliation: Norwegian University of Life Sciences
   footnote: Dep. of Chemistry and Food Science, NMBU, Ås ([nmbu.no](http://nmbu.no))
-bibliography:
-  - ref-db.bib
-  - packages.bib
+bibliography: [ref-db.bib, packages.bib]
 biblio-style: model5-names
 biblio-title: References
-documentclass: elsarticle
 classoption: authoryear
 geometry: margin=1in
-papersize: a4paper
-spacing: onehalfspacing
+papersize: A4
 fontsize: 12pt
 colorlinks: yes
+linespacing: 1.25
 link-citations: yes
 mathpazo: yes
 natbib: yes
 numbersections: no
-linenumber: yes
+monofont: "Source Code Pro"
+lot: no
+lof: no
+monofontoptions: "Scale=0.7"
+github-repo: therimalaya/simrel-m
+url: 'http\://therimalaya.github.io/simrel-m'
+knit: 'bookdown::render_book'
 keywords: |
   \footnotesize `simrel-2.0`, `simrel` package in r, data simulation, linear model, `simrel-m`
 abstract: |
@@ -37,11 +38,4 @@ abstract: |
   The method is implemented as an R-package which serves as an extension of the existing `simrel` packages @saebo2015simrel.
 ---
 
-# Preface {-}
-
-```{r include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
-), 'packages.bib')
-```
+`r if (knitr:::is_html_output()) '# Preface {-}'`

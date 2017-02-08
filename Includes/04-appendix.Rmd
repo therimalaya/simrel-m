@@ -1,0 +1,39 @@
+# Appendix
+
+## Comprehensive Explanation of Notation ##
+
+Following table present a comprehensive notation used in this paper.
+
+Table: (\#tab:notation) Notation used in this study
+
+| Symbol Definition                                                       | Symbols                                                                                         |
+|------------------------------------------------------------------------:|-------------------------------------------------------------------------------------------------|
+| Response                                                                | $y_1$, $y_2$, \ldots, $y_m$                                                                     |
+| Response Components                                                     | $W_1$, $W_2$, \ldots, $W_l$, $W_{l+1}$ \ldots, $W_m$                                            |
+| Number of Predictors relevent for each response components              | $q_1$, $q_2$, \ldots, $q_l$, 0, \ldots, 0                                                       |
+| Number of $\mathbf{X}$ components relevant for each response components | $c_1$, $c_2$, \ldots, $c_l$, 0, \ldots, 0                                                       |
+| Set of position index of relevant components                            | $\mathcal{P}_1$, $\mathcal{P}_2$, \ldots, $\mathcal{P}_l$, $\varnothing$, \ldots, $\varnothing$ |
+| Coefficient of determination for each response components               | $\mathcal{R}_1^2$, $\mathcal{R}_2^2$, \ldots, $\mathcal{R}_l^2$, 0, \ldots, 0                   |
+| Set of extra components index sampled randomly                          | $\mathcal{Q}_1$, $\mathcal{Q}_2$, \ldots, $\mathcal{Q}_l$, $\varnothing$, \ldots, $\varnothing$ |
+
+Some properties and details of terms in Table~\@ref(tab:notation) is explained below:
+
+- Total number of relevant predictors ($\sum{q_i}$) is less than or equals to total number of predictor variables ($p$). Similarly, Total number of relevant predictor components ($\sum{c_i}$) is not greater than the total number of relevant predictor for that response component. In addition, the number of the relevant predictor components for each response never exceed the total number of relevant predictor for that component.
+  \begin{align*}
+    \sum{q_i} \le p, && \sum{c_i} \le \sum{q_i}, && c_i \le q_i, && \text{ and }, &&  n(\mathcal{P}_i) = c_i
+  \end{align*}
+
+- In `simrel-m`, we have assumed that none of the predictor components are relevant for multiple response components, i.e.
+  \begin{equation*}
+    \text{For }i \ne j,\;  n(\mathcal{P}_i \cup \mathcal{P}_j) = 0
+  \end{equation*}
+
+- Since, a predictor components can have lower dimension than predicotrs, i.e., a predictors can be spanned by lower dimensional subspace, the extra components required for orthogonal rotaion during simulation are sampled from the uninformative standard normal variates. 
+  \begin{equation*}
+    n(\mathcal{Q}_i) = q_i - c_i
+  \end{equation*}
+
+- In `simrel-m`, the sampling is done without replacement.
+  \begin{equation*}
+    n(\mathcal{P}_i \cup \mathcal{Q}_i) = q_i \text{ and } (\mathcal{P}_i \cup \mathcal{Q}_i) \cap (\mathcal{P}_j \cup \mathcal{Q}_j) = \varnothing
+  \end{equation*}

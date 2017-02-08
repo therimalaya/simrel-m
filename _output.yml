@@ -1,11 +1,24 @@
 bookdown::gitbook:
-  md_extensions: +latex_macros
   number_sections: no
   css: style.css
+  github-repo: "therimalaya/simrel-m"
+  description: "Simrel-M: A versatile Simulation Tool"
+  url: "http://therimalaya.github.io/simrel-m/"
+  config:
+    toc:
+      collapse: section
+      before: '<li><a href="./index.html">Simrel-M: A versatile Simulation Tool</a></li>'
+      after: '<li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>'
+    download: ['epub', 'mobi']
+    sharing: 
+      github: yes
+      facebook: no
+      twitter: yes
+      google: yes
 bookdown::pdf_book:
+  fig_caption: yes
   citation_package: natbib
   md_extensions: -autolink_bare_uris
   template: template.tex
-  keep_tex: yes
 bookdown::epub_book: default
-rmarkdown::word_document: default
+bookdown::word_document2: default
