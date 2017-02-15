@@ -15,8 +15,10 @@ for ncx = 1:10
     for ncy = 1:4
         d1Out(ncx, ncy) = SimulEnv(Train1.x, Train1.y, ncx, ncy, 1);
         d2Out(ncx, ncy) = SimulEnv(Train2.x, Train2.y, ncx, ncy, 1);
+        % d3Out(ncx, ncy) = SimulEnv(Train3.x, Train3.y, ncx, ncy, 1);
+        % d4Out(ncx, ncy) = SimulEnv(Train4.x, Train4.y, ncx, ncy, 1);
     end
 end
 
 %% Saving fitted Objects
-save('sim-fit-obj.mat', 'd1Out', 'd2Out');
+save('sim-fit-obj.mat', 'd1Out', 'd2Out', 'd3Out', 'd4Out');

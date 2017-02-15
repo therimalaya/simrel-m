@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="simrel-m: A versatile tool for simulating multi-response linear model data" />
+<meta property="og:type" content="book" />
+<meta property="og:url" content="http://therimalaya.github.io/simrel-m" />
+
+
+<meta name="github-repo" content="therimalaya/simrel-m" />
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="simrel-m: A versatile tool for simulating multi-response linear model data">
+
+<title>simrel-m: A versatile tool for simulating multi-response linear model data</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+
+<style type="text/css">
+  p.abstract{
+    text-align: center;
+    font-weight: bold;
+  }
+  div.abstract{
+    margin: auto;
+    width: 90%;
+  }
+</style>
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#preface">Preface</a></li>
+<li class="has-sub"><a href="1-introduction.html#introduction"><span class="toc-section-number">1</span> Introduction</a><ul>
+<li class="has-sub"><a href="1-1-model-specification.html#model-specification"><span class="toc-section-number">1.1</span> Model Specification</a><ul>
+<li><a href="1-1-model-specification.html#an-overview-of-simrel"><span class="toc-section-number">1.1.1</span> An overview of <code>simrel</code></a></li>
+<li><a href="1-1-model-specification.html#model-parameterization"><span class="toc-section-number">1.1.2</span> Model Parameterization</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="2-statistical-model.html#statistical-model"><span class="toc-section-number">2</span> Statistical Model</a><ul>
+<li><a href="2-1-model-parameter-relevant-components.html#model-parameter-relevant-components"><span class="toc-section-number">2.1</span> Model parameterization and relevant components</a></li>
+<li><a href="2-2-data-simulation.html#data-simulation"><span class="toc-section-number">2.2</span> Data Simulation</a></li>
+<li><a href="2-3-rotation-predictor-space.html#rotation-predictor-space"><span class="toc-section-number">2.3</span> Rotation of predictor space</a></li>
+<li><a href="2-4-rotation-response-space.html#rotation-response-space"><span class="toc-section-number">2.4</span> Rotation of response space</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-implementation.html#implementation"><span class="toc-section-number">3</span> Implementation</a><ul>
+<li><a href="3-1-example.html#example"><span class="toc-section-number">3.1</span> Example of model comparison with simulated data from <code>simrel-m</code> package</a></li>
+<li><a href="3-2-comparison-of-estimation-methods-based-on-prediction-error.html#comparison-of-estimation-methods-based-on-prediction-error"><span class="toc-section-number">3.2</span> Comparison of Estimation Methods based on Prediction error</a></li>
+</ul></li>
+<li class="has-sub"><a href="4-appendix.html#appendix"><span class="toc-section-number">4</span> Appendix</a><ul>
+<li><a href="4-1-comprehensive-explanation-of-notation.html#comprehensive-explanation-of-notation"><span class="toc-section-number">4.1</span> Comprehensive Explanation of Notation</a></li>
+</ul></li>
+<li><a href="references.html#references">References</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="model-specification" class="section level2">
+<h2><span class="header-section-number">1.1</span> Model Specification</h2>
+<p>A multi-response multivariate general linear model in equation-<a href="1-1-model-specification.html#eq:model1">(1.2)</a> is conidered as a simulation model.</p>
+<p>Being an extension of <code>simrel</code> package, a quick summary of the procedure used in that package helps to underestand the literature in this paper.</p>
+<div id="an-overview-of-simrel" class="section level3">
+<h3><span class="header-section-number">1.1.1</span> An overview of <code>simrel</code></h3>
+<p><code>Simrel</code> is based on uni-response linear model as in equation~<a href="1-1-model-specification.html#eq:simrel-model">(1.1)</a>.</p>
+<span class="math display" id="eq:simrel-model">\[\begin{equation}
+\tag{1.1}
+  \begin{bmatrix}
+    y \\ \mathbf{X}
+  \end{bmatrix} \sim
+  \mathcal{N}\left(
+    \begin{bmatrix}
+      \mu_y \\ \boldsymbol{\mu_X}
+    \end{bmatrix},
+    \begin{bmatrix}
+      \sigma_y^2               &amp; \boldsymbol{\sigma_{Xy}}^t \\
+      \boldsymbol{\sigma_{Xy}} &amp; \boldsymbol{\Sigma_{XX}}
+    \end{bmatrix}
+  \right)
+\end{equation}\]</span>
+<span class="math display" id="eq:model1">\[\begin{equation}
+  \mathbf{Y} = \boldsymbol{\mu}_Y + \boldsymbol{B}^t (\mathbf{X} - \boldsymbol{\mu}_X) + \boldsymbol{\epsilon}
+  \tag{1.2}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(\mathbf{Y}\)</span> is a response matrix with <span class="math inline">\(m\)</span> response vector <span class="math inline">\(y_1, y_2, \ldots y_m\)</span>, <span class="math inline">\(\mathbf{X}\)</span> is multivariate predictor matrix with <span class="math inline">\(p\)</span> predictor variables and the random error term <span class="math inline">\(\boldsymbol{\epsilon}\)</span> is assumed to follow <span class="math inline">\(N(\boldsymbol{0},\; \boldsymbol{\Sigma}_{Y|X})\)</span>. Equivalently,</p>
+<span class="math display" id="eq:model2">\[\begin{equation}
+  \begin{bmatrix}\mathbf{Y}\\ \mathbf{X}\end{bmatrix} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})
+  = N \left(
+    \begin{bmatrix}
+      \boldsymbol{\mu}_Y \\
+      \boldsymbol{\mu}_X
+    \end{bmatrix},
+    \begin{bmatrix}
+      \boldsymbol{\Sigma}_{YY} &amp; \boldsymbol{\Sigma}_{XY}^t \\
+      \boldsymbol{\Sigma}_{XY} &amp; \boldsymbol{\Sigma}_{XX}
+    \end{bmatrix}
+  \right)
+  \tag{1.3}
+\end{equation}\]</span>
+<p>Here,</p>
+<p><span class="math inline">\(\boldsymbol{\Sigma}_{YY}\)</span> : Covariance Matrix of response <span class="math inline">\(\mathbf{Y}\)</span> without given <span class="math inline">\(\mathbf{X}\)</span><br />
+<span class="math inline">\(\boldsymbol{\Sigma}_{XY}\)</span> : Covariance Matrix between <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span><br />
+<span class="math inline">\(\boldsymbol{\Sigma}_{XX}\)</span> : Covariance matrix of predictor variables <span class="math inline">\(\mathbf{X}\)</span><br />
+<span class="math inline">\(\boldsymbol{\mu}_X\)</span> and <span class="math inline">\(\boldsymbol{\mu}_Y\)</span> : Mean vectors of response <span class="math inline">\(\mathbf{Y}\)</span> and predictor <span class="math inline">\(\mathbf{X}\)</span> respective</p>
+<p>According to the theory of Multivariate Normal Distribution, we can express different parameters interms of <span class="math inline">\(\mathbf{X}\)</span>, <span class="math inline">\(\mathbf{Y}\)</span> and the covariance structure.</p>
+</div>
+<div id="model-parameterization" class="section level3">
+<h3><span class="header-section-number">1.1.2</span> Model Parameterization</h3>
+<p><code>Simrel-m</code> uses model parameterization which is based on the concept of relevant components <span class="citation">I. S. Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span> where it is assumed that a subspace of response <span class="math inline">\(\mathbf{Y}\)</span> is spanned by a subset of eigenvectors corresponding to predictor space. A response space can be thought to have two mutually orthogonal space – relevant and irrelevant. Here the relevant space of response matrix is termed as response components, and we assume that each response component is spanned by an exclusive subset of predictor variables. In this way we can construct a set of predictor variables which has non-zero regression coefficients. This also enables user to have uninformative predictors which can be detected during variable selection procedure. In addition, user can control signal-to-noise ratio for each response components with a vector of population coefficient of determination <span class="math inline">\(\rho_1, \ldots, \rho_q\)</span>. Further, the collinearity between predictor variables can also be controlled by a factor <span class="math inline">\(\gamma\)</span> which guides the decay pattern of eigenvalue of <span class="math inline">\(\mathbf{X}\)</span> matrix. <span class="citation">I. S. Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span> showed that if the direction of large variablity (i.e., component corresponding to large eigenvalues) are also relevant relevant predictor space, prediction is relatively easy. In contrast, if the relevant predictors are on the direction of low varibility, prediction becomes difficult.</p>
+<p><em>Parameter Definition:</em></p>
+<p>Before continuing any further, it is necessary to define the parameters used here,</p>
+<table>
+<caption><span id="tab:parameters">Table 1.1: </span> Parameters for simulation used in this study</caption>
+<colgroup>
+<col width="15%" />
+<col width="84%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(n\)</span></td>
+<td>number of observations</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(p\)</span></td>
+<td>number of predictors</td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(q\)</span></td>
+<td>numbers of relevant predictors for each response components</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(l\)</span></td>
+<td>number of response components</td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(m\)</span></td>
+<td>number of response</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(\mathcal{P}\)</span></td>
+<td>set of position index of relevant components for each response components</td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(\gamma\)</span></td>
+<td>degree of collinearity, factor that control the decrease of eigenvalue of <span class="math inline">\(\mathbf{X}\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(\mathcal{S}\)</span></td>
+<td>set of index of response components for simulation orthogonal rotation to simulation <span class="math inline">\(m\)</span> responses</td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(\mathcal{R}^2\)</span></td>
+<td>population coefficient determination for each response components</td>
+</tr>
+</tbody>
+</table>
+<p>In the following section, some of these parameters are discussed in detail. The discussion has considered random <span class="math inline">\(\mathbf{X}\)</span> regression model with <span class="math inline">\(m\)</span> response as given in equation~<a href="1-1-model-specification.html#eq:model1">(1.2)</a>.</p>
+<p><em>Parameters Explanation and Notation Used:</em></p>
+<p>Let <span class="math inline">\(m\)</span> responses are spanned completely by <span class="math inline">\(l\)</span> response components. These <span class="math inline">\(l\)</span> response components are combined with <span class="math inline">\(m-l\)</span> standard normal vectors by user defined criteria to get <span class="math inline">\(m\)</span> responses after successive orthogonal transformation. Out of <span class="math inline">\(q\)</span>, let <span class="math inline">\(q_j,\; j = 1, \ldots l\)</span> be the number of predictors that is relevant for response <span class="math inline">\(j\)</span>. Let <span class="math inline">\(c_j\)</span> be the number of eigenvectors/ components that completely span <span class="math inline">\(j^\text{th}\)</span> predictor space containing <span class="math inline">\(q_j\)</span> number of predictors. Further, the position of these components for <span class="math inline">\(j^\text{th}\)</span> response be in index set <span class="math inline">\(\mathcal{P}_j\)</span>. Here it is also assumed that the eigenvalues corresponding to <span class="math inline">\(\mathbf{X}\)</span> declines successively such that <span class="math inline">\(\lambda_i, i = 1, \ldots, p\)</span> such that <span class="math inline">\(\lambda_i \ge \lambda_k, i &gt; k\)</span> are the eigen values of <span class="math inline">\(\mathbf{X}\)</span>. The position index of eigenvalues corresponding to response <span class="math inline">\(j\)</span> is in the set <span class="math inline">\(\mathcal{P}_j\)</span>. We assume that the index are ordered within each sets so that, <span class="math inline">\(j^\text{th}\)</span> index set contains <span class="math inline">\(c_j\)</span> number of components. The eigenvalues corresponding to these components in <span class="math inline">\(\mathcal{P}_j\)</span> set is <span class="math inline">\(\lambda_{\mathcal{P}_{jk}}, k = 1, \ldots c_j\)</span> such that <span class="math inline">\(\lambda_{\mathcal{P}_{jk}} &gt; \lambda_{\mathcal{P}_{jk&#39;}}\)</span> for <span class="math inline">\(k &gt; k&#39;\)</span>. In <code>Simrel-M</code> package, we refer this position by <code>relpos</code> argument. In addition, we suppose that the relevant components are exclusive for each response.</p>
+<p><em>An Example:</em></p>
+<p>Suppose we have a situation like,</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="right">Number of response</td>
+<td align="left"><span class="math inline">\((m)\)</span></td>
+<td align="center">=</td>
+<td align="center">5</td>
+</tr>
+<tr class="even">
+<td align="right">Number of response components</td>
+<td align="left"><span class="math inline">\((l)\)</span></td>
+<td align="center">=</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="right">Position of relevant component for response 1</td>
+<td align="left"><span class="math inline">\((\mathcal{P}_1)\)</span></td>
+<td align="center">=</td>
+<td align="center"><span class="math inline">\(\left\{ 1, 3 \right\}\)</span></td>
+</tr>
+<tr class="even">
+<td align="right">Position of relevant component for response 2</td>
+<td align="left"><span class="math inline">\((\mathcal{P}_2)\)</span></td>
+<td align="center">=</td>
+<td align="center"><span class="math inline">\(\left\{ 2, 4, 5 \right\}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="right">Position of relevant component for response 3</td>
+<td align="left"><span class="math inline">\((\mathcal{P}_3)\)</span></td>
+<td align="center">=</td>
+<td align="center"><span class="math inline">\(\left\{ 6 \right\}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>such that, <span class="math inline">\(\lambda_1 &gt; \lambda_3\)</span> in <span class="math inline">\(\mathcal{P}_1\)</span> and <span class="math inline">\(\lambda_2 &gt; \lambda_4 &gt; \lambda_5\)</span> in set <span class="math inline">\(\mathcal{P}_2\)</span>. Here, the component (eigenvector) 1 and 3 are relevant for response component 1, component 2, 4 and 5 are relevant for response component 2 and component 6 is relevant for response component 3.</p>
+<p>In <code>Simrel-M</code>, we have assumed that the eigenvalues are decreasing exponentially by factor <span class="math inline">\(\gamma\)</span> and the largest eigenvalue is 1, i.e. for <span class="math inline">\(\gamma &gt; 0\)</span>, <span class="math inline">\(\lambda_i = \text{e}^{-\gamma(i-1)}\)</span> for <span class="math inline">\(i = 1, 2, \ldots p\)</span>.</p>
+
+</div>
+</div>
+<!-- </div> -->
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-helland1994comparison">
+<p>Helland, Inge S, and Trygve Almøy. 1994. “Comparison of Prediction Methods When Only a Few Components Are Relevant.” <em>Journal of the American Statistical Association</em> 89 (426). Taylor &amp;amp; Francis Group: 583–91.</p>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="1-introduction.html"><button class="btn btn-default">Previous</button></a>
+<a href="2-statistical-model.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>
