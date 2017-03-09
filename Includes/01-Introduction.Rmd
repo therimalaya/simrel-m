@@ -27,11 +27,30 @@ Based on random regression model in equation~\@ref(eq:model1), we discuss some o
 Out of $p$ predictor variables only $q$ of them are relevant and has non-zero regression coefficients $(\beta_{ij} \ne 0)$. If $\boldsymbol{e}_i, \; i = 1, 2, \ldots, p$ be the eigenvectors corresponding to $\mathbf{X}$, then, for some vector of $\boldsymbol{\eta}_i, i = 1, \ldots, p$, 
 
 \begin{equation}
-\mathbf{B} = \begin{bmatrix} \boldsymbol{\eta}_1 & \ldots & \boldsymbol{\eta}_p \end{bmatrix} \begin{bmatrix} \mathbf{e}_1 \\ \vdots \\ \mathbf{e}_p \end{bmatrix}
+\mathbf{B} = \left(\beta_{ij}\right) = 
+  \begin{bmatrix} 
+    \boldsymbol{\eta}_{11} & \ldots & \boldsymbol{\eta}_{1p} \\
+    \vdots & \ddots & \vdots \\
+    \boldsymbol{\eta}_{m1} & \ldots & \boldsymbol{\eta}_{mp}
+  \end{bmatrix} 
+  \begin{bmatrix} 
+    \mathbf{e}_{11} & \vdots & \mathbf{e}_{1p} \\
+    \vdots & \ddots & \vdots \\
+    \mathbf{e}_{p1} & \vdots & \mathbf{e}_{pp}
+  \end{bmatrix} = \mathcal{G}\mathbf{E}
 (\#eq:beta-eigenvector-relation)
 \end{equation}
 
+The number of terms in equation~\@ref(eq:beta-eigenvector-relation) could reduce because of two reasons,
 
+a) Some elements in $\mathcal{G}$ are zero, i.e. some $\eta_{ij}$ are zero for response $j$
+b) There are coinciding eigenvalues of $\Sigma_{xx}$ such that it is enough to have one eigenvector in equation~\@ref(eq:beta-eigenvector-relation).
+
+Let there are $k$ number predictor components that are relevant for any of the response. The $\mathcal{P}$ contains the indices of these position for each response components.
+
+Thus we can say that the first row of $\mathbf{B}$ contains $k_1$ non-zero values corresponding to first response components. The second row contains $k_2$ non-zero values corresponding to second response components and so on such that $\sum_j{k_j} = k$, the total number of components of $\mathbf{X}$ that are relevant for any of the response.
+
+---
 Let us consider a random regression model in equation~\@ref(eq:model1) as our point of departure.
 
 \begin{equation}

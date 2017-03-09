@@ -151,9 +151,27 @@
 <p>Based on random regression model in equation~<a href="introduction.html#eq:model1">(2)</a>, we discuss some of these parameters in details.</p>
 <p>Out of <span class="math inline">\(p\)</span> predictor variables only <span class="math inline">\(q\)</span> of them are relevant and has non-zero regression coefficients <span class="math inline">\((\beta_{ij} \ne 0)\)</span>. If <span class="math inline">\(\boldsymbol{e}_i, \; i = 1, 2, \ldots, p\)</span> be the eigenvectors corresponding to <span class="math inline">\(\mathbf{X}\)</span>, then, for some vector of <span class="math inline">\(\boldsymbol{\eta}_i, i = 1, \ldots, p\)</span>,</p>
 <span class="math display" id="eq:beta-eigenvector-relation">\[\begin{equation}
-\mathbf{B} = \begin{bmatrix} \boldsymbol{\eta}_1 &amp; \ldots &amp; \boldsymbol{\eta}_p \end{bmatrix} \begin{bmatrix} \mathbf{e}_1 \\ \vdots \\ \mathbf{e}_p \end{bmatrix}
+\mathbf{B} = \left(\beta_{ij}\right) = 
+  \begin{bmatrix} 
+    \boldsymbol{\eta}_{11} &amp; \ldots &amp; \boldsymbol{\eta}_{1p} \\
+    \vdots &amp; \ddots &amp; \vdots \\
+    \boldsymbol{\eta}_{m1} &amp; \ldots &amp; \boldsymbol{\eta}_{mp}
+  \end{bmatrix} 
+  \begin{bmatrix} 
+    \mathbf{e}_{11} &amp; \vdots &amp; \mathbf{e}_{1p} \\
+    \vdots &amp; \ddots &amp; \vdots \\
+    \mathbf{e}_{p1} &amp; \vdots &amp; \mathbf{e}_{pp}
+  \end{bmatrix} = \mathcal{G}\mathbf{E}
 \tag{1}
 \end{equation}\]</span>
+<p>The number of terms in equation~<a href="introduction.html#eq:beta-eigenvector-relation">(1)</a> could reduce because of two reasons,</p>
+<ol style="list-style-type: lower-alpha">
+<li>Some elements in <span class="math inline">\(\mathcal{G}\)</span> are zero, i.e. some <span class="math inline">\(\eta_{ij}\)</span> are zero for response <span class="math inline">\(j\)</span></li>
+<li>There are coinciding eigenvalues of <span class="math inline">\(\Sigma_{xx}\)</span> such that it is enough to have one eigenvector in equation~<a href="introduction.html#eq:beta-eigenvector-relation">(1)</a>.</li>
+</ol>
+<p>Let there are <span class="math inline">\(k\)</span> number predictor components that are relevant for any of the response. The <span class="math inline">\(\mathcal{P}\)</span> contains the indices of these position for each response components.</p>
+<p>Thus we can say that the first row of <span class="math inline">\(\mathbf{B}\)</span> contains <span class="math inline">\(k_1\)</span> non-zero values corresponding to first response components. The second row contains <span class="math inline">\(k_2\)</span> non-zero values corresponding to second response components and so on such that <span class="math inline">\(\sum_j{k_j} = k\)</span>, the total number of components of <span class="math inline">\(\mathbf{X}\)</span> that are relevant for any of the response.</p>
+<hr />
 <p>Let us consider a random regression model in equation~<a href="introduction.html#eq:model1">(2)</a> as our point of departure.</p>
 <span class="math display" id="eq:model1">\[\begin{equation}
   \mathbf{Y} = \boldsymbol{\mu}_Y + \mathbf{B}^t (\mathbf{X} - \boldsymbol{\mu}_X) + \boldsymbol{\epsilon}
