@@ -1,5 +1,6 @@
 book_filename: "Simrel-M"
 repo: https://github.com/therimalaya/simrel-m/
+rmd_subdir: yes
 output_dir: docs
 clean: [packages.bib, bookdown.bbl]
 rmd_files: [
