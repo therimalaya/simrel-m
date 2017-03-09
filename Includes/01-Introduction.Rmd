@@ -1,4 +1,4 @@
-# Introduction
+## Introduction ##
 
 Technological advancement has opened a door for complex and sophisticated scientific experiments that was not possible before. Due to this change, enormous amounts of raw data are generated which contains massive information but difficult to excavate. Finding information and performing scientific research on these raw data has now become another problem. In order to tackle this situation new methods are being developed. However, before implementing any method, it is essential to test its performance. Often, researchers use simulated data for the purpose which itself is a time-consuming process. The main focus of this paper is to present a simulation method, along with an r-package called `simrel-m`, that is versatile in nature and yet simple to use. 
 
@@ -24,10 +24,10 @@ Table: (#tab:parameters) Parameters for simulation used in this study
 
 Based on random regression model in equation~\@ref(eq:model1), we discuss some of these parameters in details. 
 
-Out of $p$ predictor variables only $q$ of them are relevant and has non-zero regression coefficients $(\beta_{ij} \ne 0)$. If $\boldsymbol{e}_i, \; i = 1, 2, \ldots, p$ be the eigenvectors corresponding to $\mathbf{X}$, then, for some vector of $\boldsymbol{\eta}_i, i = 1, \ldots, p$, 
+Out of $p$ predictor variables only $q$ of them are relevant and has non-zero regression coefficients. If $\boldsymbol{e}_i, \; i = 1, 2, \ldots, p$ be the eigenvectors corresponding to $\mathbf{X}$, then, for some vector of $\boldsymbol{\eta}_j, j = 1, \ldots, m$ for $m$ response variables, 
 
-\begin{equation}
-\mathbf{B} = \left(\beta_{ij}\right) = 
+\begin{align}
+\mathbf{B} = \left(\beta_{ij}\right) &= 
   \begin{bmatrix} 
     \boldsymbol{\eta}_{11} & \ldots & \boldsymbol{\eta}_{1p} \\
     \vdots & \ddots & \vdots \\
@@ -37,20 +37,27 @@ Out of $p$ predictor variables only $q$ of them are relevant and has non-zero re
     \mathbf{e}_{11} & \vdots & \mathbf{e}_{1p} \\
     \vdots & \ddots & \vdots \\
     \mathbf{e}_{p1} & \vdots & \mathbf{e}_{pp}
-  \end{bmatrix} = \mathcal{G}\mathbf{E}
+  \end{bmatrix} \\ &= 
+  \begin{bmatrix}\boldsymbol{\eta}_{1} \\ \vdots \\ \boldsymbol{\eta}_{m}\end{bmatrix}_{m \times p}
+  \begin{bmatrix}\mathbf{e}_{1} & \ldots & \mathbf{e}_{p}\end{bmatrix}_{p \times p} 
 (\#eq:beta-eigenvector-relation)
-\end{equation}
+\end{align}
 
-The number of terms in equation~\@ref(eq:beta-eigenvector-relation) could reduce because of two reasons,
+The number of terms in equation~\@ref(eq:beta-eigenvector-relation) may be reduced by two mechanisms:
 
-a) Some elements in $\mathcal{G}$ are zero, i.e. some $\eta_{ij}$ are zero for response $j$
-b) There are coinciding eigenvalues of $\Sigma_{xx}$ such that it is enough to have one eigenvector in equation~\@ref(eq:beta-eigenvector-relation).
+a) Some elements in $\boldsymbol{\eta}_j, j = 1, \ldots m$ are zero
+b) There are coinciding eigenvalues of $\boldsymbol{Sigma}_{xx}$ such that it is enough to have one eigenvector in equation~\@ref(eq:beta-eigenvector-relation).
 
-Let there are $k$ number predictor components that are relevant for any of the response. The $\mathcal{P}$ contains the indices of these position for each response components.
+Let there are $k$ number predictor components that are relevant for any of the response. The $\mathcal{P}$ contains the indices of these position for each response components. Here the order of components of predictor is defined by a decreasing set of eigenvalues such that $\lambda_1 \ge \ldots \ge \lambda_p > 0$. In `simrel-m` package, these set of position is referred as `relpos`. For example, if $\mathcal{P} = {{1, 2}, {3, 5}, {4}}$ then we  can say that there are 3 informative space in response such that components 1 and 2 of predictor variable is relevant for first response component; component 3 and 5 of predictor are relevant for second response component and fourth predictor component is relevant for third response component. In addition, $\lambda_1 \ge \ldots \ge \lambda_5$ are relevant for some response.
 
-Thus we can say that the first row of $\mathbf{B}$ contains $k_1$ non-zero values corresponding to first response components. The second row contains $k_2$ non-zero values corresponding to second response components and so on such that $\sum_j{k_j} = k$, the total number of components of $\mathbf{X}$ that are relevant for any of the response.
+In `simrel-m`, these 3 response components are combined with non-informative vectors for desired number of response variables. This is referred as $\mathcal{S}$ and `ypos` in `simrel-m` package. If $\mathcal{S} = {{1, 4}, {2}, {3, 5}}$ then we can say that there are 5 response variables which has 3 dimensional informative space. Since response components 1, 2 and 3 are informative, from the indices of $\mathcal{S}$, first response component is combined with non-informative fourth component and third informative component is combined with fifth non-informative component. In this way, we will obtain a set of 5 response variables for which predictor component 1 and 2 will be relevant for response 1 and 4; predictor component 3 and 5 will be relevant for response 2 and predictor component 4 will be relevant for response 3 and 5.
+
+For simplification, an assumption is made that all $p$ eigenvalues of $\boldsymbol{\Sigma}_{XX}$ decrease exponentially as $e^{-\gamma (i - 1)}$ for $i = 1, \ldots p$ and some positive constant $\gamma$. This way, the $p$ eigenvalues depends on single variables $\gamma$ such that when $\gamma$ is large, eigenvalues decreases sharply referring high degree of multi-collinearity in predictor variables.
+
+Here we have assumed that the relevant components are know, as in @helland1994comparison, which is rare in practice. But in comparative studies of prediction methods, this can help to explain interesting cases.
 
 ---
+
 Let us consider a random regression model in equation~\@ref(eq:model1) as our point of departure.
 
 \begin{equation}
@@ -59,13 +66,13 @@ Let us consider a random regression model in equation~\@ref(eq:model1) as our po
 \end{equation}
 where $\mathbf{Y}$ is a response matrix with $m$ response variables $y_1, y_2, \ldots y_m$ with mean vector of $\boldsymbol{\mu}_Y$; $\mathbf{X}$ is vector of $p$ predictor variables and the random error term $\boldsymbol{\epsilon}$ is assumed to follow $N(\boldsymbol{0},\; \boldsymbol{\Sigma}_{Y|X})$. In addition, we assume equation~\@ref(eq:model1) as a random regression model where $\mathbf{X} \sim N\left(\boldsymbol{\mu}_X, \boldsymbol{\Sigma}_{XX}\right)$ independent of $\boldsymbol{\epsilon}$.
 
-## Model Specification
+### Model Specification ###
 
 A multi-response multivariate general linear model in equation-\@ref(eq:model1) is conidered as a simulation model.
 
 Being an extension of `simrel` package, a quick summary of the procedure used in that package  helps to underestand the literature in this paper.
 
-### An overview of `simrel`
+#### An overview of `simrel` ####
 
 `Simrel` is based on uni-response linear model as in equation~\@ref(eq:simrel-model).
 
@@ -111,7 +118,7 @@ $\boldsymbol{\mu}_X$ and $\boldsymbol{\mu}_Y$ : Mean vectors of response $\mathb
 
 According to the theory of Multivariate Normal Distribution, we can express different parameters interms of $\mathbf{X}$, $\mathbf{Y}$ and the covariance structure.
 
-### Model Parameterization
+#### Model Parameterization ####
 
 
 
