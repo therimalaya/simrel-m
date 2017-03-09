@@ -3,6 +3,7 @@ bookdown::gitbook:
   number_sections: no
   css: style.css
   github-repo: "therimalaya/simrel-m"
+  edit: https://github.com/therimalaya/simrel-m/edit/master/Includes/%s
   description: "Simrel-M: A versatile Simulation Tool"
   url: "http://therimalaya.github.io/simrel-m/"
   config:
