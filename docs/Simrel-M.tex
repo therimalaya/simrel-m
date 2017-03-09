@@ -319,13 +319,13 @@ equation\textasciitilde{}\eqref{eq:model1}, we discuss some of these
 parameters in details.
 
 Out of \(p\) predictor variables only \(q\) of them are relevant and has
-non-zero regression coefficients \((\beta_j \ne 0)\). If
-\(\boldsymbol{e}_j, \; j = 1, 2, \ldots, p\) be the eigenvectors
-corresponding to \(\mathbf{X}\), then, for some value of
-\(\mathcal{H}\),
+non-zero regression coefficients \((\beta_{ij} \ne 0)\). If
+\(\boldsymbol{e}_i, \; i = 1, 2, \ldots, p\) be the eigenvectors
+corresponding to \(\mathbf{X}\), then, for some vector of
+\(\boldsymbol{\eta}_i, i = 1, \ldots, p\),
 
 \begin{equation}
-\mathbf{B} = \mathcal{H} \mathbf{E} 
+\mathbf{B} = \begin{bmatrix} \boldsymbol{\eta}_1 & \ldots & \boldsymbol{\eta}_p \end{bmatrix} \begin{bmatrix} \mathbf{e}_1 \\ \vdots \\ \mathbf{e}_p \end{bmatrix}
 \label{eq:beta-eigenvector-relation}
 \end{equation}
 
