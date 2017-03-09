@@ -5,8 +5,15 @@ clean: [packages.bib, bookdown.bbl]
 rmd_files: [
   "index.Rmd", 
   "Includes/01-Introduction.Rmd",
-  "Includes/02-StatisticalModel.Rmd",
-  "Includes/03-Implementation.Rmd",
-  "Includes/04-appendix.Rmd",
+  # "Includes/02-StatisticalModel.Rmd",
+  # "Includes/03-Implementation.Rmd",
+  # "Includes/04-appendix.Rmd",
   "Includes/05-references.Rmd",
   ]
+language:
+  label:
+    fig: "Figure "
+    tab: "Table "
+  ui:
+    edit: "Edit"
+    chapter_name: "Chapter "

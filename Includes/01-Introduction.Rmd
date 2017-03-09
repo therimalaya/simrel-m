@@ -1,28 +1,45 @@
 # Introduction
 
-_General aspects_
+Technological advancement has opened a door for complex and sophisticated scientific experiments that was not possible before. Due to this change, enormous amounts of raw data are generated which contains massive information but difficult to excavate. Finding information and performing scientific research on these raw data has now become another problem. In order to tackle this situation new methods are being developed. However, before implementing any method, it is essential to test its performance. Often, researchers use simulated data for the purpose which itself is a time-consuming process. The main focus of this paper is to present a simulation method, along with an r-package called `simrel-m`, that is versatile in nature and yet simple to use. 
 
-Technological advancement has opened a door for complex and sophisticated scientific experiments that was not possible before. Due to this change, enormous amounts of raw data are generated which contains massive information but difficult to excavate. Finding information and performing scientific research on these raw data is now becoming another problem. In order to tackle this situation new methods are being developed. However, before implementing any methods, it is essential to test its performance. Often, researchers use simulated data for the purpose which itself is a time-consuming process. The main focus of this paper is to present a simulation method, along with an r-package called `simrel-m`, that is versatile in nature and yet simple to use. 
+The simulation method we are discussing here is based on principal of relevant space for prediction [@helland1994comparison]  which assumes that there exists a subspace in the complete space of response variables that is spanned by a subset of eigenvectors of predictor variables. The r-package based on this method lets user to specify various population properties such as  which components of predictors $(\mathbf{X})$ are relevant for a component of responses $\mathbf{Y}$ and how the eigenvalues of $\mathbf{X}$ decreases. This enables the possibility to construct data for evaluating estimation methods and methods developed for variable selection. 
 
-The method is based on principal of relevant space for prediction which assumes that there exists a subspace in the complete space of responses that is spanned by a subset of eigenvectors of predictor variables. The method and the r-package based on this principle not only has ability to simulate wide range of multi-response linear model data but also let researcher to specify which components of predictors $(\mathbf{X})$ are relevant for a component of responses $\mathbf{Y}$. This enables the possibility to construct data for evaluating methods developed for variable selection. 
+Among several literatures in simulation (<span style="color:red;">\color{red}`which literatures`</span>), @ripley2009stochastic has exhaustively discussed the topic. In addition, many literatures (<span style="color:red;">\color{red}`which literatures`</span>) are available on studies which has implemented simulated data in order to investigate new estimation methods and prediction strategy [see: @cook2015simultaneous; @cook2013envelopes; @helland2012near]. However, most of the simulations in these studies is developed to address their specific problem. A systematic tool for simulating linear model data with single response, which could serve as a general tool for all such comparisons, was presented in @saebo2015simrel and as r-package `simrel`. This paper extends `simrel` in order to simulate linear model data with multivariate response with an r-package `simrel-m`.
 
-A vast literature on simulation is present but most of them are developed to address the specific problems their study was dealing with. @saebo2015simrel has presented a generic tool that is capable of simulating linear model data as an r-package `simrel`. This paper extends the methods to simulate multivariate response.
+The r-package `simrel-m` uses model parameterization which is based on the concept of relevant components @helland1994comparison where it is assumed that a subspace of response $\mathbf{Y}$ is spanned by a subset of eigenvectors corresponding to predictor space. A response space can be thought to have two mutually orthogonal space -- relevant and irrelevant. Here the space of response matrix for which the predictors are relevant is termed as response components, and we assume that each response component is spanned by an exclusive subset of predictor variables. In this way we can construct a set of predictor variables which has non-zero regression coefficients. This also enables user to have uninformative predictors which can be detected during variable selection procedure. In addition, user can control signal-to-noise ratio for each response components with a vector of population coefficient of determination $\boldsymbol{\rho}^2$. Further, the collinearity between predictor variables can also be adjusted by a factor $\gamma$ which controls decay factor of eigenvalue of $\mathbf{X}$ matrix. @helland1994comparison showed that if the direction of large variability (i.e., component corresponding to large eigenvalues) are also relevant relevant predictor space, prediction is relatively easy. In contrast, if the relevant predictors are on the direction of low variability, prediction becomes difficult. Table~\@ref(tab:parameters) shows all the parameters that a user can specify in `simrel-m`.
 
-_Application of `simrel-m`_
+Table: (#tab:parameters) Parameters for simulation used in this study
 
-The simple interface of `simrel-m` for sophisticated simulation opens for numerous applications in various disciplines among which some of them are discussed below.
+| Parameters             | Description                                                                                  |
+| :--------------------: | -------------------------------------------------------------------------------------------- |
+| $n$                    | number of observations                                                                       |
+| $p$                    | number of predictor variables                                                                |
+| $q$                    | numbers of relevant predictors for each latent component of response variables               |
+| $l$                    | number of informative latent component of response variables (response components)           |
+| $m$                    | number of response variables                                                                 |
+| $\gamma$               | degree of collinearity (factor that control the decrease of eigenvalue of $\mathbf{X}$)      |
+| $\mathcal{P}$          | position index of relevant predictor components for each response components                 |
+| $\mathcal{S}$          | position index of response components to combine relevant and irrelevant response variable   |
+| $\boldsymbol{\rho}^2$  | population coefficient determination for each response components                            |
 
-_Educational Purpose:_
-  : Explaining multivariate statistics and edify people is a difficult and strategic task. Instructors spend lots of time just to find suitable datasets for explaining some issue. For instance --  
-  
+Based on random regression model in equation~\@ref(eq:model1), we discuss some of these parameters in details. 
 
-_Model and methods testing:_
-  : Imagine a situation where a researcher is collecting enormous amount of data which takes both time and money. Before going into extensive sampling, a pilot project is started and samples were collected using various techniques. Each of them are modelled with different estimation methods. The researcher would like to compare the sampling methods or estimation procedures that will the suitable for the final project. A simulated dataset based on the pilot project may help to identify the most appropriate sampling methods or estimation procedures.
-  
-  
-_Understanding and developing multivariate statistics:_
-  : New estimation methods are being developed to address mordern and complicated situations. A new method or technique could be difficult to understand. For example, the envelope model @cook2015foundations, a recent estimation technique based on maximum likelihood, attempts to find a response envelope (relevant subspace) that contains all the information that the corresponding predictors can explain. Here, one can make use of `simrel-m` to simulate data with underlying informative response space. In addition, new methods such as CPLS based on PLS are steadily being developed. Understanding population latent structure enables assessment of such models.
-  
+Out of $p$ predictor variables only $q$ of them are relevant and has non-zero regression coefficients $(\beta_{ij} \ne 0)$. If $\boldsymbol{e}_i, \; i = 1, 2, \ldots, p$ be the eigenvectors corresponding to $\mathbf{X}$, then, for some vector of $\boldsymbol{\eta}_i, i = 1, \ldots, p$, 
+
+\begin{equation}
+\mathbf{B} = \begin{bmatrix} \boldsymbol{\eta}_1 & \ldots & \boldsymbol{\eta}_p \end{bmatrix} \begin{bmatrix} \mathbf{e}_1 \\ \vdots \\ \mathbf{e}_p \end{bmatrix}
+(\#eq:beta-eigenvector-relation)
+\end{equation}
+
+
+Let us consider a random regression model in equation~\@ref(eq:model1) as our point of departure.
+
+\begin{equation}
+  \mathbf{Y} = \boldsymbol{\mu}_Y + \mathbf{B}^t (\mathbf{X} - \boldsymbol{\mu}_X) + \boldsymbol{\epsilon}
+  (\#eq:model1)
+\end{equation}
+where $\mathbf{Y}$ is a response matrix with $m$ response variables $y_1, y_2, \ldots y_m$ with mean vector of $\boldsymbol{\mu}_Y$; $\mathbf{X}$ is vector of $p$ predictor variables and the random error term $\boldsymbol{\epsilon}$ is assumed to follow $N(\boldsymbol{0},\; \boldsymbol{\Sigma}_{Y|X})$. In addition, we assume equation~\@ref(eq:model1) as a random regression model where $\mathbf{X} \sim N\left(\boldsymbol{\mu}_X, \boldsymbol{\Sigma}_{XX}\right)$ independent of $\boldsymbol{\epsilon}$.
+
 ## Model Specification
 
 A multi-response multivariate general linear model in equation-\@ref(eq:model1) is conidered as a simulation model.
@@ -49,12 +66,7 @@ Being an extension of `simrel` package, a quick summary of the procedure used in
   \right)
 \end{equation}
 
-\begin{equation}
-  \mathbf{Y} = \boldsymbol{\mu}_Y + \boldsymbol{B}^t (\mathbf{X} - \boldsymbol{\mu}_X) + \boldsymbol{\epsilon}
-  (\#eq:model1)
-\end{equation}
-
-where $\mathbf{Y}$ is a response matrix with $m$ response vector $y_1, y_2, \ldots y_m$, $\mathbf{X}$ is multivariate predictor matrix with $p$ predictor variables and the random error term $\boldsymbol{\epsilon}$ is assumed to follow $N(\boldsymbol{0},\; \boldsymbol{\Sigma}_{Y|X})$. Equivalently,
+ Equivalently,
 
 \begin{equation}
   \begin{bmatrix}\mathbf{Y}\\ \mathbf{X}\end{bmatrix} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})
@@ -82,25 +94,12 @@ According to the theory of Multivariate Normal Distribution, we can express diff
 
 ### Model Parameterization
 
-`Simrel-m` uses model parameterization which is based on the concept of relevant components @helland1994comparison where it is assumed that a subspace of response $\mathbf{Y}$ is spanned by a subset of eigenvectors corresponding to predictor space. A response space can be thought to have two mutually orthogonal space -- relevant and irrelevant. Here the relevant space of response matrix is termed as response components, and we assume that each response component is spanned by an exclusive subset of predictor variables. In this way we can construct a set of predictor variables which has non-zero regression coefficients. This also enables user to have uninformative predictors which can be detected during variable selection procedure. In addition, user can control signal-to-noise ratio for each response components with a vector of population coefficient of determination $\rho_1, \ldots, \rho_q$. Further, the collinearity between predictor variables can also be controlled by a factor $\gamma$ which guides the decay pattern of eigenvalue of $\mathbf{X}$ matrix. @helland1994comparison showed that if the direction of large variablity (i.e., component corresponding to large eigenvalues) are also relevant relevant predictor space, prediction is relatively easy. In contrast, if the relevant predictors are on the direction of low varibility, prediction becomes difficult.
+
 
 _Parameter Definition:_
 
 Before continuing any further, it is necessary to define the parameters used here,
 
-Table: (#tab:parameters) Parameters for simulation used in this study
-
-| Parameters      | Description                                                                                        |
-|:---------------:|----------------------------------------------------------------------------------------------------|
-| $n$             | number of observations                                                                             |
-| $p$             | number of predictors                                                                               |
-| $q$             | numbers of relevant predictors for each response components                                        |
-| $l$             | number of response components                                                                      |
-| $m$             | number of response                                                                                 |
-| $\mathcal{P}$   | set of position index of relevant components for each response components                          |
-| $\gamma$        | degree of collinearity, factor that control the decrease of eigenvalue of $\mathbf{X}$             |
-| $\mathcal{S}$   | set of index of response components for simulation orthogonal rotation to simulation $m$ responses |
-| $\mathcal{R}^2$ | population coefficient determination for each response components                                  |
 
 In the following section, some of these parameters are discussed in detail. The discussion has considered random $\mathbf{X}$ regression model with $m$ response as given in equation~\@ref(eq:model1).
 

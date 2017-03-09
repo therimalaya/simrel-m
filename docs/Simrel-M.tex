@@ -1,0 +1,488 @@
+\documentclass[12pt,A4paper,authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
+%%% Begin My package additions %%%%%%%%%%%%%%%%%%%
+%% Other Customizations
+\usepackage[hyphens]{url}
+\usepackage{lineno} % add
+\usepackage{caption}
+
+
+\usepackage{setspace}
+\setstretch{1.25}
+
+\usepackage{mathpazo}
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\biboptions{sort&compress} % For natbib
+\usepackage{booktabs} % book-quality tables
+
+% Redefines the elsarticle footer
+\makeatletter
+\def\ps@pprintTitle{%
+  \let\@oddhead\@empty
+  \let\@evenhead\@empty
+  \def\@oddfoot{\it \hfill\today}%
+  \let\@evenfoot\@oddfoot}
+\makeatother
+
+% A modified page layout
+\textwidth 6.75in
+\oddsidemargin -0.15in
+\evensidemargin -0.15in
+\textheight 9in
+\topmargin -0.5in
+%%%%%%%%%%%%%%%% end my additions to header
+
+\usepackage[T1]{fontenc}
+\usepackage{amssymb,amsmath}
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+\usepackage{fontspec}
+\ifxetex
+\usepackage{xltxtra,xunicode}
+\fi
+\defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\newcommand{\euro}{€}
+\setmonofont{Source Code Pro}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+\usepackage{longtable}
+\ifxetex
+\usepackage[setpagesize=false, % page size defined by xetex
+unicode=false, % unicode breaks when used with xetex
+xetex]{hyperref}
+\else
+\usepackage[unicode=true]{hyperref}
+\fi
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+% Pandoc toggle for numbering sections (defaults to be off)
+\setcounter{secnumdepth}{0}
+% Pandoc header
+
+
+% \usepackage[nomarkers]{endfloat}
+
+%% My customizations %%%%%%%%
+%% Loading Packages
+\usepackage[inline]{enumitem}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pgf, tikz}
+\usepackage{amsthm}
+
+%% Custom macros
+\newtheorem{mydef}{Definition}
+\newcommand{\bs}[1]{\ensuremath{\boldsymbol{#1}}}
+\newcommand{\diag}[1]{\mathrm{diag}\left(#1\right)}
+\newcommand{\seq}[3][1]{\ensuremath{#2_{#1},\ldots,\,#2_{#3}}}
+\newcommand{\note}[1]{\marginpar{\scriptsize\tt{\color{RoyalBlue}#1}}}
+\newcommand{\edit}[1]{{\color{OrangeRed} #1}}
+
+%% Custom Lengths
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{9pt}
+
+%% Define Colors
+\newcommand\myshade{85}
+\colorlet{mylinkcolor}{violet}
+\colorlet{mycitecolor}{YellowOrange}
+\colorlet{myurlcolor}{Aquamarine}
+
+%% Hyperlink Setup
+\AtBeginDocument{%
+  \hypersetup{breaklinks=true,
+    bookmarks=true,
+    pdfauthor={},
+    pdftitle={simrel-m: A versatile tool for simulating multi-response linear model data},
+    colorlinks=true,
+    urlcolor=myurlcolor!\myshade!black,
+    linkcolor=mylinkcolor!\myshade!black,
+    citecolor=mycitecolor!\myshade!black,
+    pdfborder={0 0 0}}
+}
+
+\urlstyle{same}  % don't use monospace font for urls
+
+%% End my customizations %%%%%%%%%
+
+\begin{document}
+\begin{frontmatter}
+
+  \title{\texttt{simrel-m}: A versatile tool for simulating multi-response linear
+model data}
+    \author[]{Raju Rimal}
+  
+  
+    \author[]{Trygve Almøy}
+  
+  
+    \author[Norwegian University of Life Sciences]{Solve Sæbø\corref{c1}}
+  
+   \cortext[c1]{Dep. of Chemistry and Food Science, NMBU, Ås
+(\href{http://nmbu.no}{nmbu.no})}
+    
+  \begin{abstract}
+    \small
+    Data science is generating enormous amounts of data, and new and
+    advanced analytical methods are constantly being developed to cope with
+    the challenge of extracting information from such ``big-data''.
+    Researchers often use simulated data to assess and document the
+    properties of these new methods, and in this paper we present
+    \texttt{simrel-m}, which is a versatile and transparent tool for
+    simulating linear model data with extensive range of adjustable
+    properties. The method is based on the concept of relevant components
+    \citet{helland1994comparison}, which is equivalent to the envelope model
+    \citet{cook2013envelopes}. It is a multi-response extension of
+    \texttt{simrel} \citet{saebo2015simrel}, and as \texttt{simrel} the new
+    approach is essentially based on random rotations of latent relevant
+    components to obtain a predictor matrix \(\mathbf{X}\), but in addition
+    we introduce random rotations of latent components spanning a response
+    space in order to obtain a multivariate response matrix \(\mathbf{Y}\).
+    The properties of the linear relation between \(\mathbf{X}\) and
+    \(\mathbf{Y}\) are defined by a small set of input parameters which
+    allow versatile and adjustable simulations. Sub-space rotations also
+    allow for generating data suitable for testing variable selection
+    methods in multi-response settings. The method is implemented as an
+    R-package which serves as an extension of the existing \texttt{simrel}
+    packages \citet{saebo2015simrel}.
+  \end{abstract}
+   \begin{keyword} \footnotesize \texttt{simrel-2.0}, \texttt{simrel} package in r, data
+simulation, linear model, \texttt{simrel-m} \sep \end{keyword}
+\end{frontmatter}
+
+\section{Introduction}\label{introduction}
+
+Technological advancement has opened a door for complex and
+sophisticated scientific experiments that was not possible before. Due
+to this change, enormous amounts of raw data are generated which
+contains massive information but difficult to excavate. Finding
+information and performing scientific research on these raw data has now
+become another problem. In order to tackle this situation new methods
+are being developed. However, before implementing any method, it is
+essential to test its performance. Often, researchers use simulated data
+for the purpose which itself is a time-consuming process. The main focus
+of this paper is to present a simulation method, along with an r-package
+called \texttt{simrel-m}, that is versatile in nature and yet simple to
+use.
+
+The simulation method we are discussing here is based on principal of
+relevant space for prediction \citep{helland1994comparison} which
+assumes that there exists a subspace in the complete space of response
+variables that is spanned by a subset of eigenvectors of predictor
+variables. The r-package based on this method lets user to specify
+various population properties such as which components of predictors
+\((\mathbf{X})\) are relevant for a component of responses
+\(\mathbf{Y}\) and how the eigenvalues of \(\mathbf{X}\) decreases. This
+enables the possibility to construct data for evaluating estimation
+methods and methods developed for variable selection.
+
+Among several literatures in simulation
+({\color{red}\texttt{which\ literatures}}), \citet{ripley2009stochastic}
+has exhaustively discussed the topic. In addition, many literatures
+({\color{red}\texttt{which\ literatures}}) are available on studies
+which has implemented simulated data in order to investigate new
+estimation methods and prediction strategy
+\citep[see:][]{cook2015simultaneous, cook2013envelopes, helland2012near}.
+However, most of the simulations in these studies is developed to
+address their specific problem. A systematic tool for simulating linear
+model data with single response, which could serve as a general tool for
+all such comparisons, was presented in \citet{saebo2015simrel} and as
+r-package \texttt{simrel}. This paper extends \texttt{simrel} in order
+to simulate linear model data with multivariate response with an
+r-package \texttt{simrel-m}.
+
+The r-package \texttt{simrel-m} uses model parameterization which is
+based on the concept of relevant components
+\citet{helland1994comparison} where it is assumed that a subspace of
+response \(\mathbf{Y}\) is spanned by a subset of eigenvectors
+corresponding to predictor space. A response space can be thought to
+have two mutually orthogonal space -- relevant and irrelevant. Here the
+space of response matrix for which the predictors are relevant is termed
+as response components, and we assume that each response component is
+spanned by an exclusive subset of predictor variables. In this way we
+can construct a set of predictor variables which has non-zero regression
+coefficients. This also enables user to have uninformative predictors
+which can be detected during variable selection procedure. In addition,
+user can control signal-to-noise ratio for each response components with
+a vector of population coefficient of determination
+\(\boldsymbol{\rho}^2\). Further, the collinearity between predictor
+variables can also be adjusted by a factor \(\gamma\) which controls
+decay factor of eigenvalue of \(\mathbf{X}\) matrix.
+\citet{helland1994comparison} showed that if the direction of large
+variability (i.e., component corresponding to large eigenvalues) are
+also relevant relevant predictor space, prediction is relatively easy.
+In contrast, if the relevant predictors are on the direction of low
+variability, prediction becomes difficult.
+Table\textasciitilde{}\ref{tab:parameters} shows all the parameters that
+a user can specify in \texttt{simrel-m}.
+
+\begin{longtable}[]{@{}cl@{}}
+\caption{\label{tab:parameters} Parameters for simulation used in this
+study}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.19\columnwidth}\centering\strut
+Parameters\strut
+\end{minipage} & \begin{minipage}[b]{0.75\columnwidth}\raggedright\strut
+Description\strut
+\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.19\columnwidth}\centering\strut
+Parameters\strut
+\end{minipage} & \begin{minipage}[b]{0.75\columnwidth}\raggedright\strut
+Description\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.19\columnwidth}\centering\strut
+\(n\)\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
+number of observations\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\centering\strut
+\(p\)\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
+number of predictor variables\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\centering\strut
+\(q\)\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
+numbers of relevant predictors for each latent component of response
+variables\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\centering\strut
+\(l\)\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
+number of informative latent component of response variables (response
+components)\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\centering\strut
+\(m\)\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
+number of response variables\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\centering\strut
+\(\gamma\)\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
+degree of collinearity (factor that control the decrease of eigenvalue
+of \(\mathbf{X}\))\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\centering\strut
+\(\mathcal{P}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
+position index of relevant predictor components for each response
+components\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\centering\strut
+\(\mathcal{S}\)\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
+position index of response components to combine relevant and irrelevant
+response variable\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.19\columnwidth}\centering\strut
+\(\boldsymbol{\rho}^2\)\strut
+\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
+population coefficient determination for each response components\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Based on random regression model in
+equation\textasciitilde{}\eqref{eq:model1}, we discuss some of these
+parameters in details.
+
+Out of \(p\) predictor variables only \(q\) of them are relevant and has
+non-zero regression coefficients \((\beta_j \ne 0)\). If
+\(\boldsymbol{e}_j, \; j = 1, 2, \ldots, p\) be the eigenvectors
+corresponding to \(\mathbf{X}\), then, for some value of
+\(\mathcal{H}\),
+
+\begin{equation}
+\mathbf{B} = \mathcal{H} \mathbf{E} 
+\label{eq:beta-eigenvector-relation}
+\end{equation}
+
+Let us consider a random regression model in
+equation\textasciitilde{}\eqref{eq:model1} as our point of departure.
+
+\begin{equation}
+  \mathbf{Y} = \boldsymbol{\mu}_Y + \mathbf{B}^t (\mathbf{X} - \boldsymbol{\mu}_X) + \boldsymbol{\epsilon}
+  \label{eq:model1}
+\end{equation}
+
+where \(\mathbf{Y}\) is a response matrix with \(m\) response variables
+\(y_1, y_2, \ldots y_m\) with mean vector of \(\boldsymbol{\mu}_Y\);
+\(\mathbf{X}\) is vector of \(p\) predictor variables and the random
+error term \(\boldsymbol{\epsilon}\) is assumed to follow
+\(N(\boldsymbol{0},\; \boldsymbol{\Sigma}_{Y|X})\). In addition, we
+assume equation\textasciitilde{}\eqref{eq:model1} as a random regression
+model where
+\(\mathbf{X} \sim N\left(\boldsymbol{\mu}_X, \boldsymbol{\Sigma}_{XX}\right)\)
+independent of \(\boldsymbol{\epsilon}\).
+
+\subsection{Model Specification}\label{model-specification}
+
+A multi-response multivariate general linear model in
+equation-\eqref{eq:model1} is conidered as a simulation model.
+
+Being an extension of \texttt{simrel} package, a quick summary of the
+procedure used in that package helps to underestand the literature in
+this paper.
+
+\subsubsection{\texorpdfstring{An overview of
+\texttt{simrel}}{An overview of simrel}}\label{an-overview-of-simrel}
+
+\texttt{Simrel} is based on uni-response linear model as in
+equation\textasciitilde{}\eqref{eq:simrel-model}.
+
+\begin{equation}
+\label{eq:simrel-model}
+  \begin{bmatrix}
+    y \\ \mathbf{X}
+  \end{bmatrix} \sim
+  \mathcal{N}\left(
+    \begin{bmatrix}
+      \mu_y \\ \boldsymbol{\mu_X}
+    \end{bmatrix},
+    \begin{bmatrix}
+      \sigma_y^2               & \boldsymbol{\sigma_{Xy}}^t \\
+      \boldsymbol{\sigma_{Xy}} & \boldsymbol{\Sigma_{XX}}
+    \end{bmatrix}
+  \right)
+\end{equation}
+
+Equivalently,
+
+\begin{equation}
+  \begin{bmatrix}\mathbf{Y}\\ \mathbf{X}\end{bmatrix} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})
+  = N \left(
+    \begin{bmatrix}
+      \boldsymbol{\mu}_Y \\
+      \boldsymbol{\mu}_X
+    \end{bmatrix},
+    \begin{bmatrix}
+      \boldsymbol{\Sigma}_{YY} & \boldsymbol{\Sigma}_{XY}^t \\
+      \boldsymbol{\Sigma}_{XY} & \boldsymbol{\Sigma}_{XX}
+    \end{bmatrix}
+  \right)
+  \label{eq:model2}
+\end{equation}
+
+Here,
+
+\(\boldsymbol{\Sigma}_{YY}\) : Covariance Matrix of response
+\(\mathbf{Y}\) without given \(\mathbf{X}\)\\
+\(\boldsymbol{\Sigma}_{XY}\) : Covariance Matrix between \(\mathbf{X}\)
+and \(\mathbf{Y}\)\\
+\(\boldsymbol{\Sigma}_{XX}\) : Covariance matrix of predictor variables
+\(\mathbf{X}\)\\
+\(\boldsymbol{\mu}_X\) and \(\boldsymbol{\mu}_Y\) : Mean vectors of
+response \(\mathbf{Y}\) and predictor \(\mathbf{X}\) respective
+
+According to the theory of Multivariate Normal Distribution, we can
+express different parameters interms of \(\mathbf{X}\), \(\mathbf{Y}\)
+and the covariance structure.
+
+\subsubsection{Model Parameterization}\label{model-parameterization}
+
+\emph{Parameter Definition:}
+
+Before continuing any further, it is necessary to define the parameters
+used here,
+
+In the following section, some of these parameters are discussed in
+detail. The discussion has considered random \(\mathbf{X}\) regression
+model with \(m\) response as given in
+equation\textasciitilde{}\eqref{eq:model1}.
+
+\emph{Parameters Explanation and Notation Used:}
+
+Let \(m\) responses are spanned completely by \(l\) response components.
+These \(l\) response components are combined with \(m-l\) standard
+normal vectors by user defined criteria to get \(m\) responses after
+successive orthogonal transformation. Out of \(q\), let
+\(q_j,\; j = 1, \ldots l\) be the number of predictors that is relevant
+for response \(j\). Let \(c_j\) be the number of eigenvectors/
+components that completely span \(j^\text{th}\) predictor space
+containing \(q_j\) number of predictors. Further, the position of these
+components for \(j^\text{th}\) response be in index set
+\(\mathcal{P}_j\). Here it is also assumed that the eigenvalues
+corresponding to \(\mathbf{X}\) declines successively such that
+\(\lambda_i, i = 1, \ldots, p\) such that
+\(\lambda_i \ge \lambda_k, i > k\) are the eigen values of
+\(\mathbf{X}\). The position index of eigenvalues corresponding to
+response \(j\) is in the set \(\mathcal{P}_j\). We assume that the index
+are ordered within each sets so that, \(j^\text{th}\) index set contains
+\(c_j\) number of components. The eigenvalues corresponding to these
+components in \(\mathcal{P}_j\) set is
+\(\lambda_{\mathcal{P}_{jk}}, k = 1, \ldots c_j\) such that
+\(\lambda_{\mathcal{P}_{jk}} > \lambda_{\mathcal{P}_{jk'}}\) for
+\(k > k'\). In \texttt{Simrel-M} package, we refer this position by
+\texttt{relpos} argument. In addition, we suppose that the relevant
+components are exclusive for each response.
+
+\emph{An Example:}
+
+Suppose we have a situation like,
+
+\begin{longtable}[]{@{}rlcc@{}}
+\toprule
+Number of response & \((m)\) & = & 5\tabularnewline
+Number of response components & \((l)\) & = & 3\tabularnewline
+Position of relevant component for response 1 & \((\mathcal{P}_1)\) & =
+& \(\left\{ 1, 3 \right\}\)\tabularnewline
+Position of relevant component for response 2 & \((\mathcal{P}_2)\) & =
+& \(\left\{ 2, 4, 5 \right\}\)\tabularnewline
+Position of relevant component for response 3 & \((\mathcal{P}_3)\) & =
+& \(\left\{ 6 \right\}\)\tabularnewline
+\bottomrule
+\end{longtable}
+
+such that, \(\lambda_1 > \lambda_3\) in \(\mathcal{P}_1\) and
+\(\lambda_2 > \lambda_4 > \lambda_5\) in set \(\mathcal{P}_2\). Here,
+the component (eigenvector) 1 and 3 are relevant for response component
+1, component 2, 4 and 5 are relevant for response component 2 and
+component 6 is relevant for response component 3.
+
+In \texttt{Simrel-M}, we have assumed that the eigenvalues are
+decreasing exponentially by factor \(\gamma\) and the largest eigenvalue
+is 1, i.e.~for \(\gamma > 0\), \(\lambda_i = \text{e}^{-\gamma(i-1)}\)
+for \(i = 1, 2, \ldots p\).
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+
+\renewcommand\refname{References}
+\bibliography{packages.bib,ref-db.bib}
+
+
+
+\end{document}

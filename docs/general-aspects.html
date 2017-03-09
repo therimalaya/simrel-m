@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
+<link rel="prev" href="introduction.html">
 <link rel="next" href="references.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
@@ -65,10 +65,11 @@
 <li><a href="./index.html">Simrel-M: A versatile Simulation Tool</a></li>
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#model-specification"><i class="fa fa-check"></i>Model Specification</a><ul>
-<li><a href="introduction.html#an-overview-of-simrel">An overview of <code>simrel</code></a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#model-parameterization"><i class="fa fa-check"></i>Model Parameterization</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li><a href="general-aspects.html#general-aspects"><em>General aspects</em></a><ul>
+<li class="chapter" data-level="" data-path="general-aspects.html"><a href="general-aspects.html"><i class="fa fa-check"></i>Model Specification</a><ul>
+<li><a href="general-aspects.html#an-overview-of-simrel">An overview of <code>simrel</code></a></li>
+<li class="chapter" data-level="" data-path="general-aspects.html"><a href="general-aspects.html#model-parameterization"><i class="fa fa-check"></i>Model Parameterization</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -91,12 +92,12 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
+<div id="general-aspects" class="section level1">
+<h1><em>General aspects</em></h1>
 <p>Technological advancement has opened a door for complex and sophisticated scientific experiments that was not possible before. Due to this change, enormous amounts of raw data are generated which contains massive information but difficult to excavate. Finding information and performing scientific research on these raw data has now become another problem. In order to tackle this situation new methods are being developed. However, before implementing any method, it is essential to test its performance. Often, researchers use simulated data for the purpose which itself is a time-consuming process. The main focus of this paper is to present a simulation method, along with an r-package called <code>simrel-m</code>, that is versatile in nature and yet simple to use.</p>
 <p>The simulation method we are discussing here is based on principal of relevant space for prediction <span class="citation">(I. S. Helland and Almøy <a href="#ref-helland1994comparison">1994</a>)</span> which assumes that there exists a subspace in the complete space of response variables that is spanned by a subset of eigenvectors of predictor variables. The r-package based on this method lets user to specify various population properties such as which components of predictors <span class="math inline">\((\mathbf{X})\)</span> are relevant for a component of responses <span class="math inline">\(\mathbf{Y}\)</span> and how the eigenvalues of <span class="math inline">\(\mathbf{X}\)</span> decreases. This enables the possibility to construct data for evaluating estimation methods and methods developed for variable selection.</p>
 <p>Among several literatures in simulation (<span style="color:red;"><code>which literatures</code></span>), <span class="citation">Ripley (<a href="#ref-ripley2009stochastic">2009</a>)</span> has exhaustively discussed the topic. In addition, many literatures (<span style="color:red;"><code>which literatures</code></span>) are available on studies which has implemented simulated data in order to investigate new estimation methods and prediction strategy <span class="citation">(see: R. D. Cook and Zhang <a href="#ref-cook2015simultaneous">2015</a>; R. Cook, Helland, and Su <a href="#ref-cook2013envelopes">2013</a>; I. S. Helland et al. <a href="#ref-helland2012near">2012</a>)</span>. However, most of the simulations in these studies is developed to address their specific problem. A systematic tool for simulating linear model data with single response, which could serve as a general tool for all such comparisons, was presented in <span class="citation">Sæbø, Almøy, and Helland (<a href="#ref-saebo2015simrel">2015</a>)</span> and as r-package <code>simrel</code>. This paper extends <code>simrel</code> in order to simulate linear model data with multivariate response with an r-package <code>simrel-m</code>.</p>
-<p>The r-package <code>simrel-m</code> uses model parameterization which is based on the concept of relevant components <span class="citation">I. S. Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span> where it is assumed that a subspace of response <span class="math inline">\(\mathbf{Y}\)</span> is spanned by a subset of eigenvectors corresponding to predictor space. A response space can be thought to have two mutually orthogonal space – relevant and irrelevant. Here the space of response matrix for which the predictors are relevant is termed as response components, and we assume that each response component is spanned by an exclusive subset of predictor variables. In this way we can construct a set of predictor variables which has non-zero regression coefficients. This also enables user to have uninformative predictors which can be detected during variable selection procedure. In addition, user can control signal-to-noise ratio for each response components with a vector of population coefficient of determination <span class="math inline">\(\boldsymbol{\rho}^2\)</span>. Further, the collinearity between predictor variables can also be adjusted by a factor <span class="math inline">\(\gamma\)</span> which controls decay factor of eigenvalue of <span class="math inline">\(\mathbf{X}\)</span> matrix. <span class="citation">I. S. Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span> showed that if the direction of large variability (i.e., component corresponding to large eigenvalues) are also relevant relevant predictor space, prediction is relatively easy. In contrast, if the relevant predictors are on the direction of low variability, prediction becomes difficult. Table~<a href="introduction.html#tab:parameters">1</a> shows all the parameters that a user can specify in <code>simrel-m</code>.</p>
+<p>The r-package <code>simrel-m</code> uses model parameterization which is based on the concept of relevant components <span class="citation">I. S. Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span> where it is assumed that a subspace of response <span class="math inline">\(\mathbf{Y}\)</span> is spanned by a subset of eigenvectors corresponding to predictor space. A response space can be thought to have two mutually orthogonal space – relevant and irrelevant. Here the relevant space of response matrix is termed as response components, and we assume that each response component is spanned by an exclusive subset of predictor variables. In this way we can construct a set of predictor variables which has non-zero regression coefficients. This also enables user to have uninformative predictors which can be detected during variable selection procedure. In addition, user can control signal-to-noise ratio for each response components with a vector of population coefficient of determination <span class="math inline">\(\boldsymbol{\rho}^2\)</span>. Further, the collinearity between predictor variables can also be controlled by a factor <span class="math inline">\(\gamma\)</span> which controls decay factor of eigenvalue of <span class="math inline">\(\mathbf{X}\)</span> matrix. <span class="citation">I. S. Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span> showed that if the direction of large variability (i.e., component corresponding to large eigenvalues) are also relevant relevant predictor space, prediction is relatively easy. In contrast, if the relevant predictors are on the direction of low variability, prediction becomes difficult. Table~<a href="general-aspects.html#tab:parameters">1</a> shows all the parameters that a user can specify in <code>simrel-m</code>.</p>
 <table>
 <caption><span id="tab:parameters">Table 1: </span> Parameters for simulation used in this study</caption>
 <colgroup>
@@ -148,25 +149,25 @@
 </tr>
 </tbody>
 </table>
-<p>Based on random regression model in equation~<a href="introduction.html#eq:model1">(2)</a>, we discuss some of these parameters in details.</p>
-<p>Out of <span class="math inline">\(p\)</span> predictor variables only <span class="math inline">\(q\)</span> of them are relevant and has non-zero regression coefficients <span class="math inline">\((\beta_{ij} \ne 0)\)</span>. If <span class="math inline">\(\boldsymbol{e}_i, \; i = 1, 2, \ldots, p\)</span> be the eigenvectors corresponding to <span class="math inline">\(\mathbf{X}\)</span>, then, for some vector of <span class="math inline">\(\boldsymbol{\eta}_i, i = 1, \ldots, p\)</span>,</p>
+<p>Based on random regression model in equation~<a href="general-aspects.html#eq:model1">(2)</a>, we discuss some of these parameters in details. Out of <span class="math inline">\(p\)</span> predictor variables only <span class="math inline">\(q\)</span> of them are relevant and has non-zero regression coefficients <span class="math inline">\((\beta_j \ne 0)\)</span>. Let <span class="math inline">\(\boldsymbol{e}_j, \; j = 1, 2, \ldots, p\)</span> be the eigenvectors corresponding to <span class="math inline">\(\mathbf{X}\)</span>, then,</p>
 <span class="math display" id="eq:beta-eigenvector-relation">\[\begin{equation}
-\mathbf{B} = \begin{bmatrix} \boldsymbol{\eta}_1 &amp; \ldots &amp; \boldsymbol{\eta}_p \end{bmatrix} \begin{bmatrix} \mathbf{e}_1 \\ \vdots \\ \mathbf{e}_p \end{bmatrix}
+\mathbf{B} = \sum_{j = 1}^p{\boldsymbol{\eta}_j\mathbf{e}_j}
 \tag{1}
 \end{equation}\]</span>
-<p>Let us consider a random regression model in equation~<a href="introduction.html#eq:model1">(2)</a> as our point of departure.</p>
+<p>where <span class="math inline">\(\boldsymbol{\eta}_j\)</span> is a vector corresponding to each response.</p>
+<p>Let us consider a random regression model in equation~<a href="general-aspects.html#eq:model1">(2)</a> as our point of departure.</p>
 <span class="math display" id="eq:model1">\[\begin{equation}
   \mathbf{Y} = \boldsymbol{\mu}_Y + \mathbf{B}^t (\mathbf{X} - \boldsymbol{\mu}_X) + \boldsymbol{\epsilon}
   \tag{2}
 \end{equation}\]</span>
-<p>where <span class="math inline">\(\mathbf{Y}\)</span> is a response matrix with <span class="math inline">\(m\)</span> response variables <span class="math inline">\(y_1, y_2, \ldots y_m\)</span> with mean vector of <span class="math inline">\(\boldsymbol{\mu}_Y\)</span>; <span class="math inline">\(\mathbf{X}\)</span> is vector of <span class="math inline">\(p\)</span> predictor variables and the random error term <span class="math inline">\(\boldsymbol{\epsilon}\)</span> is assumed to follow <span class="math inline">\(N(\boldsymbol{0},\; \boldsymbol{\Sigma}_{Y|X})\)</span>. In addition, we assume equation~<a href="introduction.html#eq:model1">(2)</a> as a random regression model where <span class="math inline">\(\mathbf{X} \sim N\left(\boldsymbol{\mu}_X, \boldsymbol{\Sigma}_{XX}\right)\)</span> independent of <span class="math inline">\(\boldsymbol{\epsilon}\)</span>.</p>
+<p>where <span class="math inline">\(\mathbf{Y}\)</span> is a response matrix with <span class="math inline">\(m\)</span> response variables <span class="math inline">\(y_1, y_2, \ldots y_m\)</span> with mean vector of <span class="math inline">\(\boldsymbol{\mu}_Y\)</span>; <span class="math inline">\(\mathbf{X}\)</span> is vector of <span class="math inline">\(p\)</span> predictor variables and the random error term <span class="math inline">\(\boldsymbol{\epsilon}\)</span> is assumed to follow <span class="math inline">\(N(\boldsymbol{0},\; \boldsymbol{\Sigma}_{Y|X})\)</span>. In addition, we assume equation~<a href="general-aspects.html#eq:model1">(2)</a> as a random regression model where <span class="math inline">\(\mathbf{X} \sim N\left(\boldsymbol{\mu}_X, \boldsymbol{\Sigma}_{XX}\right)\)</span> independent of <span class="math inline">\(\boldsymbol{\epsilon}\)</span>.</p>
 <div id="model-specification" class="section level2">
 <h2>Model Specification</h2>
-<p>A multi-response multivariate general linear model in equation-<a href="introduction.html#eq:model1">(2)</a> is conidered as a simulation model.</p>
+<p>A multi-response multivariate general linear model in equation-<a href="general-aspects.html#eq:model1">(2)</a> is conidered as a simulation model.</p>
 <p>Being an extension of <code>simrel</code> package, a quick summary of the procedure used in that package helps to underestand the literature in this paper.</p>
 <div id="an-overview-of-simrel" class="section level3">
 <h3>An overview of <code>simrel</code></h3>
-<p><code>Simrel</code> is based on uni-response linear model as in equation~<a href="introduction.html#eq:simrel-model">(3)</a>.</p>
+<p><code>Simrel</code> is based on uni-response linear model as in equation~<a href="general-aspects.html#eq:simrel-model">(3)</a>.</p>
 <span class="math display" id="eq:simrel-model">\[\begin{equation}
 \tag{3}
   \begin{bmatrix}
@@ -208,7 +209,7 @@
 <h3>Model Parameterization</h3>
 <p><em>Parameter Definition:</em></p>
 <p>Before continuing any further, it is necessary to define the parameters used here,</p>
-<p>In the following section, some of these parameters are discussed in detail. The discussion has considered random <span class="math inline">\(\mathbf{X}\)</span> regression model with <span class="math inline">\(m\)</span> response as given in equation~<a href="introduction.html#eq:model1">(2)</a>.</p>
+<p>In the following section, some of these parameters are discussed in detail. The discussion has considered random <span class="math inline">\(\mathbf{X}\)</span> regression model with <span class="math inline">\(m\)</span> response as given in equation~<a href="general-aspects.html#eq:model1">(2)</a>.</p>
 <p><em>Parameters Explanation and Notation Used:</em></p>
 <p>Let <span class="math inline">\(m\)</span> responses are spanned completely by <span class="math inline">\(l\)</span> response components. These <span class="math inline">\(l\)</span> response components are combined with <span class="math inline">\(m-l\)</span> standard normal vectors by user defined criteria to get <span class="math inline">\(m\)</span> responses after successive orthogonal transformation. Out of <span class="math inline">\(q\)</span>, let <span class="math inline">\(q_j,\; j = 1, \ldots l\)</span> be the number of predictors that is relevant for response <span class="math inline">\(j\)</span>. Let <span class="math inline">\(c_j\)</span> be the number of eigenvectors/ components that completely span <span class="math inline">\(j^\text{th}\)</span> predictor space containing <span class="math inline">\(q_j\)</span> number of predictors. Further, the position of these components for <span class="math inline">\(j^\text{th}\)</span> response be in index set <span class="math inline">\(\mathcal{P}_j\)</span>. Here it is also assumed that the eigenvalues corresponding to <span class="math inline">\(\mathbf{X}\)</span> declines successively such that <span class="math inline">\(\lambda_i, i = 1, \ldots, p\)</span> such that <span class="math inline">\(\lambda_i \ge \lambda_k, i &gt; k\)</span> are the eigen values of <span class="math inline">\(\mathbf{X}\)</span>. The position index of eigenvalues corresponding to response <span class="math inline">\(j\)</span> is in the set <span class="math inline">\(\mathcal{P}_j\)</span>. We assume that the index are ordered within each sets so that, <span class="math inline">\(j^\text{th}\)</span> index set contains <span class="math inline">\(c_j\)</span> number of components. The eigenvalues corresponding to these components in <span class="math inline">\(\mathcal{P}_j\)</span> set is <span class="math inline">\(\lambda_{\mathcal{P}_{jk}}, k = 1, \ldots c_j\)</span> such that <span class="math inline">\(\lambda_{\mathcal{P}_{jk}} &gt; \lambda_{\mathcal{P}_{jk&#39;}}\)</span> for <span class="math inline">\(k &gt; k&#39;\)</span>. In <code>Simrel-M</code> package, we refer this position by <code>relpos</code> argument. In addition, we suppose that the relevant components are exclusive for each response.</p>
 <p><em>An Example:</em></p>
@@ -280,7 +281,7 @@
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="references.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
