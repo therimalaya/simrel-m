@@ -10,7 +10,7 @@ bookdown::gitbook:
       collapse: section
       before: '<li><a href="./index.html">Simrel-M: A versatile Simulation Tool</a></li>'
       after: '<li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>'
-    download: ['epub', 'mobi']
+    download: ['epub', 'mobi', 'pdf']
     sharing: 
       github: yes
       facebook: no

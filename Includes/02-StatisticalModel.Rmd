@@ -1,24 +1,34 @@
 # Statistical Model {#statistical-model}
 
-Regression Coefficients $\left(\boldsymbol{B}\right)$
-  : The measurement of effect of each predictor variables in the individual response are the regression coefficients. Predictors having regression coefficients closer to zero have lower impact on the response.
-  \begin{equation}
-    \mathbf{B} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1}
-  \end{equation}
+Let us consider a random regression model in equation~\@ref(eq:model1) as our point of departure.
 
-Error Variance $\left(\boldsymbol{\Sigma}_{Y|X}\right)$
-  : Error variance comprises the variation that is present in response but is not explained by the model. The true error variance can be written as,
-  \begin{equation}
-    \boldsymbol{\Sigma}_{Y|X} = \boldsymbol{\Sigma}_{YY} - 
-      \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1} \boldsymbol{\Sigma}_{XY}
-  \end{equation}
+\begin{equation}
+  \mathbf{Y} = \boldsymbol{\mu}_Y + \mathbf{B}^t (\mathbf{X} - \boldsymbol{\mu}_X) + \boldsymbol{\epsilon}
+  (\#eq:model1)
+\end{equation}
 
-Population Coefficient of Determination $\left(\boldsymbol{\mathcal{R}}_{XY}\right)$
-  : Coefficient of determination measure how much the predictors explains the variation present in response matrix. The coefficient of determination in the case of $\mathbf{X}$ and $\mathbf{Y}$ relationship is,
-  \begin{equation}
-    \boldsymbol{\mathcal{R}}^2_{XY} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1}
-      \boldsymbol{\Sigma}_{XY} \boldsymbol{\Sigma}_{YY}^{-1}
-  \end{equation}
+where $\mathbf{Y}$ is a response matrix with $m$ response variables $y_1, y_2, \ldots y_m$ with mean vector of $\boldsymbol{\mu}_Y$; $\mathbf{X}$ is vector of $p$ predictor variables and the random error term $\boldsymbol{\epsilon}$ is assumed to follow $N(\boldsymbol{0},\; \boldsymbol{\Sigma}_{Y|X})$. In addition, we assume equation~\@ref(eq:model1) as a random regression model where $\mathbf{X} \sim N\left(\boldsymbol{\mu}_X, \boldsymbol{\Sigma}_{XX}\right)$ independent of $\boldsymbol{\epsilon}$. Equivalently, this relationship can be written as,
+
+\begin{equation}
+  \begin{bmatrix}\mathbf{Y}\\ \mathbf{X}\end{bmatrix} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})
+  = N \left(
+    \begin{bmatrix}
+      \boldsymbol{\mu}_Y \\
+      \boldsymbol{\mu}_X
+    \end{bmatrix},
+    \begin{bmatrix}
+      \boldsymbol{\Sigma}_{YY} & \boldsymbol{\Sigma}_{XY}^t \\
+      \boldsymbol{\Sigma}_{XY} & \boldsymbol{\Sigma}_{XX}
+    \end{bmatrix}
+  \right)
+  (\#eq:model2)
+\end{equation}
+
+Here, 
+$\boldsymbol{\Sigma}_{YY}$ is Covariance Matrix of response $\mathbf{Y}$;
+$\boldsymbol{\Sigma}_{XY}$ is Covariance Matrix between $\mathbf{X}$ and $\mathbf{Y}$;
+$\boldsymbol{\Sigma}_{XX}$ is Covariance matrix of predictor variables $\mathbf{X}$;
+$\boldsymbol{\mu}_Y$ and $\boldsymbol{\mu}_X$ are Mean vectors of response $\mathbf{Y}$ and predictor $\mathbf{X}$ respective.
 
 Simulation of $(\mathbf{Y, X})$ for model~\@ref(eq:model2) requires the fact that -- a set of latent variable spanning $\mathbf{X}$ and $\mathbf{Y}$ will contain same information in different structure. With two matrices $\mathbf{R}_{p\times p}$ and $\mathbf{Q}_{q \times q}$ with rank $p$ and $q$ respectively, lets define a transformation as $\mathbf{Z} = \mathbf{RX}$ and $\mathbf{W} = \mathbf{QY}$ so that,
 
@@ -45,16 +55,21 @@ Simulation of $(\mathbf{Y, X})$ for model~\@ref(eq:model2) requires the fact tha
   (\#eq:model3)
 \end{align}
 
-Further, if both $\mathbf{Q}$ and $\mathbf{R}$ are orthogonal matrix their inverse equales to their transpose, i.e. $\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q$ and $\mathbf{R}^t\mathbf{R} = \mathbf{I}_p$. The inverse transformation can be defined as,
+Further, if both $\mathbf{Q}$ and $\mathbf{R}$ are orthonormal matrix such that $\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q$ and $\mathbf{R}^t\mathbf{R} = \mathbf{I}_p$, the inverse transformation can be defined as,
 
-\begin{align}
-\boldsymbol{\Sigma}_{XX}                                                                                                                                                                          = \boldsymbol{R}^t\boldsymbol{\Sigma}_{ZZ}  \boldsymbol{R}, & \boldsymbol{\Sigma}_{XY}
-    = \boldsymbol{R}^t \boldsymbol{\Sigma}_{ZW} \boldsymbol{Q} \nonumber \\
-\boldsymbol{\Sigma}_{YY}                                                                                                                                                                          = \boldsymbol{Q}^t\boldsymbol{\Sigma}_{WW} \boldsymbol{Q}, & \boldsymbol{\Sigma}_{YX} = \boldsymbol{Q}^t \boldsymbol{\Sigma}_{WZ} \boldsymbol{R}
-(\#eq:cov-yx-wz)
-\end{align}
+\begin{equation}
+  \begin{matrix}
+    \boldsymbol{\Sigma}_{XX} = \mathbf{R}^t \boldsymbol{\Sigma}_{ZZ} \mathbf{R} & \Rightarrow & \boldsymbol{\Sigma}_{ZZ} = \mathbf{R} \boldsymbol{\Sigma}_{XX} \mathbf{R}^t \\
+    \boldsymbol{\Sigma}_{XY} = \mathbf{R}^t \boldsymbol{\Sigma}_{ZW} \mathbf{Q} & \Rightarrow & \boldsymbol{\Sigma}_{ZW} = \mathbf{R} \boldsymbol{\Sigma}_{XY} \mathbf{Q}^t \\
+    \boldsymbol{\Sigma}_{YX} = \mathbf{Q}^t \boldsymbol{\Sigma}_{WZ} \mathbf{R} & \Rightarrow & \boldsymbol{\Sigma}_{WZ} = \mathbf{Q} \boldsymbol{\Sigma}_{YX} \mathbf{R}^t \\
+    \boldsymbol{\Sigma}_{YY} = \mathbf{Q}^t \boldsymbol{\Sigma}_{WW} \mathbf{Q} & \Rightarrow & \boldsymbol{\Sigma}_{WW} = \mathbf{Q} \boldsymbol{\Sigma}_{YY} \mathbf{Q}^t
+  \end{matrix}
+  (\#eq:cov-yx-wz)
+\end{equation}
 
-The relationship above allows us to define the linear model relation in equation~\@ref(eq:model1) in terms of $\mathbf{W}$ and $athbf{Z}$ as in equation~\@ref(eq:latent-model),
+In addition, a linear model relating $\mathbf{W}$ and $\mathbf{Z}$ can be written as,
+
+<!-- The relationship above allows us to define the linear model relation in equation~\@ref(eq:model1) in terms of $\mathbf{W}$ and $\mathbf{Z}$ as in equation~\@ref(eq:latent-model), -->
 
 \begin{equation}
   \mathbf{W} = 	\boldsymbol{\mu}_W + \mathbf{A}^t \left(\mathbf{Z} - \boldsymbol{\mu}_Z\right) + \boldsymbol{\tau}; \qquad
@@ -62,45 +77,68 @@ The relationship above allows us to define the linear model relation in equation
   (\#eq:latent-model)
 \end{equation}
 
-Here, in this setting the model parameters can be defined as follows where each of them can be related to the model parameter for model in equation~\@ref(eq:model1) using the ortogonal matrices $\mathbf{P}$ and $\mathbf{Q}$.
+Here, we can find a direct connection between different population properties between \@ref(eq:model1) and \@ref(eq:latent-model). Some of them are:
 
-Regression Coefficients $\left(\mathbf{A}\right)$
-  : Using the transformation matrix $\mathbf{P}$ and $\mathbf{Q}$, we can obtain the regression coefficients corresponding to the latent structure of predictors.
-  \begin{align}
-    \mathbf{A}	&	= \boldsymbol{\Sigma}_{WZ} \boldsymbol{\Sigma}_{ZZ}^{-1}
-                  = \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{XX}\mathbf{R}^t\right]^{-1}
-                  = \boldsymbol{Q\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}R^t = \mathbf{QBR}^t
-  \end{align}
+<!-- Here, in this setting the model parameters can be defined as follows where each of them can be related to the model parameter for model in equation~\@ref(eq:model1) using the ortogonal matrices $\mathbf{P}$ and $\mathbf{Q}$. -->
 
-Error Variance $\left(\boldsymbol{\Sigma}_{W|Z}\right)$
-  : The true unexplained variation present in population that the model between the latent structure of predictors and responses can also be expressed with the rotation matrix and the error variance $\Sigma_{Y|X}$.
-  \begin{align}
+Regression Coefficients
+  : Regression coefficients for model~\@ref(eq:model1) is,
+  $$\mathbf{B} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1}$$
+  Using the transformation matrix $\mathbf{P}$ and $\mathbf{Q}$, we can obtain the regression coefficients corresponding to the latent structure of predictors.
+  $$
+  \begin{aligned}
+    \mathbf{A} &= \boldsymbol{\Sigma}_{WZ} \boldsymbol{\Sigma}_{ZZ}^{-1}
+      &= \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{XX}\mathbf{R}^t\right]^{-1} \\
+      &= \mathbf{Q}\left[\boldsymbol{\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\right]\mathbf{R}^t \\
+      &= \mathbf{QBR}^t
+  \end{aligned}
+  $$
+
+Error Variance
+  : The noise variance and the minimum prediction error for model~\@ref(eq:model1) is,
+  $$\boldsymbol{\Sigma}_{Y|X} = \boldsymbol{\Sigma}_{YY} - \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1} \boldsymbol{\Sigma}_{XY}$$
+  Further, the noise variance of transformed model~\@ref(eq:latent-model) is,
+  $$
+  \begin{aligned}
     \boldsymbol{\Sigma}_{W|Z}
-    &=	\boldsymbol{Q\Sigma}_{YY}\mathbf{Q}^t -
-    \boldsymbol{Q \Sigma}_{YX}\mathbf{R}^t \left[\boldsymbol{R\Sigma}_{XX}\boldsymbol{R}^t\right]^{-1}
+    &= \boldsymbol{Q\Sigma}_{YY}\mathbf{Q}^t -
+      \boldsymbol{Q \Sigma}_{YX}\mathbf{R}^t \left[\boldsymbol{R\Sigma}_{XX}\boldsymbol{R}^t\right]^{-1}
       \boldsymbol{R\Sigma}_{XY}\mathbf{Q}^t \nonumber \\
-    &= 	\boldsymbol{Q\Sigma}_{YY}\mathbf{Q}^t - \boldsymbol{Q \Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\boldsymbol{\Sigma}_{XY}\mathbf{Q}^t \nonumber \\
-    &= 	\mathbf{Q}\left[\boldsymbol{\Sigma}_{YY} -
+    &= \boldsymbol{Q\Sigma}_{YY}\mathbf{Q}^t - 
+      \boldsymbol{Q \Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\boldsymbol{\Sigma}_{XY}\mathbf{Q}^t \nonumber \\
+    &= \mathbf{Q}\left[\boldsymbol{\Sigma}_{YY} -
       \boldsymbol{\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\boldsymbol{\Sigma}_{XY}\right]\mathbf{Q}^{t} \nonumber \\
-    &= 	\mathbf{Q} \boldsymbol{\Sigma}_{Y|X}\mathbf{Q}^t
-  \end{align}
-  Since, $\mathbf{Y}$ is generated from orthogonal random rotation matrix $\mathbf{Q}$, the error variance depends on $\mathbf{Q}$. Further, the coefficient of determination is,
+    &= \mathbf{Q} \boldsymbol{\Sigma}_{Y|X}\mathbf{Q}^t
+  \end{aligned}
+  $$
 
-Population Coefficient of Determination $\left(\boldsymbol{\mathcal{R}}_{WZ}^{2}\right)$
-  : \begin{align}
-    \boldsymbol{\mathcal{R}}^2_{XY} & =
-                              \mathbf{Q}^t\boldsymbol{\Sigma}_{WZ}\boldsymbol{\Sigma}^{-1}_{ZZ}\boldsymbol{\Sigma}_{ZW}\boldsymbol{\Sigma}_{WW}^{-1}\boldsymbol{Q} \nonumber \\
-                            & = \mathbf{Q}^t\boldsymbol{\mathcal{R}}^2_{WZ}\mathbf{Q} \nonumber \\
-    \text{i.e. }\boldsymbol{\mathcal{R}}^2_{WZ} &= \mathbf{Q}\boldsymbol{\mathcal{R}}^2_{XY}\mathbf{Q}^t
-    \end{align}
+  <!-- Since, $\mathbf{Y}$ is generated from orthogonal random rotation matrix $\mathbf{Q}$, the error variance depends on $\mathbf{Q}$. Further, the coefficient of determination is, -->
 
-Thus, on the basis of these mathematical backgrounds, the simulation strategy follows,
+Population Coefficient of Determination
+  : The population coefficient of determination for model~\@ref(eq:model1) is,
+  $$\boldsymbol{\rho}^2_{XY} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1} \boldsymbol{\Sigma}_{XY} \boldsymbol{\Sigma}_{YY}^{-1}$$
+  Further, the coefficient of determination corresponding to model~\@ref(eq:latent-model) is,
+  $$
+  \begin{aligned}
+    \boldsymbol{\rho}^2_{ZW} &= \boldsymbol{\Sigma}_{WZ} 
+    \boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\Sigma}_{ZW} 
+    \boldsymbol{\Sigma}_{WW}^{-1} \\
+  &=\mathbf{Q}^t
+    \boldsymbol{\Sigma}_{WZ}\boldsymbol{\Sigma}^{-1}_{ZZ}
+    \boldsymbol{\Sigma}_{ZW}\boldsymbol{\Sigma}_{WW}^{-1}\boldsymbol{Q} \nonumber \\
+  &=\mathbf{Q}^t\boldsymbol{\mathcal{R}}^2_{WZ}\mathbf{Q} \nonumber \\
+    \text{i.e. }\boldsymbol{\mathcal{R}}^2_{WZ} 
+  &=\mathbf{Q}\boldsymbol{\mathcal{R}}^2_{XY}\mathbf{Q}^t
+  \end{aligned}
+  $$
 
-a) Construct covariance structure of $\mathbf{W}$ and $\mathbf{Z}$ satisfying given parameters
-b) Simulate $\mathbf{W}$ and $\mathbf{Z}$ from random standard normal distribution
-c) Rotation $\mathbf{Z}$ by orthonormal matrix $\mathbf{R}$ to yield $\mathbf{X} = \mathbf{R}^t \mathbf{Z}$
-d) Rotation of $\mathbf{W}$ by orthogonal matrix $\mathbf{Q}$ to yield $\mathbf{Y} = \mathbf{Q}^t \mathbf{W}$
-e) For simplification, we assume that no common components of $\mathbf{X}$, i.e. $\mathbf{Z}$, relevant for $\mathbf{W}$. For example, if component 1 and component 2 are relevant for $\mathbf{W}_1$, they are not relevant for other $\mathbf{W}$'s.
+<!-- Thus, on the basis of these mathematical backgrounds, the simulation strategy follows, -->
+
+<!-- a) Construct covariance structure of $\mathbf{W}$ and $\mathbf{Z}$ satisfying given parameters -->
+<!-- b) Simulate $\mathbf{W}$ and $\mathbf{Z}$ from random standard normal distribution -->
+<!-- c) Rotation $\mathbf{Z}$ by orthonormal matrix $\mathbf{R}$ to yield $\mathbf{X} = \mathbf{R}^t \mathbf{Z}$ -->
+<!-- d) Rotation of $\mathbf{W}$ by orthogonal matrix $\mathbf{Q}$ to yield $\mathbf{Y} = \mathbf{Q}^t \mathbf{W}$ -->
+<!-- e) For simplification, we assume that no common components of $\mathbf{X}$, i.e. $\mathbf{Z}$, relevant for $\mathbf{W}$. For example, if component 1 and component 2 are relevant for $\mathbf{W}_1$, they are not relevant for other $\mathbf{W}$'s. -->
 
 ## Model parameterization and relevant components {#model-parameter-relevant-components}
 Eigenvalue decomposition principal states that a variance-covariance matrix $\boldsymbol{\Sigma}$ can be decomposed as,

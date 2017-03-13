@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="introduction.html">
-<link rel="next" href="implementation.html">
+<link rel="next" href="references.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -65,24 +65,12 @@
 <li><a href="./index.html">Simrel-M: A versatile Simulation Tool</a></li>
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a><ul>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#model-specification"><i class="fa fa-check"></i>Model Specification</a><ul>
-<li><a href="introduction.html#an-overview-of-simrel">An overview of <code>simrel</code></a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#model-parameterization"><i class="fa fa-check"></i>Model Parameterization</a></li>
-</ul></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html"><i class="fa fa-check"></i>Statistical Model</a><ul>
 <li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#model-parameter-relevant-components"><i class="fa fa-check"></i>Model parameterization and relevant components</a></li>
 <li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#data-simulation"><i class="fa fa-check"></i>Data Simulation</a></li>
 <li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#rotation-predictor-space"><i class="fa fa-check"></i>Rotation of predictor space</a></li>
 <li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#rotation-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a><ul>
-<li><a href="implementation.html#example">Example of model comparison with simulated data from <code>simrel-m</code> package</a></li>
-<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#comparison-of-estimation-methods-based-on-prediction-error"><i class="fa fa-check"></i>Comparison of Estimation Methods based on Prediction error</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i>Appendix</a><ul>
-<li class="chapter" data-level="" data-path="appendix.html"><a href="appendix.html#comprehensive-explanation-of-notation"><i class="fa fa-check"></i>Comprehensive Explanation of Notation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -106,29 +94,28 @@
             <section class="normal" id="section-">
 <div id="statistical-model" class="section level1">
 <h1>Statistical Model</h1>
-<dl>
-<dt>Regression Coefficients <span class="math inline">\(\left(\boldsymbol{B}\right)\)</span></dt>
-<dd>The measurement of effect of each predictor variables in the individual response are the regression coefficients. Predictors having regression coefficients closer to zero have lower impact on the response.
-<span class="math display">\[\begin{equation}
-\mathbf{B} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1}
-  \end{equation}\]</span>
-</dd>
-<dt>Error Variance <span class="math inline">\(\left(\boldsymbol{\Sigma}_{Y|X}\right)\)</span></dt>
-<dd>Error variance comprises the variation that is present in response but is not explained by the model. The true error variance can be written as,
-<span class="math display">\[\begin{equation}
-\boldsymbol{\Sigma}_{Y|X} = \boldsymbol{\Sigma}_{YY} - 
-  \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1} \boldsymbol{\Sigma}_{XY}
-  \end{equation}\]</span>
-</dd>
-<dt>Population Coefficient of Determination <span class="math inline">\(\left(\boldsymbol{\mathcal{R}}_{XY}\right)\)</span></dt>
-<dd>Coefficient of determination measure how much the predictors explains the variation present in response matrix. The coefficient of determination in the case of <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> relationship is,
-<span class="math display">\[\begin{equation}
-\boldsymbol{\mathcal{R}}^2_{XY} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1}
-  \boldsymbol{\Sigma}_{XY} \boldsymbol{\Sigma}_{YY}^{-1}
-  \end{equation}\]</span>
-</dd>
-</dl>
-<p>Simulation of <span class="math inline">\((\mathbf{Y, X})\)</span> for model~<a href="introduction.html#eq:model2">(3)</a> requires the fact that – a set of latent variable spanning <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> will contain same information in different structure. With two matrices <span class="math inline">\(\mathbf{R}_{p\times p}\)</span> and <span class="math inline">\(\mathbf{Q}_{q \times q}\)</span> with rank <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> respectively, lets define a transformation as <span class="math inline">\(\mathbf{Z} = \mathbf{RX}\)</span> and <span class="math inline">\(\mathbf{W} = \mathbf{QY}\)</span> so that,</p>
+<p>Let us consider a random regression model in equation~<a href="statistical-model.html#eq:model1">(2)</a> as our point of departure.</p>
+<span class="math display" id="eq:model1">\[\begin{equation}
+  \mathbf{Y} = \boldsymbol{\mu}_Y + \mathbf{B}^t (\mathbf{X} - \boldsymbol{\mu}_X) + \boldsymbol{\epsilon}
+  \tag{2}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(\mathbf{Y}\)</span> is a response matrix with <span class="math inline">\(m\)</span> response variables <span class="math inline">\(y_1, y_2, \ldots y_m\)</span> with mean vector of <span class="math inline">\(\boldsymbol{\mu}_Y\)</span>; <span class="math inline">\(\mathbf{X}\)</span> is vector of <span class="math inline">\(p\)</span> predictor variables and the random error term <span class="math inline">\(\boldsymbol{\epsilon}\)</span> is assumed to follow <span class="math inline">\(N(\boldsymbol{0},\; \boldsymbol{\Sigma}_{Y|X})\)</span>. In addition, we assume equation~<a href="statistical-model.html#eq:model1">(2)</a> as a random regression model where <span class="math inline">\(\mathbf{X} \sim N\left(\boldsymbol{\mu}_X, \boldsymbol{\Sigma}_{XX}\right)\)</span> independent of <span class="math inline">\(\boldsymbol{\epsilon}\)</span>. Equivalently, this relationship can be written as,</p>
+<span class="math display" id="eq:model2">\[\begin{equation}
+  \begin{bmatrix}\mathbf{Y}\\ \mathbf{X}\end{bmatrix} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})
+  = N \left(
+    \begin{bmatrix}
+      \boldsymbol{\mu}_Y \\
+      \boldsymbol{\mu}_X
+    \end{bmatrix},
+    \begin{bmatrix}
+      \boldsymbol{\Sigma}_{YY} &amp; \boldsymbol{\Sigma}_{XY}^t \\
+      \boldsymbol{\Sigma}_{XY} &amp; \boldsymbol{\Sigma}_{XX}
+    \end{bmatrix}
+  \right)
+  \tag{3}
+\end{equation}\]</span>
+<p>Here, <span class="math inline">\(\boldsymbol{\Sigma}_{YY}\)</span> is Covariance Matrix of response <span class="math inline">\(\mathbf{Y}\)</span>; <span class="math inline">\(\boldsymbol{\Sigma}_{XY}\)</span> is Covariance Matrix between <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span>; <span class="math inline">\(\boldsymbol{\Sigma}_{XX}\)</span> is Covariance matrix of predictor variables <span class="math inline">\(\mathbf{X}\)</span>; <span class="math inline">\(\boldsymbol{\mu}_Y\)</span> and <span class="math inline">\(\boldsymbol{\mu}_X\)</span> are Mean vectors of response <span class="math inline">\(\mathbf{Y}\)</span> and predictor <span class="math inline">\(\mathbf{X}\)</span> respective.</p>
+<p>Simulation of <span class="math inline">\((\mathbf{Y, X})\)</span> for model~<a href="statistical-model.html#eq:model2">(3)</a> requires the fact that – a set of latent variable spanning <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> will contain same information in different structure. With two matrices <span class="math inline">\(\mathbf{R}_{p\times p}\)</span> and <span class="math inline">\(\mathbf{Q}_{q \times q}\)</span> with rank <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> respectively, lets define a transformation as <span class="math inline">\(\mathbf{Z} = \mathbf{RX}\)</span> and <span class="math inline">\(\mathbf{W} = \mathbf{QY}\)</span> so that,</p>
 <span class="math display" id="eq:model3">\[\begin{align}
   \begin{bmatrix}\mathbf{W} \\ 
   \boldsymbol{Z}\end{bmatrix}  &amp; \sim N \left(
@@ -151,60 +138,76 @@
   \right)
   \tag{4}
 \end{align}\]</span>
-<p>Further, if both <span class="math inline">\(\mathbf{Q}\)</span> and <span class="math inline">\(\mathbf{R}\)</span> are orthogonal matrix their inverse equales to their transpose, i.e. <span class="math inline">\(\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q\)</span> and <span class="math inline">\(\mathbf{R}^t\mathbf{R} = \mathbf{I}_p\)</span>. The inverse transformation can be defined as,</p>
-<span class="math display" id="eq:cov-yx-wz">\[\begin{align}
-\boldsymbol{\Sigma}_{XX}                                                                                                                                                                          = \boldsymbol{R}^t\boldsymbol{\Sigma}_{ZZ}  \boldsymbol{R}, &amp; \boldsymbol{\Sigma}_{XY}
-    = \boldsymbol{R}^t \boldsymbol{\Sigma}_{ZW} \boldsymbol{Q} \nonumber \\
-\boldsymbol{\Sigma}_{YY}                                                                                                                                                                          = \boldsymbol{Q}^t\boldsymbol{\Sigma}_{WW} \boldsymbol{Q}, &amp; \boldsymbol{\Sigma}_{YX} = \boldsymbol{Q}^t \boldsymbol{\Sigma}_{WZ} \boldsymbol{R}
-\tag{5}
-\end{align}\]</span>
-<p>The relationship above allows us to define the linear model relation in equation~<a href="introduction.html#eq:model1">(2)</a> in terms of <span class="math inline">\(\mathbf{W}\)</span> and <span class="math inline">\(athbf{Z}\)</span> as in equation~<a href="statistical-model.html#eq:latent-model">(6)</a>,</p>
+<p>Further, if both <span class="math inline">\(\mathbf{Q}\)</span> and <span class="math inline">\(\mathbf{R}\)</span> are orthonormal matrix such that <span class="math inline">\(\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q\)</span> and <span class="math inline">\(\mathbf{R}^t\mathbf{R} = \mathbf{I}_p\)</span>, the inverse transformation can be defined as,</p>
+<span class="math display" id="eq:cov-yx-wz">\[\begin{equation}
+  \begin{matrix}
+    \boldsymbol{\Sigma}_{XX} = \mathbf{R}^t \boldsymbol{\Sigma}_{ZZ} \mathbf{R} &amp; \Rightarrow &amp; \boldsymbol{\Sigma}_{ZZ} = \mathbf{R} \boldsymbol{\Sigma}_{XX} \mathbf{R}^t \\
+    \boldsymbol{\Sigma}_{XY} = \mathbf{R}^t \boldsymbol{\Sigma}_{ZW} \mathbf{Q} &amp; \Rightarrow &amp; \boldsymbol{\Sigma}_{ZW} = \mathbf{R} \boldsymbol{\Sigma}_{XY} \mathbf{Q}^t \\
+    \boldsymbol{\Sigma}_{YX} = \mathbf{Q}^t \boldsymbol{\Sigma}_{WZ} \mathbf{R} &amp; \Rightarrow &amp; \boldsymbol{\Sigma}_{WZ} = \mathbf{Q} \boldsymbol{\Sigma}_{YX} \mathbf{R}^t \\
+    \boldsymbol{\Sigma}_{YY} = \mathbf{Q}^t \boldsymbol{\Sigma}_{WW} \mathbf{Q} &amp; \Rightarrow &amp; \boldsymbol{\Sigma}_{WW} = \mathbf{Q} \boldsymbol{\Sigma}_{YY} \mathbf{Q}^t
+  \end{matrix}
+  \tag{5}
+\end{equation}\]</span>
+<p>In addition, a linear model relating <span class="math inline">\(\mathbf{W}\)</span> and <span class="math inline">\(\mathbf{Z}\)</span> can be written as,</p>
+<!-- The relationship above allows us to define the linear model relation in equation~\@ref(eq:model1) in terms of $\mathbf{W}$ and $\mathbf{Z}$ as in equation~\@ref(eq:latent-model), -->
 <span class="math display" id="eq:latent-model">\[\begin{equation}
   \mathbf{W} =  \boldsymbol{\mu}_W + \mathbf{A}^t \left(\mathbf{Z} - \boldsymbol{\mu}_Z\right) + \boldsymbol{\tau}; \qquad
   \boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{W|Z}\right)
   \tag{6}
 \end{equation}\]</span>
-<p>Here, in this setting the model parameters can be defined as follows where each of them can be related to the model parameter for model in equation~<a href="introduction.html#eq:model1">(2)</a> using the ortogonal matrices <span class="math inline">\(\mathbf{P}\)</span> and <span class="math inline">\(\mathbf{Q}\)</span>.</p>
+<p>Here, we can find a direct connection between different population properties between <a href="statistical-model.html#eq:model1">(2)</a> and <a href="statistical-model.html#eq:latent-model">(6)</a>. Some of them are:</p>
+<!-- Here, in this setting the model parameters can be defined as follows where each of them can be related to the model parameter for model in equation~\@ref(eq:model1) using the ortogonal matrices $\mathbf{P}$ and $\mathbf{Q}$. -->
 <dl>
-<dt>Regression Coefficients <span class="math inline">\(\left(\mathbf{A}\right)\)</span></dt>
-<dd>Using the transformation matrix <span class="math inline">\(\mathbf{P}\)</span> and <span class="math inline">\(\mathbf{Q}\)</span>, we can obtain the regression coefficients corresponding to the latent structure of predictors.
-<span class="math display">\[\begin{align}
-\mathbf{A}  &amp;   = \boldsymbol{\Sigma}_{WZ} \boldsymbol{\Sigma}_{ZZ}^{-1}
-              = \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{XX}\mathbf{R}^t\right]^{-1}
-              = \boldsymbol{Q\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}R^t = \mathbf{QBR}^t
-  \end{align}\]</span>
+<dt>Regression Coefficients</dt>
+<dd>Regression coefficients for model~<a href="statistical-model.html#eq:model1">(2)</a> is, <span class="math display">\[\mathbf{B} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1}\]</span> Using the transformation matrix <span class="math inline">\(\mathbf{P}\)</span> and <span class="math inline">\(\mathbf{Q}\)</span>, we can obtain the regression coefficients corresponding to the latent structure of predictors. <span class="math display">\[
+  \begin{aligned}
+\mathbf{A} &amp;= \boldsymbol{\Sigma}_{WZ} \boldsymbol{\Sigma}_{ZZ}^{-1}
+  &amp;= \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{XX}\mathbf{R}^t\right]^{-1} \\
+  &amp;= \mathbf{Q}\left[\boldsymbol{\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\right]\mathbf{R}^t \\
+  &amp;= \mathbf{QBR}^t
+  \end{aligned}
+  \]</span>
 </dd>
-<dt>Error Variance <span class="math inline">\(\left(\boldsymbol{\Sigma}_{W|Z}\right)\)</span></dt>
-<dd>The true unexplained variation present in population that the model between the latent structure of predictors and responses can also be expressed with the rotation matrix and the error variance <span class="math inline">\(\Sigma_{Y|X}\)</span>.
-<span class="math display">\[\begin{align}
+<dt>Error Variance</dt>
+<dd>The noise variance and the minimum prediction error for model~<a href="statistical-model.html#eq:model1">(2)</a> is, <span class="math display">\[\boldsymbol{\Sigma}_{Y|X} = \boldsymbol{\Sigma}_{YY} - \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1} \boldsymbol{\Sigma}_{XY}\]</span> Further, the noise variance of transformed model~<a href="statistical-model.html#eq:latent-model">(6)</a> is, <span class="math display">\[
+  \begin{aligned}
 \boldsymbol{\Sigma}_{W|Z}
-&amp;=  \boldsymbol{Q\Sigma}_{YY}\mathbf{Q}^t -
-\boldsymbol{Q \Sigma}_{YX}\mathbf{R}^t \left[\boldsymbol{R\Sigma}_{XX}\boldsymbol{R}^t\right]^{-1}
+&amp;= \boldsymbol{Q\Sigma}_{YY}\mathbf{Q}^t -
+  \boldsymbol{Q \Sigma}_{YX}\mathbf{R}^t \left[\boldsymbol{R\Sigma}_{XX}\boldsymbol{R}^t\right]^{-1}
   \boldsymbol{R\Sigma}_{XY}\mathbf{Q}^t \nonumber \\
-&amp;=  \boldsymbol{Q\Sigma}_{YY}\mathbf{Q}^t - \boldsymbol{Q \Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\boldsymbol{\Sigma}_{XY}\mathbf{Q}^t \nonumber \\
-&amp;=  \mathbf{Q}\left[\boldsymbol{\Sigma}_{YY} -
+&amp;= \boldsymbol{Q\Sigma}_{YY}\mathbf{Q}^t - 
+  \boldsymbol{Q \Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\boldsymbol{\Sigma}_{XY}\mathbf{Q}^t \nonumber \\
+&amp;= \mathbf{Q}\left[\boldsymbol{\Sigma}_{YY} -
   \boldsymbol{\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\boldsymbol{\Sigma}_{XY}\right]\mathbf{Q}^{t} \nonumber \\
-&amp;=  \mathbf{Q} \boldsymbol{\Sigma}_{Y|X}\mathbf{Q}^t
-  \end{align}\]</span>
-Since, <span class="math inline">\(\mathbf{Y}\)</span> is generated from orthogonal random rotation matrix <span class="math inline">\(\mathbf{Q}\)</span>, the error variance depends on <span class="math inline">\(\mathbf{Q}\)</span>. Further, the coefficient of determination is,
-</dd>
-<dt>Population Coefficient of Determination <span class="math inline">\(\left(\boldsymbol{\mathcal{R}}_{WZ}^{2}\right)\)</span></dt>
-<dd><span class="math display">\[\begin{align}
-\boldsymbol{\mathcal{R}}^2_{XY} &amp; =
-                          \mathbf{Q}^t\boldsymbol{\Sigma}_{WZ}\boldsymbol{\Sigma}^{-1}_{ZZ}\boldsymbol{\Sigma}_{ZW}\boldsymbol{\Sigma}_{WW}^{-1}\boldsymbol{Q} \nonumber \\
-                        &amp; = \mathbf{Q}^t\boldsymbol{\mathcal{R}}^2_{WZ}\mathbf{Q} \nonumber \\
-\text{i.e. }\boldsymbol{\mathcal{R}}^2_{WZ} &amp;= \mathbf{Q}\boldsymbol{\mathcal{R}}^2_{XY}\mathbf{Q}^t
-\end{align}\]</span>
+&amp;= \mathbf{Q} \boldsymbol{\Sigma}_{Y|X}\mathbf{Q}^t
+  \end{aligned}
+  \]</span>
 </dd>
 </dl>
-<p>Thus, on the basis of these mathematical backgrounds, the simulation strategy follows,</p>
-<ol style="list-style-type: lower-alpha">
-<li>Construct covariance structure of <span class="math inline">\(\mathbf{W}\)</span> and <span class="math inline">\(\mathbf{Z}\)</span> satisfying given parameters</li>
-<li>Simulate <span class="math inline">\(\mathbf{W}\)</span> and <span class="math inline">\(\mathbf{Z}\)</span> from random standard normal distribution</li>
-<li>Rotation <span class="math inline">\(\mathbf{Z}\)</span> by orthonormal matrix <span class="math inline">\(\mathbf{R}\)</span> to yield <span class="math inline">\(\mathbf{X} = \mathbf{R}^t \mathbf{Z}\)</span></li>
-<li>Rotation of <span class="math inline">\(\mathbf{W}\)</span> by orthogonal matrix <span class="math inline">\(\mathbf{Q}\)</span> to yield <span class="math inline">\(\mathbf{Y} = \mathbf{Q}^t \mathbf{W}\)</span></li>
-<li>For simplification, we assume that no common components of <span class="math inline">\(\mathbf{X}\)</span>, i.e. <span class="math inline">\(\mathbf{Z}\)</span>, relevant for <span class="math inline">\(\mathbf{W}\)</span>. For example, if component 1 and component 2 are relevant for <span class="math inline">\(\mathbf{W}_1\)</span>, they are not relevant for other <span class="math inline">\(\mathbf{W}\)</span>’s.</li>
-</ol>
+<p><!-- Since, $\mathbf{Y}$ is generated from orthogonal random rotation matrix $\mathbf{Q}$, the error variance depends on $\mathbf{Q}$. Further, the coefficient of determination is, --></p>
+<dl>
+<dt>Population Coefficient of Determination</dt>
+<dd>The population coefficient of determination for model~<a href="statistical-model.html#eq:model1">(2)</a> is, <span class="math display">\[\boldsymbol{\rho}^2_{XY} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1} \boldsymbol{\Sigma}_{XY} \boldsymbol{\Sigma}_{YY}^{-1}\]</span> Further, the coefficient of determination corresponding to model~<a href="statistical-model.html#eq:latent-model">(6)</a> is, <span class="math display">\[
+  \begin{aligned}
+\boldsymbol{\rho}^2_{ZW} &amp;= \boldsymbol{\Sigma}_{WZ} 
+\boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\Sigma}_{ZW} 
+\boldsymbol{\Sigma}_{WW}^{-1} \\
+  &amp;=\mathbf{Q}^t
+\boldsymbol{\Sigma}_{WZ}\boldsymbol{\Sigma}^{-1}_{ZZ}
+\boldsymbol{\Sigma}_{ZW}\boldsymbol{\Sigma}_{WW}^{-1}\boldsymbol{Q} \nonumber \\
+  &amp;=\mathbf{Q}^t\boldsymbol{\mathcal{R}}^2_{WZ}\mathbf{Q} \nonumber \\
+\text{i.e. }\boldsymbol{\mathcal{R}}^2_{WZ} 
+  &amp;=\mathbf{Q}\boldsymbol{\mathcal{R}}^2_{XY}\mathbf{Q}^t
+  \end{aligned}
+  \]</span>
+</dd>
+</dl>
+<!-- Thus, on the basis of these mathematical backgrounds, the simulation strategy follows, -->
+<!-- a) Construct covariance structure of $\mathbf{W}$ and $\mathbf{Z}$ satisfying given parameters -->
+<!-- b) Simulate $\mathbf{W}$ and $\mathbf{Z}$ from random standard normal distribution -->
+<!-- c) Rotation $\mathbf{Z}$ by orthonormal matrix $\mathbf{R}$ to yield $\mathbf{X} = \mathbf{R}^t \mathbf{Z}$ -->
+<!-- d) Rotation of $\mathbf{W}$ by orthogonal matrix $\mathbf{Q}$ to yield $\mathbf{Y} = \mathbf{Q}^t \mathbf{W}$ -->
+<!-- e) For simplification, we assume that no common components of $\mathbf{X}$, i.e. $\mathbf{Z}$, relevant for $\mathbf{W}$. For example, if component 1 and component 2 are relevant for $\mathbf{W}_1$, they are not relevant for other $\mathbf{W}$'s. -->
 <div id="model-parameter-relevant-components" class="section level2">
 <h2>Model parameterization and relevant components</h2>
 <p>Eigenvalue decomposition principal states that a variance-covariance matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span> can be decomposed as,</p>
@@ -264,6 +267,7 @@ Since, <span class="math inline">\(\mathbf{Y}\)</span> is generated from orthogo
 <p><code>Simrel-M</code> has considered an exclusive relevant predictor space for each response components, i.e. a set of predictor variables only influence one response component. However, it allows user to simulate more response variable than response components. In this case, noise are added during the orthogonal rotation of response components. For example, if user wants to simulation 5 response variation from 3 response components. Two standard normal vectors are combined with response components and rotated simultaneously. The rotation can be both restricted and unrestricted as discussed in previous section. The restricted rotation is carried out combining response vectors along with noise vector in a block-wise manner according to the users choice. Illustration in fig-…</p>
 <p>Suppose, in our previous example, if response components are combined as – <span class="math inline">\(\mathbf{W}_1, \mathbf{W}_4\)</span>, <span class="math inline">\(\mathbf{W}_2\)</span> and <span class="math inline">\(\mathbf{W}_3, \mathbf{W}_5\)</span>. Here, any predictor variable is only relevant for <span class="math inline">\(\mathbf{W}_1, \mathbf{W}_2\)</span> and <span class="math inline">\(\mathbf{W}_3\)</span> while <span class="math inline">\(\mathbf{W}_4\)</span> and <span class="math inline">\(\mathbf{W}_5\)</span> are noise. The resulting response variables are <span class="math inline">\(\mathbf{Y}_1 \ldots \mathbf{Y}_5\)</span> where, the first and fourth response variable spans the same space as by the first response components <span class="math inline">\(\mathbf{W}_1\)</span> and noise component <span class="math inline">\(\mathbf{W}_4\)</span> and so on. Thus, the predictors and predictor space relevant for response component <span class="math inline">\(\mathbf{W}_1\)</span> is also relevant for response <span class="math inline">\(\mathbf{Y}_1\)</span> and <span class="math inline">\(\mathbf{Y}_4\)</span>.</p>
 
+<!-- # References {-} -->
 </div>
 </div>
 <h3>References</h3>
@@ -287,7 +291,7 @@ Since, <span class="math inline">\(\mathbf{Y}\)</span> is generated from orthogo
         </div>
       </div>
 <a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="implementation.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -315,10 +319,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/therimalaya/simrel-m/edit/master/Includes/02-StatisticalModel.Rmd",
+"text": "Edit"
 },
-"download": ["Simrel-M.epub", "Simrel-M.mobi"],
+"download": ["Simrel-M.epub", "Simrel-M.mobi", "Simrel-M.pdf"],
 "toc": {
 "collapse": "section"
 }
