@@ -1,0 +1,25 @@
+* Meeting: 13 March 2017, Monday
+** Introduction
+- Motivation
+- What has been done before?
+- What is our contribution here?
+- What is coming up in these chapters                      :NotInteresting:
+** Statistical Model
+- Random Regression Model (m = 1)
+- Say something about beta
+- Introduce Q and R
+- Eigenvectors, Principal Components and Transformations
+** Relevant Components
+- Refer to some papers for m = 1 cases
+- Discuss on m = 1 case and extend it to m > 1
+- X envelope and Y envelope
+** Model Parameterization
+- Simplifying Assumption
+- Discuss about reduction in number of parameter on simplification and parameterization
+- Introduce $\gamma$, $\Sigma_{ww}$, $\rho_W^2$ and $\Sigma_{zw}$
+- How we simulate covariance matrix which satisfy coefficient of determination
+** Sampling of W and Z
+** Rotation to Y and X from W and Z
+- Discuss rotation and how we obtain other properties such as $R^2$ and covariance matrix
+** Examples
+** Discussion
