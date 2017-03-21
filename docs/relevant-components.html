@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="model-parameterization.html">
-
+<link rel="prev" href="statistical-model.html">
+<link rel="next" href="model-parameterization.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -95,43 +95,35 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-
+<div id="relevant-components" class="section level1">
+<h1>Relevant Components</h1>
+<p>Let us consider a single response linear model with <span class="math inline">\(p\)</span> predictors.</p>
+<p><span class="math display">\[\mathbf{y} = \mu_y + \beta^t\left(\mathbf{X} - \mu_x\right) + \epsilon\]</span></p>
+<p>where, <span class="math inline">\(\epsilon \sim N(0, \sigma^2)\)</span> and <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\epsilon\)</span> are random and independent. Following the principal of relevant space and irrelevant space which are discussed extensively in <span class="citation">Inge S Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span>, <span class="citation">Inge S. Helland (<a href="#ref-Helland_2000">2000</a>)</span>, <span class="citation">Inge S Helland et al. (<a href="#ref-helland2012near">2012</a>)</span>, <span class="citation">R. Cook, Helland, and Su (<a href="#ref-cook2013envelopes">2013</a>)</span>, <span class="citation">Sæbø, Almøy, and Helland (<a href="#ref-saebo2015simrel">2015</a>)</span> and <span class="citation">Inge S. Helland et al. (<a href="#ref-helland2017">2017</a>)</span>, we can assume that there exists a subspace of complete variable space which is relevant for <span class="math inline">\(\mathbf{y}\)</span>. An orthogonal space to this space does not contain any information about <span class="math inline">\(\mathbf{y}\)</span> and are irrelevant. Here, the <span class="math inline">\(y-\)</span>relevant subspace of <span class="math inline">\(\mathbf{X}\)</span> is spanned by a subset of eigenvectors <span class="math inline">\(\mathbf{(e)}\)</span> of covariance matrix of <span class="math inline">\(\mathbf{X}\)</span>, i.e. <span class="math inline">\(\boldsymbol{\Sigma}_{XX})\)</span>.</p>
+<p>This concept can be extended for <span class="math inline">\(m\)</span> response so that the subspace of <span class="math inline">\(\mathbf{X}\)</span> is relevant for a subspace of <span class="math inline">\(\mathbf{Y}\)</span>. This corresponds to the concept of simultaneous envelope <span class="citation">(R. Dennis Cook and Zhang <a href="#ref-Cook_2014">2014</a>)</span> where relevant (material) and irrelevant (immaterial) space were discussed for both response and predictors.</p>
+</div>
+<h3>References</h3>
 <div id="refs" class="references">
-<div>
-<p>Anderson, Theodore W, Ingram Olkin, and Les G Underhill. 1987. “Generation of Random Orthogonal Matrices.” <em>SIAM Journal on Scientific and Statistical Computing</em> 8 (4). SIAM: 625–29.</p>
-</div>
-<div>
-<p>Cook, R Dennis, and Xin Zhang. 2015. “Simultaneous Envelopes for Multivariate Linear Regression.” <em>Technometrics</em> 57 (1). Taylor &amp; Francis: 11–25.</p>
-</div>
-<div>
-<p>Cook, R. Dennis, and Xin Zhang. 2014. “Simultaneous Envelopes for Multivariate Linear Regression.” <em>Technometrics</em> 57 (1). Informa UK Limited: 11–25. doi:<a href="https://doi.org/10.1080/00401706.2013.872700">10.1080/00401706.2013.872700</a>.</p>
-</div>
-<div>
-<p>Cook, RD, IS Helland, and Z Su. 2013. “Envelopes and Partial Least Squares Regression.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 75 (5). Wiley Online Library: 851–77.</p>
-</div>
-<div>
-<p>Heiberger, Richard M. 1978. “Algorithm as 127: Generation of Random Orthogonal Matrices.” <em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em> 27 (2). JSTOR: 199–206.</p>
-</div>
-<div>
+<div id="ref-helland1994comparison">
 <p>Helland, Inge S, and Trygve Almøy. 1994. “Comparison of Prediction Methods When Only a Few Components Are Relevant.” <em>Journal of the American Statistical Association</em> 89 (426). Taylor &amp;amp; Francis Group: 583–91.</p>
 </div>
-<div>
-<p>Helland, Inge S, Solve Saebø, Ha Tjelmeland, and others. 2012. “Near Optimal Prediction from Relevant Components.” <em>Scandinavian Journal of Statistics</em> 39 (4). Wiley Online Library: 695–713.</p>
-</div>
-<div>
+<div id="ref-Helland_2000">
 <p>Helland, Inge S. 2000. “Model Reduction for Prediction in Regression Models.” <em>Scandinavian Journal of Statistics</em> 27 (1). Wiley-Blackwell: 1–20. doi:<a href="https://doi.org/10.1111/1467-9469.00174">10.1111/1467-9469.00174</a>.</p>
 </div>
-<div>
-<p>Helland, Inge S., S. Sæbø, T. Almøy, and R. Rimal. 2017. “Model and Estimators for Partial Least Squares.”</p>
+<div id="ref-helland2012near">
+<p>Helland, Inge S, Solve Saebø, Ha Tjelmeland, and others. 2012. “Near Optimal Prediction from Relevant Components.” <em>Scandinavian Journal of Statistics</em> 39 (4). Wiley Online Library: 695–713.</p>
 </div>
-<div>
-<p>Ripley, Brian D. 2009. <em>Stochastic Simulation</em>. Vol. 316. John Wiley &amp; Sons.</p>
+<div id="ref-cook2013envelopes">
+<p>Cook, RD, IS Helland, and Z Su. 2013. “Envelopes and Partial Least Squares Regression.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 75 (5). Wiley Online Library: 851–77.</p>
 </div>
-<div>
+<div id="ref-saebo2015simrel">
 <p>Sæbø, Solve, Trygve Almøy, and Inge S Helland. 2015. “Simrel-a Versatile Tool for Linear Model Data Simulation Based on the Concept of a Relevant Subspace and Relevant Predictors.” <em>Chemometrics and Intelligent Laboratory Systems</em>. Elsevier.</p>
 </div>
+<div id="ref-helland2017">
+<p>Helland, Inge S., S. Sæbø, T. Almøy, and R. Rimal. 2017. “Model and Estimators for Partial Least Squares.”</p>
+</div>
+<div id="ref-Cook_2014">
+<p>Cook, R. Dennis, and Xin Zhang. 2014. “Simultaneous Envelopes for Multivariate Linear Regression.” <em>Technometrics</em> 57 (1). Informa UK Limited: 11–25. doi:<a href="https://doi.org/10.1080/00401706.2013.872700">10.1080/00401706.2013.872700</a>.</p>
 </div>
 </div>
             </section>
@@ -139,8 +131,8 @@
           </div>
         </div>
       </div>
-<a href="model-parameterization.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="statistical-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-parameterization.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -168,7 +160,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/therimalaya/simrel-m/edit/master/Includes/05-references.Rmd",
+"link": "https://github.com/therimalaya/simrel-m/edit/master/Includes/02-StatisticalModel.Rmd",
 "text": "Edit"
 },
 "download": ["Simrel-M.epub", "Simrel-M.mobi", "Simrel-M.pdf"],

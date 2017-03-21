@@ -1,7 +1,7 @@
 ---
 site: bookdown::bookdown_site
 title: '`simrel-m`: A versatile tool for simulating multi-response linear model data'
-data: "`r Sys.Date()`"
+date: "`r Sys.Date()`"
 author:
 - name: Raju Rimal
 - name: Trygve Almøy
@@ -38,5 +38,5 @@ abstract: |
   The method is implemented as an R-package which serves as an extension of the existing `simrel` packages @saebo2015simrel.
 ---
 
-```{r eval = knitr:::is_html_output(), child = "Includes/abstract.Rmd"}
+```{r eval = knitr:::is_html_output(), child = "Includes/00-abstract.Rmd"}
 ```

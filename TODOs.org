@@ -3,7 +3,7 @@
 - Motivation
 - What has been done before?
 - What is our contribution here?
-- What is coming up in these chapters                      :NotInteresting:
+- What is coming up in these chapters
 ** Statistical Model
 - Random Regression Model (m = 1)
 - Say something about beta

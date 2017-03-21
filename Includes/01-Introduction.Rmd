@@ -4,56 +4,5 @@ Technological advancement has opened a door for complex and sophisticated scient
 
 The simulation method we are discussing here is based on principal of relevant space for prediction [@helland1994comparison]  which assumes that there exists a subspace in the complete space of response variables that is spanned by a subset of eigenvectors of predictor variables. The r-package based on this method lets user to specify various population properties such as  which components of predictors $(\mathbf{X})$ are relevant for a component of responses $\mathbf{Y}$ and how the eigenvalues of $\mathbf{X}$ decreases. This enables the possibility to construct data for evaluating estimation methods and methods developed for variable selection. 
 
-Among several literatures in simulation (<span style="color:red;">\color{red}`which literatures`</span>), @ripley2009stochastic has exhaustively discussed the topic. In addition, many literatures (<span style="color:red;">\color{red}`which literatures`</span>) are available on studies which has implemented simulated data in order to investigate new estimation methods and prediction strategy [see: @cook2015simultaneous; @cook2013envelopes; @helland2012near]. However, most of the simulations in these studies is developed to address their specific problem. A systematic tool for simulating linear model data with single response, which could serve as a general tool for all such comparisons, was presented in @saebo2015simrel and as r-package `simrel`. This paper extends `simrel` in order to simulate linear model data with multivariate response with an r-package `simrel-m`.
+Among several literatures in simulation (<span style="color:red;">\color{red}`which literatures`</span>), @ripley2009stochastic has exhaustively discussed the topic. In addition, many literatures (<span style="color:red;">\color{red}`which literatures`</span>) are available on studies which has implemented simulated data in order to investigate new estimation methods and prediction strategy [see: @cook2015simultaneous; @cook2013envelopes; @helland2012near]. However, most of the simulations in these studies were developed to address their specific problem. A systematic tool for simulating linear model data with single response, which could serve as a general tool for all such comparisons, was presented in @saebo2015simrel and as r-package `simrel`. This paper extends `simrel` in order to simulate linear model data with multivariate response with an r-package `simrel-m`.
 
-The r-package `simrel-m` uses model parameterization which is based on the concept of relevant components @helland1994comparison where it is assumed that a subspace of response $\mathbf{Y}$ is spanned by a subset of eigenvectors corresponding to predictor space. A response space can be thought to have two mutually orthogonal space -- relevant and irrelevant. Here the space of response matrix for which the predictors are relevant is termed as response components, and we assume that each response component is spanned by an exclusive subset of predictor variables. In this way we can construct a set of predictor variables which has non-zero regression coefficients. This also enables user to have uninformative predictors which can be detected during variable selection procedure. In addition, user can control signal-to-noise ratio for each response components with a vector of population coefficient of determination $\boldsymbol{\rho}^2$. Further, the collinearity between predictor variables can also be adjusted by a factor $\gamma$ which controls decay factor of eigenvalue of $\mathbf{X}$ matrix. @helland1994comparison showed that if the direction of large variability (i.e., component corresponding to large eigenvalues) are also relevant relevant predictor space, prediction is relatively easy. In contrast, if the relevant predictors are on the direction of low variability, prediction becomes difficult. Table~\@ref(tab:parameters) shows all the parameters that a user can specify in `simrel-m`.
-
-Table: (#tab:parameters) Parameters for simulation used in this study
-
-| Parameters             | Description                                                                                  |
-| :--------------------: | -------------------------------------------------------------------------------------------- |
-| $n$                    | number of observations                                                                       |
-| $p$                    | number of predictor variables                                                                |
-| $q$                    | numbers of relevant predictors for each latent component of response variables               |
-| $l$                    | number of informative latent component of response variables (response components)           |
-| $m$                    | number of response variables                                                                 |
-| $\gamma$               | degree of collinearity (factor that control the decrease of eigenvalue of $\mathbf{X}$)      |
-| $\mathcal{P}$          | position index of relevant predictor components for each response components                 |
-| $\mathcal{S}$          | position index of response components to combine relevant and irrelevant response variable   |
-| $\boldsymbol{\rho}^2$  | population coefficient determination for each response components                            |
-
-Based on random regression model in equation~\@ref(eq:model1), we discuss some of these parameters in details. 
-
-Out of $p$ predictor variables only $q$ of them are relevant and has non-zero regression coefficients. If $\boldsymbol{e}_i, \; i = 1, 2, \ldots, p$ be the eigenvectors corresponding to $\mathbf{X}$, then, for some vector of $\boldsymbol{\eta}_j, j = 1, \ldots, m$ for $m$ response variables, 
-
-\begin{align}
-\mathbf{B} = \left(\beta_{ij}\right) &= 
-  \begin{bmatrix} 
-    \boldsymbol{\eta}_{11} & \ldots & \boldsymbol{\eta}_{1p} \\
-    \vdots                 & \ddots & \vdots \\
-    \boldsymbol{\eta}_{m1} & \ldots & \boldsymbol{\eta}_{mp}
-  \end{bmatrix} 
-  \begin{bmatrix} 
-    \mathbf{e}_{11} & \vdots & \mathbf{e}_{1p} \\
-    \vdots          & \ddots & \vdots \\
-    \mathbf{e}_{p1} & \vdots & \mathbf{e}_{pp}
-  \end{bmatrix} \\ &= 
-  \begin{bmatrix}\boldsymbol{\eta}_{1} \\ \vdots \\ \boldsymbol{\eta}_{m}\end{bmatrix}_{m \times p}
-  \begin{bmatrix}\mathbf{e}_{1} & \ldots & \mathbf{e}_{p}\end{bmatrix}_{p \times p} 
-(\#eq:beta-eigenvector-relation)
-\end{align}
-
-The number of terms in equation~\@ref(eq:beta-eigenvector-relation) may be reduced by two mechanisms:
-
-a) Some elements in $\boldsymbol{\eta}_j, j = 1, \ldots m$ are zero
-b) There are coinciding eigenvalues of $\boldsymbol{\Sigma}_{xx}$ such that it is enough to have one eigenvector in equation~\@ref(eq:beta-eigenvector-relation).
-
-Let there are $k$ number predictor components that are relevant for any of the response. The $\mathcal{P}$ contains the indices of these position for each response components. Here the order of components of predictor is defined by a decreasing set of eigenvalues such that $\lambda_1 \ge \ldots \ge \lambda_p > 0$. In `simrel-m` package, these set of position is referred as `relpos`. For example, if $\mathcal{P} = {{1, 2}, {3, 5}, {4}}$ then we  can say that there are 3 informative space in response such that components 1 and 2 of predictor variable is relevant for first response component; component 3 and 5 of predictor are relevant for second response component and fourth predictor component is relevant for third response component. In addition, $\lambda_1 \ge \ldots \ge \lambda_5$ are relevant for some response.
-
-In `simrel-m`, these 3 response components are combined with non-informative vectors for desired number of response variables. This is referred as $\mathcal{S}$ and `ypos` in `simrel-m` package. If $\mathcal{S} = {{1, 4}, {2}, {3, 5}}$ then we can say that there are 5 response variables which has 3 dimensional informative space. Since response components 1, 2 and 3 are informative, from the indices of $\mathcal{S}$, first response component is combined with non-informative fourth component and third informative component is combined with fifth non-informative component. In this way, we will obtain a set of 5 response variables for which predictor component 1 and 2 will be relevant for response 1 and 4; predictor component 3 and 5 will be relevant for response 2 and predictor component 4 will be relevant for response 3 and 5.
-
-For simplification, an assumption is made that all $p$ eigenvalues of $\boldsymbol{\Sigma}_{XX}$ decrease exponentially as $e^{-\gamma (i - 1)}$ for $i = 1, \ldots p$ and some positive constant $\gamma$. This way, the $p$ eigenvalues depends on single variables $\gamma$ such that when $\gamma$ is large, eigenvalues decreases sharply referring high degree of multi-collinearity in predictor variables.
-
-Here we have assumed that the relevant components are know, as in @helland1994comparison, which is rare in practice. But in comparative studies of prediction methods, this can help to explain interesting cases. For example, simultaneous envelope [@cook2015simultaneous] has discussed about the informative (material) and uninformative (immaterial) space on both $\mathbf{X}$ and $\mathbf{Y}$. In this case, `simrel-m` can provide a simulated data with various interesting cases for its assessment and comparison with other methods.
-
----

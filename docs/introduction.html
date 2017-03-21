@@ -25,6 +25,7 @@
 
 
 
+<meta name="date" content="2017-03-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -66,11 +67,13 @@
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html"><i class="fa fa-check"></i>Statistical Model</a><ul>
-<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#model-parameter-relevant-components"><i class="fa fa-check"></i>Model parameterization and relevant components</a></li>
-<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#data-simulation"><i class="fa fa-check"></i>Data Simulation</a></li>
-<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#rotation-predictor-space"><i class="fa fa-check"></i>Rotation of predictor space</a></li>
-<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#rotation-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
+<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html"><i class="fa fa-check"></i>Statistical Model</a></li>
+<li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html"><i class="fa fa-check"></i>Relevant Components</a></li>
+<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html"><i class="fa fa-check"></i>Model Parameterization</a><ul>
+<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html#position-of-relevant-components"><i class="fa fa-check"></i>Position of relevant components</a></li>
+<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html#data-simulation"><i class="fa fa-check"></i>Data Simulation</a></li>
+<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html#rotation-predictor-space"><i class="fa fa-check"></i>Rotation of predictor space</a></li>
+<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html#rotation-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -95,88 +98,8 @@
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>Technological advancement has opened a door for complex and sophisticated scientific experiments that was not possible before. Due to this change, enormous amounts of raw data are generated which contains massive information but difficult to excavate. Finding information and performing scientific research on these raw data has now become another problem. In order to tackle this situation new methods are being developed. However, before implementing any method, it is essential to test its performance. Often, researchers use simulated data for the purpose which itself is a time-consuming process. The main focus of this paper is to present a simulation method, along with an r-package called <code>simrel-m</code>, that is versatile in nature and yet simple to use.</p>
-<p>The simulation method we are discussing here is based on principal of relevant space for prediction <span class="citation">(I. S. Helland and Almøy <a href="#ref-helland1994comparison">1994</a>)</span> which assumes that there exists a subspace in the complete space of response variables that is spanned by a subset of eigenvectors of predictor variables. The r-package based on this method lets user to specify various population properties such as which components of predictors <span class="math inline">\((\mathbf{X})\)</span> are relevant for a component of responses <span class="math inline">\(\mathbf{Y}\)</span> and how the eigenvalues of <span class="math inline">\(\mathbf{X}\)</span> decreases. This enables the possibility to construct data for evaluating estimation methods and methods developed for variable selection.</p>
-<p>Among several literatures in simulation (<span style="color:red;"><code>which literatures</code></span>), <span class="citation">Ripley (<a href="#ref-ripley2009stochastic">2009</a>)</span> has exhaustively discussed the topic. In addition, many literatures (<span style="color:red;"><code>which literatures</code></span>) are available on studies which has implemented simulated data in order to investigate new estimation methods and prediction strategy <span class="citation">(see: R. D. Cook and Zhang <a href="#ref-cook2015simultaneous">2015</a>; R. Cook, Helland, and Su <a href="#ref-cook2013envelopes">2013</a>; I. S. Helland et al. <a href="#ref-helland2012near">2012</a>)</span>. However, most of the simulations in these studies is developed to address their specific problem. A systematic tool for simulating linear model data with single response, which could serve as a general tool for all such comparisons, was presented in <span class="citation">Sæbø, Almøy, and Helland (<a href="#ref-saebo2015simrel">2015</a>)</span> and as r-package <code>simrel</code>. This paper extends <code>simrel</code> in order to simulate linear model data with multivariate response with an r-package <code>simrel-m</code>.</p>
-<p>The r-package <code>simrel-m</code> uses model parameterization which is based on the concept of relevant components <span class="citation">I. S. Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span> where it is assumed that a subspace of response <span class="math inline">\(\mathbf{Y}\)</span> is spanned by a subset of eigenvectors corresponding to predictor space. A response space can be thought to have two mutually orthogonal space – relevant and irrelevant. Here the space of response matrix for which the predictors are relevant is termed as response components, and we assume that each response component is spanned by an exclusive subset of predictor variables. In this way we can construct a set of predictor variables which has non-zero regression coefficients. This also enables user to have uninformative predictors which can be detected during variable selection procedure. In addition, user can control signal-to-noise ratio for each response components with a vector of population coefficient of determination <span class="math inline">\(\boldsymbol{\rho}^2\)</span>. Further, the collinearity between predictor variables can also be adjusted by a factor <span class="math inline">\(\gamma\)</span> which controls decay factor of eigenvalue of <span class="math inline">\(\mathbf{X}\)</span> matrix. <span class="citation">I. S. Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span> showed that if the direction of large variability (i.e., component corresponding to large eigenvalues) are also relevant relevant predictor space, prediction is relatively easy. In contrast, if the relevant predictors are on the direction of low variability, prediction becomes difficult. Table~<a href="introduction.html#tab:parameters">1</a> shows all the parameters that a user can specify in <code>simrel-m</code>.</p>
-<table>
-<caption><span id="tab:parameters">Table 1: </span> Parameters for simulation used in this study</caption>
-<colgroup>
-<col width="19%" />
-<col width="80%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center">Parameters</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><span class="math inline">\(n\)</span></td>
-<td>number of observations</td>
-</tr>
-<tr class="even">
-<td align="center"><span class="math inline">\(p\)</span></td>
-<td>number of predictor variables</td>
-</tr>
-<tr class="odd">
-<td align="center"><span class="math inline">\(q\)</span></td>
-<td>numbers of relevant predictors for each latent component of response variables</td>
-</tr>
-<tr class="even">
-<td align="center"><span class="math inline">\(l\)</span></td>
-<td>number of informative latent component of response variables (response components)</td>
-</tr>
-<tr class="odd">
-<td align="center"><span class="math inline">\(m\)</span></td>
-<td>number of response variables</td>
-</tr>
-<tr class="even">
-<td align="center"><span class="math inline">\(\gamma\)</span></td>
-<td>degree of collinearity (factor that control the decrease of eigenvalue of <span class="math inline">\(\mathbf{X}\)</span>)</td>
-</tr>
-<tr class="odd">
-<td align="center"><span class="math inline">\(\mathcal{P}\)</span></td>
-<td>position index of relevant predictor components for each response components</td>
-</tr>
-<tr class="even">
-<td align="center"><span class="math inline">\(\mathcal{S}\)</span></td>
-<td>position index of response components to combine relevant and irrelevant response variable</td>
-</tr>
-<tr class="odd">
-<td align="center"><span class="math inline">\(\boldsymbol{\rho}^2\)</span></td>
-<td>population coefficient determination for each response components</td>
-</tr>
-</tbody>
-</table>
-<p>Based on random regression model in equation~<a href="statistical-model.html#eq:model1">(2)</a>, we discuss some of these parameters in details.</p>
-<p>Out of <span class="math inline">\(p\)</span> predictor variables only <span class="math inline">\(q\)</span> of them are relevant and has non-zero regression coefficients. If <span class="math inline">\(\boldsymbol{e}_i, \; i = 1, 2, \ldots, p\)</span> be the eigenvectors corresponding to <span class="math inline">\(\mathbf{X}\)</span>, then, for some vector of <span class="math inline">\(\boldsymbol{\eta}_j, j = 1, \ldots, m\)</span> for <span class="math inline">\(m\)</span> response variables,</p>
-<span class="math display" id="eq:beta-eigenvector-relation">\[\begin{align}
-\mathbf{B} = \left(\beta_{ij}\right) &amp;= 
-  \begin{bmatrix} 
-    \boldsymbol{\eta}_{11} &amp; \ldots &amp; \boldsymbol{\eta}_{1p} \\
-    \vdots                 &amp; \ddots &amp; \vdots \\
-    \boldsymbol{\eta}_{m1} &amp; \ldots &amp; \boldsymbol{\eta}_{mp}
-  \end{bmatrix} 
-  \begin{bmatrix} 
-    \mathbf{e}_{11} &amp; \vdots &amp; \mathbf{e}_{1p} \\
-    \vdots          &amp; \ddots &amp; \vdots \\
-    \mathbf{e}_{p1} &amp; \vdots &amp; \mathbf{e}_{pp}
-  \end{bmatrix} \\ &amp;= 
-  \begin{bmatrix}\boldsymbol{\eta}_{1} \\ \vdots \\ \boldsymbol{\eta}_{m}\end{bmatrix}_{m \times p}
-  \begin{bmatrix}\mathbf{e}_{1} &amp; \ldots &amp; \mathbf{e}_{p}\end{bmatrix}_{p \times p} 
-\tag{1}
-\end{align}\]</span>
-<p>The number of terms in equation~<a href="introduction.html#eq:beta-eigenvector-relation">(1)</a> may be reduced by two mechanisms:</p>
-<ol style="list-style-type: lower-alpha">
-<li>Some elements in <span class="math inline">\(\boldsymbol{\eta}_j, j = 1, \ldots m\)</span> are zero</li>
-<li>There are coinciding eigenvalues of <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span> such that it is enough to have one eigenvector in equation~<a href="introduction.html#eq:beta-eigenvector-relation">(1)</a>.</li>
-</ol>
-<p>Let there are <span class="math inline">\(k\)</span> number predictor components that are relevant for any of the response. The <span class="math inline">\(\mathcal{P}\)</span> contains the indices of these position for each response components. Here the order of components of predictor is defined by a decreasing set of eigenvalues such that <span class="math inline">\(\lambda_1 \ge \ldots \ge \lambda_p &gt; 0\)</span>. In <code>simrel-m</code> package, these set of position is referred as <code>relpos</code>. For example, if <span class="math inline">\(\mathcal{P} = {{1, 2}, {3, 5}, {4}}\)</span> then we can say that there are 3 informative space in response such that components 1 and 2 of predictor variable is relevant for first response component; component 3 and 5 of predictor are relevant for second response component and fourth predictor component is relevant for third response component. In addition, <span class="math inline">\(\lambda_1 \ge \ldots \ge \lambda_5\)</span> are relevant for some response.</p>
-<p>In <code>simrel-m</code>, these 3 response components are combined with non-informative vectors for desired number of response variables. This is referred as <span class="math inline">\(\mathcal{S}\)</span> and <code>ypos</code> in <code>simrel-m</code> package. If <span class="math inline">\(\mathcal{S} = {{1, 4}, {2}, {3, 5}}\)</span> then we can say that there are 5 response variables which has 3 dimensional informative space. Since response components 1, 2 and 3 are informative, from the indices of <span class="math inline">\(\mathcal{S}\)</span>, first response component is combined with non-informative fourth component and third informative component is combined with fifth non-informative component. In this way, we will obtain a set of 5 response variables for which predictor component 1 and 2 will be relevant for response 1 and 4; predictor component 3 and 5 will be relevant for response 2 and predictor component 4 will be relevant for response 3 and 5.</p>
-<p>For simplification, an assumption is made that all <span class="math inline">\(p\)</span> eigenvalues of <span class="math inline">\(\boldsymbol{\Sigma}_{XX}\)</span> decrease exponentially as <span class="math inline">\(e^{-\gamma (i - 1)}\)</span> for <span class="math inline">\(i = 1, \ldots p\)</span> and some positive constant <span class="math inline">\(\gamma\)</span>. This way, the <span class="math inline">\(p\)</span> eigenvalues depends on single variables <span class="math inline">\(\gamma\)</span> such that when <span class="math inline">\(\gamma\)</span> is large, eigenvalues decreases sharply referring high degree of multi-collinearity in predictor variables.</p>
-<p>Here we have assumed that the relevant components are know, as in <span class="citation">I. S. Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span>, which is rare in practice. But in comparative studies of prediction methods, this can help to explain interesting cases. For example, simultaneous envelope <span class="citation">(R. D. Cook and Zhang <a href="#ref-cook2015simultaneous">2015</a>)</span> has discussed about the informative (material) and uninformative (immaterial) space on both <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span>. In this case, <code>simrel-m</code> can provide a simulated data with various interesting cases for its assessment and comparison with other methods.</p>
-<hr />
+<p>The simulation method we are discussing here is based on principal of relevant space for prediction <span class="citation">(Inge S Helland and Almøy <a href="#ref-helland1994comparison">1994</a>)</span> which assumes that there exists a subspace in the complete space of response variables that is spanned by a subset of eigenvectors of predictor variables. The r-package based on this method lets user to specify various population properties such as which components of predictors <span class="math inline">\((\mathbf{X})\)</span> are relevant for a component of responses <span class="math inline">\(\mathbf{Y}\)</span> and how the eigenvalues of <span class="math inline">\(\mathbf{X}\)</span> decreases. This enables the possibility to construct data for evaluating estimation methods and methods developed for variable selection.</p>
+<p>Among several literatures in simulation (<span style="color:red;"><code>which literatures</code></span>), <span class="citation">Ripley (<a href="#ref-ripley2009stochastic">2009</a>)</span> has exhaustively discussed the topic. In addition, many literatures (<span style="color:red;"><code>which literatures</code></span>) are available on studies which has implemented simulated data in order to investigate new estimation methods and prediction strategy <span class="citation">(see: R Dennis Cook and Zhang <a href="#ref-cook2015simultaneous">2015</a>; R. Cook, Helland, and Su <a href="#ref-cook2013envelopes">2013</a>; Inge S Helland et al. <a href="#ref-helland2012near">2012</a>)</span>. However, most of the simulations in these studies were developed to address their specific problem. A systematic tool for simulating linear model data with single response, which could serve as a general tool for all such comparisons, was presented in <span class="citation">Sæbø, Almøy, and Helland (<a href="#ref-saebo2015simrel">2015</a>)</span> and as r-package <code>simrel</code>. This paper extends <code>simrel</code> in order to simulate linear model data with multivariate response with an r-package <code>simrel-m</code>.</p>
 
 </div>
 <h3>References</h3>

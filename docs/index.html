@@ -25,6 +25,7 @@
 
 
 
+<meta name="date" content="2017-03-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -66,11 +67,13 @@
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html"><i class="fa fa-check"></i>Statistical Model</a><ul>
-<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#model-parameter-relevant-components"><i class="fa fa-check"></i>Model parameterization and relevant components</a></li>
-<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#data-simulation"><i class="fa fa-check"></i>Data Simulation</a></li>
-<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#rotation-predictor-space"><i class="fa fa-check"></i>Rotation of predictor space</a></li>
-<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html#rotation-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
+<li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html"><i class="fa fa-check"></i>Statistical Model</a></li>
+<li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html"><i class="fa fa-check"></i>Relevant Components</a></li>
+<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html"><i class="fa fa-check"></i>Model Parameterization</a><ul>
+<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html#position-of-relevant-components"><i class="fa fa-check"></i>Position of relevant components</a></li>
+<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html#data-simulation"><i class="fa fa-check"></i>Data Simulation</a></li>
+<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html#rotation-predictor-space"><i class="fa fa-check"></i>Rotation of predictor space</a></li>
+<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html#rotation-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -98,10 +101,11 @@
 <h4 class="author"><em>Trygve Almøy</em></h4>
 <h4 class="author"><em>Solve Sæbø</em></h4>
 <address class="author_afil">
-Norwegian University of Life Sciences<br></div>
-<div id="abstract" class="section level1 unnumbered">
+Norwegian University of Life Sciences<br><h4 class="date"><em>2017-03-21</em></h4>
+</div>
+<div id="abstract" class="section level1">
 <h1>Abstract</h1>
-<p>Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such “big-data”. Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present <code>simrel-m</code>, which is a versatile and transparent tool for simulating linear model data with extensive range of adjustable properties. The method is based on the concept of relevant components <span class="citation">I. S. Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span>, which is equivalent to the envelope model <span class="citation">R. Cook, Helland, and Su (<a href="#ref-cook2013envelopes">2013</a>)</span>. It is a multi-response extension of <code>simrel</code> <span class="citation">Sæbø, Almøy, and Helland (<a href="#ref-saebo2015simrel">2015</a>)</span>, and as <code>simrel</code> the new approach is essentially based on random rotations of latent relevant components to obtain a predictor matrix <span class="math inline">\(\mathbf{X}\)</span>, but in addition we introduce random rotations of latent components spanning a response space in order to obtain a multivariate response matrix <span class="math inline">\(\mathbf{Y}\)</span>. The properties of the linear relation between <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> are defined by a small set of input parameters which allow versatile and adjustable simulations. Sub-space rotations also allow for generating data suitable for testing variable selection methods in multi-response settings. The method is implemented as an R-package which serves as an extension of the existing <code>simrel</code> packages <span class="citation">Sæbø, Almøy, and Helland (<a href="#ref-saebo2015simrel">2015</a>)</span>.</p>
+<p>Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such “big-data”. Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present <code>simrel-m</code>, which is a versatile and transparent tool for simulating linear model data with extensive range of adjustable properties. The method is based on the concept of relevant components <span class="citation">Inge S Helland and Almøy (<a href="#ref-helland1994comparison">1994</a>)</span>, which is equivalent to the envelope model <span class="citation">R. Cook, Helland, and Su (<a href="#ref-cook2013envelopes">2013</a>)</span>. It is a multi-response extension of <code>simrel</code> <span class="citation">Sæbø, Almøy, and Helland (<a href="#ref-saebo2015simrel">2015</a>)</span>, and as <code>simrel</code> the new approach is essentially based on random rotations of latent relevant components to obtain a predictor matrix <span class="math inline">\(\mathbf{X}\)</span>, but in addition we introduce random rotations of latent components spanning a response space in order to obtain a multivariate response matrix <span class="math inline">\(\mathbf{Y}\)</span>. The properties of the linear relation between <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> are defined by a small set of input parameters which allow versatile and adjustable simulations. Sub-space rotations also allow for generating data suitable for testing variable selection methods in multi-response settings. The method is implemented as an R-package which serves as an extension of the existing <code>simrel</code> packages <span class="citation">Sæbø, Almøy, and Helland (<a href="#ref-saebo2015simrel">2015</a>)</span>.</p>
 
 </div>
 <h3>References</h3>

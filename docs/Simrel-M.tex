@@ -209,7 +209,7 @@ has exhaustively discussed the topic. In addition, many literatures
 which has implemented simulated data in order to investigate new
 estimation methods and prediction strategy
 \citep[see:][]{cook2015simultaneous, cook2013envelopes, helland2012near}.
-However, most of the simulations in these studies is developed to
+However, most of the simulations in these studies were developed to
 address their specific problem. A systematic tool for simulating linear
 model data with single response, which could serve as a general tool for
 all such comparisons, was presented in \citet{saebo2015simrel} and as
@@ -217,243 +217,84 @@ r-package \texttt{simrel}. This paper extends \texttt{simrel} in order
 to simulate linear model data with multivariate response with an
 r-package \texttt{simrel-m}.
 
-The r-package \texttt{simrel-m} uses model parameterization which is
-based on the concept of relevant components
-\citet{helland1994comparison} where it is assumed that a subspace of
-response \(\mathbf{Y}\) is spanned by a subset of eigenvectors
-corresponding to predictor space. A response space can be thought to
-have two mutually orthogonal space -- relevant and irrelevant. Here the
-space of response matrix for which the predictors are relevant is termed
-as response components, and we assume that each response component is
-spanned by an exclusive subset of predictor variables. In this way we
-can construct a set of predictor variables which has non-zero regression
-coefficients. This also enables user to have uninformative predictors
-which can be detected during variable selection procedure. In addition,
-user can control signal-to-noise ratio for each response components with
-a vector of population coefficient of determination
-\(\boldsymbol{\rho}^2\). Further, the collinearity between predictor
-variables can also be adjusted by a factor \(\gamma\) which controls
-decay factor of eigenvalue of \(\mathbf{X}\) matrix.
-\citet{helland1994comparison} showed that if the direction of large
-variability (i.e., component corresponding to large eigenvalues) are
-also relevant relevant predictor space, prediction is relatively easy.
-In contrast, if the relevant predictors are on the direction of low
-variability, prediction becomes difficult.
-Table\textasciitilde{}\ref{tab:parameters} shows all the parameters that
-a user can specify in \texttt{simrel-m}.
-
-\begin{longtable}[]{@{}cl@{}}
-\caption{\label{tab:parameters} Parameters for simulation used in this
-study}\tabularnewline
-\toprule
-\begin{minipage}[b]{0.19\columnwidth}\centering\strut
-Parameters\strut
-\end{minipage} & \begin{minipage}[b]{0.75\columnwidth}\raggedright\strut
-Description\strut
-\end{minipage}\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.19\columnwidth}\centering\strut
-Parameters\strut
-\end{minipage} & \begin{minipage}[b]{0.75\columnwidth}\raggedright\strut
-Description\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\(n\)\strut
-\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
-number of observations\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\(p\)\strut
-\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
-number of predictor variables\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\(q\)\strut
-\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
-numbers of relevant predictors for each latent component of response
-variables\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\(l\)\strut
-\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
-number of informative latent component of response variables (response
-components)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\(m\)\strut
-\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
-number of response variables\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\(\gamma\)\strut
-\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
-degree of collinearity (factor that control the decrease of eigenvalue
-of \(\mathbf{X}\))\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\(\mathcal{P}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
-position index of relevant predictor components for each response
-components\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\(\mathcal{S}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
-position index of response components to combine relevant and irrelevant
-response variable\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\(\boldsymbol{\rho}^2\)\strut
-\end{minipage} & \begin{minipage}[t]{0.75\columnwidth}\raggedright\strut
-population coefficient determination for each response components\strut
-\end{minipage}\tabularnewline
-\bottomrule
-\end{longtable}
-
-Based on random regression model in
-equation\textasciitilde{}\eqref{eq:model1}, we discuss some of these
-parameters in details.
-
-Out of \(p\) predictor variables only \(q\) of them are relevant and has
-non-zero regression coefficients. If
-\(\boldsymbol{e}_i, \; i = 1, 2, \ldots, p\) be the eigenvectors
-corresponding to \(\mathbf{X}\), then, for some vector of
-\(\boldsymbol{\eta}_j, j = 1, \ldots, m\) for \(m\) response variables,
-
-\begin{align}
-\mathbf{B} = \left(\beta_{ij}\right) &= 
-  \begin{bmatrix} 
-    \boldsymbol{\eta}_{11} & \ldots & \boldsymbol{\eta}_{1p} \\
-    \vdots                 & \ddots & \vdots \\
-    \boldsymbol{\eta}_{m1} & \ldots & \boldsymbol{\eta}_{mp}
-  \end{bmatrix} 
-  \begin{bmatrix} 
-    \mathbf{e}_{11} & \vdots & \mathbf{e}_{1p} \\
-    \vdots          & \ddots & \vdots \\
-    \mathbf{e}_{p1} & \vdots & \mathbf{e}_{pp}
-  \end{bmatrix} \\ &= 
-  \begin{bmatrix}\boldsymbol{\eta}_{1} \\ \vdots \\ \boldsymbol{\eta}_{m}\end{bmatrix}_{m \times p}
-  \begin{bmatrix}\mathbf{e}_{1} & \ldots & \mathbf{e}_{p}\end{bmatrix}_{p \times p} 
-\label{eq:beta-eigenvector-relation}
-\end{align}
-
-The number of terms in
-equation\textasciitilde{}\eqref{eq:beta-eigenvector-relation} may be
-reduced by two mechanisms:
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi})}
-\tightlist
-\item
-  Some elements in \(\boldsymbol{\eta}_j, j = 1, \ldots m\) are zero
-\item
-  There are coinciding eigenvalues of \(\boldsymbol{\Sigma}_{xx}\) such
-  that it is enough to have one eigenvector in
-  equation\textasciitilde{}\eqref{eq:beta-eigenvector-relation}.
-\end{enumerate}
-
-Let there are \(k\) number predictor components that are relevant for
-any of the response. The \(\mathcal{P}\) contains the indices of these
-position for each response components. Here the order of components of
-predictor is defined by a decreasing set of eigenvalues such that
-\(\lambda_1 \ge \ldots \ge \lambda_p > 0\). In \texttt{simrel-m}
-package, these set of position is referred as \texttt{relpos}. For
-example, if \(\mathcal{P} = {{1, 2}, {3, 5}, {4}}\) then we can say that
-there are 3 informative space in response such that components 1 and 2
-of predictor variable is relevant for first response component;
-component 3 and 5 of predictor are relevant for second response
-component and fourth predictor component is relevant for third response
-component. In addition, \(\lambda_1 \ge \ldots \ge \lambda_5\) are
-relevant for some response.
-
-In \texttt{simrel-m}, these 3 response components are combined with
-non-informative vectors for desired number of response variables. This
-is referred as \(\mathcal{S}\) and \texttt{ypos} in \texttt{simrel-m}
-package. If \(\mathcal{S} = {{1, 4}, {2}, {3, 5}}\) then we can say that
-there are 5 response variables which has 3 dimensional informative
-space. Since response components 1, 2 and 3 are informative, from the
-indices of \(\mathcal{S}\), first response component is combined with
-non-informative fourth component and third informative component is
-combined with fifth non-informative component. In this way, we will
-obtain a set of 5 response variables for which predictor component 1 and
-2 will be relevant for response 1 and 4; predictor component 3 and 5
-will be relevant for response 2 and predictor component 4 will be
-relevant for response 3 and 5.
-
-For simplification, an assumption is made that all \(p\) eigenvalues of
-\(\boldsymbol{\Sigma}_{XX}\) decrease exponentially as
-\(e^{-\gamma (i - 1)}\) for \(i = 1, \ldots p\) and some positive
-constant \(\gamma\). This way, the \(p\) eigenvalues depends on single
-variables \(\gamma\) such that when \(\gamma\) is large, eigenvalues
-decreases sharply referring high degree of multi-collinearity in
-predictor variables.
-
-Here we have assumed that the relevant components are know, as in
-\citet{helland1994comparison}, which is rare in practice. But in
-comparative studies of prediction methods, this can help to explain
-interesting cases. For example, simultaneous envelope
-\citep{cook2015simultaneous} has discussed about the informative
-(material) and uninformative (immaterial) space on both \(\mathbf{X}\)
-and \(\mathbf{Y}\). In this case, \texttt{simrel-m} can provide a
-simulated data with various interesting cases for its assessment and
-comparison with other methods.
-
-\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
-
 \section{Statistical Model}\label{statistical-model}
 
 Let us consider a random regression model in
-equation\textasciitilde{}\eqref{eq:model1} as our point of departure.
+equation\textasciitilde{}\eqref{eq:rand-reg-model} as our point of
+departure.
 
 \begin{equation}
-  \mathbf{Y} = \boldsymbol{\mu}_Y + \mathbf{B}^t (\mathbf{X} - \boldsymbol{\mu}_X) + \boldsymbol{\epsilon}
-  \label{eq:model1}
-\end{equation}
-
-where \(\mathbf{Y}\) is a response matrix with \(m\) response variables
-\(y_1, y_2, \ldots y_m\) with mean vector of \(\boldsymbol{\mu}_Y\);
-\(\mathbf{X}\) is vector of \(p\) predictor variables and the random
-error term \(\boldsymbol{\epsilon}\) is assumed to follow
-\(N(\boldsymbol{0},\; \boldsymbol{\Sigma}_{Y|X})\). In addition, we
-assume equation\textasciitilde{}\eqref{eq:model1} as a random regression
-model where
-\(\mathbf{X} \sim N\left(\boldsymbol{\mu}_X, \boldsymbol{\Sigma}_{XX}\right)\)
-independent of \(\boldsymbol{\epsilon}\). Equivalently, this
-relationship can be written as,
-
-\begin{equation}
-  \begin{bmatrix}\mathbf{Y}\\ \mathbf{X}\end{bmatrix} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})
-  = N \left(
+  \begin{bmatrix}\mathbf{Y}\\ \mathbf{X}\end{bmatrix} \sim N
+  \left(
     \begin{bmatrix}
       \boldsymbol{\mu}_Y \\
       \boldsymbol{\mu}_X
     \end{bmatrix},
     \begin{bmatrix}
-      \boldsymbol{\Sigma}_{YY} & \boldsymbol{\Sigma}_{XY}^t \\
+      \boldsymbol{\Sigma}_{YY} & \boldsymbol{\Sigma}_{YX} \\
       \boldsymbol{\Sigma}_{XY} & \boldsymbol{\Sigma}_{XX}
     \end{bmatrix}
   \right)
-  \label{eq:model2}
+  \label{eq:rand-reg-model}
 \end{equation}
 
-Here, \(\boldsymbol{\Sigma}_{YY}\) is Covariance Matrix of response
-\(\mathbf{Y}\); \(\boldsymbol{\Sigma}_{XY}\) is Covariance Matrix
-between \(\mathbf{X}\) and \(\mathbf{Y}\); \(\boldsymbol{\Sigma}_{XX}\)
-is Covariance matrix of predictor variables \(\mathbf{X}\);
-\(\boldsymbol{\mu}_Y\) and \(\boldsymbol{\mu}_X\) are Mean vectors of
-response \(\mathbf{Y}\) and predictor \(\mathbf{X}\) respective.
+where, \(\mathbf{Y}\) is a response matrix with \(m\) response variables
+\(y_1, y_2, \ldots y_m\) with mean vector of \(\boldsymbol{\mu}_Y\) and
+\(\mathbf{X}\) is vector of \(p\) predictor variables. Further,
 
-Simulation of \((\mathbf{Y, X})\) for
-model\textasciitilde{}\eqref{eq:model2} requires the fact that -- a set of
-latent variable spanning \(\mathbf{X}\) and \(\mathbf{Y}\) will contain
-same information in different structure. With two matrices
-\(\mathbf{R}_{p\times p}\) and \(\mathbf{Q}_{q \times q}\) with rank
-\(p\) and \(q\) respectively, lets define a transformation as
-\(\mathbf{Z} = \mathbf{RX}\) and \(\mathbf{W} = \mathbf{QY}\) so that,
+\begin{longtable}[]{@{}rl@{}}
+\toprule
+\(\boldsymbol{\Sigma}_{YY}\) & is variance-covariance matrix of response
+\(\mathbf{Y}\)\tabularnewline
+\(\boldsymbol{\Sigma}_{XX}\) & is variance-covariance matrix of
+predictor variables \(\mathbf{X}\)\tabularnewline
+\(\boldsymbol{\Sigma}_{XY}\) & is matrix of covariance between
+\(\mathbf{X}\) and \(\mathbf{Y}\)\tabularnewline
+\(\boldsymbol{\mu}_Y\) and \(\boldsymbol{\mu}_X\) & are mean vectors of
+response \(\mathbf{Y}\) and predictor \(\mathbf{X}\)
+respective.\tabularnewline
+\bottomrule
+\end{longtable}
+
+A linear relationship between \(\mathbf{X}\) and \(\mathbf{Y}\) for
+model\textasciitilde{}\eqref{eq:rand-reg-model} can be imagined as,
+
+\begin{equation}
+\mathbf{Y} = \boldsymbol{\mu}_Y + \boldsymbol{\beta}^t (\mathbf{X} - \boldsymbol{\mu}_X) + \boldsymbol{\varepsilon}
+  \label{eq:linear-model}
+\end{equation}
+
+where, \(\boldsymbol{\beta}^t\) is regression coefficient and
+\(\boldsymbol{\varepsilon}\) is error term such that
+\(\boldsymbol{\varepsilon} \sim N\left(0, \boldsymbol{\Sigma}_{Y|X}\right)\).
+The properties of the linear model in
+equation\textasciitilde{}\eqref{eq:linear-model} can be expressed in terms
+of covariance matrices from
+equation\textasciitilde{}\eqref{eq:rand-reg-model}.
+
+\begin{description}
+\tightlist
+\item[Regression Coefficients]
+\[ \boldsymbol{\beta} = \boldsymbol{\Sigma}_{XY} \boldsymbol{\Sigma}_{XX}^{-1}\]
+\item[Coefficient of Determination \(\boldsymbol{\rho}_Y^2\)]
+The diagonal elements of coefficient of determination matrix
+\(\boldsymbol{\rho}_Y^2\) gives the amount of variation that
+\(\boldsymbol{X}\) has explained about \(\boldsymbol{Y}\) in
+equation\textasciitilde{}\eqref{eq:linear-model}.
+\[\boldsymbol{\rho}_Y^2 = \boldsymbol{\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\boldsymbol{\Sigma}_{XY}\boldsymbol{\Sigma}_{YY}^{-1}\]
+\item[Error variance]
+The minimum error \(\boldsymbol{\Sigma}_{Y|X}\) of the model is,
+\[\boldsymbol{\Sigma}_{Y|X} = \boldsymbol{\Sigma}_{YY} - \boldsymbol{\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\boldsymbol{\Sigma}_{XY}\]
+\end{description}
+
+Let us define a transformation of \(\boldsymbol{X}\) and
+\(\boldsymbol{Y}\) as, \(\mathbf{Z} = \mathbf{RX}\) and
+\(\mathbf{W} = \mathbf{QY}\). Here, \(\mathbf{R}_{p\times p}\) and
+\(\mathbf{Q}_{m\times m}\) are rotation matrices which rotates
+\(\mathbf{X}\) and \(\mathbf{Y}\) giving \(\mathbf{Z}\) and
+\(\mathbf{W}\) respectively. The random regression model in
+equation\textasciitilde{}\eqref{eq:rand-reg-model} can be expressed with
+these transformed variables as,
 
 \begin{align}
   \begin{bmatrix}\mathbf{W} \\ 
@@ -462,7 +303,7 @@ same information in different structure. With two matrices
       \boldsymbol{\mu}_W \\ \boldsymbol{\mu}_Z
     \end{bmatrix},
     \begin{bmatrix}
-      \boldsymbol{\Sigma}_{WW} & \boldsymbol{\Sigma}_{WZ}^t \\
+      \boldsymbol{\Sigma}_{WW} & \boldsymbol{\Sigma}_{WZ} \\
       \boldsymbol{\Sigma}_{ZW} & \boldsymbol{\Sigma}_{ZZ}
     \end{bmatrix} \right) \nonumber \\
   & = N \left(
@@ -471,13 +312,24 @@ same information in different structure. With two matrices
       \boldsymbol{R\mu}_X
     \end{bmatrix},
     \begin{bmatrix}
-      \boldsymbol{Q\Sigma}_{YY}\boldsymbol{Q}^t & \boldsymbol{Q\Sigma}_{XY}^t\mathbf{R}^t \\
+      \boldsymbol{Q\Sigma}_{YY}\boldsymbol{Q}^t & \boldsymbol{Q\Sigma}_{YX}\mathbf{R}^t \\
       \boldsymbol{R\Sigma}_{XY}\boldsymbol{Q}^t & \boldsymbol{R\Sigma}_{XX}\mathbf{R}^t
     \end{bmatrix}
   \right)
   \label{eq:model3}
 \end{align}
 
+In addition, a linear model relating \(\mathbf{W}\) and \(\mathbf{Z}\)
+can be written as,
+
+\begin{equation}
+\mathbf{W} =    \boldsymbol{\mu}_W + \boldsymbol{\alpha}^t \left(\mathbf{Z} - \boldsymbol{\mu}_Z\right) + \boldsymbol{\tau}
+\label{eq:latent-model}
+\end{equation}
+
+where, \(\boldsymbol{\alpha}\) is regression coefficient for the
+transformed model and
+\(\boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{W|Z}\right)\).
 Further, if both \(\mathbf{Q}\) and \(\mathbf{R}\) are orthonormal
 matrix such that \(\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q\) and
 \(\mathbf{R}^t\mathbf{R} = \mathbf{I}_p\), the inverse transformation
@@ -493,38 +345,21 @@ can be defined as,
   \label{eq:cov-yx-wz}
 \end{equation}
 
-In addition, a linear model relating \(\mathbf{W}\) and \(\mathbf{Z}\)
-can be written as,
-
-\begin{equation}
-  \mathbf{W} =  \boldsymbol{\mu}_W + \mathbf{A}^t \left(\mathbf{Z} - \boldsymbol{\mu}_Z\right) + \boldsymbol{\tau}; \qquad
-  \boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{W|Z}\right)
-  \label{eq:latent-model}
-\end{equation}
-
 Here, we can find a direct connection between different population
-properties between \eqref{eq:model1} and \eqref{eq:latent-model}. Some of
-them are:
+properties between \eqref{eq:linear-model} and \eqref{eq:latent-model}.
 
 \begin{description}
 \tightlist
 \item[Regression Coefficients]
-Regression coefficients for model\textasciitilde{}\eqref{eq:model1} is,
-\[\mathbf{B} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1}\]
-Using the transformation matrix \(\mathbf{P}\) and \(\mathbf{Q}\), we
-can obtain the regression coefficients corresponding to the latent
-structure of predictors. \[
+\[
   \begin{aligned}
-\mathbf{A} &= \boldsymbol{\Sigma}_{WZ} \boldsymbol{\Sigma}_{ZZ}^{-1}
-  &= \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{XX}\mathbf{R}^t\right]^{-1} \\
-  &= \mathbf{Q}\left[\boldsymbol{\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\right]\mathbf{R}^t \\
-  &= \mathbf{QBR}^t
+  \boldsymbol{\alpha} &= \boldsymbol{\Sigma}_{WZ} \boldsymbol{\Sigma}_{ZZ}^{-1}
+  &&= \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{XX}\mathbf{R}^t\right]^{-1} \\
+  &= \mathbf{Q}\left[\boldsymbol{\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}^{-1}\right]\mathbf{R}^t
+  &&= \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
   \end{aligned}
   \]
 \item[Error Variance]
-The noise variance and the minimum prediction error for
-model\textasciitilde{}\eqref{eq:model1} is,
-\[\boldsymbol{\Sigma}_{Y|X} = \boldsymbol{\Sigma}_{YY} - \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1} \boldsymbol{\Sigma}_{XY}\]
 Further, the noise variance of transformed
 model\textasciitilde{}\eqref{eq:latent-model} is, \[
   \begin{aligned}
@@ -539,133 +374,192 @@ model\textasciitilde{}\eqref{eq:latent-model} is, \[
 &= \mathbf{Q} \boldsymbol{\Sigma}_{Y|X}\mathbf{Q}^t
   \end{aligned}
   \]
-\end{description}
-
-\begin{description}
-\tightlist
 \item[Population Coefficient of Determination]
 The population coefficient of determination for
-model\textasciitilde{}\eqref{eq:model1} is,
-\[\boldsymbol{\rho}^2_{XY} = \boldsymbol{\Sigma}_{YX} \boldsymbol{\Sigma}_{XX}^{-1} \boldsymbol{\Sigma}_{XY} \boldsymbol{\Sigma}_{YY}^{-1}\]
-Further, the coefficient of determination corresponding to
 model\textasciitilde{}\eqref{eq:latent-model} is, \[
   \begin{aligned}
-\boldsymbol{\rho}^2_{ZW} &= \boldsymbol{\Sigma}_{WZ} 
+\boldsymbol{\rho}^2_W &= \boldsymbol{\Sigma}_{WZ} 
 \boldsymbol{\Sigma}_{ZZ}^{-1} \boldsymbol{\Sigma}_{ZW} 
 \boldsymbol{\Sigma}_{WW}^{-1} \\
   &=\mathbf{Q}^t
-\boldsymbol{\Sigma}_{WZ}\boldsymbol{\Sigma}^{-1}_{ZZ}
-\boldsymbol{\Sigma}_{ZW}\boldsymbol{\Sigma}_{WW}^{-1}\boldsymbol{Q} \nonumber \\
-  &=\mathbf{Q}^t\boldsymbol{\mathcal{R}}^2_{WZ}\mathbf{Q} \nonumber \\
-\text{i.e. }\boldsymbol{\mathcal{R}}^2_{WZ} 
-  &=\mathbf{Q}\boldsymbol{\mathcal{R}}^2_{XY}\mathbf{Q}^t
+  \boldsymbol{\Sigma}_{YX}\mathbf{R}^t \left(\mathbf{R}\boldsymbol{\Sigma}_{XX}\mathbf{R}^t\right)^{-1}
+  \mathbf{R}\boldsymbol{\Sigma}_{XY}\mathbf{Q}^t \left(\mathbf{Q} \boldsymbol{\Sigma}_{YY}^{-1} \mathbf{Q}^t\right) \nonumber \\
+  &=\mathbf{Q}^t\left[\boldsymbol{\Sigma}_{YX}\boldsymbol{\Sigma}_{XX}\boldsymbol{\Sigma}_{XY}\boldsymbol{\Sigma}_{YY}^{-1}\right]\mathbf{Q} \\
+  &= \mathbf{Q}\boldsymbol{\rho}_{Y}^2 \mathbf{Q}^t
   \end{aligned}
   \]
 \end{description}
 
-\subsection{Model parameterization and relevant
-components}\label{model-parameter-relevant-components}
+From eigenvalue decomposition principle, if
+\(\boldsymbol{\Sigma}_{XX} = \mathbf{R}\boldsymbol{\Lambda}\mathbf{R}^t\)
+and
+\(\boldsymbol{\Sigma}_{YY} = \mathbf{Q}\boldsymbol{\Omega}\mathbf{Q}^t\)
+then \(\mathbf{Z}\) and \(\mathbf{W}\) can be principal components of
+\(\mathbf{X}\) and \(\mathbf{Y}\) respectively. Here,
+\(\boldsymbol{\Sigma}\) and \(\boldsymbol{\Omega}\) are diagonal matrix
+of eigenvalues corresponding to \(\mathbf{X}\) and \(\mathbf{Y}\)
+respectively.
 
-Eigenvalue decomposition principal states that a variance-covariance
-matrix \(\boldsymbol{\Sigma}\) can be decomposed as,
+\section{Relevant Components}\label{relevant-components}
 
-\begin{equation}
-  \Sigma = \mathbf{E}\Lambda \mathbf{E}^t
-\end{equation}
+Let us consider a single response linear model with \(p\) predictors.
 
-where,
-\(\mathbf{E} = (\mathbf{e}_1, \mathbf{e}_2, \ldots \mathbf{e}_p)\) is an
-orthogonal matrix of eigenvectors and \(\Lambda\) is a diagonal matrix
-of eigenvalues \(\lambda_1 \le \lambda_2 \le \ldots \lambda_p\). From
-expression in equation\textasciitilde{}\eqref{eq:cov-yx-wz},
-\(\boldsymbol{\Sigma}_{XX}\) and \(\boldsymbol{\Sigma}_{WW}\) can have
-similar decomposition with some suitable choice of orthonormal matrix
-\(\mathbf{R}\) and \(\mathbf{Q}\) respectively.
+\[\mathbf{y} = \mu_y + \beta^t\left(\mathbf{X} - \mu_x\right) + \epsilon\]
 
-In this study, all the components of \(\mathbf{Y}\), i.e. \(\mathbf{W}\)
-are considered to be uncorrelated. Since, the component structure also
-contains the irrelevant components, each of their correlation with
-others are considered to be zero. Hence, the unconditional covariance
-structure for the component matrix (\(\mathbf{W}\)) is \(\mathbf{I}_m\).
-Furthermore, if
-\(\boldsymbol{\Sigma}_{ZZ} = \Lambda = \text{diag}({\lambda_1, \lambda_2, \ldots, \lambda_p})\),
-where \(\lambda_i, i = 1, \ldots p\) are eigenvalues of \(\mathbf{X}\),
-the expression in \mbox{equation~\\eqref{eq:cov-yx-wz}} helps to simulate
-\(\mathbf{X}\) from \(\mathbf{R}\), the orthonormal rotation matrix and
-its eigen structure \(\boldsymbol{\Sigma}_{ZZ}\). Similarly from
-\(\Sigma_{WW} = \mathbf{I}_m\) and rotaion matrix \(\mathbf{Q}\), we can
-simulate \(\mathbf{Y}\).
+where, \(\epsilon \sim N(0, \sigma^2)\) and \(\mathbf{X}\) and
+\(\epsilon\) are random and independent. Following the principal of
+relevant space and irrelevant space which are discussed extensively in
+\citet{helland1994comparison}, \citet{Helland_2000},
+\citet{helland2012near}, \citet{cook2013envelopes},
+\citet{saebo2015simrel} and \citet{helland2017}, we can assume that
+there exists a subspace of complete variable space which is relevant for
+\(\mathbf{y}\). An orthogonal space to this space does not contain any
+information about \(\mathbf{y}\) and are irrelevant. Here, the
+\(y-\)relevant subspace of \(\mathbf{X}\) is spanned by a subset of
+eigenvectors \(\mathbf{(e)}\) of covariance matrix of \(\mathbf{X}\),
+i.e. \(\boldsymbol{\Sigma}_{XX})\).
 
-Let \(\mathbf{W}_1, \ldots, \mathbf{W}_l\) are the components of \(Y\)
-that are relevant to \(\mathbf{Z}\) and consequently \(\mathbf{X}\),
-\(\mathbf{W}_{l+1}, \ldots, \mathbf{W}_q\) are not the outcome of
-\(\mathbf{Z}\), the principal components of \(\mathbf{Z}\) that are
-relevant for \(\mathbf{W}\) are applicable for
-\(\mathbf{W}_1, \ldots, \mathbf{W}_l\) only. The covariance matrix of
-\(\mathbf{W}\) and \(\mathbf{Z}\) (\(\boldsymbol{\Sigma}_{WZ}\)) is
-constructed referring to the terminology in
-\citet{helland1994comparison} that the principal components are termed
-as relevant for which \(\boldsymbol{\Sigma}_{WZ}\) are non-zero.
+This concept can be extended for \(m\) response so that the subspace of
+\(\mathbf{X}\) is relevant for a subspace of \(\mathbf{Y}\). This
+corresponds to the concept of simultaneous envelope \citep{Cook_2014}
+where relevant (material) and irrelevant (immaterial) space were
+discussed for both response and predictors.
 
-Assume \(a_1, \ldots, a_l\) number of principal components of
-\(\mathbf{X}\) are relevant to \(\mathbf{W}_1, \ldots, \mathbf{W}_l\)
-respectively. Let \(\mathcal{P}_1, \ldots, \mathcal{P}_l\) are the sets
-of positions of these components, then \((\Sigma_{WZ})_{ij} \ne 0\) if
-\(j \in \mathcal{P}_i\), \(i = 1, \ldots, l\) and zero otherwise. This
-follows us to the matrix of regression coefficients as,
+\section{Model Parameterization}\label{model-parameterization}
 
-\begin{equation}
-  \mathbf{A} =
-  \begin{cases}
-    \boldsymbol{\Sigma}_{WZ}\boldsymbol{\Sigma}_{ZZ}^{-1} =
-    \sum_{j \in \mathcal{P}_i}{\left(\frac{\sigma_{ij}}{\lambda_j} \mathbf{t}_j\right)} & \text{ for } i = 1, \ldots, l \\
-    0 & \text{ otherwise }
-  \end{cases}
-\end{equation}
+In order to construct a covariance matrix of \(\mathbf{Z}\) and
+\(\mathbf{W}\) for model in equation\textasciitilde{}\eqref{eq:model3}, we
+need to identify \(1/2 (p+m)(p+m+1)\) unknowns. For the purpose of this
+simulation, we implement some assumption to re-parameterize and simplify
+the model parameters. This enables us to construct diverse nature of
+model from few key parameters.
 
-where, \(\mathbf{t}_j\) is a \(p\)-vector with 1 at position \(j\) and
-zero otherwise. As in the previous version of simrel by
-\citet{saebo2015simrel}, eigenvalues of \(\boldsymbol{\Sigma}_{XX}\) is
-assumed to be different and has adopted the parametric representation as
-\(\lambda_j = e^{-\nu(j - 1)}\text{ for } \nu>0 \text{ and } j = 1, \ldots p\).
-Here, the parameter \(\nu\) regulates the decline of
-\(\lambda_j, j = 1, \ldots p\). Without loss of generality, for further
-simplification, the first and largest eigenvalues are set to one.
+\begin{description}
+\tightlist
+\item[\textbf{Parameterization of \(\boldsymbol{\Sigma}_{ZZ}\):}]
+Since \(\mathbf{X}\)'s are principal components of \(\mathbf{X}\), the
+\(\boldsymbol{\Sigma}_{ZZ}\) can be a diagonal matrix with eigenvalues
+\(\lambda_1, \ldots, \lambda_p\) of predictors \(\mathbf{X}\). Further,
+we adopt following approximate parametric representation of these
+eigenvalues,
+\[\lambda_j = e^{-\gamma(i - 1)}, \gamma >0 \text{ and } j = 1, 2, \ldots, p\]
+Here as \(\gamma\) increases, the decline of eigenvalues becomes steeper
+and hence a single parameter \(\gamma\) can be used for
+\(\boldsymbol{\Sigma}_{ZZ}\).
+\item[\textbf{Parameterization of \(\boldsymbol{\Sigma}_{WW}\):}]
+Here, we assume that \(\mathbf{W}\)'s are independent and thus their
+covariance matrix is considered to be Identity \(\mathbf{I}_m\).
+\item[\textbf{Parameterization of \(\boldsymbol{\Sigma}_{ZW}\):}]
+After parameterization of \(\boldsymbol{\Sigma}_{ZZ}\) and
+\(\boldsymbol{\Sigma}_{WW}\), we are left with \(m \times p\) number of
+unknowns corresponding to \(\boldsymbol{\Sigma}_{ZW}\). The elements in
+this covariance matrix depends on position of x-component that are
+relevant for \(\mathbf{Y}\). In order to re-parameterize this covariance
+matrix, it is necessary to discuss about the position of relevant
+components in details.
+\end{description}
 
-For complete parametrization of the matrix \(\boldsymbol{\Xi}_{WZ}\) in
-equation\textasciitilde{}\eqref{eq:model3}, covariances between \(W\) and
-\(Z\) (\(\boldsymbol{\Sigma}_{WZ}\)) should be constructed such that it
-is positive definite and satisfy the relation,
+\subsection{Position of relevant
+components}\label{position-of-relevant-components}
 
-\begin{align}
-  \boldsymbol{\mathcal{R}}^{2}_{WZ}                                      &=
-    \boldsymbol{\Sigma}_{WZ}\boldsymbol{\Sigma}^{-1}_{ZZ}\boldsymbol{\Sigma}_{ZW}\boldsymbol{\Sigma}_{WW}^{-1} \nonumber \\
-  \text{i.e, } \boldsymbol{\mathcal{R}}_{WZ}^{2}\boldsymbol{\Sigma}_{WW} &=
-    \boldsymbol{\Sigma}_{WZ}\boldsymbol{\Lambda}^{-1}\boldsymbol{\Sigma}_{ZW}
-\label{eq:sigmaRhoRelation}
-\end{align}
+Let only \(k_1\) components are relevant for \(\mathbf{w}_1\), \(k_2\)
+components are relevant for \(\mathbf{w}_2\) and so on. Let the position
+of these components are given by the set
+\(\mathcal{P}_1, \mathcal{P}_2, \ldots, \mathcal{P}_m\) respectively.
+Further, the covariance between \(\mathbf{w}_j\) and \(\mathbf{z}_i\) is
+non-zero only if \(\mathbf{z}_i\) is relevant for \(\mathbf{w}_j\). If
+\(\sigma_{ij}\) be the covariance between \(\mathbf{w}_j\) and
+\(\mathbf{z_i}\) then \(\sigma_{ij} \ne 0\) if \(i \in \mathcal{P}_j\)
+where \(i = 1, \ldots, p\) and \(j = 1, \ldots, m\) and
+\(\sigma_{ij} = 0\) otherwise.
 
-For given \(\boldsymbol{\mathcal{R}}_{WZ}^{2}\) and
-\(\Sigma_{WW} = \mathbf{I}_m\),
-equation\textasciitilde{}\eqref{eq:sigmaRhoRelation} will be satisfied for
-some \(\boldsymbol{\Sigma}_{WX}\) whose rows correspond to the relevant
-components for \(\mathbf{W}\). As we have considered the situation that
-no relevant components are common, elements in
-\(\boldsymbol{\Sigma}_{WZ}\) are sampled from a uniform distribution
-\(\mathcal{U}(-1, 1) = \{s_{\mathcal{P}_{1i}}, s_{\mathcal{P}_{2i}}, \ldots s_{\mathcal{P}_{pi}}\}\),
-for each \(i = 1, \ldots q\) as in \citet{saebo2015simrel} such that,
+In addition, the corresponding regression coefficient for
+\(\mathbf{w}_j\) is,
 
 \[
-\left(\boldsymbol{\sigma}_{WZ}\right)_{ij} = \text{sign}\left(s_{ij}\right)
-\sqrt{
-  \frac
-    {\boldsymbol{\mathcal{R}}_{WZ}^{2}.\left|s_{ij}\right|}
-    {\sum_{k\in\mathcal{P}_i}{\left|s_{ik}\right|}}
-  \lambda_{j}
-}
+\boldsymbol{\alpha}_j = \Lambda^{-1} \sigma_{ij} = \sum_{i \in \mathcal{P}_j}\frac{\sigma_{ij}}{\lambda_i}\mathbf{t}_{ij},\qquad j = 1, 2, \ldots m
 \]
 
-for \(j \in \mathcal{P}_i\) and for each \(i = 1, \ldots q\)
+where, \(\mathbf{t}_{ij}\) is a matrix with column vectors of 1's and
+0's such that \(\mathbf{t}_{ij} = 1\) if the position relevant
+components for \(\mathbf{w}_j\) in set \(\mathcal{P}_j\) and 0
+otherwise.
+
+The position of relevant components have heavy impact on prediction.
+\citet{helland1994comparison} have shown that if relevant components
+have large variance, prediction of \(\mathbf{Y}\) from \(\mathbf{X}\) is
+relatively easy and if the variance of relevant components is small, the
+prediction becomes difficult given that coefficient of determination and
+other model parameters held constant. For example, if first and second
+components of \(\mathbf{X}\) are relevant for \(\mathbf{Y}_1\) and fifth
+and sixth componets are relevant for \(\mathbf{Y}_2\), it is relatively
+easy to predict \(\mathbf{Y}_1\) than \(\mathbf{Y}_2\). Since, the first
+and second principal components have larger variance than fifth and
+sixth components.
+
+Although the covariance matrix depends only on few relevant components,
+we can not choose these covariances freely since we also need to satisfy
+following two conditions:
+
+\begin{itemize}
+\tightlist
+\item
+  The covariance matrix must be positive definite
+\item
+  The covariance \(\sigma_{ij}\) must satisfy user defined coefficient
+  of determination
+\end{itemize}
+
+We have the relation,
+\[\boldsymbol{\rho}_W^2 = \boldsymbol{\Sigma}_{ZW}^t\boldsymbol{\Sigma}_{ZZ}^{-1}\boldsymbol{\Sigma}_{ZW}\boldsymbol{\Sigma}_{WW}^I\]
+Applying our assumption for simulation,
+\(\boldsymbol{\Sigma_{WW}} = \mathbf{I}_m\) and
+\(\boldsymbol{\Sigma}_{ZZ} = \Lambda\), we obtain,
+
+\[
+\begin{aligned}
+\boldsymbol{\rho}_W^2 &= \boldsymbol{\Sigma}_{ZW}^t \Lambda^{-1} \boldsymbol{\Sigma}_{ZW} \mathbf{I}_m \\
+&= \begin{bmatrix}
+\sum_{i = 1}^p \sigma_{i1}^2/\lambda_i          & \ldots & \sum_{i = 1}^p \sigma_{i1}\sigma_{im}/\lambda_i \\
+\vdots                                          & \ddots & \vdots \\
+\sum_{i = 1}^p \sigma_{i1}\sigma_{im}/\lambda_i & \ldots & \sum_{i = 1}^p \sigma_{im}^2/\lambda_i
+\end{bmatrix}
+\end{aligned}
+\]
+
+Furthermore, we assume that there are no overlapping relevant components
+for any two \(\mathbf{W}\), i.e,
+\(n\left(\mathcal{P}_j \cap \mathcal{P}_{j*}\right) = 0\) or
+\(\sigma_{ij}\sigma_{ij*} = 0\) for \(j\ne j*\). The additional unknown
+parameters in diagonal should agree with user specified coefficient of
+determination for \(\mathbf{W}_j\). i.e, \(\rho_{wj}^2\) is,
+
+\[
+\rho_{wj}^2 = \sum_{i = 1}^p\frac{\sigma_{ij}^2}{\lambda_i}
+\]
+
+Here, only the relevant components have non-zero covariances with
+\(\mathbf{w}_j\), so,
+
+\[
+\rho_{wj}^2 = \sum_{i \in \mathcal{P}_j}\frac{\sigma_{ij}^2}{\lambda_i}
+\]
+
+For some user defined \(\rho_{jw}^2\), \(\sigma_{ij}^2\) determined as
+follows,
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  Sample \(k_j\) values from uniform distribution \(\mathcal{U}(-1, 1)\)
+  distribution. Let them be,
+  \(\mathcal{S}_{\mathcal{P}_1}, \ldots, \mathcal{S}_{\mathcal{P}_{k_j}}\).
+\item
+  Define,
+  \[\sigma_{ij} = \text{Sign}\left(\mathcal{S}_i\right)\sqrt{\frac{\rho_{wj}^2\left|\mathcal{S}_i\right|}{\sum_{k\in \mathcal{P}_j}\left|\mathcal{S}_k\right|} \lambda_i}\]
+  for \(i \in \mathcal{P}_j\) and \(j = 1, \ldots, m\)
+\end{enumerate}
 
 \subsection{Data Simulation}\label{data-simulation}
 
