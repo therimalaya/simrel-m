@@ -37,3 +37,6 @@ blockquote > p:first-child {
 .title {
     line-height: 1.2em;
 }
+.book.font-family-0 {
+    font-family: "palatino", serif;
+}
