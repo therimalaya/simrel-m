@@ -19,7 +19,19 @@
 - Introduce $\gamma$, $\Sigma_{ww}$, $\rho_W^2$ and $\Sigma_{zw}$
 - How we simulate covariance matrix which satisfy coefficient of determination
 ** Sampling of W and Z
+   Give an example and follow it through out the rotation section
 ** Rotation to Y and X from W and Z
 - Discuss rotation and how we obtain other properties such as $R^2$ and covariance matrix
 ** Examples
+**** Also add PLS1 model
+**** Just vary R2 and Gamma, following values for the parameters will be good
+      | parameters | value                        |
+      |------------+------------------------------|
+      | n          | 100                          |
+      | p          | 25                           |
+      | R2         | 0.8, 0.8, 0.4; 0.4, 0.4, 0.4 |
+      | gamma      | 0.3, 0.9                     |
+      | relpos     | 1,6; 2, 5; 3, 4              |
+      | ypos       | 1, 4; 2, 5; 3                |
+**** This is a paper about ~Simrel-m~ and not an exhaustive study of  properties of estimation methods, so just state small facts about them
 ** Discussion

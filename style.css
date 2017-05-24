@@ -1,15 +1,24 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:300,400&subset=latin-ext');
+
 p.caption {
   color: #777;
   margin-top: 10px;
 }
+code {
+  font-family: 'Source Code Pro', monospace!important;
+}
+
 p code {
+  font-family: 'Source Code Pro', monospace!important;
   white-space: inherit;
 }
 pre {
+  font-family: 'Source Code Pro', monospace!important;
   word-break: normal;
   word-wrap: normal;
 }
 pre code {
+  font-family: 'Source Code Pro', monospace!important;
   white-space: inherit;
 }
 p.flushright {
@@ -27,7 +36,7 @@ blockquote > p:first-child {
 }
 #header {
     text-align: center;
-    font-family: Palatino, serif;
+    font-family: "Source Sans Pro", 'Helvetica Neue', sans-serif;
 }
 .author {
     line-height: 1;
@@ -37,6 +46,11 @@ blockquote > p:first-child {
 .title {
     line-height: 1.2em;
 }
-.book.font-family-0 {
-    font-family: "palatino", serif;
+.book .font-family-0 {
+    font-family: "Source Serif Pro", Palatino, serif;
+}
+.lead{
+  font-size: 1.7rem;
+  text-align: center;
+  font-weight: 300;
 }

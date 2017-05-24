@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="simrel-m: A versatile tool for simulating multi-response linear model data" />
+<meta property="og:type" content="book" />
+<meta property="og:url" content="http://therimalaya.github.io/simrel-m" />
+
+
+<meta name="github-repo" content="therimalaya/simrel-m" />
+
+
+<meta name="date" content="2017-05-24" />
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="simrel-m: A versatile tool for simulating multi-response linear model data">
+
+<title>simrel-m: A versatile tool for simulating multi-response linear model data</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+
+
+
+<style type="text/css">
+  p.abstract{
+    text-align: center;
+    font-weight: bold;
+  }
+  div.abstract{
+    margin: auto;
+    width: 90%;
+  }
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="toc.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li><a href="2-statistical-model.html#statistical-model"><span class="toc-section-number">2</span> Statistical Model</a></li>
+<li class="has-sub"><a href="3-relevant-components.html#relevant-components"><span class="toc-section-number">3</span> Relevant Components</a><ul>
+<li class="has-sub"><a href="3-1-model-parameterization.html#model-parameterization"><span class="toc-section-number">3.1</span> Model Parameterization</a><ul>
+<li><a href="3-1-model-parameterization.html#position-of-relevant-components"><span class="toc-section-number">3.1.1</span> Position of relevant components</a></li>
+<li><a href="3-1-model-parameterization.html#data-simulation"><span class="toc-section-number">3.1.2</span> Data Simulation</a></li>
+</ul></li>
+<li><a href="3-2-rotation-of-predictor-space.html#rotation-of-predictor-space"><span class="toc-section-number">3.2</span> Rotation of predictor space</a></li>
+<li><a href="3-3-rotation-of-response-space.html#rotation-of-response-space"><span class="toc-section-number">3.3</span> Rotation of response space</a></li>
+</ul></li>
+<li><a href="4-implementation.html#implementation"><span class="toc-section-number">4</span> Implementation</a></li>
+<li><a href="5-web-interface.html#web-interface"><span class="toc-section-number">5</span> Web Interface</a></li>
+<li><a href="references.html#references">References</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="implementation" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Implementation</h1>
+<p>This section demonstrates an application of <code>simrel-m</code> in order to compare different estimation methods on the basis of prediction error. For the comparison, we have considered four well established estimation methods.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Ordinary Least Squares (OLS),</li>
+<li>Principal Component Regression (PCR),</li>
+<li>Partial Least Squares predicting individual response variable separately (PLS1) and</li>
+<li>Partial Least Squares predicting all response variables together (PLS).</li>
+</ol>
+<p>We have also considered four relatively new estimation methods</p>
+<ol style="list-style-type: lower-alpha">
+<li>Canonically Powered Partial Least Squares regression (CPPLS) <span class="citation">(Indahl, Liland, and Næs <label for="tufte-mn-22" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-22" class="margin-toggle">2009<span class="marginnote">Indahl, Ulf G, Kristian Hovde Liland, and Tormod Næs. 2009. “Canonical Partial Least Squares–a Unified Pls Approach to Classification and Regression Problems.” <em>Journal of Chemometrics</em> 23 (9). Wiley Online Library: 495–504.</span>)</span>,</li>
+<li>Canonical Partial Least Squares regression (CPLS) <span class="citation">(Indahl, Liland, and Næs <label for="tufte-mn-23" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-23" class="margin-toggle">2009<span class="marginnote">Indahl, Ulf G, Kristian Hovde Liland, and Tormod Næs. 2009. “Canonical Partial Least Squares–a Unified Pls Approach to Classification and Regression Problems.” <em>Journal of Chemometrics</em> 23 (9). Wiley Online Library: 495–504.</span>)</span>,</li>
+<li>Envelope estimation in predictor space (xenv) <span class="citation">(Cook, Li, and Chiaromonte <label for="tufte-mn-24" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-24" class="margin-toggle">2010<span class="marginnote">Cook, R Dennis, Bing Li, and Francesca Chiaromonte. 2010. “Envelope Models for Parsimonious and Efficient Multivariate Linear Regression.” <em>Statistica Sinica</em>. JSTOR, 927–60.</span>)</span>,</li>
+<li>Envelope estimation in response space (yenv) <span class="citation">(R. D. Cook and Zhang <label for="tufte-mn-25" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-25" class="margin-toggle">2015a<span class="marginnote">Cook, R Dennis, and Xin Zhang. 2015a. “Foundations for Envelope Models and Methods.” <em>Journal of the American Statistical Association</em> 110 (510). Taylor &amp; Francis: 599–611.</span>)</span> and</li>
+<li>Simultaneous estimation of x- and y-envelope (senv) <span class="citation">(R. D. Cook and Zhang <label for="tufte-mn-26" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-26" class="margin-toggle">2015b<span class="marginnote">Cook, R Dennis, and Xin Zhang. 2015b. “Simultaneous Envelopes for Multivariate Linear Regression.” <em>Technometrics</em> 57 (1). Taylor &amp; Francis: 11–25.</span>)</span></li>
+</ol>
+<p>From the possible combinations of two levels of coefficient of determination <span class="math inline">\((R^2)\)</span> and two levels of <code>gamma</code> (factor that controls the multicollinearity in predictor variable), four simulation designs (design 1, design 2, design 3, design 4) are prepared. Replicating each design 20 times, 80 datasets with five response variables <span class="math inline">\((m=5)\)</span> and 16 predictor variables <span class="math inline">\((p = 16)\)</span> are simulated using the method discussed in this paper. It is also assumed that three principle components of response variables (<span class="math inline">\(w_1, w_2\)</span> and <span class="math inline">\(w_3\)</span>) completely describes the variation present in five response variables (<span class="math inline">\(y_1 \ldots y_5\)</span>). The four designs are presented in the Table~<a href="4-implementation.html#tab:parameter-settings">4.1</a>. All datasets contains 100 sample observations and out of 16 predictor variables, three disjoint set of five predictor variables are relevant for response components <span class="math inline">\(w_1, w_2\)</span> and <span class="math inline">\(w_3\)</span>. Further, predictor components <span class="math inline">\(z_1\)</span> and <span class="math inline">\(z_6\)</span> are relevant for response component <span class="math inline">\(w_1\)</span>, predictor components <span class="math inline">\(z_2\)</span> and <span class="math inline">\(z_5\)</span> are relevant for response component <span class="math inline">\(w_2\)</span> and predictor component <span class="math inline">\(z_3\)</span> is relevant for response component <span class="math inline">\(w_3\)</span>. In addition, following the discussion about <a href="3-3-rotation-of-response-space.html#rotation-of-response-space">rotation of response space</a>, <span class="math inline">\(w_1\)</span> is rotated together with <span class="math inline">\(w_4\)</span> and <span class="math inline">\(w_2\)</span> is rotated together with <span class="math inline">\(w_5\)</span>.</p>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:parameter-settings">Table 4.1: </span> Parameter setting of simulated data for model comparison</span><!--</caption>--></p>
+<table>
+<colgroup>
+<col width="41%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right"> </th>
+<th align="right">Design1</th>
+<th align="right">Design2</th>
+<th align="right">Design3</th>
+<th align="right">Design4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><strong>Decay of eigenvalue <span class="math inline">\((\gamma)\)</span></strong></td>
+<td align="right">0.2</td>
+<td align="right">0.8</td>
+<td align="right">0.2</td>
+<td align="right">0.8</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>Coef. of Determination <span class="math inline">\((\rho^2)\)</span></strong></td>
+<td align="right">0.8, 0.8, 0.4</td>
+<td align="right">0.8, 0.8, 0.4</td>
+<td align="right">0.4, 0.4, 0.4</td>
+<td align="right">0.4, 0.4, 0.4</td>
+</tr>
+</tbody>
+</table>
+<p>For each method, an estimate of test prediction error is computed as,</p>
+<p><span class="math display">\[\underset{m \times m}{\boldsymbol{\alpha}} = 
+\left(
+\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
+\right) ^t \boldsymbol{\Sigma}_{xx}
+\left(
+\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
+\right) + \boldsymbol{\sigma}^2\]</span></p>
+<p>where, <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is an estimate of true regression coefficient <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span> is the true covariance structure of predictor variable obtained from <code>simrel-m</code>. Also, <span class="math inline">\(\boldsymbol{\sigma}^2\)</span> is the true minimum error of the model. Here <span class="math inline">\(\hat{\beta}\)</span> vary accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the Forbenius norm <span class="math inline">\(\left\lVert\alpha\right\rVert_F \in \mathbb{R}^{m \times m}\)</span> defined as <span class="citation">(Golub and Van Loan <label for="tufte-mn-27" class="margin-toggle">&#8853;</label><input type="checkbox" id="tufte-mn-27" class="margin-toggle">2012<span class="marginnote">Golub, Gene H, and Charles F Van Loan. 2012. <em>Matrix Computations</em>. Vol. 3. JHU Press.</span>)</span>,</p>
+<p><span class="math display">\[\left\lVert\alpha\right\rVert_F = \sqrt{\sum_{i = 1}^m \sum_{j = 1}^m {\left|a_{ij}\right|^2}}.\]</span></p>
+<p>The minimimum prediction error (measured as discussed above) for nine estimation methods averaged over 20 replications of four designs are in Table~<a href="4-implementation.html#tab:min-error">4.2</a>. The table also shows that the number of components a method has used in order to obtain the minimum of average prediciton error.</p>
+<center>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:min-error">Table 4.2: </span> Minimum average prediction error (number of components, prediction error)</span><!--</caption>--></p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="22%" />
+<col width="22%" />
+<col width="22%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="center">Design: 1</th>
+<th align="center">Design: 2</th>
+<th align="center">Design: 3</th>
+<th align="center">Design: 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><em>CPLS</em></td>
+<td align="center">(3, 1.65)</td>
+<td align="center">(3, 1.64)</td>
+<td align="center"><strong><em>(3, 1.88)</em></strong></td>
+<td align="center">(3, 1.86)</td>
+</tr>
+<tr class="even">
+<td align="left"><em>CPPLS</em></td>
+<td align="center">(3, 1.64)</td>
+<td align="center">(3, 1.63)</td>
+<td align="center">(3, 1.89)</td>
+<td align="center"><strong><em>(3, 1.86)</em></strong></td>
+</tr>
+<tr class="odd">
+<td align="left"><em>OLS</em></td>
+<td align="center">(1, 1.88)</td>
+<td align="center">(1, 1.87)</td>
+<td align="center">(1, 2.12)</td>
+<td align="center">(1, 2.09)</td>
+</tr>
+<tr class="even">
+<td align="left"><em>PCR</em></td>
+<td align="center">(7, 1.69)</td>
+<td align="center">(6, 1.66)</td>
+<td align="center">(6, 1.88)</td>
+<td align="center">(6, 1.87)</td>
+</tr>
+<tr class="odd">
+<td align="left"><em>PLS</em></td>
+<td align="center">(4, 1.68)</td>
+<td align="center">(6, 1.66)</td>
+<td align="center">(3, 1.88)</td>
+<td align="center">(6, 1.88)</td>
+</tr>
+<tr class="even">
+<td align="left"><em>PLS1</em></td>
+<td align="center">(1, 1.71)</td>
+<td align="center">(5, 1.67)</td>
+<td align="center">(1, 1.91)</td>
+<td align="center">(5, 1.88)</td>
+</tr>
+<tr class="odd">
+<td align="left"><em>Senv</em></td>
+<td align="center"><strong><em>(4, 1.63)</em></strong></td>
+<td align="center"><strong><em>(5, 1.62)</em></strong></td>
+<td align="center">(3, 1.99)</td>
+<td align="center">(5, 1.96)</td>
+</tr>
+<tr class="even">
+<td align="left"><em>Xenv</em></td>
+<td align="center">(5, 1.67)</td>
+<td align="center">(6, 1.67)</td>
+<td align="center">(5, 1.89)</td>
+<td align="center">(5, 1.9)</td>
+</tr>
+<tr class="odd">
+<td align="left"><em>Yenv</em></td>
+<td align="center">(3, 1.65)</td>
+<td align="center">(3, 1.65)</td>
+<td align="center">(3, 1.96)</td>
+<td align="center">(3, 1.93)</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>Table~<a href="4-implementation.html#tab:min-error">4.2</a> shows that simulteneous envelope has prediction error of 1.63 and 1.62 in design 1 and design 2 respectively which is smaller than other methods. However the model was not able to show the same performance in design 3 and design 4. Cannonical PLS and Cannonically Powered PLS has out performed other methods in these designs. Here, the difference between CPLS and CPPLS is minimal. These methods has also shown a fair performance in the first two designs with only three components. A detail picture of prediction error for each estimation method obtained for each additional component is shown in Figure~<a href="4-implementation.html#fig:Average-Prediction-Plot">4.1</a>. Although design 2 and design 4 has higher level of multicollinearity, the performance of the estimation methods is indifferent to its effect. Since all the methods, except OLS, are based on shrinking of estimates, they are less influenced by multicollinearity problem.</p>
+<div class="figure"><span id="fig:Average-Prediction-Plot"></span>
+<p class="caption marginnote shownote">
+Figure 4.1: Minimum of Average Prediction Error
+</p>
+<img src="Simrel-M_files/figure-html/Average-Prediction-Plot-1.png" alt="Minimum of Average Prediction Error" width="100%"  />
+</div>
+<p>Above analysis has answered some questions such as how methods works when there exist a true reduced dimension in response space but also arised question like why they perform differently. For example, the reduced performance of simulteneous envelope going from design with <span class="math inline">\(R^2 = (0.8, 0.8, 0.4)\)</span> to design with <span class="math inline">\(R^2 = (0.4, 0.4, 0.4)\)</span> has arised question such as – Does the performance of the method depends on <span class="math inline">\(R^2\)</span> or it is a random situation? Since, this paper is intended for a demonstration of how <code>simrel-m</code> can be used in scientific study, a more elaborative study is needed in order to answer such question which <code>simrel-m</code> can help as an useful instrument.</p>
+
+</div>
+<p style="text-align: center;">
+<a href="3-3-rotation-of-response-space.html"><button class="btn btn-default">Previous</button></a>
+<a href="https://github.com/therimalaya/simrel-m/edit/master/Includes/03-Implementation.Rmd"><button class="btn btn-default">Edit</button></a>
+<a href="5-web-interface.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

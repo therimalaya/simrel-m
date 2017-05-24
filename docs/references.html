@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>simrel-m: A versatile tool for simulating multi-response linear model data</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="<code>simrel-m</code>: A versatile tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.18 and GitBook 2.6.7">
 
   <meta property="og:title" content="simrel-m: A versatile tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -25,16 +24,25 @@
 
 
 
-<meta name="date" content="2017-04-07">
+<meta name="date" content="2017-05-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="model-parameterization.html">
+<link rel="prev" href="web-interface.html">
 
-
+<style type="text/css">
+p.abstract{
+  text-align: center;
+  font-weight: bold;
+}
+div.abstract{
+  margin: auto;
+  width: 90%;
+}
+</style>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -57,26 +65,32 @@
 <body>
 
 
+
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
 
     <div class="book-summary">
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./index.html">Simrel-M: A versatile Simulation Tool</a></li>
+<li class="lead"><a href="./index.html">Simrel-M: A versatile Simulation Tool</a></li>
+
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Abstract</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="" data-path="statistical-model.html"><a href="statistical-model.html"><i class="fa fa-check"></i>Statistical Model</a></li>
-<li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html"><i class="fa fa-check"></i>Relevant Components</a></li>
-<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html"><i class="fa fa-check"></i>Model Parameterization</a><ul>
-<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html#position-of-relevant-components"><i class="fa fa-check"></i>Position of relevant components</a></li>
-<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html#data-simulation"><i class="fa fa-check"></i>Data Simulation</a></li>
-<li class="chapter" data-level="" data-path="model-parameterization.html"><a href="model-parameterization.html#rotation-of-predictor-space"><i class="fa fa-check"></i>Rotation of predictor space</a></li>
+<li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html"><i class="fa fa-check"></i>Relevant Components</a><ul>
+<li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html#model-parameterization"><i class="fa fa-check"></i>Model Parameterization</a><ul>
+<li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html#position-of-relevant-components"><i class="fa fa-check"></i>Position of relevant components</a></li>
+<li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html#data-simulation"><i class="fa fa-check"></i>Data Simulation</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html#rotation-of-predictor-space"><i class="fa fa-check"></i>Rotation of predictor space</a></li>
+<li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html#rotation-of-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a></li>
+<li class="chapter" data-level="" data-path="web-interface.html"><a href="web-interface.html"><i class="fa fa-check"></i>Web Interface</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>
+
 </ul>
 
       </nav>
@@ -102,13 +116,19 @@
 <p>Anderson, Theodore W, Ingram Olkin, and Les G Underhill. 1987. “Generation of Random Orthogonal Matrices.” <em>SIAM Journal on Scientific and Statistical Computing</em> 8 (4). SIAM: 625–29.</p>
 </div>
 <div>
-<p>Cook, R Dennis, and Xin Zhang. 2015. “Simultaneous Envelopes for Multivariate Linear Regression.” <em>Technometrics</em> 57 (1). Taylor &amp; Francis: 11–25.</p>
+<p>Cook, R Dennis, and Xin Zhang. 2015a. “Foundations for Envelope Models and Methods.” <em>Journal of the American Statistical Association</em> 110 (510). Taylor &amp; Francis: 599–611.</p>
 </div>
 <div>
-<p>Cook, R. Dennis, and Xin Zhang. 2014. “Simultaneous Envelopes for Multivariate Linear Regression.” <em>Technometrics</em> 57 (1). Informa UK Limited: 11–25. doi:<a href="https://doi.org/10.1080/00401706.2013.872700">10.1080/00401706.2013.872700</a>.</p>
+<p>———. 2015b. “Simultaneous Envelopes for Multivariate Linear Regression.” <em>Technometrics</em> 57 (1). Taylor &amp; Francis: 11–25.</p>
+</div>
+<div>
+<p>Cook, R Dennis, Bing Li, and Francesca Chiaromonte. 2010. “Envelope Models for Parsimonious and Efficient Multivariate Linear Regression.” <em>Statistica Sinica</em>. JSTOR, 927–60.</p>
 </div>
 <div>
 <p>Cook, RD, IS Helland, and Z Su. 2013. “Envelopes and Partial Least Squares Regression.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 75 (5). Wiley Online Library: 851–77.</p>
+</div>
+<div>
+<p>Golub, Gene H, and Charles F Van Loan. 2012. <em>Matrix Computations</em>. Vol. 3. JHU Press.</p>
 </div>
 <div>
 <p>Heiberger, Richard M. 1978. “Algorithm as 127: Generation of Random Orthogonal Matrices.” <em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em> 27 (2). JSTOR: 199–206.</p>
@@ -126,10 +146,13 @@
 <p>Helland, Inge S., S. Sæbø, T. Almøy, and R. Rimal. 2017. “Model and Estimators for Partial Least Squares.”</p>
 </div>
 <div>
+<p>Indahl, Ulf G, Kristian Hovde Liland, and Tormod Næs. 2009. “Canonical Partial Least Squares–a Unified Pls Approach to Classification and Regression Problems.” <em>Journal of Chemometrics</em> 23 (9). Wiley Online Library: 495–504.</p>
+</div>
+<div>
 <p>Ripley, Brian D. 2009. <em>Stochastic Simulation</em>. Vol. 316. John Wiley &amp; Sons.</p>
 </div>
 <div>
-<p>Sæbø, Solve, Trygve Almøy, and Inge S Helland. 2015. “Simrel-a Versatile Tool for Linear Model Data Simulation Based on the Concept of a Relevant Subspace and Relevant Predictors.” <em>Chemometrics and Intelligent Laboratory Systems</em>. Elsevier.</p>
+<p>Sæbø, Solve, Trygve Almøy, and Inge S Helland. 2015. “Simrel – a Versatile Tool for Linear Model Data Simulation Based on the Concept of a Relevant Subspace and Relevant Predictors.” <em>Chemometrics and Intelligent Laboratory Systems</em>. Elsevier.</p>
 </div>
 </div>
 </div>
@@ -138,9 +161,10 @@
           </div>
         </div>
       </div>
-<a href="model-parameterization.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="web-interface.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -163,11 +187,11 @@ gitbook.start({
 },
 "fontsettings": {
 "theme": "white",
-"family": "serif",
+"family": "sans",
 "size": 2
 },
 "edit": {
-"link": "https://github.com/therimalaya/simrel-m/edit/master/Includes/05-references.Rmd",
+"link": "https://github.com/therimalaya/simrel-m/edit/master/Includes/06-references.Rmd",
 "text": "Edit"
 },
 "download": ["Simrel-M.epub", "Simrel-M.pdf"],

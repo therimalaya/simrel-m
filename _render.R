@@ -17,6 +17,7 @@ if (length(formats) == 0) {
     'bookdown::pdf_book',
     'bookdown::epub_book',
     'bookdown::gitbook'
+    # 'bookdown::tufte_html_book'
   )
 }
 

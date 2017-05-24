@@ -5,11 +5,11 @@ output_dir: docs
 clean: [packages.bib, bookdown.bbl]
 rmd_files: [
   "index.Rmd", 
-  "Includes/01-Introduction.Rmd",
   "Includes/02-StatisticalModel.Rmd",
-  # "Includes/03-Implementation.Rmd",
-  # "Includes/04-appendix.Rmd",
-  "Includes/05-references.Rmd",
+  "Includes/03-Implementation.Rmd",
+  "Includes/04-WebInterface.Rmd",
+  # "Includes/05-appendix.Rmd",
+  "Includes/06-references.Rmd",
   ]
 language:
   label:

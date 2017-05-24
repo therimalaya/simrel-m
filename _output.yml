@@ -8,20 +8,19 @@ bookdown::gitbook:
   config:
     toc:
       collapse: section
-      before: '<li><a href="./index.html">Simrel-M: A versatile Simulation Tool</a></li>'
-      after: '<li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>'
+      before: |
+        <li class="lead"><a href="./index.html">Simrel-M: A versatile Simulation Tool</a></li>
+      after: |
+        <li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>
     download: ['epub', 'pdf']
-    fontsettings:
-      theme: white
-      family: serif
-      size: 2
     sharing: 
       github: yes
       facebook: no
       twitter: yes
       google: yes
-bookdown::html_chapters:
-  css: style.css
+bookdown::tufte_html_book:
+  toc: yes
+  css: [style.css, toc.css]
 bookdown::pdf_book:
   fig_caption: yes
   citation_package: natbib

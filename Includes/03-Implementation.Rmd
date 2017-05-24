@@ -1,186 +1,172 @@
-# Implementation {#implementation}
+# Implementation #
+
+This section demonstrates an application of `simrel-m` in order to compare different estimation methods on the basis of prediction error. For the comparison, we have considered four well established estimation methods.
+
+a) Ordinary Least Squares (OLS),
+b) Principal Component Regression (PCR),
+c) Partial Least Squares predicting individual response variable separately (PLS1) and
+d) Partial Least Squares predicting all response variables together (PLS).
+
+We have also considered four relatively new estimation methods
+
+a) Canonically Powered Partial Least Squares regression (CPPLS) [@indahl2009canonical],
+b) Canonical Partial Least Squares regression (CPLS) [@indahl2009canonical],
+c) Envelope estimation in predictor space (xenv) [@cook2010envelope],
+d) Envelope estimation in response space (yenv) [@cook2015foundations] and
+e) Simultaneous estimation of x- and y-envelope (senv) [@cook2015simultaneous]
+
+From the possible combinations of two levels of coefficient of determination $(R^2)$ and two levels of `gamma` (factor that controls the multicollinearity in predictor variable), four simulation designs (`r paste0('design ', 1:4)`) are prepared. Replicating each design 20 times, 80 datasets with five response variables $(m=5)$ and 16 predictor variables $(p = 16)$ are simulated using the method discussed in this paper. It is also assumed that three principle components of response variables ($w_1, w_2$ and $w_3$) completely describes the variation present in five response variables ($y_1 \ldots y_5$). The four designs are presented in the Table~\@ref(tab:parameter-settings). All datasets contains 100 sample observations and out of 16 predictor variables, three disjoint set of five predictor variables are relevant for response components $w_1, w_2$ and $w_3$. Further, predictor components $z_1$ and $z_6$ are relevant for response component $w_1$, predictor components $z_2$ and $z_5$ are relevant for response component $w_2$ and predictor component $z_3$ is relevant for response component $w_3$. In addition, following the discussion about [rotation of response space](#rotation-of-response-space), $w_1$ is rotated together with $w_4$ and $w_2$ is rotated together with $w_5$.
 
 ```{r KnitrSetup, include=FALSE}
 knitr::opts_chunk$set(
   comment = NA,
   message = FALSE,
   warning = FALSE,
-  echo    = FALSE
+  echo    = FALSE,
+  fig.pos = 'H'
+)
+evl <- !file.exists('scripts/output/pred-err.rdata')
+source("scripts/01-setup.r")
+if (evl) {
+  source("08-final-data.r") 
+} else {
+  load('output/pred-err.rdata')
+  setwd(owd)
+}
+```
+
+```{r design-table}
+design_table <- do.call(rbind, opts[c("gamma", "R2")])
+dimnames(design_table) <- list(
+  c("Decay of eigenvalue $(\\gamma)$",
+    "Coef. of Determination $(\\rho^2)$"),
+  paste0("Design", 1:4))
+```
+
+```{r design-table-print}
+pander::pander(
+  design_table, type = "rmarkdown", 
+  split.cells = c(40, rep(30, 4)), split.tables = Inf,
+  justify = paste(rep("r", ncol(design_table) + 1), collapse = ""),
+  caption = "(\\#tab:parameter-settings) Parameter setting of simulated data for model comparison"
 )
 ```
 
-```{r LoadingPackages}
-pkgs <- c("pls", "envlp", "simulatr", "data.table", "pander", "magrittr", "purrr", "ggplot2")
-for (pkg in pkgs) 
-  suppressPackageStartupMessages(require(pkg, quietly = T, 
-                                         warn.conflicts = F, 
-                                         character.only = T))
+For each method, an estimate of test prediction error is computed as,
+
+$$\underset{m \times m}{\boldsymbol{\alpha}} = 
+\left(
+\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
+\right) ^t \boldsymbol{\Sigma}_{xx}
+\left(
+\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
+\right) + \boldsymbol{\sigma}^2$$
+
+where, $\hat{\boldsymbol{\beta}}$ is an estimate of true regression coefficient $\boldsymbol{\beta}$ and $\boldsymbol{\Sigma}_{xx}$ is the true covariance structure of predictor variable obtained from `simrel-m`. Also, $\boldsymbol{\sigma}^2$ is the true minimum error of the model. Here $\hat{\beta}$ vary accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the Forbenius norm $\left\lVert\alpha\right\rVert_F \in \mathbb{R}^{m \times m}$ defined as [@golub2012matrix], 
+
+$$\left\lVert\alpha\right\rVert_F = \sqrt{\sum_{i = 1}^m \sum_{j = 1}^m {\left|a_{ij}\right|^2}}.$$
+
+The minimimum prediction error (measured as discussed above) for nine estimation methods averaged over 20 replications of four designs are in Table~\@ref(tab:min-error). The table also shows that the number of components a method has used in order to obtain the minimum of average prediciton error.
+
+```{r Average-Prediction}
+avg_pred_err <- myData %>% 
+  group_by(Model, design, comp, R2, gamma) %>% 
+  do(mean_se(.$pred_err)) %>% 
+  rename(pred_err = y, upper = ymax, lower = ymin)
 ```
 
-```{r SourceScript}
-source("functions.R")
-```
-
-## Example of model comparison with simulated data from `simrel-m` package {#example}
-
-In this section, `simrel-m` is implemented to simulate multi-response linear model dataset and use it to compare Principal Components Regression (PCR), Partial Least Squared Regression (PLS), Cannonically Powered Partial Least Squared Regression (CPPLS), Maximum Likelihood under Envelope Estimation and Ordinary Least Squared Regression (OLS) on the basis of their prediction ability of test observations. Here two design of parameters as in Table-\@ref(tab:parameter-settings) are implemented for the simulation.
-
-```{r MakingDesign, results='hide'}
-set.seed(225)
-opts <- list(
-  n = c(100, 50, 200, 20),
-  p = c(20, 40, 50, 10),
-  q = c("5, 5, 7", 
-        "15, 15, 9",
-        "12, 15, 8",
-        "3, 4"),
-  m = c(6, 5, 5, 3),
-  relpos = c("1, 2; 3, 4, 6; 5",
-             "1, 2; 3, 4; 5, 7",
-             "1, 2, 3; 4, 6; 5, 7, 9",
-             "1; 2, 3"),
-  gamma = c(0.9, 0.4, 0.7, 0.6),
-  R2 = c("0.8, 0.9, 0.7",
-         "0.8, 0.9, 0.5",
-         "0.7, 0.9, 0.8",
-         "0.6, 0.8"),
-  ypos = c("1, 4; 2, 6; 3, 5",
-           "1, 4; 2, 5; 3",
-           "1; 3, 4; 2, 5",
-           "1, 3; 2"),
-  ntest = rep(1000, 4)
-)
-design <- as.data.table(.prepare_design(opts))
-design[, type := "multivariate"]
-mdls <- c("OLS", "PCR", "PLS", "Envelope", "CPPLS")
-```
-
-
-```{r parameter-settings}
-design_table <- t(design) %>% 
-  as.data.table(keep.rownames = TRUE) %>% 
-  setnames(c("parameters", paste0("Design", 1:4)))
-design_desc <- c(
-  "Number of observations",
-  "Number of predictors",
-  "Relevant number of predictors",
-  "Number of responses",
-  "Position of relevant components",
-  "Gamma (decay of eigenvalues)",
-  "Coefficient of Determination",
-  "Position of response components",
-  "Number of test observations"
-)
-design_table <- cbind(Parameters = design_desc, design_table[-.N, -"parameters"])
-knitr::kable(design_table, align = "rrr",
-             caption = "Parameter setting of simulated data for model comparison",
-             booktabs = TRUE)
-```
-
-Here, the first design has large number of observations as compared to the number of variables while the number of variables in second design is nearly equals to its number of observations. Both the models have three informative response components from which first design generates `r opts[['m']][1]` responses and the second design generates  `r opts[['m']][2]` responses. In addition, the eigenvalues of predictors decreases sharply in the first design than the second one. The prediction error are compared on the basis of 1000 test samples.
-
-Prediction error is measured as mean squared error of prediction (MSEP) using the expression in equation~\@ref(eq:msep).
-
-
-\begin{equation}
-\text{MSEP}_\text{train} = \frac{\mathbf{Y}_\text{train} - 
-  \hat{\mathbf{Y}}_\text{train}}{n_\text{train}} \nonumber \text{ and }
-\text{MSEP}_\text{test}  = \frac{\mathbf{Y}_\text{test} - 
-  \hat{\mathbf{Y}}_\text{test}}{n_\text{test}}
-(\#eq:msep)
-\end{equation}
-
-where, $\hat{\mathbf{Y}}_\text{train} = \mathbf{X}_\text{train} \boldsymbol{\beta}$ and $\hat{\mathbf{Y}}_\text{test} = \mathbf{X}_\text{test} \boldsymbol{\beta}$
-
-```{r Simulation, results='hide'}
-load_if_not("sim_obj", expression = {
-  set.seed(7777)
-  design %>% 
-    apply(1, function(x) do.call(simulatr, x)) %>% 
-    data.table %>% 
-    setnames("sim_obj") %>% 
-    cbind(design)
-})
-sim_obj[, c("Train", "Test") := list(
-  lapply(sim_obj, function(obj) {
-    data.frame(x = I(obj$X), y = I(obj$Y))
-  }),
-  lapply(sim_obj, function(obj) {
-    data.frame(x = I(obj$testX), y = I(obj$testY))
-  })
-)]
-
-## ---- Writing Matlab file ----------------------------------------
-R.matlab::writeMat(
-  "sim-data.mat", 
-  Train1 = I(sim_obj[1, Train][[1]]),
-  Test1 = I(sim_obj[1, Test][[1]]),
-  Train2 = I(sim_obj[2, Train][[1]]),
-  Test2 = I(sim_obj[2, Test][[1]]),
-  Train3 = I(sim_obj[3, Train][[1]]),
-  Test3 = I(sim_obj[3, Test][[1]]),
-  Train4 = I(sim_obj[4, Train][[1]]),
-  Test4 = I(sim_obj[4, Test][[1]])
-)
-```
-
-```{r, fitSimulEnv}
-# matlabr::run_matlab_script('FitSimulEnv.m') #! Important Don't delete it
-senv.fit <- R.matlab::readMat("sim-fit-obj.mat")
-senv <- data.table(senvelope = lapply(senv.fit, function(x) {
-  out <- list(
-    beta = x["beta", , ],
-    Gyhat = x["Gyhat", , ],
-    Gxhat = x["Gxhat", , ]
+<center>
+```{r minimum-average-prediction}
+avgPredErr <- avg_pred_err %>%
+  group_by(Model, design) %>%
+  summarise(
+    comp = comp[which.min(pred_err)],
+    pred_err = min(pred_err),
+    label = paste0("(", comp, ", ", round(pred_err, 2), ")")
   )
-  out <- lapply(out, `dimnames<-`, 
-                list(paste0("compX", 1:10), 
-                     paste0("compY", 1:4)))
-}))
+avgPredErr_lbl <- avgPredErr %>% 
+  select(-comp, -pred_err) %>%
+  mutate(design = paste0("Design: ", design)) %>% 
+  spread(design, label)
+
+avgPredErr_idx <- avgPredErr %>% 
+  select(-comp, -label) %>% 
+  mutate(design = paste0("Design: ", design)) %>% 
+  spread(design, pred_err) %>% 
+  ungroup() %>% 
+  select(-Model) %>% 
+  do({sapply(., function(x) x == min(x)) %>% as_tibble()}) %>%
+  as.matrix() %>% 
+  which(arr.ind = TRUE)
+avgPredErr_idx[, "col"] <- avgPredErr_idx[, "col"] + 1
+
+avgPredErr_lbl %>% 
+  pander(emphasize.strong.cells = avgPredErr_idx,
+         # emphasize.verbatim.cols = 2:ncol(.),
+         emphasize.italics.cells = avgPredErr_idx,
+         emphasize.italics.cols = 1,
+         split.cells = Inf, justify = "lcccc",
+         caption = "(\\#tab:min-error) Minimum average prediction error (number of components, prediction error)")
+```
+</center>
+
+```{r}
+topBest <- avgPredErr %>% 
+  ungroup() %>% 
+  group_by(design) %>% 
+  summarize(
+    Model = Model[which.min(pred_err)],
+    pred_err = min(pred_err)
+  )
 ```
 
+Table~\@ref(tab:min-error) shows that simulteneous envelope has prediction error of `r paste(round(topBest[["pred_err"]][1:2], 2), collapse = " and ")` in design 1 and design 2 respectively which is smaller than other methods. However the model was not able to show the same performance in design 3 and design 4. Cannonical PLS and Cannonically Powered PLS has out performed other methods in these designs. Here, the difference between CPLS and CPPLS is minimal. These methods has also shown a fair performance in the first two designs with only three components. A detail picture of prediction error for each estimation method obtained for each additional component is shown in Figure~\@ref(fig:Average-Prediction-Plot). Although design 2 and design 4 has higher level of multicollinearity, the performance of the estimation methods is indifferent to its effect. Since all the methods, except OLS, are based on shrinking of estimates, they are less influenced by multicollinearity problem.
 
-```{r ModelFitting, results='hide'}
-fit <- copy(sim_obj[1:2])
-fit <- fit[, .(sim_obj = sim_obj)][, design := 1:.N]
-fit[, ols := lapply(sim_obj, fit_ols)]
-fit[, pcr := lapply(sim_obj, fit_mvr, mvr_fun = "pcr", ncomp = 10)]
-fit[, pls := lapply(sim_obj, fit_mvr, mvr_fun = "plsr", ncomp = 10)]
-fit[, cppls := lapply(sim_obj, fit_mvr, mvr_fun = "cppls", ncomp = 10)]
-fit[, xenv := lapply(sim_obj, fit_env)]
-fit[, yenv := lapply(sim_obj, fit_env, type = "y", ncomp = 3)]
-fit[, senvelope := senv]
+```{r Average-Prediction-Plot, fig.cap="Minimum of Average Prediction Error", fig.asp=0.7, out.width='100%', fig.width=8}
+plot_label <- avg_pred_err %>% 
+  ungroup() %>% 
+  select(R2, gamma, design) %>% 
+  unique() %>% 
+  transmute(
+    design = unique(design),
+    Model = NA,
+    x = Inf, y = c(Inf, Inf, -Inf, -Inf), 
+    label = paste0("R2: ", R2, "\ngamma: ", gamma),
+    type = "Properties",
+    v = c(1.2, 1.2, -1.2, -1)
+  )
+plt <- avg_pred_err %>% 
+  filter(Model != "OLS") %>% 
+  mutate(type = "Plot") %>% 
+  ggplot(aes(comp, pred_err, fill = Model)) +
+  geom_ribbon(aes(ymax = upper, ymin = lower), alpha = 0.1) +
+  geom_line(aes(color = Model), size = 0.5) +
+  geom_point(shape = 21, size = 1, aes(color = Model)) +
+  geom_hline(data = avg_pred_err %>% 
+               filter(Model == "OLS", comp == 1),
+             aes(yintercept = pred_err, color = Model), 
+             linetype = 2, size = 0.5) +
+  geom_point(data = avg_pred_err %>% 
+               filter(Model == "OLS", comp == 1),
+             aes(y = pred_err, color = Model), size = 1) +
+  geom_text(aes(label = label, x = Inf, y = y, vjust = v), 
+            data = plot_label,
+            hjust = 1, family = "mono", size = rel(4)) +
+  scale_size_continuous(range = c(0.1, 2), breaks = NULL) +
+  scale_fill_discrete(l = 40) +
+  labs(x = "Number of Components", 
+       y = expression(paste('Prediction Error (||', alpha, '||'[F], ")"))) +
+  facet_wrap( ~ design, labeller = label_both) +
+  theme_gray(base_size = 14) +
+  theme(legend.position = "bottom") +
+  scale_x_continuous(breaks = seq(0, 10, 1)) +
+  ggtitle("Prediction Error", 
+          sub = "Averaged over 20 replicated Datasets of same properties") +
+  guides(color = guide_legend(nrow = 1), 
+         fill = guide_legend(nrow = 1))
+plot(plt)
 ```
 
+Above analysis has answered some questions such as how methods works when there exist a true reduced dimension in response space but also arised question like why they perform differently. For example, the reduced performance of simulteneous envelope going from design with $R^2 = (0.8, 0.8, 0.4)$ to design with $R^2 = (0.4, 0.4, 0.4)$ has arised question such as -- Does the performance of the method depends on $R^2$ or it is a random situation? Since, this paper is intended for a demonstration of how `simrel-m` can be used in scientific study, a more elaborative study is needed in order to answer such question which `simrel-m` can help as an useful instrument.
 
-```{r PredictionError, results='hide'}
-mdls <- names(fit)[-c(1:2)]
-pred_error  <- map_df(mdls, function(mdl){
-  fit[, map2_df(.SD[["sim_obj"]], .SD[[mdl]], ~get_pred_error(.x, .y, mdl)), 
-      by = design, .SDcols = c("sim_obj", mdl)]
-}, .id = "Model")
-pred_error[, Model := mdls[as.numeric(Model)]]
-pred_error[, comp := as.numeric(gsub('[a-zA-Z]', '', comp))]
-```
 
-```{r PredictionErrorPropOLS}
-pe.wide <- dcast(pred_error, design + comp ~ Model, value.var = 'pred_err') %>% 
-  .[, ols := ols[1], by = design]
-predProp <- pe.wide[, .SD/pls, by = .(design, comp)] %>% 
-  melt(1:2, variable.name = "Methods", value.name = "PropPredError") %>% 
-  na.omit()
-```
-
-## Comparison of Estimation Methods based on Prediction error
-Figure-\@ref(fig:prediction-error-plot) shows the performance of different models with components 1 to 10 ...
-
-```{r prediction-error-plot, fig.cap='Model comparison based on test prediction error', fig.asp=0.4, out.width="100%", fig.pos='H'}
-ggplot(pred_error[pred_err <= 2.5], aes(comp, pred_err, color = Model)) +
-  geom_line(aes(group = Model)) +
-  geom_point(size = 1) +
-  facet_grid(.~design, labeller = label_both) +
-  scale_x_continuous(breaks = 1:10) +
-  labs(x = 'Number of Components', y = expression(paste('||', alpha, '||'[F])))
-```
-
-Some more text and more and more
