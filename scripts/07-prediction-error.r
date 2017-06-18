@@ -6,10 +6,5 @@ predErr <- map_df(`names<-`(mdls, mdls), function(mdl){
     group_by(design, replicate, id) %>%
     select_(mdl = mdl) %>%
     left_join(trueValue) %>%
-    transmute(
-      pred_err = pmap(
-        list(mdl, minerror, trueBeta, sigma, testData),
-        getPredErr, use.formula = TRUE
-      )
-    ) %>% unnest()
+    do(with(., pmap_df(list(mdl, minerror, trueBeta, sigma), getPredErr)))
 }, .id = "Model")

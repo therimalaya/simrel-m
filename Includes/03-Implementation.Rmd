@@ -101,8 +101,9 @@ avgPredErr_idx <- avgPredErr %>%
 avgPredErr_idx[, "col"] <- avgPredErr_idx[, "col"] + 1
 
 avgPredErr_lbl %>% 
+  as.data.frame() %>% 
   pander(emphasize.strong.cells = avgPredErr_idx,
-         # emphasize.verbatim.cols = 2:ncol(.),
+         emphasize.verbatim.cols = 2:ncol(.),
          emphasize.italics.cells = avgPredErr_idx,
          emphasize.italics.cols = 1,
          split.cells = Inf, justify = "lcccc",

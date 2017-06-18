@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-05-24">
+<meta name="date" content="2017-06-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -194,7 +194,7 @@ Figure 2: Simulated Data before (left) and after (right) rotation
 </div>
 <div id="rotation-of-response-space" class="section level2">
 <h2>Rotation of response space</h2>
-<p>The previous example has four response variables with only three informative principal components <span class="math inline">\(w_1, w_2\)</span> and <span class="math inline">\(w_3\)</span>. During the rotation of covariance matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span>, the response space is also rotated separately along with the predictor space. Figure~<a href="relevant-components.html#fig:cov-plot-print">1</a> shows that the informative response component <span class="math inline">\(w_3\)</span> is rotated together with uninformative response component <span class="math inline">\(w_4\)</span> so that the predictors which were relevant for <span class="math inline">\(w_3\)</span> will be relevant for response variables <span class="math inline">\(y_3\)</span> and <span class="math inline">\(y_4\)</span>. Similarly, response components <span class="math inline">\(w_1\)</span> and <span class="math inline">\(w_2\)</span> are rotated separately so that predictors relevant for <span class="math inline">\(w_1\)</span> and <span class="math inline">\(w_2\)</span> will also be relevant for <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span> respectively which we can see in Figure~<a href="relevant-components.html#fig:simulated-data">2</a>. In the r-package <em>Simrel-M</em>, the combining of the response components is specified by a parameter <code>ypos</code>.</p>
+<p>The previous example has four response variables with only three informative principal components <span class="math inline">\(w_1, w_2\)</span> and <span class="math inline">\(w_3\)</span>. During the rotation of covariance matrix <span class="math inline">\(\boldsymbol{\Sigma}\)</span>, the response space is also rotated separately along with the predictor space. Figure~<a href="relevant-components.html#fig:cov-plot-print">1</a> shows that the informative response component <span class="math inline">\(w_3\)</span> is rotated together with uninformative response component <span class="math inline">\(w_4\)</span> so that the predictors which were relevant for <span class="math inline">\(w_3\)</span> will be relevant for response variables <span class="math inline">\(y_3\)</span> and <span class="math inline">\(y_4\)</span>. Similarly, response components <span class="math inline">\(w_1\)</span> and <span class="math inline">\(w_2\)</span> are rotated separately so that predictors relevant for <span class="math inline">\(w_1\)</span> and <span class="math inline">\(w_2\)</span> will also be relevant for <span class="math inline">\(y_1\)</span> and <span class="math inline">\(y_2\)</span> respectively which we can see in Figure~<a href="relevant-components.html#fig:simulated-data">2</a>. In the r-package <em>simrel-m</em>, the combining of the response components is specified by a parameter <code>ypos</code>.</p>
 
 </div>
 </div>

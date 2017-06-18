@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-05-24">
+<meta name="date" content="2017-06-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -113,7 +113,7 @@ div.abstract{
 <p>In order to give an interface for <code>simrel-m</code>, we have created a shiny app which allows users to input the simulation parameters through different input fields. Figure~<a href="web-interface.html#fig:AppSimulatr">4</a> shows a screenshot for the application. The application constitute of three main sections from where user can interact with this simulation approach. A random seed can be selected using section in Figure~<a href="web-interface.html#fig:AppSimulatr">4</a> (a) so that a particular set of data can be simulated. Figure~<a href="web-interface.html#fig:AppSimulatr">4</a> (b) has all the input panel where parameter for simulation can be entered. Here user also has option to simulate univariate (uses <code>simrel</code> package in CRAN), bivariate (not yet availiable in CRAN) and multivariate simulation (<code>simrel-m</code>). In addition, a simulated R-object of <code>simrel</code> can be download as <code>Rdata</code> format (section (e) in Figure~<a href="web-interface.html#fig:AppSimulatr">4</a>). The object consitute of the simulated data along with other properties such as coefficient of determination for each response, true regression coefficients and rotation matrices.</p>
 <p>All <code>simrel-m</code> parameters can be entered using simple user interface where a vectors are separated with comma(,) and lists are separated with semicolon(;). For instance, the relevant position considered <a href="implementation.html#implementation">implementation</a> section can be entered as <code>1, 6; 2, 5; 3, 4</code> which is equivalent to R syntax <code>list(c(1, 6), c(2, 5), c(3, 4))</code>.</p>
 <div class="figure" style="text-align: center"><span id="fig:AppSimulatr"></span>
-<img src="images/screenshots/AppInterface.png" alt="Application interface of `simulatr`. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data" width="95%" />
+<img src="images/screenshots/AppSimulatr.png" alt="Application interface of `simulatr`. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data" width="95%" />
 <p class="caption">
 Figure 4: Application interface of <code>simulatr</code>. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data
 </p>

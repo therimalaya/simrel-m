@@ -725,7 +725,7 @@ were relevant for \(w_3\) will be relevant for response variables
 are rotated separately so that predictors relevant for \(w_1\) and
 \(w_2\) will also be relevant for \(y_1\) and \(y_2\) respectively which
 we can see in Figure\textasciitilde{}\ref{fig:simulated-data}. In the
-r-package \emph{Simrel-M}, the combining of the response components is
+r-package \emph{simrel-m}, the combining of the response components is
 specified by a parameter \texttt{ypos}.
 
 \hypertarget{implementation}{\section{Implementation}\label{implementation}}
@@ -883,7 +883,7 @@ average prediciton error.
 \caption{\label{tab:min-error} Minimum average prediction error (number of
 components, prediction error)}\tabularnewline
 \toprule
-\begin{minipage}[b]{0.10\columnwidth}\raggedright\strut
+\begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
 Model\strut
 \end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
 Design: 1\strut
@@ -897,7 +897,7 @@ Design: 4\strut
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{0.10\columnwidth}\raggedright\strut
+\begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
 Model\strut
 \end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
 Design: 1\strut
@@ -910,104 +910,104 @@ Design: 4\strut
 \end{minipage}\tabularnewline
 \midrule
 \endhead
-\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{CPLS}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.65)\strut
+\texttt{(3,\ 1.65)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.64)\strut
+\texttt{(3,\ 1.64)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{(3, 1.88)}}\strut
+\textbf{\emph{\texttt{(3,\ 1.88)}}}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.86)\strut
+\texttt{(3,\ 1.86)}\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{CPPLS}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.64)\strut
+\texttt{(3,\ 1.64)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.63)\strut
+\texttt{(3,\ 1.63)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.89)\strut
+\texttt{(3,\ 1.89)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{(3, 1.86)}}\strut
+\textbf{\emph{\texttt{(3,\ 1.86)}}}\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{OLS}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(1, 1.88)\strut
+\texttt{(1,\ 1.88)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(1, 1.87)\strut
+\texttt{(1,\ 1.87)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(1, 2.12)\strut
+\texttt{(1,\ 2.12)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(1, 2.09)\strut
+\texttt{(1,\ 2.09)}\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{PCR}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(7, 1.69)\strut
+\texttt{(7,\ 1.69)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(6, 1.66)\strut
+\texttt{(6,\ 1.66)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(6, 1.88)\strut
+\texttt{(6,\ 1.88)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(6, 1.87)\strut
+\texttt{(6,\ 1.87)}\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{PLS}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(4, 1.68)\strut
+\texttt{(4,\ 1.68)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(6, 1.66)\strut
+\texttt{(6,\ 1.66)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.88)\strut
+\texttt{(3,\ 1.88)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(6, 1.88)\strut
+\texttt{(6,\ 1.88)}\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{PLS1}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(1, 1.71)\strut
+\texttt{(1,\ 1.71)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(5, 1.67)\strut
+\texttt{(5,\ 1.67)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(1, 1.91)\strut
+\texttt{(1,\ 1.91)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(5, 1.88)\strut
+\texttt{(5,\ 1.88)}\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{Senv}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{(4, 1.63)}}\strut
+\textbf{\emph{\texttt{(4,\ 1.63)}}}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{(5, 1.62)}}\strut
+\textbf{\emph{\texttt{(5,\ 1.62)}}}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.99)\strut
+\texttt{(3,\ 1.99)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(5, 1.96)\strut
+\texttt{(5,\ 1.96)}\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{Xenv}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(5, 1.67)\strut
+\texttt{(5,\ 1.67)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(6, 1.67)\strut
+\texttt{(6,\ 1.67)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(5, 1.89)\strut
+\texttt{(5,\ 1.89)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(5, 1.9)\strut
+\texttt{(5,\ 1.9)}\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{Yenv}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.65)\strut
+\texttt{(3,\ 1.65)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.65)\strut
+\texttt{(3,\ 1.65)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.96)\strut
+\texttt{(3,\ 1.96)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-(3, 1.93)\strut
+\texttt{(3,\ 1.93)}\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \end{longtable}
@@ -1072,7 +1072,7 @@ R syntax \texttt{list(c(1,\ 6),\ c(2,\ 5),\ c(3,\ 4))}.
 
 \begin{figure}[!hbt]
 
-{\centering \includegraphics[width=0.95\linewidth]{images/screenshots/AppInterface} 
+{\centering \includegraphics[width=0.95\linewidth]{images/screenshots/AppSimulatr} 
 
 }
 
