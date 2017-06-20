@@ -62,9 +62,7 @@ $$\underset{m \times m}{\boldsymbol{\alpha}} =
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
 \right) + \boldsymbol{\sigma}^2$$
 
-where, $\hat{\boldsymbol{\beta}}$ is an estimate of true regression coefficient $\boldsymbol{\beta}$ and $\boldsymbol{\Sigma}_{xx}$ is the true covariance structure of predictor variable obtained from `simrel-m`. Also, $\boldsymbol{\sigma}^2$ is the true minimum error of the model. Here $\hat{\beta}$ vary accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the Forbenius norm $\left\lVert\alpha\right\rVert_F \in \mathbb{R}^{m \times m}$ defined as [@golub2012matrix], 
-
-$$\left\lVert\alpha\right\rVert_F = \sqrt{\sum_{i = 1}^m \sum_{j = 1}^m {\left|a_{ij}\right|^2}}.$$
+where, $\hat{\boldsymbol{\beta}}$ is an estimate of true regression coefficient $\boldsymbol{\beta}$ and $\boldsymbol{\Sigma}_{xx}$ is the true covariance structure of predictor variable obtained from `simrel-m`. Also, $\boldsymbol{\sigma}^2$ is the true minimum error of the model. Here $\hat{\beta}$ vary accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the trace of $\alpha$, i.e. $\text{tr}(\alpha)$.
 
 The minimimum prediction error (measured as discussed above) for nine estimation methods averaged over 20 replications of four designs are in Table~\@ref(tab:min-error). The table also shows that the number of components a method has used in order to obtain the minimum of average prediciton error.
 
