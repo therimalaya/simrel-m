@@ -70,6 +70,7 @@ The minimimum prediction error (measured as discussed above) for nine estimation
 
 ```{r Average-Prediction}
 avg_pred_err <- myData %>% 
+  rename(pred_err = without_norm) %>% 
   group_by(Model, design, comp, R2, gamma) %>% 
   do(mean_se(.$pred_err)) %>% 
   rename(pred_err = y, upper = ymax, lower = ymin)

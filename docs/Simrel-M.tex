@@ -40,6 +40,9 @@
 \usepackage[T1]{fontenc}
 \usepackage{amssymb,amsmath}
 
+%% Multiple figure side-by-side
+\usepackage{subfig}
+
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
 % use upquote if available, for straight quotes in verbatim environments
@@ -661,7 +664,7 @@ principal components of \(\mathbf{x}\)) have non-zero covariance with
 similar manner other non-zero covariances are self-explanatory.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-1} \caption{Simulation of predictor and response variables after orthogonal transformation of principal components by a rotation matrix}\label{fig:cov-plot-print}
+\subfloat[Relevant Position\label{fig:cov-plot-print1}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print2}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print3}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of principal components by a rotation matrix}\label{fig:cov-plot-print}
 \end{figure}
 
 In order to simulate predictor variables \((\mathbf{x})\), we construct
@@ -913,107 +916,107 @@ Design: 4\strut
 \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{CPLS}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.65)}\strut
+\texttt{(3,\ 3.24)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.64)}\strut
+\texttt{(4,\ 3.22)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{\texttt{(3,\ 1.88)}}}\strut
+\texttt{(3,\ 4.09)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.86)}\strut
+\texttt{(3,\ 4.05)}\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{CPPLS}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.64)}\strut
+\texttt{(3,\ 3.21)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.63)}\strut
+\texttt{(3,\ 3.17)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.89)}\strut
+\texttt{(3,\ 4.11)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{\texttt{(3,\ 1.86)}}}\strut
+\textbf{\emph{\texttt{(3,\ 4.04)}}}\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{OLS}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(1,\ 1.88)}\strut
+\texttt{(1,\ 3.6)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(1,\ 1.87)}\strut
+\texttt{(1,\ 3.58)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(1,\ 2.12)}\strut
+\texttt{(1,\ 4.57)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(1,\ 2.09)}\strut
+\texttt{(1,\ 4.5)}\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{PCR}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(7,\ 1.69)}\strut
+\texttt{(7,\ 3.28)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 1.66)}\strut
+\texttt{(6,\ 3.19)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 1.88)}\strut
+\textbf{\emph{\texttt{(6,\ 4.08)}}}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 1.87)}\strut
+\texttt{(6,\ 4.04)}\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{PLS}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(4,\ 1.68)}\strut
+\texttt{(5,\ 3.29)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 1.66)}\strut
+\texttt{(6,\ 3.19)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.88)}\strut
+\texttt{(3,\ 4.11)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 1.88)}\strut
+\texttt{(6,\ 4.06)}\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{PLS1}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(1,\ 1.71)}\strut
+\texttt{(2,\ 3.32)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 1.67)}\strut
+\texttt{(5,\ 3.2)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(1,\ 1.91)}\strut
+\texttt{(1,\ 4.16)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 1.88)}\strut
+\texttt{(5,\ 4.07)}\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{Senv}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{\texttt{(4,\ 1.63)}}}\strut
+\textbf{\emph{\texttt{(4,\ 3.17)}}}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{\texttt{(5,\ 1.62)}}}\strut
+\textbf{\emph{\texttt{(5,\ 3.14)}}}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.99)}\strut
+\texttt{(3,\ 4.35)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 1.96)}\strut
+\texttt{(5,\ 4.28)}\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{Xenv}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 1.67)}\strut
+\texttt{(5,\ 3.23)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 1.67)}\strut
+\texttt{(6,\ 3.2)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 1.89)}\strut
+\texttt{(5,\ 4.1)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 1.9)}\strut
+\texttt{(6,\ 4.11)}\strut
 \end{minipage}\tabularnewline
 \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
 \emph{Yenv}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.65)}\strut
+\texttt{(3,\ 3.24)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.65)}\strut
+\texttt{(3,\ 3.23)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.96)}\strut
+\texttt{(3,\ 4.29)}\strut
 \end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 1.93)}\strut
+\texttt{(3,\ 4.24)}\strut
 \end{minipage}\tabularnewline
 \bottomrule
 \end{longtable}
 
 Table\textasciitilde{}\ref{tab:min-error} shows that simulteneous
-envelope has prediction error of 1.63 and 1.62 in design 1 and design 2
+envelope has prediction error of 3.17 and 3.14 in design 1 and design 2
 respectively which is smaller than other methods. However the model was
 not able to show the same performance in design 3 and design 4.
 Cannonical PLS and Cannonically Powered PLS has out performed other
