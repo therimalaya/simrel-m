@@ -169,8 +169,7 @@ div.abstract{
 \left(
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
 \right) + \boldsymbol{\sigma}^2\]</span></p>
-<p>where, <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is an estimate of true regression coefficient <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span> is the true covariance structure of predictor variable obtained from <code>simrel-m</code>. Also, <span class="math inline">\(\boldsymbol{\sigma}^2\)</span> is the true minimum error of the model. Here <span class="math inline">\(\hat{\beta}\)</span> vary accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the Forbenius norm <span class="math inline">\(\left\lVert\alpha\right\rVert_F \in \mathbb{R}^{m \times m}\)</span> defined as <span class="citation">(Golub and Van Loan <a href="#ref-golub2012matrix">2012</a>)</span>,</p>
-<p><span class="math display">\[\left\lVert\alpha\right\rVert_F = \sqrt{\sum_{i = 1}^m \sum_{j = 1}^m {\left|a_{ij}\right|^2}}.\]</span></p>
+<p>where, <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is an estimate of true regression coefficient <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span> is the true covariance structure of predictor variable obtained from <code>simrel-m</code>. Also, <span class="math inline">\(\boldsymbol{\sigma}^2\)</span> is the true minimum error of the model. Here <span class="math inline">\(\hat{\beta}\)</span> vary accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the trace of <span class="math inline">\(\alpha\)</span>, i.e. <span class="math inline">\(\text{tr}(\alpha)\)</span>.</p>
 <p>The minimimum prediction error (measured as discussed above) for nine estimation methods averaged over 20 replications of four designs are in Table~<a href="implementation.html#tab:min-error">2</a>. The table also shows that the number of components a method has used in order to obtain the minimum of average prediciton error.</p>
 <center>
 <table>
@@ -281,9 +280,6 @@ Figure 3: Minimum of Average Prediction Error
 </div>
 <div id="ref-cook2015simultaneous">
 <p>Cook, R Dennis, and Xin Zhang. 2015b. “Simultaneous Envelopes for Multivariate Linear Regression.” <em>Technometrics</em> 57 (1). Taylor &amp; Francis: 11–25.</p>
-</div>
-<div id="ref-golub2012matrix">
-<p>Golub, Gene H, and Charles F Van Loan. 2012. <em>Matrix Computations</em>. Vol. 3. JHU Press.</p>
 </div>
 </div>
             </section>
