@@ -1,0 +1,10 @@
+.container-fluid.main-container p, div p, p, dl > dd{
+    padding: 15px 0px;
+    text-align: justify;
+    line-height: 2.8rem;
+}
+
+.container-fluid.main-container, 
+.table.table-condensed, pre, code, table {
+    font-size: large;
+}

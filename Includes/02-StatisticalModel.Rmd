@@ -1,3 +1,16 @@
+---
+output: 
+  bookdown::html_document2:
+    fig_caption: yes
+    theme: yeti
+    number_sections: no
+    toc: no
+    css: "custom.css"
+bibliography: "../ref-db.bib"
+biblio-style: "apalike"
+link-citations: true
+---
+
 # Statistical Model #
 
 Let us consider a model in equation~\@ref(eq:rand-reg-model) as our point of departure.
@@ -42,7 +55,7 @@ Coefficient of Determination $\boldsymbol{\rho}_y^2$
 $$\boldsymbol{\rho}_y^2 = \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}$$
 
 Conditional variance
-: The conditional variance of $\mathbf{y}$ given $\mathbf{x}$ is, $$\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.$$ The diagonal elements of this matrix equals the theoretical minimum errors of prediction for each of the response variables.
+: The conditional variance of $\mathbf{y}$ given $\mathbf{x}$ is, $$\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.$$ The diagonal elements of this matrix equals the theoretical least square error of prediction for each of the response variables.
 
 Let us define a transformation of $\mathbf{X}$ and $\mathbf{Y}$ as, $\mathbf{z} = \mathbf{Rx}$ and $\mathbf{w} = \mathbf{Qy}$. Here, $\mathbf{R}_{p\times p}$ and $\mathbf{Q}_{m\times m}$ are rotation matrices which rotates $\mathbf{x}$ and $\mathbf{y}$ giving $\mathbf{z}$ and $\mathbf{w}$ respectively. The model in equation~\@ref(eq:rand-reg-model) can be expressed with these transformed variables as,
 
@@ -146,7 +159,7 @@ This concept can be extended to $m$ responses so that the subspace of $\mathbf{x
 
 ## Model Parameterization ##
 
-In order to construct a fully specified covariance matrix of $\mathbf{z}$ and $\mathbf{w}$ for model in equation~\@ref(eq:model3), we need to identify $1/2 (p+m)(p+m+1)$ unknown parameters<span style="color:red;">\color{red}Some Motivation for simplification of parameters</span>(<span style="color:green;">\color{green}See comment from Solve</span>). For the purpose of this simulation, we implement some assumption to re-parameterize and simplify the model parameters. This enables us to construct a wide range of model properties from few key parameters.
+In order to construct a fully specified covariance matrix of $\mathbf{z}$ and $\mathbf{w}$ for model in equation~\@ref(eq:model3), we need to identify $1/2 (p+m)(p+m+1)$ unknown parameters. However, $\Sigma_{zz}$ is a diagonal matrix of eigenvalues of $\Sigma_{xx}$, the number of parameter reduced by $1/2p(p-1)$ parameters. In addition, the covariances of $\mathbf{z}$ that are not relevant for $\mathbf{w}$ will be zero. This further reduces the unknown parameters. For the purpose of this simulation, we implement some assumption to re-parameterize and simplify the model parameters. This enables us to construct a wide range of model properties from only few key parameters.
 
 **Parameterization of $\boldsymbol{\Sigma}_{zz}$**
 : If we consider the rotation matrix $\mathbf{R}$ corresponds to the eigenvectors of $\boldsymbol{\Sigma}_{xx}$, then $\mathbf{z}$ becomes the set of principal components of $\mathbf{x}$. In that case $\boldsymbol{\Sigma}_{zz}$ is a diagonal matrix with eigenvalues $\lambda_1, \ldots, \lambda_p$. Further, we adopt the following parametric representation of these eigenvalues,
@@ -219,8 +232,7 @@ Similarly, in order to simulate $n$ observations, we define $\underset{n \times 
 pkgs <- c("simulatr", "ggplot2", "reshape2")
 for (pkg in pkgs) require(pkg, character.only = T)
 
-# source("scripts/00-plot-function.R")
-source("../../Conferences/nsm-17/plot-functions.R")
+source(file.path(getwd(), "scripts/00-plot-function.R"))
 set.seed(123)
 pars <- list(
   n      = 25,

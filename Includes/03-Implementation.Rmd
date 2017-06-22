@@ -1,3 +1,16 @@
+---
+output: 
+  bookdown::html_document2:
+    fig_caption: yes
+    theme: yeti
+    number_sections: no
+    toc: no
+    css: "custom.css"
+bibliography: "../ref-db.bib"
+biblio-style: "apalike"
+link-citations: true
+---
+
 # Implementation #
 
 This section demonstrates an application of `simrel-m` in order to compare different estimation methods on the basis of prediction error. For the comparison, we have considered four well established estimation methods.

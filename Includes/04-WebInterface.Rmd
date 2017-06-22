@@ -1,11 +1,40 @@
+---
+output: 
+  bookdown::html_document2:
+    fig_caption: yes
+    theme: yeti
+    number_sections: no
+    toc: no
+    css: "custom.css"
+bibliography: "../ref-db.bib"
+biblio-style: "apalike"
+link-citations: true
+---
+
 # Web Interface #
+
+```{r setup_web_interface, include=FALSE}
+knitr::opts_chunk$set(
+  comment = NA,
+  message = FALSE,
+  warning = FALSE,
+  echo    = FALSE,
+  fig.pos = 'H'
+)
+```
 
 In order to give an alternative interface for `simrel-m`, we have created a shiny app which  allows users to input the simulation parameters through different input fields. Figure~\@ref(fig:AppSimulatr) shows a screenshot for the application. The application contains three main sections through which the user can interact with  this simulation approach. A random seed can be selected using section in Figure~\@ref(fig:AppSimulatr) (a) so that a particular set of data can be  simulated. Figure~\@ref(fig:AppSimulatr) (b) has all the input panel where  parameter for simulation can be entered. Here the user also has the option to simulate univariate (uses `simrel` package in CRAN), bivariate (not yet available in CRAN)  and multivariate simulation (`simrel-m`). In addition, a simulated R-object is comprised by the simulated data can be download as `Rdata` format (section (e) in Figure~\@ref(fig:AppSimulatr)).  The object constitute of the simulated data along with other properties such as coefficient of determination for each response, true regression coefficients and rotation matrices.
 
 All `simrel-m` parameters can be entered using simple user interface where a vectors are separated with comma(,) and lists are separated with  semicolon(;). For instance, the relevant position discussed in [implementation](#implementation) section of this paper can be entered as `1, 6; 2, 5; 3, 4` which is equivalent to R syntax `list(c(1, 6), c(2, 5), c(3, 4))`.
 
-```{r AppSimulatr, fig.cap="Application interface of `simulatr`. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data", fig.align='center', out.width='95%', fig.pos='!hbt'}
-knitr::include_graphics("images/screenshots/AppSimulatr.png")
+```{r AppSimulatr, fig.cap="Application interface of `simulatr`. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data", fig.align='center', out.width='95%', fig.pos='!htb'}
+knitr::include_graphics(file.path(getwd(), "images/screenshots/AppSimulatr.png"))
 ```
 
-The application not only allows users to simulate data but also gives some insight on simulated data using some plots. Section (c) in Figure~\@ref(fig:AppSimulatr) shows these plots for the simulated data. The first plot shows the true regression coefficients for different predictor variables. The second plot has the covariance of relevant component with each response along with eigenvalue of predictors. In this plot, we can see that if the components with small eigenvalues is relevant but with large eigenvalues are not relevant than the model will be difficult to predict. An estimated covariance of these relevant components is in third figure of this section. Along with these main sections, section (d) in the figure contains additional analysis performed with the simulated data such as its estimation with different methods. This section, which is still under development, is intended for educational purposes to show how changing the data properties influences the performances of different estimation and prediction methods.
+The application not only allows users to simulate data but also gives some insight on simulated data. The example used in the screenshot has simulated 200 training and 50 test samples with 15 predictor and 4 response variables. There are two latent variables (response component) that completely spans the informative response space. Five predictor variables are relevant for the first response component and explains 80 percent of the variation. In addition, the first and second predictor components spans the same space spanned by these five relevant predictors. Similarly, another set of four predictor variables are relevant for second response component and explains 70 percent of the variation. Here, third, fourth and sixth predictor components spans the same space spanned by these four relevant predictors. Further, the first response component is  rotated together with a normally distributed random vector to obtain first and third response variable and second resposne components is rotated together with another normally distributed random vector to obtain second and fourth response variable. 
+
+Section (c) in Figure~\@ref(fig:AppSimulatr) contains three plots -- a) regression coefficients b) relevant components and c) estimated relevant components. In the first plot we can see that predictor variables (1, 2, 8, 9 and 13) are relevant for first and third response variable and predictor variables (3, 4, 6 and 15) are relevant for second and fourth response variable. The second plot shows covariance between response components and the predictor components along with the corresponding eigenvalues in the background (bar plot). As in our parameter setting, the plot shows that first and second predictor components have non-zero covariance with first response component and third, fourth and sixth predictor components have non-zero covariance with second response component. The third plot is the estimated covariance between predictor components with response variable, for the simulated data. Since the first and third response components are rotated together, in the plot, the covariance between predictor components and first and third response variable is following similar pattern. This also suggests that the predictor components which were relevant for first response components gets relevant for first and third response variables after rotation.
+
+Along with these main sections, section (d) in the figure contains additional analysis performed with the simulated data such as its estimation with different methods. This section, which is still under development, is intended for educational purposes to show how changing the data properties influences the performances of different estimation and prediction methods.
+
+Many scientific studies [@helland2012near; @saebo2008lpls; @cook2015simultaneous] are using simulated data in order to compare their findings with others or assess its properties. In many of these situations, a user-friendly and versitle simulation tool like `simrel-m` can play an important role. @gangsei2016theoretical; @gangsei2016linear; and @saebo2015simrel are some examples where the univariate and bivariate form of `simrel` have been used for their study. 

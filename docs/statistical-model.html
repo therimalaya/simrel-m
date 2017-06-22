@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-06-20">
+<meta name="date" content="2017-06-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -157,7 +157,7 @@ div.abstract{
 <dd>The diagonal elements of coefficient of determination matrix <span class="math inline">\(\boldsymbol{\rho}_y^2\)</span> gives the amount of variation that <span class="math inline">\(\mathbf{X}\)</span> has explained about each <span class="math inline">\(\mathbf{Y}\)</span>. <span class="math display">\[\boldsymbol{\rho}_y^2 = \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\]</span>
 </dd>
 <dt>Conditional variance</dt>
-<dd>The conditional variance of <span class="math inline">\(\mathbf{y}\)</span> given <span class="math inline">\(\mathbf{x}\)</span> is, <span class="math display">\[\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.\]</span> The diagonal elements of this matrix equals the theoretical minimum errors of prediction for each of the response variables.
+<dd>The conditional variance of <span class="math inline">\(\mathbf{y}\)</span> given <span class="math inline">\(\mathbf{x}\)</span> is, <span class="math display">\[\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.\]</span> The diagonal elements of this matrix equals the theoretical least square error of prediction for each of the response variables.
 </dd>
 </dl>
 <p>Let us define a transformation of <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> as, <span class="math inline">\(\mathbf{z} = \mathbf{Rx}\)</span> and <span class="math inline">\(\mathbf{w} = \mathbf{Qy}\)</span>. Here, <span class="math inline">\(\mathbf{R}_{p\times p}\)</span> and <span class="math inline">\(\mathbf{Q}_{m\times m}\)</span> are rotation matrices which rotates <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> giving <span class="math inline">\(\mathbf{z}\)</span> and <span class="math inline">\(\mathbf{w}\)</span> respectively. The model in equation~<a href="statistical-model.html#eq:rand-reg-model">(1)</a> can be expressed with these transformed variables as,</p>

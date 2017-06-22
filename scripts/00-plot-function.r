@@ -46,11 +46,16 @@ get.cov.df <- function(cov.mat, n.xvar, n.yvar, relpos, xvar.name = "X",  yvar.n
   relpred.vec <- flatten_list(relpred, yvar.name, xvar.name)
   ypos.vec <- flatten_list(ypos, yvar.name, yvar.name)
   get_relvec <- function(df, relvec) {
-    rpos1 <- relvec[df["Var1"]]
-    rpos2 <- relvec[df["Var2"]]
+    rpos1 <- if (df[["facet1"]] %in% c("Z", "W")) unname(relvec[df["Var1"]]) else 
+      paste(names(which(relvec[df["Var1"]] == ypos.vec)), collapse = ", ")
+    
+    rpos2 <- if (df[["facet1"]] %in% c("Z", "W")) unname(relvec[df["Var2"]]) else 
+      paste(names(which(relvec[df["Var2"]] == ypos.vec)), collapse = ", ")
+    
     if (all(!is.na(c(rpos1, rpos2)))) {
-      out <- if (as.numeric(df["value"]) == 0) "None" else rpos1
-      return(out)
+      if (any(rpos1 == "", rpos2 == "")) return("None")
+      if (as.numeric(df["value"]) == 0) return("None")
+      return(rpos1)
     } else {
       if (as.numeric(df["value"]) == 0) return("None")
       if (all(c(is.na(c(rpos1, rpos2)), as.numeric(df["value"]) != 0))) return("None")
@@ -58,7 +63,6 @@ get.cov.df <- function(cov.mat, n.xvar, n.yvar, relpos, xvar.name = "X",  yvar.n
       if (is.na(rpos2)) return(rpos1)
     }
   }
-  
   irrelpred.idx <- setdiff(paste0(xvar.name, 1:n.xvar), names(relpred.vec))
   irrelpred.vec <- `names<-`(rep(NA, length(irrelpred.idx)), irrelpred.idx)
   abs.cov.df$rotation <- apply(abs.cov.df, 1, get_relvec, relvec = c(relpred.vec, ypos.vec, irrelpred.vec))
@@ -123,9 +127,11 @@ plot.covdf <- function(covdf.obj, type) {
           axis.text.x = element_text(angle = 45, hjust = 1),
           axis.text = element_text(family = "mono"),
           panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank()) +
+          panel.grid.minor = element_blank(),
+          panel.background = element_rect(color = "#ABABAB", size = 3),
+          plot.background = element_rect(fill = "transparent", color = NA)) +
     labs(x = "", y = "") +
-    scale_fill_brewer("Relevant for:", palette = "Set2", na.value = "#ffeeee")
+    scale_fill_brewer("Relevant for:", palette = "Set1", na.value = "#ffeeee")
   return(plt)
 }
 
@@ -182,31 +188,31 @@ get_obsplot <- function(sim.obj, before.rot = TRUE) {
   
   ## Plottings
   ThePlot <- ggplot(dff, aes(Variables, Obs.Value)) + 
-    geom_point(size = rel(1), shape = 23,
+    geom_violin(aes_string(fill = fill_colour_aes), 
+                alpha = 0.5, size = 0.2, color = "darkgray") +
+    geom_point(size = rel(1), shape = 23, position = position_jitter(width = 0.1),
                aes_string(color = fill_colour_aes)) +
-    geom_boxplot(aes_string(fill = fill_colour_aes), 
-                 alpha = 0.5, size = 0.2, color = "darkgray") +
     labs(x = "", y = "") +
     theme_minimal(base_size = 8) +
     theme(panel.background = element_rect(fill = NA, color = "#ababab"), 
           strip.text.x = element_text(angle = 90, hjust = 0.5, vjust = 1), 
           legend.position = "bottom") +
-    scale_fill_brewer("Relevant for:", palette = "Set2") +
-    scale_color_brewer("Relevant for:", palette = "Set2")
+    scale_fill_brewer("Relevant for:", palette = "Set1") +
+    scale_color_brewer("Relevant for:", palette = "Set1")
   return(ThePlot)
 }
 
 ## ---- Prediction Error Plot ----------------------------------------
 get_pred_plot <- function(pred_err, type_of_error = "average") {
-    ols_err <- pred_err %>% 
-      filter(Model == "OLS", comp == 1)
-    
-    pred_err <- pred_err %>% filter(Model != "OLS")
-    predErr_smry <- pred_err %>% 
+  ols_err <- pred_err %>% 
+    filter(Model == "OLS", comp == 1)
+  
+  pred_err <- pred_err %>% filter(Model != "OLS")
+  predErr_smry <- pred_err %>% 
     group_by(Model, design, comp) %>% 
     summarise(minimum = min(pred_err), average = mean(pred_err), maximum = max(pred_err)) %>% 
     gather(`Type of Error`, pred_err, -Model, -design, -comp)
-
+  
   PE <- predErr_smry %>% 
     filter(`Type of Error` == type_of_error) %>% 
     group_by(Model, design) %>% 
