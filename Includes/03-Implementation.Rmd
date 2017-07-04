@@ -18,9 +18,9 @@ This section demonstrates an application of `simrel-m` in order to compare diffe
 a) Ordinary Least Squares (OLS),
 b) Principal Component Regression (PCR),
 c) Partial Least Squares predicting individual response variable separately (PLS1) and
-d) Partial Least Squares predicting all response variables together (PLS).
+d) Partial Least Squares predicting all response variables together (PLS2).
 
-We have also considered four relatively new estimation methods
+We have also considered four relatively new estimation methods in multi-response regression:
 
 a) Canonically Powered Partial Least Squares regression (CPPLS) [@indahl2009canonical],
 b) Canonical Partial Least Squares regression (CPLS) [@indahl2009canonical],
@@ -28,7 +28,7 @@ c) Envelope estimation in predictor space (xenv) [@cook2010envelope],
 d) Envelope estimation in response space (yenv) [@cook2015foundations] and
 e) Simultaneous estimation of x- and y-envelope (senv) [@cook2015simultaneous]
 
-From the possible combinations of two levels of coefficient of determination $(R^2)$ and two levels of `gamma` (factor that controls the multicollinearity in predictor variable), four simulation designs (`r paste0('design ', 1:4)`) are prepared. Replicating each design 20 times, 80 datasets with five response variables $(m=5)$ and 16 predictor variables $(p = 16)$ are simulated using the method discussed in this paper. It is also assumed that three principle components of response variables ($w_1, w_2$ and $w_3$) completely describes the variation present in five response variables ($y_1 \ldots y_5$). The four designs are presented in the Table~\@ref(tab:parameter-settings). All datasets contains 100 sample observations and out of 16 predictor variables, three disjoint set of five predictor variables are relevant for response components $w_1, w_2$ and $w_3$. Further, predictor components $z_1$ and $z_6$ are relevant for response component $w_1$, predictor components $z_2$ and $z_5$ are relevant for response component $w_2$ and predictor component $z_3$ is relevant for response component $w_3$. In addition, following the discussion about [rotation of response space](#rotation-of-response-space), $w_1$ is rotated together with $w_4$ and $w_2$ is rotated together with $w_5$.
+From the possible combinations of two levels of coefficient of determination $(R^2)$ and two levels of `gamma` (the factor that controls the multicollinearity in predictor variables), four simulation designs (design 1-4) were prepared. Replicating each design 20 times, 80 datasets with five response variables $(m=5)$ and 16 predictor variables $(p = 16)$ were simulated using the method discussed in this paper. It was also assumed that three principle components of response variables ($w_1, w_2$ and $w_3$) completely describe the variation present in five response variables ($y_1 \ldots y_5$). The four designs are presented in the Table~\@ref(tab:parameter-settings). All datasets contained 100 sampled observations and out of 16 predictor variables, three disjoint set of five predictor variables are relevant for response components $w_1, w_2$ and $w_3$. Further, predictor components $z_1$ and $z_6$ were relevant for response component $w_1$, predictor components $z_2$ and $z_5$ were relevant for response component $w_2$ and predictor component $z_3$ was relevant for response component $w_3$. In addition, following the discussion about [rotation of response space](#rotation-of-response-space), $w_1$ was rotated together with $w_4$ and $w_2$ was rotated together with $w_5$.
 
 ```{r KnitrSetup, include=FALSE}
 knitr::opts_chunk$set(
@@ -51,8 +51,8 @@ if (evl) {
 ```{r design-table}
 design_table <- do.call(rbind, opts[c("gamma", "R2")])
 dimnames(design_table) <- list(
-  c("Decay of eigenvalue $(\\gamma)$",
-    "Coef. of Determination $(\\rho^2)$"),
+  c("Decay of eigenvalues $(\\gamma)$",
+    "Coef. of Determination $(\\rho^2_{w_j})$"),
   paste0("Design", 1:4))
 ```
 
@@ -65,7 +65,7 @@ pander::pander(
 )
 ```
 
-For each method, an estimate of test prediction error is computed as,
+For each method, an estimate of test prediction error was computed as,
 
 $$\underset{m \times m}{\boldsymbol{\alpha}} = 
 \left(
@@ -75,9 +75,9 @@ $$\underset{m \times m}{\boldsymbol{\alpha}} =
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
 \right) + \boldsymbol{\Sigma}_{Y|X}$$
 
-where, $\hat{\boldsymbol{\beta}}$ is an estimate of true regression coefficient $\boldsymbol{\beta}$ and $\boldsymbol{\Sigma}_{xx}$ is the true covariance structure of predictor variable obtained from `simrel-m`. Also, $\boldsymbol{\sigma}^2$ is the true minimum error of the model. Here $\hat{\beta}$ vary accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the trace of $\boldsymbol{\alpha}$.
+where, $\hat{\boldsymbol{\beta}}$ is an estimate of true regression coefficient $\boldsymbol{\beta}$ and $\boldsymbol{\Sigma}_{xx}$ is the true covariance structure of the predictor variables obtained from `simrel-m`. Also, $\boldsymbol{\Sigma}_{Y|X}$ is the true minimum error of the model. Here $\hat{\beta}$ varies accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the trace of $\boldsymbol{\alpha}$.
 
-The minimimum prediction error (measured as discussed above) for nine estimation methods averaged over 20 replications of four designs are in Table~\@ref(tab:min-error). The table also shows that the number of components a method has used in order to obtain the minimum of average prediciton error.
+The minimimum prediction error (measured as discussed above) for nine estimation methods averaged over 20 replications of four designs are shown in Table \@ref(tab:min-error). The table also gives the number of predictor components a method has used in order to obtain the minimum of average prediciton error.
 
 ```{r Average-Prediction}
 avg_pred_err <- myData %>% 
@@ -119,7 +119,7 @@ avgPredErr_lbl %>%
          emphasize.italics.cells = avgPredErr_idx,
          emphasize.italics.cols = 1,
          split.cells = Inf, justify = "lcccc",
-         caption = "(\\#tab:min-error) Minimum average prediction error (number of components corresponding to minimum prediction error, minimum prediction error)")
+         caption = "(\\#tab:min-error) Minimum average prediction error (number of components corresponding to minimum prediction error, minimum prediction error) (For $Y\\text{env}$, the number of response components is given)")
 ```
 </center>
 
@@ -134,7 +134,7 @@ topBest <- avgPredErr %>%
   )
 ```
 
-Table~\@ref(tab:min-error) shows that simulteneous envelope has prediction error of `r paste(round(topBest[["pred_err"]][1:2], 2), collapse = " and ")` in design~1 (with `r topBest[["comp"]][1]` components) and design~2 (with `r topBest[["comp"]][2]` components) respectively which is smaller than other methods. However the method was not able to show the same performance in design~3 and design~4. PCR model has least prediction error (`r round(topBest[["pred_err"]][3], 2)`) from `r topBest[["comp"]][3]` components in design 3 and Cannonically Powered PLS has minimum prediction error (`r round(topBest[["pred_err"]][4], 2)`) from `r topBest[["comp"]][4]` components in design 4. In design 3, we can also see that the Canonical PLS method has second best performance with only three components. The number of components vary accross different replicated dataset but the component corresponding to minimum prediction error is discussed here. A detail picture of prediction error for each estimation method obtained for each additional component is shown in Figure~\@ref(fig:Average-Prediction-Plot). Although design 2 and design 4 has higher level of multicollinearity, the performance of the estimation methods is indifferent to its effect. Since all the methods, except OLS, are based on shrinking of estimates, they are less influenced by multicollinearity problem.
+Table \@ref(tab:min-error) shows that the simulteneous envelope has prediction error of `r paste(round(topBest[["pred_err"]][1:2], 2), collapse = " and ")` in design 1 (with `r topBest[["comp"]][1]` components) and design 2 (with `r topBest[["comp"]][2]` components), respectively, which is smaller than other methods. However the method was not able to show the same performance in design 3 and design 4. The PCR model has the smallest prediction error (`r round(topBest[["pred_err"]][3], 2)`) from `r topBest[["comp"]][3]` components in design 3 and Canonically Powered PLS has minimum prediction error (`r round(topBest[["pred_err"]][4], 2)`) from `r topBest[["comp"]][4]` components in design 4. In design 3, we can also see that the Canonical PLS method has second best performance with only three components. The number of components vary accross different replicated dataset but the component corresponding to minimum prediction error is discussed here. A detailed picture of prediction error for each estimation method obtained for each additional component is shown in Figure \@ref(fig:Average-Prediction-Plot). Although designs 2 and 4 have higher levels of multicollinearity, the performance of the estimation methods is indifferent to its effect. Since all the methods, except OLS, are based on shrinking of estimates, they are less influenced by the multicollinearity problem.
 
 ```{r Average-Prediction-Plot, fig.cap="Minimum of Average Prediction Error", fig.asp=0.7, out.width='100%', fig.width=8}
 plot_label <- avg_pred_err %>% 
@@ -181,6 +181,4 @@ plt <- avg_pred_err %>%
 plot(plt)
 ```
 
-Above analysis has answered some questions such as how methods works when there exist a true reduced dimension in response space but also arised question like why they perform differently. For example, what is the reason for the decreasing performance of the simultaneous envelope method as the $\rho^2$ values are reduced? Does this depend on the dimensions and spheric shape of the $\mathbf{y}$ envelopes? Since, the example is intended as a demonstration of how `simrel-m` can be used in scientific study, and a more elaborative study would be necessary in order to answer such questions, but for this purpose `simrel-m` would be a powerful tool.
-
-
+The analysis presented in Figure \@ref(fig:Average-Prediction-Plot) has addressed some questions such as how methods works when there exist a true reduced dimension in response space, but also arised other questions like why they perform differently. For example, what is the reason for the decreasing relative performance of the simultaneous envelope method as the $\rho^2$ values are reduced? Does this depend on the dimensions and spheric shape of the $\mathbf{y}$ envelopes? Since, the example is merely intended as a demonstration of how `simrel-m` can be used in scientific study, a more elaborative study would be necessary to answer such questions, but for this purpose `simrel-m` would be a powerful tool.

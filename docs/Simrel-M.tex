@@ -1,4 +1,4 @@
-\documentclass[12pt,A4paper,authoryear]{elsarticle} %review=doublespace preprint=single 5p=2 column
+\documentclass[12pt,A4paper,numeric]{elsarticle} %review=doublespace preprint=single 5p=2 column
 %%% Begin My package additions %%%%%%%%%%%%%%%%%%%
 %% Other Customizations
 \usepackage[hyphens]{url}
@@ -9,7 +9,7 @@
 \usepackage{lscape}
 
 \usepackage{setspace}
-\setstretch{1.25}
+\setstretch{2}
 
 \usepackage{mathpazo}
 
@@ -69,9 +69,9 @@
 \fi
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
-\usepackage[margin=1in]{geometry}
-\usepackage{natbib}
-\bibliographystyle{plainnat}
+\usepackage[margin=3cm]{geometry}
+\usepackage[numbers]{natbib}
+\bibliographystyle{vancouver-authoryear}
 \usepackage{longtable}
 \ifxetex
 \usepackage[setpagesize=false, % page size defined by xetex
@@ -124,7 +124,7 @@ xetex]{hyperref}
   \hypersetup{breaklinks=true,
     bookmarks=true,
     pdfauthor={},
-    pdftitle={simrel-m: A versatile tool for simulating multi-response linear model data},
+    pdftitle={A tool for simulating multi-response linear model data},
     colorlinks=true,
     urlcolor=myurlcolor!\myshade!black,
     linkcolor=mylinkcolor!\myshade!black,
@@ -150,8 +150,7 @@ xetex]{hyperref}
 \begin{document}
 \begin{frontmatter}
 
-  \title{\texttt{simrel-m}: A versatile tool for simulating multi-response linear
-model data}
+  \title{A tool for simulating multi-response linear model data}
     \author[]{Raju Rimal}
   
   
@@ -171,25 +170,24 @@ model data}
     Researchers often use simulated data to assess and document the
     properties of these new methods, and in this paper we present
     \texttt{simrel-m}, which is a versatile and transparent tool for
-    simulating linear model data with extensive range of adjustable
+    simulating linear model data with an extensive range of adjustable
     properties. The method is based on the concept of relevant components
     \citet{helland1994comparison}, which is equivalent to the envelope model
-    \citet{cook2013envelopes}. It is a multi-response extension of
-    \texttt{simrel} \citet{saebo2015simrel}, and as \texttt{simrel} the new
-    approach is essentially based on random rotations of latent relevant
-    components to obtain a predictor matrix \(\mathbf{X}\), but in addition
-    we introduce random rotations of latent components spanning a response
-    space in order to obtain a multivariate response matrix \(\mathbf{Y}\).
-    The properties of the linear relation between \(\mathbf{X}\) and
-    \(\mathbf{Y}\) are defined by a small set of input parameters which
-    allow versatile and adjustable simulations. Sub-space rotations also
-    allow for generating data suitable for testing variable selection
-    methods in multi-response settings. The method is implemented as an
-    R-package which serves as an extension of the existing \texttt{simrel}
-    packages \citet{saebo2015simrel}.
+    by Dennis Cook. It is a multi-response extension of R-package
+    \texttt{simrel} which is availiable in R-package repository CRAN, and as
+    \texttt{simrel} the new approach is essentially based on random
+    rotations of latent relevant components to obtain a predictor matrix
+    \(\mathbf{X}\), but in addition we introduce random rotations of latent
+    components spanning a response space in order to obtain a multivariate
+    response matrix \(\mathbf{Y}\). The properties of the linear relation
+    between \(\mathbf{X}\) and \(\mathbf{Y}\) are defined by a small set of
+    input parameters which allow versatile and adjustable simulations.
+    Sub-space rotations also allow for generating data suitable for testing
+    variable selection methods in multi-response settings. The method is
+    implemented as an update to the R-package \texttt{simrel}.
   \end{abstract}
-   \begin{keyword} \footnotesize \texttt{simrel-2.0}, \texttt{simrel} package in r, data
-simulation, linear model, \texttt{simrel-m} \sep \end{keyword}
+   \begin{keyword} \footnotesize \texttt{simrel} package in r, data simulation, linear
+model, \texttt{simrel-m} \sep \end{keyword}
 \end{frontmatter}
 
 \section{Introduction}\label{introduction}
@@ -201,27 +199,27 @@ contains massive information but difficult to excavate. Finding
 information and performing scientific research on these raw data has now
 become another problem. In order to tackle this situation new methods
 are being developed. However, before implementing any method, it is
-essential to test its performance. Often, researchers use simulated data
-for the purpose which itself is a time-consuming process. The main focus
-of this paper is to present a simulation method, along with an r-package
-called \texttt{simrel-m}, that is versatile in nature and yet simple to
-use.
+essential to test its performance and explore its properties. Often,
+researchers use simulated data for the purpose which itself is a
+time-consuming process. The main focus of this paper is to present a
+simulation method, along with an r-package called \texttt{simrel-m},
+that is versatile in nature and yet simple to use.
 
-The simulation method we are presenting here is based on the principal
-of relevant space for prediction \citep{helland1994comparison} which
-assumes that there exists a subspace in the complete space of response
-variables that is spanned by a subset of eigenvectors of predictor
-variables. The r-package based on this method lets user specify various
-population properties such as which components of predictors
-\((\mathbf{x})\) are relevant for a latent subspace of the responses
-\(\mathbf{y}\) and collinearity structure of \(\mathbf{x}\). This
+The simulation method we are presenting here is based on the principle
+of relevant space for prediction \citep{helland1994comparison}
+{\color{Red} which assumes that there exists a subspace in the complete
+space of response variables that is spanned by a subset of eigenvectors
+of predictor variables.} Our r-package based on this principle lets the
+user specify various population properties such as which latent
+components are relevant for a latent subspace of the responses
+\(\mathbf{y}\) and the collinearity structure of \(\mathbf{x}\). This
 enables the possibility to construct data for evaluating estimation
 methods and methods developed for variable selection.
 
 Among several publications on simulation, \citet{ripley2009stochastic}
 and \citet{gamerman2006markov} has exhaustively discussed the topic. In
 addition, many publications have implemented simulated data in order to
-investigate new estimation methods and prediction strategy
+investigate new estimation methods and prediction strategies
 \citep[see:][]{cook2015simultaneous, cook2013envelopes, helland2012near}.
 However, most of the simulations in these studies were developed to
 address their specific problem. A systematic tool for simulating linear
@@ -233,9 +231,8 @@ r-package \texttt{simrel-m}.
 
 \section{Statistical Model}\label{statistical-model}
 
-Let us consider a model in
-equation\textasciitilde{}\eqref{eq:rand-reg-model} as our point of
-departure.
+In this section we describe the model and the model parameterization
+which is assumed throughout this paper. We assume:
 
 \begin{equation}
   \begin{bmatrix}\mathbf{y}\\ \mathbf{x}\end{bmatrix} \sim N
@@ -253,26 +250,26 @@ departure.
 \end{equation}
 
 where, \(\mathbf{y}\) is a response vector with \(m\) response variables
-\(y_1, y_2, \ldots y_m\) with mean vector of \(\boldsymbol{\mu}_y\) and
+\(y_1, y_2, \ldots y_m\) with mean vector \(\boldsymbol{\mu}_y\), and
 \(\mathbf{x}\) is vector of \(p\) predictor variables with mean vector
 \(\boldsymbol{\mu}_x\). Further,
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule
-\(\boldsymbol{\Sigma}_{yy}\) & is variance-covariance matrix of
+\(\boldsymbol{\Sigma}_{yy}\) & is the variance-covariance matrix of
 \(\mathbf{y}\)\tabularnewline
-\(\boldsymbol{\Sigma}_{xx}\) & is variance-covariance matrix of
+\(\boldsymbol{\Sigma}_{xx}\) & is the variance-covariance matrix of
 variables \(\mathbf{x}\)\tabularnewline
-\(\boldsymbol{\Sigma}_{xy}\) & is matrix of covariance between
+\(\boldsymbol{\Sigma}_{xy}\) & is the matrix of covariance between
 \(\mathbf{x}\) and \(\mathbf{y}\)\tabularnewline
 \bottomrule
 \end{longtable}
 
 \addtocounter{table}{-1}
 
-For model\textasciitilde{}\eqref{eq:rand-reg-model}, standard theory in
-multivariate statistics may be used to show that \(\mathbf{y}\)
-conditioned on \(\mathbf{x}\) corresponds to the linear model,
+Standard theory in multivariate statistics may be used to show that
+\(\mathbf{y}\) conditioned on \(\mathbf{x}\) corresponds to the linear
+model,
 
 \begin{equation}
 \mathbf{y} = \boldsymbol{\mu}_y + \boldsymbol{\beta}^t (\mathbf{x} - \boldsymbol{\mu}_x) + \boldsymbol{\varepsilon}
@@ -280,36 +277,36 @@ conditioned on \(\mathbf{x}\) corresponds to the linear model,
 \end{equation}
 
 where, \(\boldsymbol{\beta}^t\) is a matrix of regression coefficient
-and \(\boldsymbol{\varepsilon}\) is error term such that
+and \(\boldsymbol{\varepsilon}\) is an error term such that
 \(\boldsymbol{\varepsilon} \sim N\left(0, \boldsymbol{\Sigma}_{y|x}\right)\).
-The properties of the linear model in
-equation\textasciitilde{}\eqref{eq:linear-model} can be expressed in terms
-of covariance matrices from
-equation\textasciitilde{}\eqref{eq:rand-reg-model}.
+The properties of the linear model \eqref{eq:linear-model} can be
+expressed in terms of covariance matrices in \eqref{eq:rand-reg-model}.
 
 \begin{description}
 \tightlist
 \item[Regression Coefficients]
+The vector of regression coefficients is given by
 \[ \boldsymbol{\beta} = \boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\]
-\item[Coefficient of Determination \(\boldsymbol{\rho}_y^2\)]
-The diagonal elements of coefficient of determination matrix
-\(\boldsymbol{\rho}_y^2\) gives the amount of variation that
-\(\mathbf{X}\) has explained about each \(\mathbf{Y}\).
+\item[Coefficient of Determination]
+The diagonal elements of the coefficient of determination matrix
+\(\boldsymbol{\rho}_y^2\) gives the amount of variation in each response
+variable that is explained by \(\mathbf{x}\).
 \[\boldsymbol{\rho}_y^2 = \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\]
 \item[Conditional variance]
-The conditional variance of \(\mathbf{y}\) given \(\mathbf{x}\) is,
+The conditional variance covariance matrix of \(\mathbf{y}\) given
+\(\mathbf{x}\) is,
 \[\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.\]
 The diagonal elements of this matrix equals the theoretical least square
 error of prediction for each of the response variables.
 \end{description}
 
-Let us define a transformation of \(\mathbf{X}\) and \(\mathbf{Y}\) as,
+Let us define a transformation of \(\mathbf{x}\) and \(\mathbf{y}\) as,
 \(\mathbf{z} = \mathbf{Rx}\) and \(\mathbf{w} = \mathbf{Qy}\). Here,
 \(\mathbf{R}_{p\times p}\) and \(\mathbf{Q}_{m\times m}\) are rotation
-matrices which rotates \(\mathbf{x}\) and \(\mathbf{y}\) giving
-\(\mathbf{z}\) and \(\mathbf{w}\) respectively. The model in
-equation\textasciitilde{}\eqref{eq:rand-reg-model} can be expressed with
-these transformed variables as,
+matrices that rotate \(\mathbf{x}\) and \(\mathbf{y}\) to yield
+\(\mathbf{z}\) and \(\mathbf{w}\), respectively. The model
+\eqref{eq:rand-reg-model} can be re-expressed in terms of these
+transformed variables as:
 
 \begin{align}
   \begin{bmatrix}\mathbf{w} \\ 
@@ -343,11 +340,11 @@ can be written as,
 \label{eq:latent-model}
 \end{equation}
 
-where, \(\boldsymbol{\alpha}\) is regression coefficient for the
-transformed model and
+where \(\boldsymbol{\alpha}\) is the regression coefficient vector for
+the transformed model and
 \(\boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{w|z}\right)\).
 Further, if both \(\mathbf{Q}\) and \(\mathbf{R}\) are orthonormal
-matrix such that \(\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q\) and
+matrices such that \(\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q\) and
 \(\mathbf{R}^t\mathbf{R} = \mathbf{I}_p\), the inverse transformation
 can be defined as,
 
@@ -361,8 +358,8 @@ can be defined as,
   \label{eq:cov-yx-wz}
 \end{equation}
 
-Here, we can find a direct connection between different population
-properties between \eqref{eq:linear-model} and \eqref{eq:latent-model}.
+From this, we can find a direct connection between different population
+properties of \eqref{eq:linear-model} and \eqref{eq:latent-model}.
 
 \begin{description}
 \tightlist
@@ -375,9 +372,9 @@ properties between \eqref{eq:linear-model} and \eqref{eq:latent-model}.
   &&= \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
   \end{aligned}
   \]
-\item[Error Variance]
-Further, the noise variance of transformed
-model\textasciitilde{}\eqref{eq:latent-model} is, \[
+\item[Conditional Variance]
+Further, the conditional variance covariance matrix of \(\mathbf{w}\)
+given \(\mathbf{z}\) is, \[
   \begin{aligned}
 \boldsymbol{\Sigma}_{w|z}
 &= \boldsymbol{Q\Sigma}_{yy}\mathbf{Q}^t -
@@ -391,8 +388,7 @@ model\textasciitilde{}\eqref{eq:latent-model} is, \[
   \end{aligned}
   \]
 \item[Coefficient of Determination]
-The coefficient of determination for
-model\textasciitilde{}\eqref{eq:latent-model} is, \[
+The coefficient of determination matrix \eqref{eq:latent-model} is, \[
   \begin{aligned}
 \boldsymbol{\rho}^2_w &= \boldsymbol{\Sigma}_{wz} 
 \boldsymbol{\Sigma}_{zz}^{-1} \boldsymbol{\Sigma}_{zw} 
@@ -406,7 +402,7 @@ model\textasciitilde{}\eqref{eq:latent-model} is, \[
   \]
 \end{description}
 
-From eigenvalue decomposition principal, if
+From the eigenvalue decomposition principle, if
 \(\boldsymbol{\Sigma}_{xx} = \mathbf{R}\boldsymbol{\Lambda}\mathbf{R}^t\)
 and
 \(\boldsymbol{\Sigma}_{yy} = \mathbf{Q}\boldsymbol{\Omega}\mathbf{Q}^t\)
@@ -416,116 +412,114 @@ paper, these principal components will be termed as \emph{predictor
 components} and \emph{response components} respectively. Here,
 \(\boldsymbol{\Sigma}\) and \(\boldsymbol{\Omega}\) are diagonal
 matrices of eigenvalues of \(\boldsymbol{\Sigma}_{xx}\) and
-\(\boldsymbol{\Sigma}_{yy}\) respectively.
+\(\boldsymbol{\Sigma}_{yy}\), respectively.
 
 \section{Relevant Components}\label{relevant-components}
 
-Let us consider a single response linear model with \(p\) predictors.
+Consider a single response linear model with \(p\) predictors.
 
 \[y = \mu_y + \boldsymbol{\beta}^t\left(\mathbf{x} - \mu_x\right) + \epsilon\]
 
 where, \(\epsilon \sim N(0, \sigma^2)\) and \(\mathbf{x}\) are random
-and independent. Following the principal of relevant space and
-irrelevant space which are discussed extensively in
-\citet{helland1994comparison}, \citet{Helland_2000},
-\citet{helland2012near}, \citet{cook2013envelopes},
-\citet{saebo2015simrel} and \citet{helland2017}, we can assume that
-there exists a subspace of the full predictor space which is relevant
-for \(\mathbf{y}\). An orthogonal space to this space does not contain
-any information about \(\mathbf{y}\) and is considered as irrelevant.
-Here, the \(y-\)relevant subspace of \(\mathbf{x}\) is spanned by a
-subset of eigenvectors of covariance matrix of \(\mathbf{x}\), i.e.
-\(\boldsymbol{\Sigma}_{xx}\).
+predictors. Following the principal of relevant space and irrelevant
+space which are discussed extensively in \citet{helland1994comparison},
+\citet{Helland_2000}, \citet{helland2012near},
+\citet{cook2013envelopes}, \citet{saebo2015simrel} and
+\citet{helland2017}, we can assume that there exists a subspace of the
+full predictor space which is relevant for \(y\). An orthogonal space to
+this space does not contain any information about \(y\) and is
+considered as irrelevant. Here, the \(y-\)relevant subspace of
+\(\mathbf{x}\) is spanned by a subset of the principal components
+defined by the eigenvectors of the covariance matrix of \(\mathbf{x}\),
+i.e. \(\boldsymbol{\Sigma}_{xx}\).
 
 This concept can be extended to \(m\) responses so that the subspace of
 \(\mathbf{x}\) is relevant for a subspace of \(\mathbf{y}\). This
-corresponds to the concept of simultaneous envelope
+corresponds to the concept of simultaneous envelopes
 \citep{cook2015simultaneous} where relevant (material) and irrelevant
-(immaterial) space were discussed for both response and predictors.
+(immaterial) space were discussed for both response and predictor
+variables.
 
 \subsection{Model Parameterization}\label{model-parameterization}
 
-In order to construct a fully specified covariance matrix of
-\(\mathbf{z}\) and \(\mathbf{w}\) for model in
-equation\textasciitilde{}\eqref{eq:model3}, we need to identify
-\(1/2 (p+m)(p+m+1)\) unknown parameters. However, \(\Sigma_{zz}\) is a
-diagonal matrix of eigenvalues of \(\Sigma_{xx}\), the number of
-parameter reduced by \(1/2p(p-1)\) parameters. In addition, the
-covariances of \(\mathbf{z}\) that are not relevant for \(\mathbf{w}\)
-will be zero. This further reduces the unknown parameters. For the
-purpose of this simulation, we implement some assumption to
-re-parameterize and simplify the model parameters. This enables us to
-construct a wide range of model properties from only few key parameters.
+In order to construct a fully specified and unrestricted covariance
+matrix of \(\mathbf{z}\) and \(\mathbf{w}\) for the model in equation
+\eqref{eq:model3}, we need to identify \(1/2 (p+m)(p+m+1)\) unknown
+parameters. {\color{red}However, \(\Sigma_{zz}\) is a diagonal matrix of
+eigenvalues of \(\Sigma_{xx}\), hence the number of parameters may be
+reduced by \(1/2p(p-1)\) parameters. In addition, the covariances of
+\(\mathbf{z}\) that are not relevant for \(\mathbf{w}\) will be zero.
+This further reduces the number of unknown parameters.} For the purpose
+of simulation, we implement some assumptions to re-parameterize and
+simplify the model. This enables us to construct a wide range of model
+properties from only few key parameters.
 
 \begin{description}
 \tightlist
 \item[\textbf{Parameterization of \(\boldsymbol{\Sigma}_{zz}\)}]
-If we consider the rotation matrix \(\mathbf{R}\) corresponds to the
+If we let the rotation matrix \(\mathbf{R}\) correspond to the
 eigenvectors of \(\boldsymbol{\Sigma}_{xx}\), then \(\mathbf{z}\)
 becomes the set of principal components of \(\mathbf{x}\). In that case
 \(\boldsymbol{\Sigma}_{zz}\) is a diagonal matrix with eigenvalues
-\(\lambda_1, \ldots, \lambda_p\). Further, we adopt the following
-parametric representation of these eigenvalues,
+\(\lambda_1, \ldots, \lambda_p\). Further, we adopt the same parametric
+representation as \citet{saebo2015simrel} for these eigenvalues:
 \[\lambda_j = e^{-\gamma(j - 1)}, \gamma >0 \text{ and } j = 1, 2, \ldots, p\]
-Here as \(\gamma\) increases, the decline of eigenvalues becomes
+Here, as \(\gamma\) increases, the decline of eigenvalues becomes
 steeper, hence the parameter \(\gamma\) controls the level of
 multicollinearity in \(\mathbf{x}\).
 \item[\textbf{Parameterization of \(\boldsymbol{\Sigma}_{ww}\)}]
-Here, we assume that \(\mathbf{w}\)'s are independent unconditionally
-equally mutinormal distributed with variance 1, hence
+Here we assume that \(\mathbf{w}\)'s are independent and mutinormal
+distributed with variances 1, hence
 \(\boldsymbol{\Sigma}_{ww} = \mathbf{I}_m\).
 \item[\textbf{Parameterization of \(\boldsymbol{\Sigma}_{zw}\)}]
 After parameterization of \(\boldsymbol{\Sigma}_{zz}\) and
 \(\boldsymbol{\Sigma}_{ww}\), we are left with \(m \times p\) number of
 unknowns corresponding to \(\boldsymbol{\Sigma}_{zw}\). Some of the
 elements of \(\boldsymbol{\Sigma}_{zw}\) may be equal to zero, which
-implies that the given \(\mathbf{z}\) is irrelevant for the given
-variable \(\mathbf{w}\). The non-zero elements define which of the
-\(\mathbf{z}\) are relevant for the \(\mathbf{w}\). We typically refer
-to the indices of these \(\mathbf{z}\) variables as the position of
-relevant components. In order to re-parameterize this covariance matrix,
-it is necessary to discuss the position of relevant components in
-details.
+implies that the given \(z\) is irrelevant for the given variable \(w\).
+The non-zero elements define which of the \(z\) are relevant for
+\(\mathbf{w}\). We typically refer to the indices of these \(z\)
+variables as the positions of relevant components. In order to
+re-parameterize this covariance matrix, it is necessary to discuss the
+position of relevant components in detail.
 \end{description}
 
 \subsubsection{Position of relevant
 components}\label{position-of-relevant-components}
 
-Let \(k_1\) components be relevant for \(\mathbf{w}_1\), \(k_2\)
-components be relevant for \(\mathbf{w}_2\) and so on. Let the positions
-of these components be given by the index sets
+Let \(k_1\) components be relevant for \(w_1\), \(k_2\) components be
+relevant for \(w_2\) and so on. Let the positions of these components be
+given by the index sets
 \(\mathcal{P}_1, \mathcal{P}_2, \ldots, \mathcal{P}_m\) respectively.
-Further, the covariance between \(\mathbf{w}_j\) and \(\mathbf{z}_i\) is
-non-zero only if \(\mathbf{z}_i\) is relevant for \(\mathbf{w}_j\). If
-\(\sigma_{ij}\) is the covariance between \(\mathbf{w}_j\) and
-\(\mathbf{z_i}\) then \(\sigma_{ij} \ne 0\) if \(i \in \mathcal{P}_j\)
-where \(i = 1, \ldots, p\) and \(j = 1, \ldots, m\) and
-\(\sigma_{ij} = 0\) otherwise.
+Further, the covariance between \(w_j\) and \(z_i\) is non-zero only if
+\(\mathbf{z}_i\) is relevant for \(w_j\). If \(\sigma_{ij}\) is the
+covariance between \(w_j\) and \(z_i\) then \(\sigma_{ij} \ne 0\) if
+\(i \in \mathcal{P}_j\) where \(i = 1, \ldots, p\) and
+\(j = 1, \ldots, m\) and \(\sigma_{ij} = 0\) otherwise.
 
 In addition, the true regression coefficients for \(w_j\)
-(equation\textasciitilde{}\eqref{eq:latent-model}) is given by:
+(ref:\eqref{eq:latent-model}) is given by:
 
 \[
 \boldsymbol{\alpha}_j = \Lambda^{-1} \sigma_{ij} = \sum_{i \in \mathcal{P}_j}\frac{\sigma_{ij}}{\lambda_i},\qquad j = 1, 2, \ldots m
 \]
 
-The position of relevant components have heavy impact on prediction.
-\citet{helland1994comparison} have shown that if relevant components
-have large eigenvalues (variances), which here implies small index
-values in \(\mathcal{P}_j\), prediction of \(\mathbf{y}\) from
-\(\mathbf{x}\) is relatively easy and if the eigenvalues (variances) of
-relevant components are small, the prediction becomes difficult given
-that the coefficient of determination and other model parameters are
-held constant. For example, if the first and second components,
-\(\mathbf{z}_1\) and \(\mathbf{z}_2\), are relevant for \(\mathbf{w}_1\)
-and fifth and sixth components, \(\mathbf{z}_5\) and \(\mathbf{z}_6\),
-are relevant for \(\mathbf{w}_2\), it is relatively easier to predict
-\(\mathbf{w}_1\) than \(\mathbf{w}_2\), other properties being similar.
-This is so, because the first and second principal components have
-larger variances than the fifth and sixth components.
+The positions of the relevant components have heavy impact on
+prediction. \citet{helland1994comparison} have shown that if the
+relevant components have large eigenvalues (variances), which here
+implies small index values in \(\mathcal{P}_j\), prediction of
+\(\mathbf{y}\) from \(\mathbf{x}\) is relatively easy and if the
+eigenvalues (variances) of relevant components are small, the prediction
+becomes difficult, given that the coefficient of determination and other
+model parameters are held constant. For example, if the first and second
+components, \(z_1\) and \(z_2\), are relevant for \(w_1\) and fifth and
+sixth components, \(z_5\) and \(z_6\), are relevant for \(w_2\), it is
+relatively easier to predict \(w_1\) than \(w_2\), other properties
+being similar. This is so, because the first and second principal
+components have larger variances than the fifth and sixth components.
 
-Although the covariance matrix may depends on few relevant components,
-we can not choose these covariances freely since we also need to satisfy
+Although the covariance matrix may depend on few relevant components, we
+can not choose these covariances freely since we also need to satisfy
 following two conditions:
 
 \begin{itemize}
@@ -556,33 +550,33 @@ Applying our above given assumptions that,
 \]
 
 Furthermore, we assume that there are no overlapping relevant components
-for any two \(\mathbf{w}\), i.e,
-\(n\left(\mathcal{P}_j \cap \mathcal{P}_{j*}\right) = 0\) or
+for any two \(w\), i.e,
+\(\mathcal{P}_j \cap \mathcal{P}_{j*} = \varnothing\) or
 \(\sigma_{ij}\sigma_{ij*} = 0\) for \(j\ne j*\). The additional unknown
-parameters in diagonal of \(\boldsymbol{\rho}_w^2\) should agree with
-user specified coefficient of determination for \(\mathbf{w}_j\). i.e,
-\(\rho_{wj}^2\) is,
+parameters in the diagonal of \(\boldsymbol{\rho}_w^2\) should agree
+with user specified coefficients of determination for \(\mathbf{w}\).
+i.e, \(\rho_{wj}^2\) is,
 
 \[
 \rho_{wj}^2 = \sum_{i = 1}^p\frac{\sigma_{ij}^2}{\lambda_i}
 \]
 
 Here, only the relevant components have non-zero covariances with
-\(\mathbf{w}_j\), so,
+\(w_j\), so,
 
 \[
 \rho_{wj}^2 = \sum_{i \in \mathcal{P}_j}\frac{\sigma_{ij}^2}{\lambda_i}
 \]
 
-For some user defined \(\rho_{jw}^2\), \(\sigma_{ij}^2\) is determined
-as follows,
+For some user defined \(\rho_{jw}^2\) the \(\sigma_{ij}^2\) is
+determined as follows,
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
   Sample \(k_j\) values from a uniform distribution
-  \(\mathcal{U}(-1, 1)\) distribution. Let them be,
+  \(\mathcal{U}(-1, 1)\) distribution. Let them be denoted
   \(\mathcal{S}_{\mathcal{P}_1}, \ldots, \mathcal{S}_{\mathcal{P}_{k_j}}\).
 \item
   Define,
@@ -599,36 +593,34 @@ simulation of a single observation of \((\mathbf{w, z})\) let us define
 \(\mathbf{g} = \boldsymbol{\Sigma}^{-1/2}\mathbf{u}\) such that
 \(\text{cov}(\mathbf{g}) = \boldsymbol{\Sigma}\). Here
 \(\boldsymbol{\Sigma}^{-1/2}\) is obtained from Choleskey decomposition
-and serves as one of the square root of positive definite matrix
-\(\boldsymbol{\Sigma}\) and \(\mathbf{u}\) is simulated from standard
+of \(\boldsymbol{\Sigma}\) and \(\mathbf{u}\) is simulated from standard
 normal distribution and has covariance \(\text{cov}(u) = \mathbf{I}\).
 
 Similarly, in order to simulate \(n\) observations, we define
-\(\underset{n \times (m + p)}{\mathbf{G}} = \mathbf{U}\boldsymbol{\Sigma}^{-1/2}\)
-such that \(\text{cov}(\mathbf{G}) = \boldsymbol{\Sigma}\). Here the
-first \(m\) columns of \(\mathbf{G}\) will serve as \(\mathbf{W}\) and
-remaining \(p\) columns will serve as \(\mathbf{Z}\). Further, each row
-of \(\mathbf{G}\) will be a vector sampled independently from joint
-normal distribution of \(\left(\mathbf{w}, \mathbf{z}\right)\). Finally,
-these simulated matrices \(\mathbf{W}\) and \(\mathbf{Z}\) are
-orthogonally rotated in order to obtain \(\mathbf{Y}\) and
-\(\mathbf{X}\) respectively. Following section discuss about these
-rotation matrices in details.
+\(\underset{n \times (m + p)}{\mathbf{G}} = \mathbf{U}\boldsymbol{\Sigma}^{-1/2}\).
+Here the first \(m\) columns of \(\mathbf{G}\) will serve as
+\(\mathbf{W}\) and remaining \(p\) columns will serve as \(\mathbf{Z}\).
+Further, each row of \(\mathbf{G}\) will be a vector sampled
+independently from the joint normal distribution of
+\(\left(\mathbf{w}, \mathbf{z}\right)\). Finally, these simulated
+matrices \(\mathbf{W}\) and \(\mathbf{Z}\) are orthogonally rotated in
+order to obtain \(\mathbf{Y}\) and \(\mathbf{X}\) respectively. The
+following section discuss about these rotation matrices in detail.
 
 \subsection{Rotation of predictor
 space}\label{rotation-of-predictor-space}
 
-In order to make comments on predictor space, let us consider an example
-where a regression model with \(p = 10\) predictors \((\mathbf{x})\) and
-\(m = 4\) responses \((\mathbf{y})\). Let's assume that only three
-principal components \((w_1, w_2\) and \(w_3)\) are needed to describe
-all four response variables. Further, let the index sets
+Initially, let us consider an example where a regression model with
+\(p = 10\) predictors \((\mathbf{x})\) and \(m = 4\) responses
+\((\mathbf{y})\). Let's assume that only three response components
+\((w_1, w_2\) and \(w_3)\) are needed to describe all four response
+variables. Further, let the index sets
 \(\mathcal{P}_1 = \{1, 2\}, \mathcal{P}_2 = \{3, 4\}\) and
-\(\mathcal{P}_3 = \{5, 6\}\) define the position of the principal
+\(\mathcal{P}_3 = \{5, 6\}\) define the positions of the predictor
 components of \(\mathbf{x}\) that are relevant for \(w_1, w_2\) and
 \(w_3\) respectively. Let \(\mathcal{S}_1\), \(\mathcal{S}_2\) and
 \(\mathcal{S}_3\) be the orthogonal spaces spanned by each set of
-principal components. These spaces together span
+predictor components. These spaces together span
 \(\mathcal{S}_k = \mathcal{S}_1 \oplus \mathcal{S}_2 \oplus \mathcal{S}_3\)
 which is the minimum relevant space and equivalent to the x-envelope as
 discussed by \citet{cook2013envelopes}.
@@ -636,67 +628,74 @@ discussed by \citet{cook2013envelopes}.
 Moreover, let \(q_1 = 3, q_2 = 3\) and \(q_3 = 2\) be the number of
 predictor variables we want to be relevant for \(w_1, w_2\) and \(w_3\)
 respectively. Then \(q_1 = 3\) predictors may be obtained by rotating
-the principal components in \(\mathcal{P}_1\) along with one more
-irrelevant principal component. Similarly, \(q_2 = 3\) predictors,
-relevant for \(w_2\), can be obtained by rotating principal components
-in \(\mathcal{P}_2\) along with one more irrelevant component and
+the predictor components in \(\mathcal{P}_1\) along with one more
+irrelevant component. Similarly, \(q_2 = 3\) predictors, relevant for
+\(w_2\), can be obtained by rotating predictor components in
+\(\mathcal{P}_2\) along with one more irrelevant component and finally,
 \(q_3 = 2\) predictors, relevant for \(w_3\), can be obtained by
-rotating principal components in \(\mathcal{P}_3\) without any
-additional irrelevant component. Let the space spanned by the
-\(q_1, q_2\) and \(q_3\) number of predictors be \(\mathcal{S}_{q_1}\),
+rotating the components in \(\mathcal{P}_3\) without any additional
+irrelevant component. Let the space spanned by the \(q_1, q_2\) and
+\(q_3\) number of predictors be \(\mathcal{S}_{q_1}\),
 \(\mathcal{S}_{q_2}\) and \(\mathcal{S}_{q_3}\). Together they span a
 space
 \(\mathcal{S}_q = \mathcal{S}_{q_1} \oplus \mathcal{S}_{q_2} \oplus \mathcal{S}_{q_3}\).
-This space is bigger than \(\mathcal{S}_k\). Here, \(\mathcal{S}_k\) is
-orthogonal to \(\mathcal{S}_{p - k}\) and \(\mathcal{S}_q\) is
-orthogonal to \(\mathcal{S}_{p - q}\). Generally speaking, here we are
-splitting complete variable space \(\mathcal{S}_p\) into two orthogonal
-space -- \(\mathcal{S}_k\) relevant for \(\mathbf{y}\) and
-\(\mathcal{S}_{p - k}\) irrelevant for \(\mathbf{y}\).
+This space is bigger than \(\mathcal{S}_k\) since in the process two
+irrelevant components were included in the rotations. Here,
+\(\mathcal{S}_k\) is orthogonal to \(\mathcal{S}_{p - k}\) and
+\(\mathcal{S}_q\) is orthogonal to \(\mathcal{S}_{p - q}\). Generally
+speaking, here we are splitting the complete variable space
+\(\mathcal{S}_p\) into two orthogonal spaces -- \(\mathcal{S}_k\)
+relevant for \(\mathbf{w}\) and \(\mathcal{S}_{p - k}\) irrelevant for
+\(\mathbf{w}\).
 
-In the previous section, we discussed about constructing covariance
-matrix of latent structure.
+In the previous section, we discussed about the construction of a
+covariance matrix for the latent structure.
 Figure\textasciitilde{}\ref{fig:cov-plot-print} (left) shows a similar
-structure resembling the example here. The three colors represents their
+structure resembling the example here. The three colors represent the
 relevance with the three latent response components \((w_1, w_2\) and
 \(w_3)\). Here we can see that \(z_{1}\) and \(z_{2}\) (first and second
-principal components of \(\mathbf{x}\)) have non-zero covariance with
+predictor components of \(\mathbf{x}\)) have non-zero covariance with
 \(w_1\) (first latent component of response \(\mathbf{y}\)). In the
 similar manner other non-zero covariances are self-explanatory.
 
 \begin{figure}
-\subfloat[Relevant Position\label{fig:cov-plot-print1}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print2}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print3}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of principal components by a rotation matrix}\label{fig:cov-plot-print}
+\subfloat[Relevant Position\label{fig:cov-plot-print1}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print2}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print3}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print}
 \end{figure}
 
 In order to simulate predictor variables \((\mathbf{x})\), we construct
-matrix \(\mathbf{R}\) which then is used for orthogonal rotation of
-principal components \(\mathbf{z}\). This defines a new basis for the
-same space as is spanned by the principal components. In principal,
-there are many possible options for a rotation matrix. Among them, the
-eigenvector matrix of \(\boldsymbol{\Sigma}_{xx}\) can be a candidate.
-However, in this reverse engineering both rotation matrices
-\(\mathbf{R}\) and \(\mathbf{Q}\) along with the covariance matrices
-\(\boldsymbol{\Sigma}_{xx}\) are unknown. So, we are free to choose any
-\(\mathbf{R}\) that satisfied the properties of a real valued rotation
-matrix, i.e \(\mathbf{R}^{-1} = \mathbf{R}^t\) so that \(\mathbf{R}\) is
-orthonormal and its determinant becomes \(\pm 1\). Here the rotation
-matrix \(\mathbf{R}\) should be block diagonal as in
+matrix \(\mathbf{R}\) which then is used for orthogonal rotation of the
+predictor components \(\mathbf{z}\). This defines a new basis for the
+same space as is spanned by the predictor components. In principle,
+there are many possible options for defining a rotation matrix. Among
+them, the eigenvector matrix of \(\boldsymbol{\Sigma}_{xx}\) can be a
+candidate. However, in this reverse engineering approach both rotation
+matrices \(\mathbf{R}\) and \(\mathbf{Q}\) along with the covariance
+matrices \(\boldsymbol{\Sigma}_{xx}\) are unknown. So, we are free to
+choose any \(\mathbf{R}\) that satisfied the properties of a real valued
+rotation matrix, i.e \(\mathbf{R}^{-1} = \mathbf{R}^t\) so that
+\(\mathbf{R}\) is orthonormal and its determinant becomes \(\pm 1\).
+Here the rotation matrix \(\mathbf{R}\) should be block diagonal as in
 figure\textasciitilde{}\ref{fig:cov-plot-print} (middle) in order to
 rotate spaces \(\mathcal{S}_1, \mathcal{S}_2 \ldots\) separately.
 Figure\textasciitilde{}\ref{fig:simulated-data} (left) shows the
-simulated principal components \(\mathbf{z}\) that we are following in
-our example where we can see that the principal component \(z_{1}\) and
-\(z_{2}\) relevant for \(w_1\) is getting rotated together with an
-irrelevant component \(z_{8}\). The resultant predictors
-(Figure\textasciitilde{}\ref{fig:simulated-data}, right)
-\(x_{1}, x_{2}\) and \(x_{8}\) will also be relevant for \(w_1\). In the
-figure, we can see that principal components \(x_{7}, x_{8}, x_{9}\) and
-\(x_{10}\) are not relevant for any responses before rotation however
-\(x_{8}, x_{10}\) predictors becomes relevant after rotation keeping
-\(x_{7}\) and \(x_{9}\) still irrelevant.
+simulated predictor components \(\mathbf{z}\) that we are following in
+our example where we can see that the components \(z_{1}\) and \(z_{2}\)
+(relevant for \(w_1\)) is getting rotated together with an irrelevant
+component \(z_{8}\). The resultant predictors (Figure
+\ref{fig:simulated-data}, right) \(x_{1}, x_{2}\) and \(x_{8}\) will
+hence also be relevant for \(w_1\). In the figure, we can see that
+components \(z_{7}, z_{8}, z_{9}\) and \(z_{10}\) are not relevant for
+any responses before rotation, however, the \(x_{8}, x_{10}\) predictors
+become relevant after rotation keeping \(x_{7}\) and \(x_{9}\) still
+irrelevant.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{Simrel-M_files/figure-latex/simulated-data-1} \caption{Simulated Data before (left) and after (right) rotation}\label{fig:simulated-data}
+
+{\centering \subfloat[Before Rotation\label{fig:simulated-data1}]{\includegraphics[width=0.45\linewidth]{Simrel-M_files/figure-latex/simulated-data-1} }\subfloat[After Rotation\label{fig:simulated-data2}]{\includegraphics[width=0.45\linewidth]{Simrel-M_files/figure-latex/simulated-data-2} }
+
+}
+
+\caption{Simulated Data before}\label{fig:simulated-data}
 \end{figure}
 
 Among several methods
@@ -704,33 +703,31 @@ Among several methods
 random orthogonal matrix, in this paper we are using orthogonal matrix
 \(\mathcal{Q}\) obtained from QR-decomposition of a matrix filled with
 standard normal variates. The rotation here can be a) restricted and b)
-unrestricted. The latter rotates all principal components \(\mathbf{z}\)
-together and makes all predictor variables somewhat relevant for all
-response variables. However, the former one performs a block-wise
-rotation so that it rotates certain selected principal components
-together. This gives control for specifying certain predictors as
-relevant for selected responses, which was discussed in our example
-above. This also allows us to simulate irrelevant predictors such as
-\(x_{7}\) and \(x_{9}\) which can be detected during variables selection
-procedures.
+unrestricted. The latter rotates all components \(\mathbf{z}\) together
+and makes all predictor variables somewhat relevant for all response
+components. However, the former performs a block-wise rotation so that
+it rotates certain selected predictor components together. This gives
+control for specifying certain predictors as relevant for selected
+responses, which was discussed in our example above. This also allows us
+to simulate irrelevant predictors such as \(x_{7}\) and \(x_{9}\) which
+can be detected during variable selection procedures.
 
 \hypertarget{rotation-of-response-space}{\subsection{Rotation of
 response space}\label{rotation-of-response-space}}
 
 The previous example has four response variables with only three
-informative principal components \(w_1, w_2\) and \(w_3\). During the
-rotation of covariance matrix \(\boldsymbol{\Sigma}\), the response
-space is also rotated separately along with the predictor space.
-Figure\textasciitilde{}\ref{fig:cov-plot-print} shows that the
-informative response component \(w_3\) is rotated together with
-uninformative response component \(w_4\) so that the predictors which
-were relevant for \(w_3\) will be relevant for response variables
-\(y_3\) and \(y_4\). Similarly, response components \(w_1\) and \(w_2\)
-are rotated separately so that predictors relevant for \(w_1\) and
-\(w_2\) will also be relevant for \(y_1\) and \(y_2\) respectively which
-we can see in Figure\textasciitilde{}\ref{fig:simulated-data}. In the
-r-package \emph{simrel-m}, the combining of the response components is
-specified by a parameter \texttt{ypos}.
+informative components \(w_1, w_2\) and \(w_3\). During the rotation
+procedure, the response space is also rotated along with the predictor
+space. Figure \ref{fig:cov-plot-print} shows that the informative
+response component \(w_3\) is rotated together with the uninformative
+response component \(w_4\) so that the predictors which were relevant
+for \(w_3\) will be relevant for response variables \(y_3\) and \(y_4\).
+Similarly, response components \(w_1\) and \(w_2\) are rotated
+separately so that predictors relevant for \(w_1\) and \(w_2\) will only
+be relevant for \(y_1\) and \(y_2\) respectively, which we can see in
+Figure\textasciitilde{}\ref{fig:simulated-data}. In the r-package
+\emph{simrel-m}, the combining of the response components is specified
+by a parameter \texttt{ypos}.
 
 \hypertarget{implementation}{\section{Implementation}\label{implementation}}
 
@@ -751,10 +748,11 @@ estimation methods.
   separately (PLS1) and
 \item
   Partial Least Squares predicting all response variables together
-  (PLS).
+  (PLS2).
 \end{enumerate}
 
-We have also considered four relatively new estimation methods
+We have also considered four relatively new estimation methods in
+multi-response regression:
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -777,32 +775,32 @@ We have also considered four relatively new estimation methods
 \end{enumerate}
 
 From the possible combinations of two levels of coefficient of
-determination \((R^2)\) and two levels of \texttt{gamma} (factor that
-controls the multicollinearity in predictor variable), four simulation
-designs (design 1, design 2, design 3, design 4) are prepared.
-Replicating each design 20 times, 80 datasets with five response
-variables \((m=5)\) and 16 predictor variables \((p = 16)\) are
-simulated using the method discussed in this paper. It is also assumed
-that three principle components of response variables (\(w_1, w_2\) and
-\(w_3\)) completely describes the variation present in five response
-variables (\(y_1 \ldots y_5\)). The four designs are presented in the
+determination \((R^2)\) and two levels of \texttt{gamma} (the factor
+that controls the multicollinearity in predictor variables), four
+simulation designs (design 1-4) were prepared. Replicating each design
+20 times, 80 datasets with five response variables \((m=5)\) and 16
+predictor variables \((p = 16)\) were simulated using the method
+discussed in this paper. It was also assumed that three principle
+components of response variables (\(w_1, w_2\) and \(w_3\)) completely
+describe the variation present in five response variables
+(\(y_1 \ldots y_5\)). The four designs are presented in the
 Table\textasciitilde{}\ref{tab:parameter-settings}. All datasets
-contains 100 sample observations and out of 16 predictor variables,
+contained 100 sampled observations and out of 16 predictor variables,
 three disjoint set of five predictor variables are relevant for response
 components \(w_1, w_2\) and \(w_3\). Further, predictor components
-\(z_1\) and \(z_6\) are relevant for response component \(w_1\),
-predictor components \(z_2\) and \(z_5\) are relevant for response
-component \(w_2\) and predictor component \(z_3\) is relevant for
+\(z_1\) and \(z_6\) were relevant for response component \(w_1\),
+predictor components \(z_2\) and \(z_5\) were relevant for response
+component \(w_2\) and predictor component \(z_3\) was relevant for
 response component \(w_3\). In addition, following the discussion about
 \protect\hyperlink{rotation-of-response-space}{rotation of response
-space}, \(w_1\) is rotated together with \(w_4\) and \(w_2\) is rotated
-together with \(w_5\).
+space}, \(w_1\) was rotated together with \(w_4\) and \(w_2\) was
+rotated together with \(w_5\).
 
 \begin{longtable}[]{@{}rrrrr@{}}
 \caption{\label{tab:parameter-settings} Parameter setting of simulated data
 for model comparison}\tabularnewline
 \toprule
-\begin{minipage}[b]{0.36\columnwidth}\raggedleft\strut
+\begin{minipage}[b]{0.35\columnwidth}\raggedleft\strut
 ~\strut
 \end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedleft\strut
 Design1\strut
@@ -816,7 +814,7 @@ Design4\strut
 \midrule
 \endfirsthead
 \toprule
-\begin{minipage}[b]{0.36\columnwidth}\raggedleft\strut
+\begin{minipage}[b]{0.35\columnwidth}\raggedleft\strut
 ~\strut
 \end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedleft\strut
 Design1\strut
@@ -829,8 +827,8 @@ Design4\strut
 \end{minipage}\tabularnewline
 \midrule
 \endhead
-\begin{minipage}[t]{0.36\columnwidth}\raggedleft\strut
-\textbf{Decay of eigenvalue \((\gamma)\)}\strut
+\begin{minipage}[t]{0.35\columnwidth}\raggedleft\strut
+\textbf{Decay of eigenvalues \((\gamma)\)}\strut
 \end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
 0.2\strut
 \end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
@@ -840,8 +838,8 @@ Design4\strut
 \end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
 0.8\strut
 \end{minipage}\tabularnewline
-\begin{minipage}[t]{0.36\columnwidth}\raggedleft\strut
-\textbf{Coef. of Determination \((\rho^2)\)}\strut
+\begin{minipage}[t]{0.35\columnwidth}\raggedleft\strut
+\textbf{Coef. of Determination \((\rho^2_{w_j})\)}\strut
 \end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
 0.8, 0.8, 0.4\strut
 \end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
@@ -854,7 +852,7 @@ Design4\strut
 \bottomrule
 \end{longtable}
 
-For each method, an estimate of test prediction error is computed as,
+For each method, an estimate of test prediction error was computed as,
 
 \[\underset{m \times m}{\boldsymbol{\alpha}} = 
 \left(
@@ -866,23 +864,24 @@ For each method, an estimate of test prediction error is computed as,
 
 where, \(\hat{\boldsymbol{\beta}}\) is an estimate of true regression
 coefficient \(\boldsymbol{\beta}\) and \(\boldsymbol{\Sigma}_{xx}\) is
-the true covariance structure of predictor variable obtained from
-\texttt{simrel-m}. Also, \(\boldsymbol{\sigma}^2\) is the true minimum
-error of the model. Here \(\hat{\beta}\) vary accross different
-estimation methods while the remaining terms are same for each dataset
-design. Further, an overall prediction error of all responses is
+the true covariance structure of the predictor variables obtained from
+\texttt{simrel-m}. Also, \(\boldsymbol{\Sigma}_{Y|X}\) is the true
+minimum error of the model. Here \(\hat{\beta}\) varies accross
+different estimation methods while the remaining terms are same for each
+dataset design. Further, an overall prediction error of all responses is
 measured by the trace of \(\boldsymbol{\alpha}\).
 
 The minimimum prediction error (measured as discussed above) for nine
-estimation methods averaged over 20 replications of four designs are in
-Table\textasciitilde{}\ref{tab:min-error}. The table also shows that the
-number of components a method has used in order to obtain the minimum of
+estimation methods averaged over 20 replications of four designs are
+shown in Table \ref{tab:min-error}. The table also gives the number of
+predictor components a method has used in order to obtain the minimum of
 average prediciton error.
 
 \begin{longtable}[]{@{}lcccc@{}}
 \caption{\label{tab:min-error} Minimum average prediction error (number of
 components corresponding to minimum prediction error, minimum prediction
-error)}\tabularnewline
+error) (For \(Y\text{env}\), the number of response components is
+given)}\tabularnewline
 \toprule
 \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
 Model\strut
@@ -1013,69 +1012,67 @@ Design: 4\strut
 \bottomrule
 \end{longtable}
 
-Table\textasciitilde{}\ref{tab:min-error} shows that simulteneous
-envelope has prediction error of 3.17 and 3.14 in
-design\textasciitilde{}1 (with 4 components) and
-design\textasciitilde{}2 (with 5 components) respectively which is
-smaller than other methods. However the method was not able to show the
-same performance in design\textasciitilde{}3 and
-design\textasciitilde{}4. PCR model has least prediction error (4.08)
-from 6 components in design 3 and Cannonically Powered PLS has minimum
-prediction error (4.04) from 3 components in design 4. In design 3, we
-can also see that the Canonical PLS method has second best performance
-with only three components. The number of components vary accross
-different replicated dataset but the component corresponding to minimum
-prediction error is discussed here. A detail picture of prediction error
-for each estimation method obtained for each additional component is
-shown in Figure\textasciitilde{}\ref{fig:Average-Prediction-Plot}.
-Although design 2 and design 4 has higher level of multicollinearity,
-the performance of the estimation methods is indifferent to its effect.
-Since all the methods, except OLS, are based on shrinking of estimates,
-they are less influenced by multicollinearity problem.
+Table \ref{tab:min-error} shows that the simulteneous envelope has
+prediction error of 3.17 and 3.14 in design 1 (with 4 components) and
+design 2 (with 5 components), respectively, which is smaller than other
+methods. However the method was not able to show the same performance in
+design 3 and design 4. The PCR model has the smallest prediction error
+(4.08) from 6 components in design 3 and Canonically Powered PLS has
+minimum prediction error (4.04) from 3 components in design 4. In design
+3, we can also see that the Canonical PLS method has second best
+performance with only three components. The number of components vary
+accross different replicated dataset but the component corresponding to
+minimum prediction error is discussed here. A detailed picture of
+prediction error for each estimation method obtained for each additional
+component is shown in Figure \ref{fig:Average-Prediction-Plot}. Although
+designs 2 and 4 have higher levels of multicollinearity, the performance
+of the estimation methods is indifferent to its effect. Since all the
+methods, except OLS, are based on shrinking of estimates, they are less
+influenced by the multicollinearity problem.
 
 \begin{figure}[H]
 \includegraphics[width=1\linewidth]{Simrel-M_files/figure-latex/Average-Prediction-Plot-1} \caption{Minimum of Average Prediction Error}\label{fig:Average-Prediction-Plot}
 \end{figure}
 
-Above analysis has answered some questions such as how methods works
-when there exist a true reduced dimension in response space but also
-arised question like why they perform differently. For example, what is
-the reason for the decreasing performance of the simultaneous envelope
-method as the \(\rho^2\) values are reduced? Does this depend on the
-dimensions and spheric shape of the \(\mathbf{y}\) envelopes? Since, the
-example is intended as a demonstration of how \texttt{simrel-m} can be
-used in scientific study, and a more elaborative study would be
-necessary in order to answer such questions, but for this purpose
+The analysis presented in Figure \ref{fig:Average-Prediction-Plot} has
+addressed some questions such as how methods works when there exist a
+true reduced dimension in response space, but also arised other
+questions like why they perform differently. For example, what is the
+reason for the decreasing relative performance of the simultaneous
+envelope method as the \(\rho^2\) values are reduced? Does this depend
+on the dimensions and spheric shape of the \(\mathbf{y}\) envelopes?
+Since, the example is merely intended as a demonstration of how
+\texttt{simrel-m} can be used in scientific study, a more elaborative
+study would be necessary to answer such questions, but for this purpose
 \texttt{simrel-m} would be a powerful tool.
 
 \section{Web Interface}\label{web-interface}
 
 In order to give an alternative interface for \texttt{simrel-m}, we have
 created a shiny app which allows users to input the simulation
-parameters through different input fields.
-Figure\textasciitilde{}\ref{fig:AppSimulatr} shows a screenshot for the
-application. The application contains three main sections through which
-the user can interact with this simulation approach. A random seed can
-be selected using section in
-Figure\textasciitilde{}\ref{fig:AppSimulatr} (a) so that a particular
-set of data can be simulated.
-Figure\textasciitilde{}\ref{fig:AppSimulatr} (b) has all the input panel
-where parameter for simulation can be entered. Here the user also has
-the option to simulate univariate (uses \texttt{simrel} package in
-CRAN), bivariate (not yet available in CRAN) and multivariate simulation
-(\texttt{simrel-m}). In addition, a simulated R-object is comprised by
-the simulated data can be download as \texttt{Rdata} format (section (e)
-in Figure\textasciitilde{}\ref{fig:AppSimulatr}). The object constitute
-of the simulated data along with other properties such as coefficient of
-determination for each response, true regression coefficients and
-rotation matrices.
+parameters through different input fields. Figure \ref{fig:AppSimulatr}
+shows a screenshot of the application. The application contains three
+main sections through which the user can interact with this simulation
+approach. A random seed can be selected using section Figure
+\ref{fig:AppSimulatr} (a) so that a particular set of data can be
+re-simulated if needed. Figure \ref{fig:AppSimulatr} (b) has all the
+input panels where the user dependent parameters for simulation can be
+entered. Here the user also has the option to simulate univariate (uses
+\texttt{simrel} package in CRAN), bivariate (not yet available in CRAN)
+and multivariate simulation (\texttt{simrel-m}). In addition, a
+simulated R-object is comprised by the simulated data can be download as
+\texttt{Rdata} format (section (e) in Figure \ref{fig:AppSimulatr}). The
+object holds the simulated data along with other properties such as
+coefficient of determination for each response, true regression
+coefficients and rotation matrices.
 
-All \texttt{simrel-m} parameters can be entered using simple user
+All \texttt{simrel-m} parameters can be entered using a simple user
 interface where a vectors are separated with comma(,) and lists are
 separated with semicolon(;). For instance, the relevant position
-discussed in \protect\hyperlink{implementation}{implementation} section
-of this paper can be entered as \texttt{1,\ 6;\ 2,\ 5;\ 3,\ 4} which is
-equivalent to R syntax \texttt{list(c(1,\ 6),\ c(2,\ 5),\ c(3,\ 4))}.
+discussed in the \protect\hyperlink{implementation}{implementation}
+section of this paper can be entered as \texttt{1,\ 6;\ 2,\ 5;\ 3,\ 4}
+which is equivalent to R syntax
+\texttt{list(c(1,\ 6),\ c(2,\ 5),\ c(3,\ 4))}.
 
 \begin{figure}[!htb]
 
@@ -1086,49 +1083,51 @@ equivalent to R syntax \texttt{list(c(1,\ 6),\ c(2,\ 5),\ c(3,\ 4))}.
 \caption{Application interface of `simulatr`. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data}\label{fig:AppSimulatr}
 \end{figure}
 
-The application not only allows users to simulate data but also gives
-some insight on simulated data. The example used in the screenshot has
-simulated 200 training and 50 test samples with 15 predictor and 4
-response variables. There are two latent variables (response component)
-that completely spans the informative response space. Five predictor
-variables are relevant for the first response component and explains 80
-percent of the variation. In addition, the first and second predictor
-components spans the same space spanned by these five relevant
-predictors. Similarly, another set of four predictor variables are
-relevant for second response component and explains 70 percent of the
-variation. Here, third, fourth and sixth predictor components spans the
-same space spanned by these four relevant predictors. Further, the first
-response component is rotated together with a normally distributed
-random vector to obtain first and third response variable and second
-resposne components is rotated together with another normally
-distributed random vector to obtain second and fourth response variable.
+The application not only allows users to simulate data, but also gives
+some insight into simulated data properties. The example used in the
+screenshot has simulated 200 training and 50 test samples with 15
+predictor and 4 response variables. There are two latent variables
+(response components) that completely span the informative response
+space. Five predictor variables are relevant for the first response
+component and explains 80 percent of the variation in \(\mathbf{x}\). In
+addition, the first and second predictor components span the same space
+as spanned by these five relevant predictors. Similarly, another set of
+four predictor variables are relevant for second response component and
+explains 70 percent of the variation. Here, third, fourth and sixth
+predictor components span the same space as spanned by these four
+relevant predictors. Further, the first response component is rotated
+together with a normally distributed random vector to obtain first and
+third response variable and second response components are rotated
+together with another normally distributed random vector to obtain
+second and fourth response variable.
 
-Section (c) in Figure\textasciitilde{}\ref{fig:AppSimulatr} contains
-three plots -- a) regression coefficients b) relevant components and c)
-estimated relevant components. In the first plot we can see that
-predictor variables (1, 2, 8, 9 and 13) are relevant for first and third
-response variable and predictor variables (3, 4, 6 and 15) are relevant
-for second and fourth response variable. The second plot shows
-covariance between response components and the predictor components
-along with the corresponding eigenvalues in the background (bar plot).
-As in our parameter setting, the plot shows that first and second
-predictor components have non-zero covariance with first response
-component and third, fourth and sixth predictor components have non-zero
-covariance with second response component. The third plot is the
-estimated covariance between predictor components with response
-variable, for the simulated data. Since the first and third response
-components are rotated together, in the plot, the covariance between
-predictor components and first and third response variable is following
-similar pattern. This also suggests that the predictor components which
-were relevant for first response components gets relevant for first and
-third response variables after rotation.
+Section (c) in Figure \ref{fig:AppSimulatr} contains three plots -- a)
+true regression coefficients b) relevant components and c) estimated
+relevant components. In the first plot we can see that predictor
+variables (1, 2, 8, 9 and 13) are relevant for the first and third
+response variable by their non-zero coefficients, whereas predictor
+variables (3, 4, 6 and 15) are relevant for the second and fourth
+response variable. The second plot shows the covariances between the
+response components and the predictor components along with the
+corresponding eigenvalues in the background (bar plot). In the plot the
+absolute value of the covariances after scaling with the largest
+covariance are shown. As in our parameter setting, the plot shows that
+first and second predictor components have non-zero covariance with
+first response component and third, fourth and sixth predictor
+components have non-zero covariance with second response component. The
+third plot is the estimated covariance between predictor components and
+the response variables, for the simulated data. Since the first and
+third response components are rotated together, in the plot, the
+covariance between predictor components and first and third response
+variable is following similar pattern. This also suggests that the
+predictor components which were relevant for first response components
+gets relevant for first and third response variables after rotation.
 
 Along with these main sections, section (d) in the figure contains
 additional analysis performed with the simulated data such as its
-estimation with different methods. This section, which is still under
-development, is intended for educational purposes to show how changing
-the data properties influences the performances of different estimation
-and prediction methods.
+estimation with different methods. This section is intended for
+educational purposes to show how changing the data properties influences
+the performances of different estimation and prediction methods.
 
 Many scientific studies
 \citep{helland2012near, saebo2008lpls, cook2015simultaneous} are using
@@ -1137,7 +1136,7 @@ its properties. In many of these situations, a user-friendly and
 versitle simulation tool like \texttt{simrel-m} can play an important
 role. \citet{gangsei2016theoretical}; \citet{gangsei2016linear}; and
 \citet{saebo2015simrel} are some examples where the univariate and
-bivariate form of \texttt{simrel} have been used for their study.
+bivariate form of \texttt{simrel} have been used for such purposes.
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}

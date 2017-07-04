@@ -98,8 +98,8 @@ $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
 $if(natbib)$
-\usepackage{natbib}
-\bibliographystyle{plainnat}
+\usepackage[numbers]{natbib}
+\bibliographystyle{$biblio-style$}
 $endif$
 $if(biblatex)$
 \usepackage{biblatex}

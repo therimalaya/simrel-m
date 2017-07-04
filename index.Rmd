@@ -1,6 +1,6 @@
 ---
 site: bookdown::bookdown_site
-title: '`simrel-m`: A versatile tool for simulating multi-response linear model data'
+title: 'A tool for simulating multi-response linear model data'
 date: "`r Sys.Date()`"
 author:
 - name: Raju Rimal
@@ -9,41 +9,41 @@ author:
   affiliation: Norwegian University of Life Sciences
   footnote: Dep. of Chemistry and Food Science, NMBU, Ås ([nmbu.no](http://nmbu.no))
 bibliography: [ref-db.bib, packages.bib]
-biblio-style: model5-names
+biblio-style: "vancouver-authoryear"
 biblio-title: References
-classoption: authoryear
-geometry: margin=1in
+classoption: numeric
+geometry: margin=3cm
 papersize: A4
 fontsize: 12pt
 colorlinks: yes
-linespacing: 1.25
+linespacing: 2
 link-citations: yes
-mathpazo: yes
 natbib: yes
+mathpazo: yes
 numbersections: no
-monofont: "Source Code Pro"
 use-landscape-page: yes
 lot: no
 lof: no
+monofont: "Source Code Pro"
 monofontoptions: "Scale=0.7"
 github-repo: therimalaya/simrel-m
 url: 'http\://therimalaya.github.io/simrel-m'
 knit: 'bookdown::render_book'
 keywords: |
-  \footnotesize `simrel-2.0`, `simrel` package in r, data simulation, linear model, `simrel-m`
+  \footnotesize `simrel` package in r, data simulation, linear model, `simrel-m`
 abstract: |
   \small
-  Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such "big-data". Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present `simrel-m`, which is a versatile and transparent tool for simulating linear model data with extensive range of adjustable properties.
-  The method is based on the concept of relevant components @helland1994comparison, which is equivalent to the envelope model @cook2013envelopes. It is a multi-response extension of `simrel` @saebo2015simrel, and as `simrel` the new approach is essentially based on random rotations of latent relevant components to obtain a predictor matrix $\mathbf{X}$, but in addition we introduce random rotations of latent components spanning a response space in order to obtain a multivariate response matrix $\mathbf{Y}$.
+  Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such "big-data". Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present `simrel-m`, which is a versatile and transparent tool for simulating linear model data with an extensive range of adjustable properties.
+  The method is based on the concept of relevant components @helland1994comparison, which is equivalent to the envelope model by Dennis Cook. It is a multi-response extension of R-package `simrel` which is availiable in R-package repository CRAN, and as `simrel` the new approach is essentially based on random rotations of latent relevant components to obtain a predictor matrix $\mathbf{X}$, but in addition we introduce random rotations of latent components spanning a response space in order to obtain a multivariate response matrix $\mathbf{Y}$.
   The properties of the linear relation between $\mathbf{X}$ and $\mathbf{Y}$ are defined by a small set of input parameters which allow versatile and adjustable simulations. Sub-space rotations also allow for generating data suitable for testing variable selection methods in multi-response settings.
-  The method is implemented as an R-package which serves as an extension of the existing `simrel` packages @saebo2015simrel.
+  The method is implemented as an update to the R-package `simrel`.
 ---
 
 # Introduction #
 
-Technological advancement has opened a door for complex and sophisticated scientific experiments that was not possible before. Due to this change, enormous amounts of raw data are generated which contains massive information but difficult to excavate. Finding information and performing scientific research on these raw data has now become another problem. In order to tackle this situation new methods are being developed. However, before implementing any method, it is essential to test its performance. Often, researchers use simulated data for the purpose which itself is a time-consuming process. The main focus of this paper is to present a simulation method, along with an r-package called `simrel-m`, that is versatile in nature and yet simple to use. 
+Technological advancement has opened a door for complex and sophisticated scientific experiments that was not possible before. Due to this change, enormous amounts of raw data are generated which contains massive information but difficult to excavate. Finding information and performing scientific research on these raw data has now become another problem. In order to tackle this situation new methods are being developed. However, before implementing any method, it is essential to test its performance and explore its properties. Often, researchers use simulated data for the purpose which itself is a time-consuming process. The main focus of this paper is to present a simulation method, along with an r-package called `simrel-m`, that is versatile in nature and yet simple to use. 
 
-The simulation method we are presenting here is based on the principal of relevant space for prediction [@helland1994comparison]  which assumes that there exists a subspace in the complete space of response variables that is spanned by a subset of eigenvectors of predictor variables. The r-package based on this method lets user specify various population properties such as  which components of predictors $(\mathbf{x})$ are relevant for a latent subspace of the responses $\mathbf{y}$ and collinearity structure of $\mathbf{x}$. This enables the possibility to construct data for evaluating estimation methods and methods developed for variable selection. 
+The simulation method we are presenting here is based on the principle of relevant space for prediction [@helland1994comparison] <span style="color:Red;">\color{Red} which assumes that there exists a subspace in the complete space of response variables that is spanned by a subset of eigenvectors of predictor variables.</span> Our r-package based on this principle lets the user specify various population properties such as  which latent components are relevant for a latent subspace of the responses $\mathbf{y}$ and the collinearity structure of $\mathbf{x}$. This enables the possibility to construct data for evaluating estimation methods and methods developed for variable selection. 
 
-Among several publications on simulation, @ripley2009stochastic and @gamerman2006markov has exhaustively discussed the topic. In addition, many publications have implemented simulated data in order to investigate new estimation methods and prediction strategy [see: @cook2015simultaneous; @cook2013envelopes; @helland2012near]. However, most of the simulations in these studies were developed to address their specific problem. A systematic tool for simulating linear model data with single response, which could serve as a general tool for all such comparisons, was presented in @saebo2015simrel and as the r-package `simrel`. This paper extends `simrel` in order to simulate linear model data with multivariate response with an r-package `simrel-m`.
+Among several publications on simulation, @ripley2009stochastic and @gamerman2006markov has exhaustively discussed the topic. In addition, many publications have implemented simulated data in order to investigate new estimation methods and prediction strategies [see: @cook2015simultaneous; @cook2013envelopes; @helland2012near]. However, most of the simulations in these studies were developed to address their specific problem. A systematic tool for simulating linear model data with single response, which could serve as a general tool for all such comparisons, was presented in @saebo2015simrel and as the r-package `simrel`. This paper extends `simrel` in order to simulate linear model data with multivariate response with an r-package `simrel-m`.
 

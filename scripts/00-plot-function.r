@@ -121,14 +121,13 @@ plot.covdf <- function(covdf.obj, type) {
     geom_tile(color = "lightgray", aes(alpha = value ^ (1/4))) +
     facet_grid(facet2 ~ facet1, scales = "free", space = "free") +
     scale_alpha_continuous(range = c(0, 1), guide = "none") +
-    theme_minimal(base_size = 8) +
+    theme_gray(base_size = 14) +
     theme(legend.position = "bottom", strip.text = element_blank(),
-          ## panel.background = element_rect(color = "darkgray", fill = NA),
           axis.text.x = element_text(angle = 45, hjust = 1),
           axis.text = element_text(family = "mono"),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
-          panel.background = element_rect(color = "#ABABAB", size = 3),
+          panel.background = element_rect(fill = "#EFEFEF"),
           plot.background = element_rect(fill = "transparent", color = NA)) +
     labs(x = "", y = "") +
     scale_fill_brewer("Relevant for:", palette = "Set1", na.value = "#ffeeee")
@@ -187,16 +186,13 @@ get_obsplot <- function(sim.obj, before.rot = TRUE) {
   dff$RelevantBefore <- factor(dff$RelevantBefore, levels = unique(sort(dff$RelevantBefore, decreasing = T)))
   
   ## Plottings
-  ThePlot <- ggplot(dff, aes(Variables, Obs.Value)) + 
-    geom_violin(aes_string(fill = fill_colour_aes), 
-                alpha = 0.5, size = 0.2, color = "darkgray") +
-    geom_point(size = rel(1), shape = 23, position = position_jitter(width = 0.1),
-               aes_string(color = fill_colour_aes)) +
+  ThePlot <- ggplot(dff, aes_string("Variables", "Obs.Value", fill = fill_colour_aes)) + 
+    geom_violin(scale = "width", trim = FALSE, alpha = 0.15, color = NA) +
+    geom_point(position = position_jitter(width = 0.1), shape = 21, size = rel(3), alpha = 0.5) +
     labs(x = "", y = "") +
-    theme_minimal(base_size = 8) +
-    theme(panel.background = element_rect(fill = NA, color = "#ababab"), 
-          strip.text.x = element_text(angle = 90, hjust = 0.5, vjust = 1), 
-          legend.position = "bottom") +
+    theme_gray(base_size = 20) +
+    theme(strip.text.x = element_text(angle = 90, hjust = 0.5, vjust = 1), 
+          legend.position = "top") +
     scale_fill_brewer("Relevant for:", palette = "Set1") +
     scale_color_brewer("Relevant for:", palette = "Set1")
   return(ThePlot)

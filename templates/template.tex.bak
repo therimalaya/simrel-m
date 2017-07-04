@@ -1,0 +1,176 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A template for Wiley article submissions.
+% Developed by Overleaf. 
+%
+% Please note that whilst this template provides a 
+% preview of the typeset manuscript for submission, it 
+% will not necessarily be the final publication layout.
+%
+% Usage notes:
+% The "blind" option will make anonymous all author, affiliation, correspondence and funding information.
+% Use "num-refs" option for numerical citation and references style.
+% Use "alpha-refs" option for author-year citation and references style.
+
+\documentclass[$for(classoption)$$classoption$$sep$,$endfor$]{wiley-article}
+% \documentclass[blind,alpha-refs]{wiley-article}
+
+% Add additional packages here if required
+% \usepackage{siunitx}
+% \usepackage{hyperref}
+
+%% ---- My Customizations --------------
+\usepackage{booktabs}
+\usepackage{amssymb, amsmath}
+\usepackage{subfig}
+\usepackage[utf8]{inputenc}
+\usepackage[inline]{enumitem}
+\usepackage{float}
+\usepackage{pgf, tikz}
+% \usepackage{amsthm}
+
+% Linespacing
+$if(linespacing)$
+\usepackage{setspace}
+\setstretch{$linespacing$}
+$endif$
+
+% Longtable
+$if(longtable)$
+\usepackage{longtable}
+$endif$
+
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+
+$if(natbib)$
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+$endif$
+$if(biblatex)$
+\usepackage{biblatex}
+$if(biblio-files)$
+\bibliography{$biblio-files$}
+$endif$
+$endif$
+$if(listings)$
+\usepackage{listings}
+$endif$
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=R,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+$endif$
+
+% We will generate all images so they have a width \maxwidth. This means
+% that they will get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+  \else\Gin@nat@width\fi}
+\makeatother
+\let\Oldincludegraphics\includegraphics
+\renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=\maxwidth]{#1}}
+
+%% Define Colors
+% \newcommand\myshade{85}
+% \colorlet{mylinkcolor}{violet}
+% \colorlet{mycitecolor}{green}
+% \colorlet{myurlcolor}{blue}
+% 
+% %% Hyperlink Setup
+% \AtBeginDocument{%
+%   \hypersetup{breaklinks=true,
+%     bookmarks=true,
+%     pdfauthor={$author-meta$},
+%     pdftitle={$title-meta$},
+%     colorlinks=true,
+%     urlcolor=$if(urlcolor)$$urlcolor$$else$myurlcolor!\myshade!black$endif$,
+%     linkcolor=$if(linkcolor)$$linkcolor$$else$mylinkcolor!\myshade!black$endif$,
+%     citecolor=$if(citecolor)$$citecolor$$else$mycitecolor!\myshade!black$endif$,
+%     pdfborder={0 0 0}}
+% }
+
+%% Custom macros
+\newtheorem{mydef}{Definition}
+\newcommand{\bs}[1]{\ensuremath{\boldsymbol{#1}}}
+\newcommand{\diag}[1]{\mathrm{diag}\left(#1\right)}
+\newcommand{\seq}[3][1]{\ensuremath{#2_{#1},\ldots,\,#2_{#3}}}
+\newcommand{\note}[1]{\marginpar{\scriptsize\tt{\color{RoyalBlue}#1}}}
+\newcommand{\edit}[1]{{\color{OrangeRed} #1}}
+
+%% Custom Lengths
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{9pt}
+%% ------ My Customizations ends --------
+
+% Update article type if known
+\papertype{Original Article}
+% Include section in journal if known, otherwise delete
+\paperfield{Journal Section}
+
+\title{$title$}
+
+% List abbreviations here, if any. Please note that it is preferred that abbreviations be defined at the first instance they appear in the text, rather than creating an abbreviations list.
+% \abbrevs{ABC, a black cat; DEF, doesn't ever fret; GHI, goes home immediately.}
+\abbrevs{$if(abbrev)$ $abbrev$ $endif$}
+
+% Include full author names and degrees, when required by the journal.
+% Use the \authfn to add symbols for additional footnotes and present addresses, if any. Usually start with 1 for notes about author contributions; then continuing with 2 etc if any author has a different present address.
+\author[1\authfn{1}]{$firstAuthor$}
+\author[2\authfn{1}]{$if(secondAuthor)$ $secondAuthor$ $endif$}
+\author[2\authfn{1}]{$if(thirdAuthor)$ $thirdAuthor$ $endif$}
+% \author[2]{$if(fourthAuthor)$ $fourthAuthor$ $endif$}
+
+\contrib[\authfn{1}]{Equally contributing authors.}
+
+% Include full affiliation details for all authors
+\affil[1]{$author.affiliation$}
+% \affil[2]{$if(author.affiliation)$ $author.affiliation$ $endif$}
+
+\corraddress{$if(correspAddress)$ $correspAddress$ $endif$}
+\corremail{$if(correspEmail)$ $correspEmail$ $endif$}
+
+\presentadd[\authfn{2}]{$if(presentAddress)$ $presentAddress$ $endif$}
+
+\fundinginfo{$if(fundingInfo)$ $fundingInfo$ $endif$}
+
+% Include the name of the author that should appear in the running header
+\runningauthor{$firstAuthor$ et al.}
+
+% Pandoc header
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+$abstract$
+
+% Please include a maximum of seven keywords
+$if(keywords)$ \begin{keyword} $for(keywords)$$keywords$ \sep $endfor$\end{keyword}$endif$
+\end{abstract}
+
+$body$
+
+\printendnotes
+
+% Submissions are not required to reflect the precise reference formatting of the journal (use of italics, bold etc.), however it is important that all key elements of each reference are included.
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+
+% \begin{biography}[example-image-1x1]{A.~One}
+% Please check with the journal's author guidelines whether author biographies are required. They are usually only included for review-type articles, and typically require photos and brief biographies (up to 75 words) for each author.
+% \bigskip
+% \bigskip
+% \end{biography}
+
+% \graphicalabstract{example-image-1x1}{Please check the journal's author guildines for whether a graphical abstract, key points, new findings, or other items are required for display in the Table of Contents.}
+
+\end{document}
