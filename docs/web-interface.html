@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A tool for simulating multi-response linear model data</title>
   <meta name="description" content="A tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.3.18 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4.1 and GitBook 2.6.7">
 
   <meta property="og:title" content="A tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-07-04">
+<meta name="date" content="2017-07-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -113,7 +113,7 @@ div.abstract{
 <p>In order to give an alternative interface for <code>simrel-m</code>, we have created a shiny app which allows users to input the simulation parameters through different input fields. Figure <a href="web-interface.html#fig:AppSimulatr">4</a> shows a screenshot of the application. The application contains three main sections through which the user can interact with this simulation approach. A random seed can be selected using section Figure <a href="web-interface.html#fig:AppSimulatr">4</a> (a) so that a particular set of data can be re-simulated if needed. Figure <a href="web-interface.html#fig:AppSimulatr">4</a> (b) has all the input panels where the user dependent parameters for simulation can be entered. Here the user also has the option to simulate univariate (uses <code>simrel</code> package in CRAN), bivariate (not yet available in CRAN) and multivariate simulation (<code>simrel-m</code>). In addition, a simulated R-object is comprised by the simulated data can be download as <code>Rdata</code> format (section (e) in Figure <a href="web-interface.html#fig:AppSimulatr">4</a>). The object holds the simulated data along with other properties such as coefficient of determination for each response, true regression coefficients and rotation matrices.</p>
 <p>All <code>simrel-m</code> parameters can be entered using a simple user interface where a vectors are separated with comma(,) and lists are separated with semicolon(;). For instance, the relevant position discussed in the <a href="implementation.html#implementation">implementation</a> section of this paper can be entered as <code>1, 6; 2, 5; 3, 4</code> which is equivalent to R syntax <code>list(c(1, 6), c(2, 5), c(3, 4))</code>.</p>
 <div class="figure" style="text-align: center"><span id="fig:AppSimulatr"></span>
-<img src="images/screenshots/AppSimulatr.png" alt="Application interface of `simulatr`. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data" width="95%" />
+<img src="_bookdown_files/AppSimulatr.png" alt="Application interface of `simulatr`. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data" width="95%" />
 <p class="caption">
 Figure 4: Application interface of <code>simulatr</code>. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data
 </p>
@@ -163,7 +163,7 @@ Figure 4: Application interface of <code>simulatr</code>. (a) Seed and simulatio
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-require(["gitbook"], function(gitbook) {
+gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": true,
@@ -197,7 +197,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

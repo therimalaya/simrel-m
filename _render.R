@@ -14,7 +14,8 @@ owd <- setwd(dirname(src))
 # provide default formats if necessary
 if (length(formats) == 0) {
   formats <- c(
-    'bookdown::pdf_book',
+    'manuscript::manuscript',
+    # 'bookdown::pdf_book',
     'bookdown::epub_book',
     'bookdown::gitbook'
     # 'bookdown::tufte_html_book'

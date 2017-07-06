@@ -1,194 +1,136 @@
-\documentclass[12pt,A4paper,numeric]{elsarticle} %review=doublespace preprint=single 5p=2 column
-%%% Begin My package additions %%%%%%%%%%%%%%%%%%%
-%% Other Customizations
-\usepackage[hyphens]{url}
-\usepackage{lineno} % add
-\usepackage{caption}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A template for Wiley article submissions.
+% Developed by Overleaf. 
+%
+% Please note that whilst this template provides a 
+% preview of the typeset manuscript for submission, it 
+% will not necessarily be the final publication layout.
+%
+% Usage notes:
+% The "blind" option will make anonymous all author, affiliation, correspondence and funding information.
+% Use "num-refs" option for numerical citation and references style.
+% Use "alpha-refs" option for author-year citation and references style.
 
-%% Use Landscape Pages
-\usepackage{lscape}
+\documentclass[num-refs]{wiley-article}
+% \documentclass[blind,alpha-refs]{wiley-article}
 
-\usepackage{setspace}
-\setstretch{2}
+% Add additional packages here if required
+\usepackage{siunitx}
 
-\usepackage{mathpazo}
+%% ---- My Customizations --------------
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{subfig}
+\usepackage{float}
+% \usepackage{amssymb, amsmath}
+% \usepackage[utf8]{inputenc}
+% \usepackage[inline]{enumitem}
+% \usepackage{pgf, tikz}
+% \usepackage{amsthm}
 
+% Linespacing
 
+% Longtable
+\usepackage{longtable}
+
+% %% Custom macros
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-
-\biboptions{sort&compress} % For natbib
-\usepackage{booktabs} % book-quality tables
-
-% Redefines the elsarticle footer
-\makeatletter
-\def\ps@pprintTitle{%
-  \let\@oddhead\@empty
-  \let\@evenhead\@empty
-  \def\@oddfoot{\it \hfill\today}%
-  \let\@evenfoot\@oddfoot}
-\makeatother
-
-% A modified page layout
-\textwidth 6.75in
-\oddsidemargin -0.15in
-\evensidemargin -0.15in
-\textheight 9in
-\topmargin -0.5in
-%%%%%%%%%%%%%%%% end my additions to header
-
-\usepackage[T1]{fontenc}
-\usepackage{amssymb,amsmath}
-
-%% Multiple figure side-by-side
-\usepackage{subfig}
-
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-% use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-\usepackage[utf8]{inputenc}
-
-\usepackage[T1]{fontenc}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-% use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-\usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-\usepackage{fontspec}
-\ifxetex
-\usepackage{xltxtra,xunicode}
-\fi
-\defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
-\newcommand{\euro}{€}
-\setmonofont{Source Code Pro}
-\fi
-% use microtype if available
-\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
-\usepackage[margin=3cm]{geometry}
-\usepackage[numbers]{natbib}
-\bibliographystyle{vancouver-authoryear}
-\usepackage{longtable}
-\ifxetex
-\usepackage[setpagesize=false, % page size defined by xetex
-unicode=false, % unicode breaks when used with xetex
-xetex]{hyperref}
-\else
-\usepackage[unicode=true]{hyperref}
-\fi
-
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\setcounter{secnumdepth}{0}
-% Pandoc toggle for numbering sections (defaults to be off)
-\setcounter{secnumdepth}{0}
-% Pandoc header
-
-
-% \usepackage[nomarkers]{endfloat}
-
-%% My customizations %%%%%%%%
-%% Loading Packages
-\usepackage[inline]{enumitem}
-\usepackage{float}
-\usepackage{tabularx}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{pgf, tikz}
-\usepackage{amsthm}
-
-%% Custom macros
-\newtheorem{mydef}{Definition}
-\newcommand{\bs}[1]{\ensuremath{\boldsymbol{#1}}}
-\newcommand{\diag}[1]{\mathrm{diag}\left(#1\right)}
-\newcommand{\seq}[3][1]{\ensuremath{#2_{#1},\ldots,\,#2_{#3}}}
-\newcommand{\note}[1]{\marginpar{\scriptsize\tt{\color{RoyalBlue}#1}}}
-\newcommand{\edit}[1]{{\color{OrangeRed} #1}}
 
 %% Custom Lengths
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{9pt}
+%% ------ My Customizations ends --------
 
-%% Define Colors
-\newcommand\myshade{85}
-\colorlet{mylinkcolor}{violet}
-\colorlet{mycitecolor}{YellowOrange}
-\colorlet{myurlcolor}{Aquamarine}
+% Update article type if known
+\papertype{Original Article}
+% Include section in journal if known, otherwise delete
+\paperfield{Journal Section}
 
-%% Hyperlink Setup
-\AtBeginDocument{%
-  \hypersetup{breaklinks=true,
-    bookmarks=true,
-    pdfauthor={},
-    pdftitle={A tool for simulating multi-response linear model data},
-    colorlinks=true,
-    urlcolor=myurlcolor!\myshade!black,
-    linkcolor=mylinkcolor!\myshade!black,
-    citecolor=mycitecolor!\myshade!black,
-    pdfborder={0 0 0}}
-}
+\title{A tool for simulating multi-response linear model data}
 
-\urlstyle{same}  % don't use monospace font for urls
+% List abbreviations here, if any. Please note that it is preferred that abbreviations be defined at the first instance they appear in the text, rather than creating an abbreviations list.
+% \abbrevs{ABC, a black cat; DEF, doesn't ever fret; GHI, goes home immediately.}
+ \abbrevs{PLS1, Partial Least Squares with individual response modeling; PLS2,
+Partial Least Squares with all response modeling together; PCR,
+Principal Component Regression; CPPLS, Cannonically Powered Partial
+Least Squares; CPLS, Cannonical Partial Least Squares; xenv, envelope in
+predictor(x) space; yend, envelope in response(y) space; senv,
+simultaneous envelope in both predictor and response space} 
 
-%% End my customizations %%%%%%%%%
+% Include full author names and degrees, when required by the journal.
+% Use the \authfn to add symbols for additional footnotes and present addresses, if any. Usually start with 1 for notes about author contributions; then continuing with 2 etc if any author has a different present address.
+\author[1]{Raju Rimal}
+\affil[1]{Faculty of Chemistry and Bioinformatics, Norwegian University of Life
+Sciences, \AA s, Norway}
 
-\usepackage{amsthm}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}{Lemma}[section]
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{corollary}{Corollary}[section]
-\newtheorem{proposition}{Proposition}[section]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[section]
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
+
+\author[1]{Trygve Alm\o y}
+
+
+
+\author[2]{Solve S\ae \o}
+\affil[2]{Prorector, Norwegian University of Life Sciences, \AA s, Norway}
+
+
+
+\corraddress{NMBU, Norway}
+\corremail{raju.rimal@nmbu.no}
+
+\runningauthor{Raju Rimal et al.}
+
+% 
+% \author[1\authfn{1}]{Author One PhD}
+% \author[2\authfn{1}]{Author A.~Two MD}
+% \author[2\authfn{2}\authfn{1}]{Author Three PhD}
+% \author[2]{Author B.~Four}
+% 
+% \contrib[\authfn{1}]{Equally contributing authors.}
+% 
+% % Include full affiliation details for all authors
+% \affil[1]{Department, Institution, City, State or Province, Postal Code, Country}
+% \affil[2]{Department, Institution, City, State or Province, Postal Code, Country}
+% 
+% \presentadd[\authfn{2}]{Department, Institution, City, State or Province, Postal Code, Country}
+% 
+% \corraddress{Author One PhD, Department, Institution, City, State or Province, Postal Code, Country}
+% \corremail{correspondingauthor@email.com}
+
+% Include the name of the author that should appear in the running header
+
+% Pandoc header
+
 \begin{document}
-\begin{frontmatter}
 
-  \title{A tool for simulating multi-response linear model data}
-    \author[]{Raju Rimal}
-  
-  
-    \author[]{Trygve Almøy}
-  
-  
-    \author[Norwegian University of Life Sciences]{Solve Sæbø\corref{c1}}
-  
-   \cortext[c1]{Dep. of Chemistry and Food Science, NMBU, Ås
-(\href{http://nmbu.no}{nmbu.no})}
-    
-  \begin{abstract}
-    \small
-    Data science is generating enormous amounts of data, and new and
-    advanced analytical methods are constantly being developed to cope with
-    the challenge of extracting information from such ``big-data''.
-    Researchers often use simulated data to assess and document the
-    properties of these new methods, and in this paper we present
-    \texttt{simrel-m}, which is a versatile and transparent tool for
-    simulating linear model data with an extensive range of adjustable
-    properties. The method is based on the concept of relevant components
-    \citet{helland1994comparison}, which is equivalent to the envelope model
-    by Dennis Cook. It is a multi-response extension of R-package
-    \texttt{simrel} which is availiable in R-package repository CRAN, and as
-    \texttt{simrel} the new approach is essentially based on random
-    rotations of latent relevant components to obtain a predictor matrix
-    \(\mathbf{X}\), but in addition we introduce random rotations of latent
-    components spanning a response space in order to obtain a multivariate
-    response matrix \(\mathbf{Y}\). The properties of the linear relation
-    between \(\mathbf{X}\) and \(\mathbf{Y}\) are defined by a small set of
-    input parameters which allow versatile and adjustable simulations.
-    Sub-space rotations also allow for generating data suitable for testing
-    variable selection methods in multi-response settings. The method is
-    implemented as an update to the R-package \texttt{simrel}.
-  \end{abstract}
-   \begin{keyword} \footnotesize \texttt{simrel} package in r, data simulation, linear
-model, \texttt{simrel-m} \sep \end{keyword}
-\end{frontmatter}
+\maketitle
+
+\begin{abstract}
+\small
+Data science is generating enormous amounts of data, and new and
+advanced analytical methods are constantly being developed to cope with
+the challenge of extracting information from such ``big-data''.
+Researchers often use simulated data to assess and document the
+properties of these new methods, and in this paper we present
+\texttt{simrel-m}, which is a versatile and transparent tool for
+simulating linear model data with an extensive range of adjustable
+properties. The method is based on the concept of relevant components
+\citet{helland1994comparison}, which is equivalent to the envelope model
+by Dennis Cook. It is a multi-response extension of R-package
+\texttt{simrel} which is availiable in R-package repository CRAN, and as
+\texttt{simrel} the new approach is essentially based on random
+rotations of latent relevant components to obtain a predictor matrix
+\(\mathbf{X}\), but in addition we introduce random rotations of latent
+components spanning a response space in order to obtain a multivariate
+response matrix \(\mathbf{Y}\). The properties of the linear relation
+between \(\mathbf{X}\) and \(\mathbf{Y}\) are defined by a small set of
+input parameters which allow versatile and adjustable simulations.
+Sub-space rotations also allow for generating data suitable for testing
+variable selection methods in multi-response settings. The method is
+implemented as an update to the R-package \texttt{simrel}.
+% Please include a maximum of seven keywords
+\keywords{\texttt{simrel} package in r, data simulation, linear model,
+\texttt{simrel-m}}
+\end{abstract}
 
 \section{Introduction}\label{introduction}
 
@@ -207,7 +149,7 @@ that is versatile in nature and yet simple to use.
 
 The simulation method we are presenting here is based on the principle
 of relevant space for prediction \citep{helland1994comparison}
-{\color{Red} which assumes that there exists a subspace in the complete
+{\color{red} which assumes that there exists a subspace in the complete
 space of response variables that is spanned by a subset of eigenvectors
 of predictor variables.} Our r-package based on this principle lets the
 user specify various population properties such as which latent
@@ -1076,7 +1018,7 @@ which is equivalent to R syntax
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.95\linewidth]{/Users/rajurim/Dropbox/Papers/01-simrel-m/images/screenshots/AppSimulatr} 
+{\centering \includegraphics[width=0.95\linewidth]{_bookdown_files/AppSimulatr} 
 
 }
 
@@ -1141,10 +1083,17 @@ bivariate form of \texttt{simrel} have been used for such purposes.
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
 
+\printendnotes
 
-\renewcommand\refname{References}
+% Submissions are not required to reflect the precise reference formatting of the journal (use of italics, bold etc.), however it is important that all key elements of each reference are included.
 \bibliography{packages.bib,ref-db.bib}
 
+% \begin{biography}[example-image-1x1]{A.~One}
+% Please check with the journal's author guidelines whether author biographies are required. They are usually only included for review-type articles, and typically require photos and brief biographies (up to 75 words) for each author.
+% \bigskip
+% \bigskip
+% \end{biography}
 
+% \graphicalabstract{example-image-1x1}{Please check the journal's author guildines for whether a graphical abstract, key points, new findings, or other items are required for display in the Table of Contents.}
 
 \end{document}

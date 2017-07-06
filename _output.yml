@@ -21,11 +21,11 @@ bookdown::gitbook:
 bookdown::tufte_html_book:
   toc: yes
   css: [style.css, toc.css]
-bookdown::pdf_book:
+manuscript::manuscript:
   fig_caption: yes
   citation_package: natbib
   md_extensions: -autolink_bare_uris
-  template: "templates/document.tex"
+  template: 'templates/template.tex'
   keep_tex: yes
   dev: "cairo_pdf"
 bookdown::epub_book:
