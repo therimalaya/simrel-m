@@ -14,7 +14,6 @@ link-citations: true
 # Statistical Model #
 
 In this section we describe the model and the model parameterization which is assumed throughout this paper. We assume:
-
 \begin{equation}
   \begin{bmatrix}\mathbf{y}\\ \mathbf{x}\end{bmatrix} \sim N
   \left(
@@ -62,8 +61,8 @@ Let us define a transformation of $\mathbf{x}$ and $\mathbf{y}$ as, $\mathbf{z} 
 
 \begin{align}
   \begin{bmatrix}\mathbf{w} \\ 
-  \mathbf{z}\end{bmatrix}  & \sim N \left(\boldsymbol{\mu}, \boldsymbol{\Sigma}\right) \\
-  &= N \left(
+  \mathbf{z}\end{bmatrix}  & \sim N \left(\boldsymbol{\mu}, \boldsymbol{\Sigma}\right)
+  = N \left(
     \begin{bmatrix}
       \boldsymbol{\mu}_w \\ \boldsymbol{\mu}_z
     \end{bmatrix},
@@ -109,9 +108,9 @@ Regression Coefficients
   $$
   \begin{aligned}
   \boldsymbol{\alpha} &= \boldsymbol{\Sigma}_{wz} \boldsymbol{\Sigma}_{zz}^{-1}
-      &&= \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1} \\
-      &= \mathbf{Q}\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\right]\mathbf{R}^t
-      &&= \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
+      = \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1}
+      = \mathbf{Q}\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\right]\mathbf{R}^t
+      = \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
   \end{aligned}
   $$
 
@@ -124,10 +123,10 @@ Conditional Variance
       \boldsymbol{Q \Sigma}_{yx}\mathbf{R}^t \left[\boldsymbol{R\Sigma}_{xx}\boldsymbol{R}^t\right]^{-1}
       \boldsymbol{R\Sigma}_{xy}\mathbf{Q}^t \nonumber \\
     &= \boldsymbol{Q\Sigma}_{yy}\mathbf{Q}^t - 
-      \boldsymbol{Q \Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\mathbf{Q}^t \nonumber \\
+      \boldsymbol{Q \Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\mathbf{Q}^t \\
     &= \mathbf{Q}\left[\boldsymbol{\Sigma}_{yy} -
-      \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\right]\mathbf{Q}^{t} \nonumber \\
-    &= \mathbf{Q} \boldsymbol{\Sigma}_{y|x}\mathbf{Q}^t
+      \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\right]\mathbf{Q}^{t}
+    = \mathbf{Q} \boldsymbol{\Sigma}_{y|x}\mathbf{Q}^t
   \end{aligned}
   $$
 
@@ -141,8 +140,8 @@ Coefficient of Determination
   &=\mathbf{Q}^t
   \boldsymbol{\Sigma}_{yx}\mathbf{R}^t \left(\mathbf{R}\boldsymbol{\Sigma}_{xx}\mathbf{R}^t\right)^{-1}
   \mathbf{R}\boldsymbol{\Sigma}_{xy}\mathbf{Q}^t \left(\mathbf{Q} \boldsymbol{\Sigma}_{yy}^{-1} \mathbf{Q}^t\right) \nonumber \\
-  &=\mathbf{Q}^t\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\right]\mathbf{Q} \\
-  &= \mathbf{Q}\boldsymbol{\rho}_{Y}^2 \mathbf{Q}^t
+  &=\mathbf{Q}^t\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\right]\mathbf{Q}
+  = \mathbf{Q}\boldsymbol{\rho}_{Y}^2 \mathbf{Q}^t
   \end{aligned}
   $$
 
@@ -160,7 +159,7 @@ This concept can be extended to $m$ responses so that the subspace of $\mathbf{x
 
 ## Model Parameterization ##
 
-In order to construct a fully specified and unrestricted covariance matrix of $\mathbf{z}$ and $\mathbf{w}$ for the model in equation \@ref(eq:model3), we need to identify $1/2 (p+m)(p+m+1)$ unknown parameters. <span style="color:red;">\color{red}However, $\Sigma_{zz}$ is a diagonal matrix of eigenvalues of $\Sigma_{xx}$, hence the number of parameters may be reduced by $1/2p(p-1)$ parameters. In addition, the covariances of $\mathbf{z}$ that are not relevant for $\mathbf{w}$ will be zero. This further reduces the number of unknown parameters.</span> For the purpose of simulation, we implement some assumptions to re-parameterize and simplify the model. This enables us to construct a wide range of model properties from only few key parameters.
+In order to construct a fully specified and unrestricted covariance matrix of $\mathbf{z}$ and $\mathbf{w}$ for the model in equation \@ref(eq:model3), we need to identify $1/2 (p+m)(p+m+1)$ unknown parameters. For the purpose of simulation, we implement some assumptions to re-parameterize and simplify the model. This enables us to construct a wide range of model properties from only few key parameters.
 
 **Parameterization of $\boldsymbol{\Sigma}_{zz}$**
 : If we let the rotation matrix $\mathbf{R}$ correspond to the eigenvectors of $\boldsymbol{\Sigma}_{xx}$, then $\mathbf{z}$ becomes the set of principal components of $\mathbf{x}$. In that case $\boldsymbol{\Sigma}_{zz}$ is a diagonal matrix with eigenvalues $\lambda_1, \ldots, \lambda_p$. Further, we adopt the same parametric representation as @saebo2015simrel for these eigenvalues:
@@ -263,27 +262,67 @@ Moreover, let $q_1 = 3, q_2 = 3$ and $q_3 = 2$ be the number of predictor variab
 
 In the previous section, we discussed about the construction of a covariance matrix for the latent structure. Figure~\@ref(fig:cov-plot-print) (left) shows a similar structure resembling the example here. The three colors represent the relevance with the three latent response components $(w_1, w_2$ and $w_3)$. Here we can see that $`r rel.z[[1]][1]`$ and $`r rel.z[[1]][2]`$ (first and second predictor components of $\mathbf{x}$) have non-zero covariance with $w_1$ (first latent component of response $\mathbf{y}$). In the similar manner other non-zero covariances are self-explanatory. 
 
-```{r cov-plot-print, results = 'hide', echo = FALSE, warning = FALSE, message = FALSE, out.width = '33%', fig.asp = 1.2, fig.subcap=c("Relevant Position", "Rotation Matrix", "Relevant Predictors"), fig.cap = 'Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).', fig.width=3}
-plt1 <- plot(cov.df(sim.obj, type = "relpos", ordering = TRUE), "relpos") +
-  ggtitle("PC Covariance Matrix")
-plt2 <- plot(cov.df(sim.obj, type = "rotation"), "relpred") +
-  ggtitle("Rotation Matrix")
-plt3 <- plot(cov.df(sim.obj, type = "relpred"), "relpred") +
-  ggtitle("simulated data cov. matrix")
-plusTheme <- theme(text = element_text(size = 12), 
-                   legend.title = element_blank(), 
-                   legend.position = "top",
-                   plot.title = element_blank())
-plt1 + plusTheme
-plt2 + plusTheme
-plt3 + plusTheme
+```{r cov-plot-print, echo = FALSE, warning = FALSE, message = FALSE, out.width = '33%', fig.asp = 1.2, fig.subcap=c("Relevant Position", "Rotation Matrix", "Relevant Predictors"), fig.cap = 'Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).', fig.width=1.7, dpi = 800, fig.pos = "!htb"}
+plt1 <- plot(cov.df(sim.obj, type = "relpos", ordering = TRUE), "relpos")
+plt2 <- plot(cov.df(sim.obj, type = "rotation"), "relpred")
+plt3 <- plot(cov.df(sim.obj, type = "relpred"), "relpred")
+plusTheme <- theme_grey(base_size = 7) + 
+  theme(text = element_text(size = 5.5), 
+        legend.title = element_blank(), 
+        legend.position = "top", 
+        plot.title = element_blank(),
+        legend.key.size = unit(0.25, "cm"),
+        legend.margin = margin(2, 2, 0, 2),
+        plot.margin = margin(2, 2, 1, 1),
+        panel.grid = element_line(size = 0.03),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+        axis.ticks = element_line(size = 0.05))
+savePlot <- function(plt, filename, width = 5.5, height = 5.5, dev = "tiff"){
+  ggsave(plt,  filename = filename, 
+         units = "cm",  width = width,  height = height, 
+         device = dev,  dpi = 800)
+}
+plt1 <- plt1 + plusTheme
+plt2 <- plt2 + plusTheme
+plt3 <- plt3 + plusTheme
+
+## Save TIFF
+savePlot(plt1, filename = "images/tiff/cov-plot-print-1.tiff")
+savePlot(plt2, filename = "images/tiff/cov-plot-print-2.tiff")
+savePlot(plt3, filename = "images/tiff/cov-plot-print-3.tiff")
+
+## Save png
+savePlot(plt1, filename = "images/png/cov-plot-print-1.png", dev = "png")
+savePlot(plt2, filename = "images/png/cov-plot-print-2.png", dev = "png")
+savePlot(plt3, filename = "images/png/cov-plot-print-3.png", dev = "png")
+
+## Print png
+knitr::include_graphics(c(
+  'images/png/cov-plot-print-1.png', 
+  'images/png/cov-plot-print-2.png', 
+  'images/png/cov-plot-print-3.png'
+))
 ```
 
 In order to simulate predictor variables $(\mathbf{x})$,  we construct matrix $\mathbf{R}$ which then is used for orthogonal rotation of the predictor components $\mathbf{z}$. This defines a new basis for the same space as is spanned by the predictor components. In principle, there are many possible options for defining a rotation matrix. Among them, the eigenvector matrix of $\boldsymbol{\Sigma}_{xx}$ can be a candidate. However, in this reverse engineering approach both rotation matrices $\mathbf{R}$ and $\mathbf{Q}$ along with the covariance matrices $\boldsymbol{\Sigma}_{xx}$ are unknown. So, we are free to choose any $\mathbf{R}$ that satisfied the properties of a real valued rotation matrix, i.e $\mathbf{R}^{-1} = \mathbf{R}^t$ so that $\mathbf{R}$ is orthonormal and its determinant becomes $\pm 1$. Here the rotation matrix $\mathbf{R}$ should be block diagonal as in figure~\@ref(fig:cov-plot-print) (middle) in order to rotate spaces $\mathcal{S}_1, \mathcal{S}_2 \ldots$ separately. Figure~\@ref(fig:simulated-data) (left) shows the simulated predictor components $\mathbf{z}$ that we are following in our example where we can see that the components $`r rel.z[[1]][1]`$ and $`r rel.z[[1]][2]`$ (relevant for $w_1$) is getting rotated together with an irrelevant component $`r rel.z[[1]][3]`$. The resultant predictors (Figure \@ref(fig:simulated-data), right) $`r rel.x[[1]][-3]`$ and $`r rel.x[[1]][3]`$ will hence also be relevant for $w_1$. In the figure, we can see that components $`r irrelpos.z[-4]`$ and $`r irrelpos.z[4]`$ are not relevant for any responses before rotation, however, the $`r setdiff(irrelpos.x, irrel.x)`$ predictors become relevant after rotation keeping $`r irrel.x[1]`$ and $`r irrel.x[2]`$ still irrelevant.
 
-```{r simulated-data, results = 'hide', echo = FALSE, warning = FALSE, message = FALSE, out.width = '45%', fig.asp=0.7, fig.cap = 'Simulated Data before', fig.align='center', fig.show='hold', fig.subcap=c("Before Rotation", "After Rotation")}
-get_obsplot(sim.obj)
-get_obsplot(sim.obj, FALSE)
+```{r simulated-data, echo = FALSE, warning = FALSE, message = FALSE, out.width = '45%', fig.cap = 'Simulated Data before', fig.align='center', fig.subcap=c("Before Rotation", "After Rotation"), fig.pos='!htb'}
+obsPlt1 <- get_obsplot(sim.obj, base.size = 8,  point.size = 0.5) + plusTheme
+obsPlt2 <- get_obsplot(sim.obj, FALSE, base.size = 8,  point.size = 0.5) + plusTheme
+
+## Save TIFF
+savePlot(obsPlt1, filename = "images/tiff/simulated-data-1.tiff", width = 7)
+savePlot(obsPlt2, filename = "images/tiff/simulated-data-2.tiff", width = 7)
+
+## Save png
+savePlot(obsPlt1, filename = "images/png/simulated-data-1.png", width = 7, dev = "png")
+savePlot(obsPlt2, filename = "images/png/simulated-data-2.png", width = 7, dev = "png")
+
+## Print Plot
+knitr::include_graphics(c(
+  "images/png/simulated-data-1.png", 
+  "images/png/simulated-data-2.png"
+))
 ```
 
 Among several methods [@anderson1987generation; @heiberger1978algorithm] for generating random orthogonal matrix, in this paper we are using orthogonal matrix $\mathcal{Q}$ obtained from QR-decomposition of a matrix filled with standard normal variates. The rotation here can be a) restricted and b) unrestricted. The latter rotates all components $\mathbf{z}$ together and makes all predictor variables somewhat relevant for all response components. However, the former performs a block-wise rotation so that it rotates certain selected predictor components together. This gives control for specifying certain predictors as relevant for selected responses, which was discussed in our example above. This also allows us to simulate irrelevant predictors such as $`r irrel.x[1]`$ and $`r irrel.x[2]`$ which can be detected during variable selection procedures.

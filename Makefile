@@ -3,11 +3,11 @@ DIR="docs"
 manuscript:
 	Rscript --quiet _render.R "manuscript::manuscript"
 
-pdf:
-	Rscript --quiet _render.R "bookdown::pdf_book"
-
 gitbook:
 	Rscript --quiet _render.R "bookdown::gitbook"
+
+pdf:
+	Rscript --quiet _render.R "bookdown::pdf_book"
 
 tufte:
 	Rscript --quiet _render.R "bookdown::tufte_html_book"

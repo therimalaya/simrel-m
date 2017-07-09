@@ -28,18 +28,18 @@
 % \usepackage{pgf, tikz}
 % \usepackage{amsthm}
 
-% Linespacing
-
 % Longtable
 \usepackage{longtable}
 
 % %% Custom macros
 \providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+}
 
 %% Custom Lengths
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{9pt}
+% \setlength{\parindent}{0pt}
+% \setlength{\parskip}{9pt}
 %% ------ My Customizations ends --------
 
 % Update article type if known
@@ -69,16 +69,19 @@ Sciences, \AA s, Norway}
 
 
 
-\author[2]{Solve S\ae \o}
+\author[2]{Solve S\ae b\o}
 \affil[2]{Prorector, Norwegian University of Life Sciences, \AA s, Norway}
 
 
 
-\corraddress{NMBU, Norway}
+\corraddress{Raju Rimal, Faculty of Chemistry and Bioinformatics, Norwegian
+University of Life Sciences, 1430, \AA s, Norway}
 \corremail{raju.rimal@nmbu.no}
 
 \runningauthor{Raju Rimal et al.}
 
+\fundinginfo{This research is funded by Norwegian University of Life Sciences, Ås,
+Norway.}
 % 
 % \author[1\authfn{1}]{Author One PhD}
 % \author[2\authfn{1}]{Author A.~Two MD}
@@ -98,6 +101,11 @@ Sciences, \AA s, Norway}
 
 % Include the name of the author that should appear in the running header
 
+% Linespacing
+\usepackage[nodisplayskipstretch]{setspace}
+
+% Floating figures and tables at the end of document
+
 % Pandoc header
 
 \begin{document}
@@ -105,16 +113,15 @@ Sciences, \AA s, Norway}
 \maketitle
 
 \begin{abstract}
-\small
-Data science is generating enormous amounts of data, and new and
-advanced analytical methods are constantly being developed to cope with
-the challenge of extracting information from such ``big-data''.
+\normalsize Data science is generating enormous amounts of data, and new
+and advanced analytical methods are constantly being developed to cope
+with the challenge of extracting information from such ``big-data''.
 Researchers often use simulated data to assess and document the
 properties of these new methods, and in this paper we present
 \texttt{simrel-m}, which is a versatile and transparent tool for
 simulating linear model data with an extensive range of adjustable
 properties. The method is based on the concept of relevant components
-\citet{helland1994comparison}, which is equivalent to the envelope model
+\citep{helland1994comparison}, which is equivalent to the envelope model
 by Dennis Cook. It is a multi-response extension of R-package
 \texttt{simrel} which is availiable in R-package repository CRAN, and as
 \texttt{simrel} the new approach is essentially based on random
@@ -132,6 +139,9 @@ implemented as an update to the R-package \texttt{simrel}.
 \texttt{simrel-m}}
 \end{abstract}
 
+% Linespacing
+\setstretch{1.25}
+
 \section{Introduction}\label{introduction}
 
 Technological advancement has opened a door for complex and
@@ -148,15 +158,20 @@ simulation method, along with an r-package called \texttt{simrel-m},
 that is versatile in nature and yet simple to use.
 
 The simulation method we are presenting here is based on the principle
-of relevant space for prediction \citep{helland1994comparison}
-{\color{red} which assumes that there exists a subspace in the complete
-space of response variables that is spanned by a subset of eigenvectors
-of predictor variables.} Our r-package based on this principle lets the
-user specify various population properties such as which latent
-components are relevant for a latent subspace of the responses
-\(\mathbf{y}\) and the collinearity structure of \(\mathbf{x}\). This
-enables the possibility to construct data for evaluating estimation
-methods and methods developed for variable selection.
+of relevant space for prediction \citep{helland1994comparison} which
+assumes that there exists a y-relevant subspace in the complete space of
+predictor variables that is spanned by a subset of eigenvectors of these
+predictor variables. Our extension to this principle is to introduce a
+subspace in \(\mathbf{y}\) (material space) which contains the
+information that predictor space is relevant for. The concept of
+response reduction to the material space in response variable was
+introduced by \citet{cook2010envelope}. Our r-package based on this
+principle lets the user specify various population properties such as
+which latent components are relevant for a latent subspace of the
+responses \(\mathbf{y}\) and the collinearity structure of
+\(\mathbf{x}\). This enables the possibility to construct data for
+evaluating estimation methods and methods developed for variable
+selection.
 
 Among several publications on simulation, \citet{ripley2009stochastic}
 and \citet{gamerman2006markov} has exhaustively discussed the topic. In
@@ -252,8 +267,8 @@ transformed variables as:
 
 \begin{align}
   \begin{bmatrix}\mathbf{w} \\ 
-  \mathbf{z}\end{bmatrix}  & \sim N \left(\boldsymbol{\mu}, \boldsymbol{\Sigma}\right) \\
-  &= N \left(
+  \mathbf{z}\end{bmatrix}  & \sim N \left(\boldsymbol{\mu}, \boldsymbol{\Sigma}\right)
+  = N \left(
     \begin{bmatrix}
       \boldsymbol{\mu}_w \\ \boldsymbol{\mu}_z
     \end{bmatrix},
@@ -309,9 +324,9 @@ properties of \eqref{eq:linear-model} and \eqref{eq:latent-model}.
 \[
   \begin{aligned}
   \boldsymbol{\alpha} &= \boldsymbol{\Sigma}_{wz} \boldsymbol{\Sigma}_{zz}^{-1}
-  &&= \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1} \\
-  &= \mathbf{Q}\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\right]\mathbf{R}^t
-  &&= \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
+  = \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1}
+  = \mathbf{Q}\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\right]\mathbf{R}^t
+  = \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
   \end{aligned}
   \]
 \item[Conditional Variance]
@@ -323,10 +338,10 @@ given \(\mathbf{z}\) is, \[
   \boldsymbol{Q \Sigma}_{yx}\mathbf{R}^t \left[\boldsymbol{R\Sigma}_{xx}\boldsymbol{R}^t\right]^{-1}
   \boldsymbol{R\Sigma}_{xy}\mathbf{Q}^t \nonumber \\
 &= \boldsymbol{Q\Sigma}_{yy}\mathbf{Q}^t - 
-  \boldsymbol{Q \Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\mathbf{Q}^t \nonumber \\
+  \boldsymbol{Q \Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\mathbf{Q}^t \\
 &= \mathbf{Q}\left[\boldsymbol{\Sigma}_{yy} -
-  \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\right]\mathbf{Q}^{t} \nonumber \\
-&= \mathbf{Q} \boldsymbol{\Sigma}_{y|x}\mathbf{Q}^t
+  \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\right]\mathbf{Q}^{t}
+= \mathbf{Q} \boldsymbol{\Sigma}_{y|x}\mathbf{Q}^t
   \end{aligned}
   \]
 \item[Coefficient of Determination]
@@ -338,8 +353,8 @@ The coefficient of determination matrix \eqref{eq:latent-model} is, \[
   &=\mathbf{Q}^t
   \boldsymbol{\Sigma}_{yx}\mathbf{R}^t \left(\mathbf{R}\boldsymbol{\Sigma}_{xx}\mathbf{R}^t\right)^{-1}
   \mathbf{R}\boldsymbol{\Sigma}_{xy}\mathbf{Q}^t \left(\mathbf{Q} \boldsymbol{\Sigma}_{yy}^{-1} \mathbf{Q}^t\right) \nonumber \\
-  &=\mathbf{Q}^t\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\right]\mathbf{Q} \\
-  &= \mathbf{Q}\boldsymbol{\rho}_{Y}^2 \mathbf{Q}^t
+  &=\mathbf{Q}^t\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\right]\mathbf{Q}
+  = \mathbf{Q}\boldsymbol{\rho}_{Y}^2 \mathbf{Q}^t
   \end{aligned}
   \]
 \end{description}
@@ -387,14 +402,9 @@ variables.
 In order to construct a fully specified and unrestricted covariance
 matrix of \(\mathbf{z}\) and \(\mathbf{w}\) for the model in equation
 \eqref{eq:model3}, we need to identify \(1/2 (p+m)(p+m+1)\) unknown
-parameters. {\color{red}However, \(\Sigma_{zz}\) is a diagonal matrix of
-eigenvalues of \(\Sigma_{xx}\), hence the number of parameters may be
-reduced by \(1/2p(p-1)\) parameters. In addition, the covariances of
-\(\mathbf{z}\) that are not relevant for \(\mathbf{w}\) will be zero.
-This further reduces the number of unknown parameters.} For the purpose
-of simulation, we implement some assumptions to re-parameterize and
-simplify the model. This enables us to construct a wide range of model
-properties from only few key parameters.
+parameters. For the purpose of simulation, we implement some assumptions
+to re-parameterize and simplify the model. This enables us to construct
+a wide range of model properties from only few key parameters.
 
 \begin{description}
 \tightlist
@@ -600,8 +610,8 @@ predictor components of \(\mathbf{x}\)) have non-zero covariance with
 \(w_1\) (first latent component of response \(\mathbf{y}\)). In the
 similar manner other non-zero covariances are self-explanatory.
 
-\begin{figure}
-\subfloat[Relevant Position\label{fig:cov-plot-print1}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print2}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print3}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print}
+\begin{figure}[!htb]
+\subfloat[Relevant Position\label{fig:cov-plot-print1}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print2}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print3}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print}
 \end{figure}
 
 In order to simulate predictor variables \((\mathbf{x})\), we construct
@@ -631,9 +641,9 @@ any responses before rotation, however, the \(x_{8}, x_{10}\) predictors
 become relevant after rotation keeping \(x_{7}\) and \(x_{9}\) still
 irrelevant.
 
-\begin{figure}
+\begin{figure}[!htb]
 
-{\centering \subfloat[Before Rotation\label{fig:simulated-data1}]{\includegraphics[width=0.45\linewidth]{Simrel-M_files/figure-latex/simulated-data-1} }\subfloat[After Rotation\label{fig:simulated-data2}]{\includegraphics[width=0.45\linewidth]{Simrel-M_files/figure-latex/simulated-data-2} }
+{\centering \subfloat[Before Rotation\label{fig:simulated-data1}]{\includegraphics[width=0.45\linewidth]{images/png/simulated-data-1} }\subfloat[After Rotation\label{fig:simulated-data2}]{\includegraphics[width=0.45\linewidth]{images/png/simulated-data-2} }
 
 }
 
@@ -736,7 +746,13 @@ component \(w_2\) and predictor component \(z_3\) was relevant for
 response component \(w_3\). In addition, following the discussion about
 \protect\hyperlink{rotation-of-response-space}{rotation of response
 space}, \(w_1\) was rotated together with \(w_4\) and \(w_2\) was
-rotated together with \(w_5\).
+rotated together with \(w_5\). Figure \ref{fig:cov-plot-print-1}
+visualize the covariance structrue and relationship between the response
+and predictor variables for first design.
+
+\begin{figure}[!htb]
+\subfloat[Relevant Position\label{fig:cov-plot-print-11}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-1-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print-12}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-1-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print-13}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-1-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print-1}
+\end{figure}
 
 \begin{longtable}[]{@{}rrrrr@{}}
 \caption{\label{tab:parameter-settings} Parameter setting of simulated data
@@ -972,8 +988,8 @@ of the estimation methods is indifferent to its effect. Since all the
 methods, except OLS, are based on shrinking of estimates, they are less
 influenced by the multicollinearity problem.
 
-\begin{figure}[H]
-\includegraphics[width=1\linewidth]{Simrel-M_files/figure-latex/Average-Prediction-Plot-1} \caption{Minimum of Average Prediction Error}\label{fig:Average-Prediction-Plot}
+\begin{figure}[!htb]
+\includegraphics[width=1\linewidth]{images/png/pred-plot} \caption{Minimum of Average Prediction Error}\label{fig:Average-Prediction-Plot}
 \end{figure}
 
 The analysis presented in Figure \ref{fig:Average-Prediction-Plot} has
@@ -1018,7 +1034,7 @@ which is equivalent to R syntax
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.95\linewidth]{_bookdown_files/AppSimulatr} 
+{\centering \includegraphics[width=0.95\linewidth]{images/AppSimulatr} 
 
 }
 
@@ -1079,9 +1095,6 @@ versitle simulation tool like \texttt{simrel-m} can play an important
 role. \citet{gangsei2016theoretical}; \citet{gangsei2016linear}; and
 \citet{saebo2015simrel} are some examples where the univariate and
 bivariate form of \texttt{simrel} have been used for such purposes.
-
-\section*{References}\label{references}
-\addcontentsline{toc}{section}{References}
 
 \printendnotes
 

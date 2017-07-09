@@ -135,7 +135,7 @@ plot.covdf <- function(covdf.obj, type) {
 }
 
 ## ---- Observation Plot ------------------------------
-get_obsplot <- function(sim.obj, before.rot = TRUE) {
+get_obsplot <- function(sim.obj, before.rot = TRUE, point.size=2, base.size = 12) {
   
   ## Set X and Y names
   xvar.name <- if (before.rot) "Z" else "X"
@@ -186,11 +186,17 @@ get_obsplot <- function(sim.obj, before.rot = TRUE) {
   dff$RelevantBefore <- factor(dff$RelevantBefore, levels = unique(sort(dff$RelevantBefore, decreasing = T)))
   
   ## Plottings
-  ThePlot <- ggplot(dff, aes_string("Variables", "Obs.Value", fill = fill_colour_aes)) + 
-    geom_violin(scale = "width", trim = FALSE, alpha = 0.15, color = NA) +
-    geom_point(position = position_jitter(width = 0.1), shape = 21, size = rel(3), alpha = 0.5) +
+  ThePlot <- ggplot(dff, aes_string(
+    x = "Variables", 
+    y = "Obs.Value", 
+    fill = fill_colour_aes,
+    color = fill_colour_aes)) + 
+    geom_violin(scale = "width", trim = FALSE, 
+                alpha = 0.15, color = NA) +
+    geom_point(position = position_jitter(width = 0.1),
+               shape = 16, size = rel(point.size), alpha = 0.5) +
     labs(x = "", y = "") +
-    theme_gray(base_size = 20) +
+    theme_gray(base_size = base.size) +
     theme(strip.text.x = element_text(angle = 90, hjust = 0.5, vjust = 1), 
           legend.position = "top") +
     scale_fill_brewer("Relevant for:", palette = "Set1") +

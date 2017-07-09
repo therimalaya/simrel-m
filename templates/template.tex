@@ -28,12 +28,6 @@
 % \usepackage{pgf, tikz}
 % \usepackage{amsthm}
 
-% Linespacing
-$if(linespacing)$
-\usepackage{setspace}
-\setstretch{$linespacing$}
-$endif$
-
 % Longtable
 $if(longtable)$
 \usepackage{longtable}
@@ -41,11 +35,13 @@ $endif$
 
 % %% Custom macros
 \providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+}
 
 %% Custom Lengths
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{9pt}
+% \setlength{\parindent}{0pt}
+% \setlength{\parskip}{9pt}
 %% ------ My Customizations ends --------
 
 % Update article type if known
@@ -73,6 +69,7 @@ $if(address.email)$\corremail{$address.email$}$endif$
 
 $if(runningAuthor)$\runningauthor{$runningAuthor$ et al.}$endif$
 
+$if(fundingInfo)$\fundinginfo{$fundingInfo$}$endif$
 % 
 % \author[1\authfn{1}]{Author One PhD}
 % \author[2\authfn{1}]{Author A.~Two MD}
@@ -92,6 +89,16 @@ $if(runningAuthor)$\runningauthor{$runningAuthor$ et al.}$endif$
 
 % Include the name of the author that should appear in the running header
 
+% Linespacing
+$if(linespacing)$
+\usepackage[nodisplayskipstretch]{setspace}
+$endif$
+
+% Floating figures and tables at the end of document
+$if(endfloat)$
+\usepackage[nolists, tablesfirst]{endfloat}
+$endif$
+
 % Pandoc header
 $for(header-includes)$
 $header-includes$
@@ -106,6 +113,11 @@ $abstract$
 % Please include a maximum of seven keywords
 $if(keywords)$\keywords{$keywords$}$endif$
 \end{abstract}
+
+% Linespacing
+$if(linespacing)$
+\setstretch{$linespacing$}
+$endif$
 
 $body$
 
