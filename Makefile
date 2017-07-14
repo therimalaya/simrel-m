@@ -13,7 +13,7 @@ htmlbook:
 	Rscript --quiet _render.R "bookdown::html_book"
 
 html:
-	Rscript --quiet _render.R "bookdown::html_document2"
+	Rscript --quiet _render.R "bookdown::html_document2" && mv main.html index.html
 
 serve:
 	browser-sync start --server $(DIR) --files $(DIR) --no-open --no-ui
