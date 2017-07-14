@@ -1,0 +1,8 @@
+*.spl
+*.ttt
+.DS_*
+*.fff
+MatlabServer.m
+*.class
+.Rproj.user
+scripts/output/unsync

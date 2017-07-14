@@ -1,16 +1,3 @@
----
-output: 
-  bookdown::html_document2:
-    fig_caption: yes
-    theme: yeti
-    number_sections: no
-    toc: no
-    css: "custom.css"
-bibliography: "../ref-db.bib"
-biblio-style: "apalike"
-link-citations: true
----
-
 # Implementation #
 
 ```{r KnitrSetup, include=FALSE}
@@ -29,6 +16,8 @@ if (evl) {
   load('output/pred-err.rdata')
   setwd(owd)
 }
+library(knitr)
+library(kableExtra)
 ```
 
 This section demonstrates an application of `simrel-m` in order to compare different estimation methods on the basis of prediction error. For the comparison, we have considered four well established estimation methods.
@@ -73,38 +62,20 @@ plusTheme <- theme_grey(base_size = 6.5) +
         panel.grid = element_line(size = 0.03),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
         axis.ticks = element_line(size = 0.05))
-plt11 <- plt11 + plusTheme
-plt12 <- plt12 + plusTheme
-plt13 <- plt13 + plusTheme
+(plt11 <- plt11 + plusTheme)
+(plt12 <- plt12 + plusTheme)
+(plt13 <- plt13 + plusTheme)
 
 ## Save TIFF photos
-if (!file.exists("images/tiff/cov-plot-print-1-1.tiff")) {
-  savePlot(plt11, filename = "images/tiff/cov-plot-print-1-1.tiff")
+if (!file.exists("images/cov-plot-print-1-1.tiff")) {
+  savePlot(plt11, filename = "images/cov-plot-print-1-1.tiff")
 }
-if (!file.exists("images/tiff/cov-plot-print-1-2.tiff")) {
-  savePlot(plt12, filename = "images/tiff/cov-plot-print-1-2.tiff")
+if (!file.exists("images/cov-plot-print-1-2.tiff")) {
+  savePlot(plt12, filename = "images/cov-plot-print-1-2.tiff")
 }
-if (!file.exists("images/tiff/cov-plot-print-1-3.tiff")) {
-  savePlot(plt13, filename = "images/tiff/cov-plot-print-1-3.tiff")
+if (!file.exists("images/cov-plot-print-1-3.tiff")) {
+  savePlot(plt13, filename = "images/cov-plot-print-1-3.tiff")
 }
-
-## Save png photos
-if (!file.exists("images/png/cov-plot-print-1-1.png")) {
-  savePlot(plt11, filename = "images/png/cov-plot-print-1-1.png", dev = "png")
-}
-if (!file.exists("images/png/cov-plot-print-1-2.png")) {
-  savePlot(plt12, filename = "images/png/cov-plot-print-1-2.png", dev = "png")
-}
-if (!file.exists("images/png/cov-plot-print-1-3.png")) {
-  savePlot(plt13, filename = "images/png/cov-plot-print-1-3.png", dev = "png")
-}
-
-## Printing pictures
-knitr::include_graphics(c(
-  'images/png/cov-plot-print-1-1.png', 
-  'images/png/cov-plot-print-1-2.png', 
-  'images/png/cov-plot-print-1-3.png'
-))
 ```
 
 
@@ -118,13 +89,19 @@ dimnames(design_table) <- list(
   paste0("Design", 1:4))
 ```
 
-```{r design-table-print}
-pander::pander(
-  design_table, type = "rmarkdown", 
-  split.cells = c(40, rep(30, 4)), split.tables = Inf,
-  justify = paste(rep("r", ncol(design_table) + 1), collapse = ""),
-  caption = "(\\#tab:parameter-settings) Parameter setting of simulated data for model comparison"
-)
+```{r parameter-settings}
+if (!knitr:::is_html_output()) {
+knitr::kable(design_table, escape = FALSE, booktabs = TRUE,
+      caption = "Parameter setting of simulated data for model comparison") %>% 
+  kable_styling(full_width = TRUE, latex_options = "hold_position")
+} else {
+  pander::pander(
+    design_table, type = "rmarkdown",
+    split.cells = c(40, rep(30, 4)), split.tables = Inf,
+    justify = paste(rep("r", ncol(design_table) + 1), collapse = ""),
+    caption = "(\\#tab:parameter-settings) Parameter setting of simulated data for model comparison"
+  )
+}
 ```
 
 For each method, an estimate of test prediction error was computed as,
@@ -149,14 +126,13 @@ avg_pred_err <- myData %>%
   rename(pred_err = y, upper = ymax, lower = ymin)
 ```
 
-<center>
 ```{r minimum-average-prediction}
 avgPredErr <- avg_pred_err %>%
   group_by(Model, design) %>%
   summarise(
     comp = comp[which.min(pred_err)],
     pred_err = min(pred_err),
-    label = paste0("(", comp, ", ", round(pred_err, 2), ")")
+    label = paste0("(", comp, ", ", format(round(pred_err, 2), nsmall = 2), ")")
   )
 avgPredErr_lbl <- avgPredErr %>% 
   select(-comp, -pred_err) %>%
@@ -173,17 +149,35 @@ avgPredErr_idx <- avgPredErr %>%
   as.matrix() %>% 
   which(arr.ind = TRUE)
 avgPredErr_idx[, "col"] <- avgPredErr_idx[, "col"] + 1
-
-avgPredErr_lbl %>% 
-  as.data.frame() %>% 
-  pander(emphasize.strong.cells = avgPredErr_idx,
-         emphasize.verbatim.cols = 2:ncol(.),
-         emphasize.italics.cells = avgPredErr_idx,
-         emphasize.italics.cols = 1,
-         split.cells = Inf, justify = "lcccc",
-         caption = "(\\#tab:min-error) Minimum average prediction error (number of components corresponding to minimum prediction error, minimum prediction error) (For $Y\\text{env}$, the number of response components is given)")
 ```
-</center>
+
+```{r min-error}
+if (!knitr:::is_html_output()) {
+tbl <- as.data.frame(purrr::map_at(avgPredErr_lbl, 2:5, ~paste0("\\texttt{", .x, "}")))
+kable(tbl, booktabs = TRUE, align = "lcccc", escape = FALSE,
+      caption = "Minimum average prediction error 
+      (number of components corresponding to minimum prediction error, minimum prediction error) 
+      (For $Y\\text{env}$, the number of response components is given)") %>% 
+  kable_styling(latex_options = 'striped', full_width = FALSE)%>%
+  column_spec(1, bold = TRUE, width = "10em") %>% 
+  column_spec(2, width = "7em") %>% 
+  column_spec(3, width = "7em") %>% 
+  column_spec(4, width = "7em") %>% 
+  column_spec(5, width = "7em") %>% 
+  row_spec(0, bold = TRUE)
+} else {
+  avgPredErr_lbl %>%
+    as.data.frame() %>%
+    pander(emphasize.strong.cells = avgPredErr_idx,
+           emphasize.verbatim.cols = 2:ncol(.),
+           emphasize.italics.cells = avgPredErr_idx,
+           emphasize.italics.cols = 1, justify = "lcccc",
+           caption = "(\\#tab:min-error) Minimum average prediction error 
+           (number of components corresponding to minimum prediction error, minimum prediction error) 
+           (For $Y\\text{env}$, the number of response components is given)")
+}
+```
+
 
 ```{r}
 topBest <- avgPredErr %>% 
@@ -198,7 +192,7 @@ topBest <- avgPredErr %>%
 
 Table \@ref(tab:min-error) shows that the simulteneous envelope has prediction error of `r paste(round(topBest[["pred_err"]][1:2], 2), collapse = " and ")` in design 1 (with `r topBest[["comp"]][1]` components) and design 2 (with `r topBest[["comp"]][2]` components), respectively, which is smaller than other methods. However the method was not able to show the same performance in design 3 and design 4. The PCR model has the smallest prediction error (`r round(topBest[["pred_err"]][3], 2)`) from `r topBest[["comp"]][3]` components in design 3 and Canonically Powered PLS has minimum prediction error (`r round(topBest[["pred_err"]][4], 2)`) from `r topBest[["comp"]][4]` components in design 4. In design 3, we can also see that the Canonical PLS method has second best performance with only three components. The number of components vary accross different replicated dataset but the component corresponding to minimum prediction error is discussed here. A detailed picture of prediction error for each estimation method obtained for each additional component is shown in Figure \@ref(fig:Average-Prediction-Plot). Although designs 2 and 4 have higher levels of multicollinearity, the performance of the estimation methods is indifferent to its effect. Since all the methods, except OLS, are based on shrinking of estimates, they are less influenced by the multicollinearity problem.
 
-```{r Average-Prediction-Plot, fig.cap="Minimum of Average Prediction Error", fig.asp=0.7, out.width='100%', fig.width=8, fig.pos='!htb', dpi=800}
+```{r Average-Prediction-Plot, fig.cap="Minimum of Average Prediction Error", fig.asp=0.7, out.width='100%', fig.width=6, fig.pos='!htb', dpi=800}
 plot_label <- avg_pred_err %>% 
   ungroup() %>% 
   select(R2, gamma, design) %>% 
@@ -240,15 +234,11 @@ plt <- avg_pred_err %>%
           sub = "Averaged over 20 replicated Datasets of same properties") +
   guides(color = guide_legend(nrow = 1), 
          fill = guide_legend(nrow = 1))
-if (!file.exists("images/tiff/pred-plot.tiff")) {
-  ggsave(plt, filename = "images/tiff/pred-plot.tiff", device = "tiff",
+if (!file.exists("images/pred-plot.tiff")) {
+  ggsave(plt, filename = "images/pred-plot.tiff", device = "tiff",
        width = 16.7, units = "cm", dpi = 800, height = 11.7)
 }
-if (!file.exists("images/png/pred-plot.png")) {
-  ggsave(plt, filename = "images/png/pred-plot.png", device = "png",
-       width = 16.7, units = "cm", dpi = 800, height = 11.7)
-}
-knitr::include_graphics("images/png/pred-plot.png")
+plot(plt)
 ```
 
 The analysis presented in Figure \@ref(fig:Average-Prediction-Plot) has addressed some questions such as how methods works when there exist a true reduced dimension in response space, but also arised other questions like why they perform differently. For example, what is the reason for the decreasing relative performance of the simultaneous envelope method as the $\rho^2$ values are reduced? Does this depend on the dimensions and spheric shape of the $\mathbf{y}$ envelopes? Since, the example is merely intended as a demonstration of how `simrel-m` can be used in scientific study, a more elaborative study would be necessary to answer such questions, but for this purpose `simrel-m` would be a powerful tool.

@@ -2,34 +2,38 @@
 site: bookdown::bookdown_site
 title: 'A tool for simulating multi-response linear model data'
 date: "`r Sys.Date()`"
-authors:
-  - index: 1
-    name: 'Raju Rimal'
-    affil: 'Faculty of Chemistry and Bioinformatics, Norwegian University of Life Sciences, \AA s, Norway'
-  - name: 'Trygve Alm\o y'
-  - index: 2
-    name: 'Solve S\ae b\o'
-    affil: 'Prorector, Norwegian University of Life Sciences, \AA s, Norway'
+# Author Information
+author:
+  - name: Raju Rimal
+    email: raju.rimal@nmbu.no
+    affiliation: KBM
+    footnote: Corresponding Author
+  - name: Trygve Almøy
+    email: trygve.almoy@nmbu.no
+    affiliation: KBM
+  - name: Solve Sæbø
+    email: solve.sabo@nmbu.no
+    affiliation: NMBU
 address:
-  corresp: 'Raju Rimal, Faculty of Chemistry and Bioinformatics, Norwegian University of Life Sciences, 1430, \AA s, Norway'
-  email: 'raju.rimal@nmbu.no'
-runningAuthor: Raju Rimal
-endfloat: no
-abbrev: |
-  PLS1, Partial Least Squares with individual response modeling; PLS2, Partial Least Squares with all response modeling together; PCR, Principal Component Regression; CPPLS, Cannonically Powered Partial Least Squares; CPLS, Cannonical Partial Least Squares; xenv, envelope in predictor(x) space; yend, envelope in response(y) space; senv, simultaneous envelope in both predictor and response space
-bibliography: ['ref-db.bib', 'packages.bib']
-classoption: 'num-refs'
-link-citations: yes
-longtable: yes
-natbib: yes
-linespacing: 1.25
-monofont: "Source Code Pro"
+  - code: KBM
+    address: Faculty of Chemistry and Bioinformatics, Norwegian University of Life Sciences, Ås, Norway
+  - code: NMBU
+    address: Prorector, Norwegian University of Life Sciences, Ås, Norway
+# Template Options
+classoption: ['3p', 'times']
+monofont: 'sourcecodepro'
 monofontoptions: "Scale=0.7"
+colorlinks: true
+# Bibliography Setup
+bibliography: ['ref-db.bib', 'packages.bib']
+biblio-title: References
+biblio-style: elsarticle-harv
+# Extra Information
 github-repo: therimalaya/simrel-m
-fundingInfo: "This research is funded by Norwegian University of Life Sciences, Ås, Norway."
 url: 'http\://therimalaya.github.io/simrel-m'
 knit: 'bookdown::render_book'
-keywords: '`simrel` package in r, data simulation, linear model, `simrel-m`'
+# Abstract and Keywords
+keywords: ['`simrel` package in r, data simulation, linear model, `simrel-m`']
 abstract: |
   \normalsize Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such "big-data". Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present `simrel-m`, which is a versatile and transparent tool for simulating linear model data with an extensive range of adjustable properties.
   The method is based on the concept of relevant components [@helland1994comparison], which is equivalent to the envelope model by Dennis Cook. It is a multi-response extension of R-package `simrel` which is availiable in R-package repository CRAN, and as `simrel` the new approach is essentially based on random rotations of latent relevant components to obtain a predictor matrix $\mathbf{X}$, but in addition we introduce random rotations of latent components spanning a response space in order to obtain a multivariate response matrix $\mathbf{Y}$.

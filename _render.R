@@ -14,10 +14,10 @@ owd <- setwd(dirname(src))
 # provide default formats if necessary
 if (length(formats) == 0) {
   formats <- c(
-    'manuscript::manuscript',
-    # 'bookdown::pdf_book',
+    'bookdown::pdf_book',
+    'bookdown::gitbook',
     'bookdown::epub_book',
-    'bookdown::gitbook'
+    'bookdown::html_document2'
     # 'bookdown::tufte_html_book'
   )
 }
@@ -25,7 +25,8 @@ if (length(formats) == 0) {
 # render the book to all formats unless they are specified via command-line args
 for (fmt in formats) {
   cmd <- sprintf("bookdown::render_book('index.Rmd', '%s', quiet = %s)",
-                fmt, quiet)
+                 fmt, quiet)
+  
   res <- bookdown:::Rscript(c('-e', shQuote(cmd)))
   if (res != 0) stop('Failed to compile the book to ', fmt)
 }

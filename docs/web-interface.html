@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-07-09">
+<meta name="date" content="2017-07-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -121,29 +121,9 @@ Figure 5: Application interface of <code>simulatr</code>. (a) Seed and simulatio
 <p>The application not only allows users to simulate data, but also gives some insight into simulated data properties. The example used in the screenshot has simulated 200 training and 50 test samples with 15 predictor and 4 response variables. There are two latent variables (response components) that completely span the informative response space. Five predictor variables are relevant for the first response component and explains 80 percent of the variation in <span class="math inline">\(\mathbf{x}\)</span>. In addition, the first and second predictor components span the same space as spanned by these five relevant predictors. Similarly, another set of four predictor variables are relevant for second response component and explains 70 percent of the variation. Here, third, fourth and sixth predictor components span the same space as spanned by these four relevant predictors. Further, the first response component is rotated together with a normally distributed random vector to obtain first and third response variable and second response components are rotated together with another normally distributed random vector to obtain second and fourth response variable.</p>
 <p>Section (c) in Figure <a href="web-interface.html#fig:AppSimulatr">5</a> contains three plots – a) true regression coefficients b) relevant components and c) estimated relevant components. In the first plot we can see that predictor variables (1, 2, 8, 9 and 13) are relevant for the first and third response variable by their non-zero coefficients, whereas predictor variables (3, 4, 6 and 15) are relevant for the second and fourth response variable. The second plot shows the covariances between the response components and the predictor components along with the corresponding eigenvalues in the background (bar plot). In the plot the absolute value of the covariances after scaling with the largest covariance are shown. As in our parameter setting, the plot shows that first and second predictor components have non-zero covariance with first response component and third, fourth and sixth predictor components have non-zero covariance with second response component. The third plot is the estimated covariance between predictor components and the response variables, for the simulated data. Since the first and third response components are rotated together, in the plot, the covariance between predictor components and first and third response variable is following similar pattern. This also suggests that the predictor components which were relevant for first response components gets relevant for first and third response variables after rotation.</p>
 <p>Along with these main sections, section (d) in the figure contains additional analysis performed with the simulated data such as its estimation with different methods. This section is intended for educational purposes to show how changing the data properties influences the performances of different estimation and prediction methods.</p>
-<p>Many scientific studies <span class="citation">(Helland et al. <a href="#ref-helland2012near">2012</a>; Sæbø et al. <a href="#ref-saebo2008lpls">2008</a>; R. D. Cook and Zhang <a href="#ref-cook2015simultaneous">2015</a><a href="#ref-cook2015simultaneous">b</a>)</span> are using simulated data in order to compare their findings with others or assess its properties. In many of these situations, a user-friendly and versitle simulation tool like <code>simrel-m</code> can play an important role. <span class="citation">L. E. Gangsei, Almøy, and Sæbø (<a href="#ref-gangsei2016theoretical">2016</a>)</span>; <span class="citation">L. Gangsei, Almøy, and Sæbø (<a href="#ref-gangsei2016linear">2016</a>)</span>; and <span class="citation">Sæbø, Almøy, and Helland (<a href="#ref-saebo2015simrel">2015</a>)</span> are some examples where the univariate and bivariate form of <code>simrel</code> have been used for such purposes.</p>
+<p>Many scientific studies <span class="citation">(Helland et al. 2012; Sæbø et al. 2008; R. Dennis Cook and Zhang 2015)</span> are using simulated data in order to compare their findings with others or assess its properties. In many of these situations, a user-friendly and versitle simulation tool like <code>simrel-m</code> can play an important role. <span class="citation">L. E. Gangsei, Almøy, and Sæbø (2016)</span>; <span class="citation">L. Gangsei, Almøy, and Sæbø (2016)</span>; and <span class="citation">Sæbø, Almøy, and Helland (2015)</span> are some examples where the univariate and bivariate form of <code>simrel</code> have been used for such purposes.</p>
 
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-helland2012near">
-<p>Helland, Inge S, Solve Saebø, Ha Tjelmeland, and others. 2012. “Near Optimal Prediction from Relevant Components.” <em>Scandinavian Journal of Statistics</em> 39 (4). Wiley Online Library: 695–713.</p>
-</div>
-<div id="ref-saebo2008lpls">
-<p>Sæbø, Solve, Trygve Almøy, Arnar Flatberg, Are H Aastveit, and Harald Martens. 2008. “LPLS-Regression: A Method for Prediction and Classification Under the Influence of Background Information on Predictor Variables.” <em>Chemometrics and Intelligent Laboratory Systems</em> 91 (2). Elsevier: 121–32.</p>
-</div>
-<div id="ref-cook2015simultaneous">
-<p>Cook, R Dennis, and Xin Zhang. 2015b. “Simultaneous Envelopes for Multivariate Linear Regression.” <em>Technometrics</em> 57 (1). Taylor &amp; Francis: 11–25.</p>
-</div>
-<div id="ref-gangsei2016theoretical">
-<p>Gangsei, Lars Erik, Trygve Almøy, and Solve Sæbø. 2016. “Theoretical Evaluation of Prediction Error in Linear Regression with a Bivariate Response Variable Containing Missing Data.” <em>Communications in Statistics-Theory and Methods</em>, no. just-accepted. Taylor &amp; Francis.</p>
-</div>
-<div id="ref-gangsei2016linear">
-<p>Gangsei, LE, T Almøy, and S Sæbø. 2016. “Linear Regression with Bivariate Response Variable Containing Missing Data.” <em>An Empirical Bayes Strategy to Increase Prediction Precision. Submitted Manuscript to Communications in Statistics–Simulation and Computation</em>.</p>
-</div>
-<div id="ref-saebo2015simrel">
-<p>Sæbø, Solve, Trygve Almøy, and Inge S Helland. 2015. “Simrel – a Versatile Tool for Linear Model Data Simulation Based on the Concept of a Relevant Subspace and Relevant Predictors.” <em>Chemometrics and Intelligent Laboratory Systems</em>. Elsevier.</p>
-</div>
+<!-- # References {-} -->
 </div>
             </section>
 

@@ -1,16 +1,19 @@
 DIR="docs"
 
-manuscript:
-	Rscript --quiet _render.R "manuscript::manuscript"
+pdf:
+	Rscript --quiet _render.R "bookdown::pdf_book"
 
 gitbook:
 	Rscript --quiet _render.R "bookdown::gitbook"
 
-pdf:
-	Rscript --quiet _render.R "bookdown::pdf_book"
-
 tufte:
 	Rscript --quiet _render.R "bookdown::tufte_html_book"
+
+htmlbook:
+	Rscript --quiet _render.R "bookdown::html_book"
+
+html:
+	Rscript --quiet _render.R "bookdown::html_document2"
 
 serve:
 	browser-sync start --server $(DIR) --files $(DIR) --no-open --no-ui

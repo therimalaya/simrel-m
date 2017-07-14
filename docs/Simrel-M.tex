@@ -1,146 +1,205 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% A template for Wiley article submissions.
-% Developed by Overleaf. 
-%
-% Please note that whilst this template provides a 
-% preview of the typeset manuscript for submission, it 
-% will not necessarily be the final publication layout.
-%
-% Usage notes:
-% The "blind" option will make anonymous all author, affiliation, correspondence and funding information.
-% Use "num-refs" option for numerical citation and references style.
-% Use "alpha-refs" option for author-year citation and references style.
+%review=doublespace preprint=single 5p=2 column
+\documentclass[3p,times]{elsarticle}
 
-\documentclass[num-refs]{wiley-article}
-% \documentclass[blind,alpha-refs]{wiley-article}
-
-% Add additional packages here if required
-\usepackage{siunitx}
-
-%% ---- My Customizations --------------
+%% add packages %%
+%% ------------ %%
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{caption}
 \usepackage{subfig}
+\usepackage{amssymb, amsmath}
+\usepackage[inline]{enumitem}
 \usepackage{float}
-% \usepackage{amssymb, amsmath}
-% \usepackage[utf8]{inputenc}
-% \usepackage[inline]{enumitem}
-% \usepackage{pgf, tikz}
-% \usepackage{amsthm}
+\usepackage{tabularx}
+\usepackage[dvipsnames, table]{xcolor}
+\usepackage{ifxetex, ifluatex}
+\usepackage{fixltx2e}
+\usepackage[unicode=true, colorlinks]{hyperref}
+\usepackage{cleveref}
+%% ------------ %%
 
-% Longtable
+%% Conditional Packages %%
+%% -------------------- %%
+
+
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+
+
+\else % if luatex or xelatex
+  \usepackage{fontspec}
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+
+
+
+    \setmonofont{sourcecodepro}
+
+
+\fi
+
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+
+
+
+
+
+
 \usepackage{longtable}
 
-% %% Custom macros
+
+
+
+% Pandoc toggle for numbering sections (defaults to be off)
+\setcounter{secnumdepth}{5}
+
+%% Use Landscape Pages
+
+
+\usepackage{lmodern}
+
+%% -------------------- %%
+
+%% Create and Provide some customizations %%
+%% -------------------------------------- %%
 \providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}
-  \setlength{\parskip}{0pt}
-}
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+  
+%% Custom macros
+\newtheorem{mydef}{Definition}
+\newcommand{\bs}[1]{\ensuremath{\boldsymbol{#1}}}
+\newcommand{\diag}[1]{\mathrm{diag}\left(#1\right)}
+\newcommand{\seq}[3][1]{\ensuremath{#2_{#1},\ldots,\,#2_{#3}}}
+\newcommand{\note}[1]{\marginpar{\scriptsize\tt{\color{RoyalBlue}#1}}}
+\newcommand{\edit}[1]{{\color{OrangeRed} #1}}
 
-%% Custom Lengths
+% set some lengths
 % \setlength{\parindent}{0pt}
-% \setlength{\parskip}{9pt}
-%% ------ My Customizations ends --------
+% \setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
 
-% Update article type if known
-\papertype{Original Article}
-% Include section in journal if known, otherwise delete
-\paperfield{Journal Section}
+%% Hyperref color setup
+\AtBeginDocument{%
+  %% Define Colors
+  \newcommand\myshade{80}
+  \colorlet{mylinkcolor}{violet!\myshade!black}
+  \colorlet{mycitecolor}{YellowOrange!\myshade!black}
+  \colorlet{myurlcolor}{Aquamarine!\myshade!black}
 
-\title{A tool for simulating multi-response linear model data}
+  \hypersetup{
+    breaklinks = true,
+    bookmarks  = true,
+    pdfauthor  = {},
+    pdftitle   = {A tool for simulating multi-response linear model data},
+    linkcolor  = mylinkcolor,
+    citecolor  = mycitecolor,
+    urlcolor   = myurlcolor,
+    colorlinks = true,
+  }
+}
+\urlstyle{same}  % don't use monospace font for urls
+%% -------------------------------------- %%
 
-% List abbreviations here, if any. Please note that it is preferred that abbreviations be defined at the first instance they appear in the text, rather than creating an abbreviations list.
-% \abbrevs{ABC, a black cat; DEF, doesn't ever fret; GHI, goes home immediately.}
- \abbrevs{PLS1, Partial Least Squares with individual response modeling; PLS2,
-Partial Least Squares with all response modeling together; PCR,
-Principal Component Regression; CPPLS, Cannonically Powered Partial
-Least Squares; CPLS, Cannonical Partial Least Squares; xenv, envelope in
-predictor(x) space; yend, envelope in response(y) space; senv,
-simultaneous envelope in both predictor and response space} 
+%% Customizations %%
+%% -------------- %%
+ % turn line numbering on
 
-% Include full author names and degrees, when required by the journal.
-% Use the \authfn to add symbols for additional footnotes and present addresses, if any. Usually start with 1 for notes about author contributions; then continuing with 2 etc if any author has a different present address.
-\author[1]{Raju Rimal}
-\affil[1]{Faculty of Chemistry and Bioinformatics, Norwegian University of Life
-Sciences, \AA s, Norway}
+%% -------------- %%
 
+%% Configure Bibliography %%
+%% ---------------------- %%
+\bibliographystyle{elsarticle-harv}
+\biboptions{square}
 
-\author[1]{Trygve Alm\o y}
+% \makeatletter
+% \providecommand{\doi}[1]{%
+%   \begingroup
+%     \let\bibinfo\@secondoftwo
+%     \urlstyle{rm}%
+%     \href{http://dx.doi.org/#1}{%
+%       doi:\discretionary{}{}{}%
+%       \nolinkurl{#1}%
+%     }%
+%   \endgroup
+% }
+% \makeatother
 
-
-
-\author[2]{Solve S\ae b\o}
-\affil[2]{Prorector, Norwegian University of Life Sciences, \AA s, Norway}
-
-
-
-\corraddress{Raju Rimal, Faculty of Chemistry and Bioinformatics, Norwegian
-University of Life Sciences, 1430, \AA s, Norway}
-\corremail{raju.rimal@nmbu.no}
-
-\runningauthor{Raju Rimal et al.}
-
-\fundinginfo{This research is funded by Norwegian University of Life Sciences, Ås,
-Norway.}
 % 
-% \author[1\authfn{1}]{Author One PhD}
-% \author[2\authfn{1}]{Author A.~Two MD}
-% \author[2\authfn{2}\authfn{1}]{Author Three PhD}
-% \author[2]{Author B.~Four}
-% 
-% \contrib[\authfn{1}]{Equally contributing authors.}
-% 
-% % Include full affiliation details for all authors
-% \affil[1]{Department, Institution, City, State or Province, Postal Code, Country}
-% \affil[2]{Department, Institution, City, State or Province, Postal Code, Country}
-% 
-% \presentadd[\authfn{2}]{Department, Institution, City, State or Province, Postal Code, Country}
-% 
-% \corraddress{Author One PhD, Department, Institution, City, State or Province, Postal Code, Country}
-% \corremail{correspondingauthor@email.com}
 
-% Include the name of the author that should appear in the running header
+%% Header Includes %%
+%% --------------- %%
+%% --------------- %%
 
-% Linespacing
-\usepackage[nodisplayskipstretch]{setspace}
 
-% Floating figures and tables at the end of document
 
-% Pandoc header
-
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}{Proposition}[section]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
 \begin{document}
+%% --- Front Matter Start --- %%
+\begin{frontmatter}
 
-\maketitle
+  \title{A tool for simulating multi-response linear model data}
+  
+    \author[KBM]{Raju Rimal\corref{c1}}
+   \ead{raju.rimal@nmbu.no} 
+   \cortext[c1]{Corresponding Author}
+    \author[KBM]{Trygve Almøy}
+   \ead{trygve.almoy@nmbu.no} 
+  
+    \author[NMBU]{Solve Sæbø}
+   \ead{solve.sabo@nmbu.no} 
+  
+      \address[KBM]{Faculty of Chemistry and Bioinformatics, Norwegian University of Life
+Sciences, Ås, Norway}
+    \address[NMBU]{Prorector, Norwegian University of Life Sciences, Ås, Norway}
+  
+  \begin{abstract}
+  \normalsize Data science is generating enormous amounts of data, and new
+  and advanced analytical methods are constantly being developed to cope
+  with the challenge of extracting information from such ``big-data''.
+  Researchers often use simulated data to assess and document the
+  properties of these new methods, and in this paper we present
+  \texttt{simrel-m}, which is a versatile and transparent tool for
+  simulating linear model data with an extensive range of adjustable
+  properties. The method is based on the concept of relevant components
+  \citep{helland1994comparison}, which is equivalent to the envelope model
+  by Dennis Cook. It is a multi-response extension of R-package
+  \texttt{simrel} which is availiable in R-package repository CRAN, and as
+  \texttt{simrel} the new approach is essentially based on random
+  rotations of latent relevant components to obtain a predictor matrix
+  \(\mathbf{X}\), but in addition we introduce random rotations of latent
+  components spanning a response space in order to obtain a multivariate
+  response matrix \(\mathbf{Y}\). The properties of the linear relation
+  between \(\mathbf{X}\) and \(\mathbf{Y}\) are defined by a small set of
+  input parameters which allow versatile and adjustable simulations.
+  Sub-space rotations also allow for generating data suitable for testing
+  variable selection methods in multi-response settings. The method is
+  implemented as an update to the R-package \texttt{simrel}.
+  \end{abstract}
+   \begin{keyword} \texttt{simrel} package in r, data simulation, linear model,
+\texttt{simrel-m}\end{keyword}
 
-\begin{abstract}
-\normalsize Data science is generating enormous amounts of data, and new
-and advanced analytical methods are constantly being developed to cope
-with the challenge of extracting information from such ``big-data''.
-Researchers often use simulated data to assess and document the
-properties of these new methods, and in this paper we present
-\texttt{simrel-m}, which is a versatile and transparent tool for
-simulating linear model data with an extensive range of adjustable
-properties. The method is based on the concept of relevant components
-\citep{helland1994comparison}, which is equivalent to the envelope model
-by Dennis Cook. It is a multi-response extension of R-package
-\texttt{simrel} which is availiable in R-package repository CRAN, and as
-\texttt{simrel} the new approach is essentially based on random
-rotations of latent relevant components to obtain a predictor matrix
-\(\mathbf{X}\), but in addition we introduce random rotations of latent
-components spanning a response space in order to obtain a multivariate
-response matrix \(\mathbf{Y}\). The properties of the linear relation
-between \(\mathbf{X}\) and \(\mathbf{Y}\) are defined by a small set of
-input parameters which allow versatile and adjustable simulations.
-Sub-space rotations also allow for generating data suitable for testing
-variable selection methods in multi-response settings. The method is
-implemented as an update to the R-package \texttt{simrel}.
-% Please include a maximum of seven keywords
-\keywords{\texttt{simrel} package in r, data simulation, linear model,
-\texttt{simrel-m}}
-\end{abstract}
-
-% Linespacing
-\setstretch{1.25}
+\end{frontmatter}
 
 \section{Introduction}\label{introduction}
 
@@ -380,15 +439,14 @@ Consider a single response linear model with \(p\) predictors.
 where, \(\epsilon \sim N(0, \sigma^2)\) and \(\mathbf{x}\) are random
 predictors. Following the principal of relevant space and irrelevant
 space which are discussed extensively in \citet{helland1994comparison},
-\citet{Helland_2000}, \citet{helland2012near},
-\citet{cook2013envelopes}, \citet{saebo2015simrel} and
-\citet{helland2017}, we can assume that there exists a subspace of the
-full predictor space which is relevant for \(y\). An orthogonal space to
-this space does not contain any information about \(y\) and is
-considered as irrelevant. Here, the \(y-\)relevant subspace of
-\(\mathbf{x}\) is spanned by a subset of the principal components
-defined by the eigenvectors of the covariance matrix of \(\mathbf{x}\),
-i.e. \(\boldsymbol{\Sigma}_{xx}\).
+\citet{Helland2000}, \citet{helland2012near}, \citet{cook2013envelopes},
+\citet{saebo2015simrel} and \citet{helland2017}, we can assume that
+there exists a subspace of the full predictor space which is relevant
+for \(y\). An orthogonal space to this space does not contain any
+information about \(y\) and is considered as irrelevant. Here, the
+\(y-\)relevant subspace of \(\mathbf{x}\) is spanned by a subset of the
+principal components defined by the eigenvectors of the covariance
+matrix of \(\mathbf{x}\), i.e. \(\boldsymbol{\Sigma}_{xx}\).
 
 This concept can be extended to \(m\) responses so that the subspace of
 \(\mathbf{x}\) is relevant for a subspace of \(\mathbf{y}\). This
@@ -611,7 +669,7 @@ predictor components of \(\mathbf{x}\)) have non-zero covariance with
 similar manner other non-zero covariances are self-explanatory.
 
 \begin{figure}[!htb]
-\subfloat[Relevant Position\label{fig:cov-plot-print1}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print2}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print3}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print}
+\subfloat[Relevant Position\label{fig:cov-plot-print1}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print2}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print3}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print}
 \end{figure}
 
 In order to simulate predictor variables \((\mathbf{x})\), we construct
@@ -643,7 +701,7 @@ irrelevant.
 
 \begin{figure}[!htb]
 
-{\centering \subfloat[Before Rotation\label{fig:simulated-data1}]{\includegraphics[width=0.45\linewidth]{images/png/simulated-data-1} }\subfloat[After Rotation\label{fig:simulated-data2}]{\includegraphics[width=0.45\linewidth]{images/png/simulated-data-2} }
+{\centering \subfloat[Before Rotation\label{fig:simulated-data1}]{\includegraphics[width=0.45\linewidth]{Simrel-M_files/figure-latex/simulated-data-1} }\subfloat[After Rotation\label{fig:simulated-data2}]{\includegraphics[width=0.45\linewidth]{Simrel-M_files/figure-latex/simulated-data-2} }
 
 }
 
@@ -751,64 +809,22 @@ visualize the covariance structrue and relationship between the response
 and predictor variables for first design.
 
 \begin{figure}[!htb]
-\subfloat[Relevant Position\label{fig:cov-plot-print-11}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-1-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print-12}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-1-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print-13}]{\includegraphics[width=0.33\linewidth]{images/png/cov-plot-print-1-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print-1}
+\subfloat[Relevant Position\label{fig:cov-plot-print-11}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-1-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print-12}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-1-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print-13}]{\includegraphics[width=0.33\linewidth]{Simrel-M_files/figure-latex/cov-plot-print-1-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print-1}
 \end{figure}
 
-\begin{longtable}[]{@{}rrrrr@{}}
-\caption{\label{tab:parameter-settings} Parameter setting of simulated data
-for model comparison}\tabularnewline
+\begin{table}[!h]
+
+\caption{\label{tab:parameter-settings}Parameter setting of simulated data for model comparison}
+\centering
+\begin{tabular}[t]{p{\dimexpr0.42\columnwidth-2\tabcolsep}p{\dimexpr0.14\columnwidth-2\tabcolsep}p{\dimexpr0.14\columnwidth-2\tabcolsep}p{\dimexpr0.14\columnwidth-2\tabcolsep}p{\dimexpr0.14\columnwidth-2\tabcolsep}}
 \toprule
-\begin{minipage}[b]{0.35\columnwidth}\raggedleft\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedleft\strut
-Design1\strut
-\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedleft\strut
-Design2\strut
-\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedleft\strut
-Design3\strut
-\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedleft\strut
-Design4\strut
-\end{minipage}\tabularnewline
+  & Design1 & Design2 & Design3 & Design4\\
 \midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.35\columnwidth}\raggedleft\strut
-~\strut
-\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedleft\strut
-Design1\strut
-\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedleft\strut
-Design2\strut
-\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedleft\strut
-Design3\strut
-\end{minipage} & \begin{minipage}[b]{0.13\columnwidth}\raggedleft\strut
-Design4\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.35\columnwidth}\raggedleft\strut
-\textbf{Decay of eigenvalues \((\gamma)\)}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
-0.2\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
-0.8\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
-0.2\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
-0.8\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.35\columnwidth}\raggedleft\strut
-\textbf{Coef. of Determination \((\rho^2_{w_j})\)}\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
-0.8, 0.8, 0.4\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
-0.8, 0.8, 0.4\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
-0.4, 0.4, 0.4\strut
-\end{minipage} & \begin{minipage}[t]{0.13\columnwidth}\raggedleft\strut
-0.4, 0.4, 0.4\strut
-\end{minipage}\tabularnewline
+Decay of eigenvalues $(\gamma)$ & 0.2 & 0.8 & 0.2 & 0.8\\
+Coef. of Determination $(\rho^2_{w_j})$ & 0.8, 0.8, 0.4 & 0.8, 0.8, 0.4 & 0.4, 0.4, 0.4 & 0.4, 0.4, 0.4\\
 \bottomrule
-\end{longtable}
+\end{tabular}
+\end{table}
 
 For each method, an estimate of test prediction error was computed as,
 
@@ -835,140 +851,33 @@ shown in Table \ref{tab:min-error}. The table also gives the number of
 predictor components a method has used in order to obtain the minimum of
 average prediciton error.
 
-\begin{longtable}[]{@{}lcccc@{}}
-\caption{\label{tab:min-error} Minimum average prediction error (number of
-components corresponding to minimum prediction error, minimum prediction
-error) (For \(Y\text{env}\), the number of response components is
-given)}\tabularnewline
+\rowcolors{2}{gray!6}{white}
+
+\begin{table}
+
+\caption{\label{tab:min-error}Minimum average prediction error 
+      (number of components corresponding to minimum prediction error, minimum prediction error) 
+      (For $Y\text{env}$, the number of response components is given)}
+\centering
+\begin{tabular}[t]{>{\bfseries\raggedright\arraybackslash}p{10em}>{\centering\arraybackslash}p{7em}>{\centering\arraybackslash}p{7em}>{\centering\arraybackslash}p{7em}>{\centering\arraybackslash}p{7em}lcccclcccclcccclcccc}
 \toprule
-\begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
-Model\strut
-\end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
-Design: 1\strut
-\end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
-Design: 2\strut
-\end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
-Design: 3\strut
-\end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
-Design: 4\strut
-\end{minipage}\tabularnewline
+\bfseries{Model} & \bfseries{Design..1} & \bfseries{Design..2} & \bfseries{Design..3} & \bfseries{Design..4}\\
 \midrule
-\endfirsthead
-\toprule
-\begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
-Model\strut
-\end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
-Design: 1\strut
-\end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
-Design: 2\strut
-\end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
-Design: 3\strut
-\end{minipage} & \begin{minipage}[b]{0.19\columnwidth}\centering\strut
-Design: 4\strut
-\end{minipage}\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\emph{CPLS}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 3.24)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(4,\ 3.22)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 4.09)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 4.05)}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\emph{CPPLS}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 3.21)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 3.17)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 4.11)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{\texttt{(3,\ 4.04)}}}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\emph{OLS}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(1,\ 3.6)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(1,\ 3.58)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(1,\ 4.57)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(1,\ 4.5)}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\emph{PCR}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(7,\ 3.28)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 3.19)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{\texttt{(6,\ 4.08)}}}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 4.04)}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\emph{PLS}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 3.29)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 3.19)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 4.11)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 4.06)}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\emph{PLS1}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(2,\ 3.32)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 3.2)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(1,\ 4.16)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 4.07)}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\emph{Senv}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{\texttt{(4,\ 3.17)}}}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\textbf{\emph{\texttt{(5,\ 3.14)}}}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 4.35)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 4.28)}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\emph{Xenv}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 3.23)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 3.2)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(5,\ 4.1)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(6,\ 4.11)}\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\emph{Yenv}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 3.24)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 3.23)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 4.29)}\strut
-\end{minipage} & \begin{minipage}[t]{0.19\columnwidth}\centering\strut
-\texttt{(3,\ 4.24)}\strut
-\end{minipage}\tabularnewline
+CPLS & \texttt{(3, 3.24)} & \texttt{(4, 3.22)} & \texttt{(3, 4.09)} & \texttt{(3, 4.05)}\\
+CPPLS & \texttt{(3, 3.21)} & \texttt{(3, 3.17)} & \texttt{(3, 4.11)} & \texttt{(3, 4.04)}\\
+OLS & \texttt{(1, 3.60)} & \texttt{(1, 3.58)} & \texttt{(1, 4.57)} & \texttt{(1, 4.50)}\\
+PCR & \texttt{(7, 3.28)} & \texttt{(6, 3.19)} & \texttt{(6, 4.08)} & \texttt{(6, 4.04)}\\
+PLS & \texttt{(5, 3.29)} & \texttt{(6, 3.19)} & \texttt{(3, 4.11)} & \texttt{(6, 4.06)}\\
+\addlinespace
+PLS1 & \texttt{(2, 3.32)} & \texttt{(5, 3.20)} & \texttt{(1, 4.16)} & \texttt{(5, 4.07)}\\
+Senv & \texttt{(4, 3.17)} & \texttt{(5, 3.14)} & \texttt{(3, 4.35)} & \texttt{(5, 4.28)}\\
+Xenv & \texttt{(5, 3.23)} & \texttt{(6, 3.20)} & \texttt{(5, 4.10)} & \texttt{(6, 4.11)}\\
+Yenv & \texttt{(3, 3.24)} & \texttt{(3, 3.23)} & \texttt{(3, 4.29)} & \texttt{(3, 4.24)}\\
 \bottomrule
-\end{longtable}
+\end{tabular}
+\end{table}
+
+\rowcolors{2}{white}{white}
 
 Table \ref{tab:min-error} shows that the simulteneous envelope has
 prediction error of 3.17 and 3.14 in design 1 (with 4 components) and
@@ -989,7 +898,7 @@ methods, except OLS, are based on shrinking of estimates, they are less
 influenced by the multicollinearity problem.
 
 \begin{figure}[!htb]
-\includegraphics[width=1\linewidth]{images/png/pred-plot} \caption{Minimum of Average Prediction Error}\label{fig:Average-Prediction-Plot}
+\includegraphics[width=1\linewidth]{Simrel-M_files/figure-latex/Average-Prediction-Plot-1} \caption{Minimum of Average Prediction Error}\label{fig:Average-Prediction-Plot}
 \end{figure}
 
 The analysis presented in Figure \ref{fig:Average-Prediction-Plot} has
@@ -1096,17 +1005,11 @@ role. \citet{gangsei2016theoretical}; \citet{gangsei2016linear}; and
 \citet{saebo2015simrel} are some examples where the univariate and
 bivariate form of \texttt{simrel} have been used for such purposes.
 
-\printendnotes
+\section{References}\label{references}
 
-% Submissions are not required to reflect the precise reference formatting of the journal (use of italics, bold etc.), however it is important that all key elements of each reference are included.
+
+\renewcommand\refname{References}
 \bibliography{packages.bib,ref-db.bib}
 
-% \begin{biography}[example-image-1x1]{A.~One}
-% Please check with the journal's author guidelines whether author biographies are required. They are usually only included for review-type articles, and typically require photos and brief biographies (up to 75 words) for each author.
-% \bigskip
-% \bigskip
-% \end{biography}
-
-% \graphicalabstract{example-image-1x1}{Please check the journal's author guildines for whether a graphical abstract, key points, new findings, or other items are required for display in the Table of Contents.}
 
 \end{document}

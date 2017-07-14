@@ -2,6 +2,7 @@ bookdown::gitbook:
   dev: svglite
   number_sections: no
   css: style.css
+  citation_package: natbib
   github-repo: "therimalaya/simrel-m"
   description: "Simrel-M: A versatile Simulation Tool"
   url: "http://therimalaya.github.io/simrel-m/"
@@ -21,13 +22,20 @@ bookdown::gitbook:
 bookdown::tufte_html_book:
   toc: yes
   css: [style.css, toc.css]
-manuscript::manuscript:
+bookdown::html_document2:
+  citation_package: natbib
+  dev: svglite
+  fig_caption: yes
+  theme: yeti
+  number_sections: no
+  css: "custom.css"
+bookdown::pdf_book:
   fig_caption: yes
   citation_package: natbib
   md_extensions: -autolink_bare_uris
-  template: 'templates/template.tex'
+  template: 'templates/Elsarticle.tex'
   keep_tex: yes
-  dev: "cairo_pdf"
+  dev: "pdf"
 bookdown::epub_book:
   dev: svglite
 bookdown::word_document2: default

@@ -29,6 +29,7 @@ share_legend <- function(..., ncol = length(list(...)), nrow = 1, position = c("
 
 ## ---- Prepare data for covariance plot ------------------------------
 get.cov.df <- function(cov.mat, n.xvar, n.yvar, relpos, xvar.name = "X",  yvar.name = "Y", relpred = NULL, ordering = TRUE, ypos) {
+  require(reshape2)
   mat.names <- c(paste0(yvar.name, 1:n.yvar), 
                  paste0(xvar.name, 1:n.xvar))
   rownames(cov.mat) <- colnames(cov.mat) <- mat.names

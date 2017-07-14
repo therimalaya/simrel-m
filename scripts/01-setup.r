@@ -1,4 +1,4 @@
-owd <- setwd("/Users/rajurim/Dropbox/Papers/01-simrel-m/scripts/")
+owd <- setwd("/Users/therimalaya/Dropbox/Papers/01-simrel-m/scripts/")
 
 ## ----LoadingPackages-----------------------------------------------------
 pkgs <- c("pls", "envlp", "simulatr", "pander", "tidyverse")
