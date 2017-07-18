@@ -20,7 +20,7 @@ library(knitr)
 library(kableExtra)
 ```
 
-This section demonstrates an application of `simrel-m` in order to compare different estimation methods on the basis of prediction error. For the comparison, we have considered four well established estimation methods.
+This section demonstrates an application of multi-response extension of `simrel` in order to compare different estimation methods on the basis of prediction error. For the comparison, we have considered four well established estimation methods.
 
 a) Ordinary Least Squares (OLS),
 b) Principal Component Regression (PCR),
@@ -31,11 +31,11 @@ We have also considered four relatively new estimation methods in multi-response
 
 a) Canonically Powered Partial Least Squares regression (CPPLS) [@indahl2009canonical],
 b) Canonical Partial Least Squares regression (CPLS) [@indahl2009canonical],
-c) Envelope estimation in predictor space (xenv) [@cook2010envelope],
-d) Envelope estimation in response space (yenv) [@cook2015foundations] and
-e) Simultaneous estimation of x- and y-envelope (senv) [@cook2015simultaneous]
+c) Envelope estimation in predictor space (Xenv) [@cook2010envelope],
+d) Envelope estimation in response space (Yenv) [@cook2015foundations] and
+e) Simultaneous estimation of x- and y-envelope (Senv) [@cook2015simultaneous]
 
-From the possible combinations of two levels of coefficient of determination $(R^2)$ and two levels of `gamma` (the factor that controls the multicollinearity in predictor variables), four simulation designs (design 1-4) were prepared. Replicating each design 20 times, 80 datasets with five response variables $(m=5)$ and 16 predictor variables $(p = 16)$ were simulated using the method discussed in this paper. It was also assumed that three principle components of response variables ($w_1, w_2$ and $w_3$) completely describe the variation present in five response variables ($y_1 \ldots y_5$). The four designs are presented in the Table~\@ref(tab:parameter-settings). All datasets contained 100 sampled observations and out of 16 predictor variables, three disjoint set of five predictor variables are relevant for response components $w_1, w_2$ and $w_3$. Further, predictor components $z_1$ and $z_6$ were relevant for response component $w_1$, predictor components $z_2$ and $z_5$ were relevant for response component $w_2$ and predictor component $z_3$ was relevant for response component $w_3$. In addition, following the discussion about [rotation of response space](#rotation-of-response-space), $w_1$ was rotated together with $w_4$ and $w_2$ was rotated together with $w_5$. Figure \@ref(fig:cov-plot-print-1) visualize the covariance structrue and relationship between the response and predictor variables for first design.
+From the possible combinations of two levels of coefficient of determination $(R^2)$ and two levels of `gamma` (the factor that controls the multicollinearity in predictor variables), four simulation designs (design 1-4) were prepared. Replicating each design 20 times, 80 datasets with five response variables $(m=5)$ and 16 predictor variables $(p = 16)$ were simulated using the method discussed in this paper. It was also assumed that three principle components of response variables ($w_1, w_2$ and $w_3$) completely describe the variation present in five response variables ($y_1 \ldots y_5$). The four designs are presented in Table~\@ref(tab:parameter-settings). All datasets contained 100 sampled observations and out of 16 predictor variables, three disjoint set of five predictor variables are relevant for response components $w_1, w_2$ and $w_3$. Further, predictor components $z_1$ and $z_6$ were relevant for response component $w_1$, predictor components $z_2$ and $z_5$ were relevant for response component $w_2$ and predictor component $z_3$ and $z_4$ was relevant for response component $w_3$. In addition, following the discussion about [rotation of response space](#rotation-of-response-space), $w_1$ was rotated together with $w_4$ and $w_2$ was rotated together with $w_5$. Figure \@ref(fig:cov-plot-print-1) visualize the covariance structrue and relationship between the response and predictor variables for first design.
 
 ```{r}
 dgn <- lapply(opts, function(x) x[[1]])
@@ -44,7 +44,7 @@ dgn$type <- "multivariate"
 sobj <- do.call(simulatr, dgn)
 ```
 
-```{r cov-plot-print-1, echo = FALSE, warning = FALSE, message = FALSE, out.width = '33%', fig.asp = 1.2, fig.subcap=c("Relevant Position", "Rotation Matrix", "Relevant Predictors"), fig.cap = 'Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).', fig.width=1.8, dpi = 800, fig.pos='!htb'}
+```{r cov-plot-print-1, echo = FALSE, warning = FALSE, message = FALSE, out.width = '33%', fig.asp = 1.2, fig.subcap=c("Relevant Position", "Rotation Matrix", "Relevant Predictors"), fig.cap = 'Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).', fig.width=1.8, dpi = 800, fig.pos='!htb'}
 plt11 <- plot(cov.df(sobj, type = "relpos", ordering = TRUE), "relpos") +
   ggtitle("PC Covariance Matrix")
 plt12 <- plot(cov.df(sobj, type = "rotation"), "relpred") +
@@ -92,14 +92,14 @@ dimnames(design_table) <- list(
 ```{r parameter-settings}
 if (!knitr:::is_html_output()) {
 knitr::kable(design_table, escape = FALSE, booktabs = TRUE,
-      caption = "Parameter setting of simulated data for model comparison") %>% 
+      caption = "Parameter setting of simulated data for comparison of estimation methods") %>% 
   kable_styling(full_width = TRUE, latex_options = "hold_position")
 } else {
   pander::pander(
     design_table, type = "rmarkdown",
     split.cells = c(40, rep(30, 4)), split.tables = Inf,
     justify = paste(rep("r", ncol(design_table) + 1), collapse = ""),
-    caption = "(\\#tab:parameter-settings) Parameter setting of simulated data for model comparison"
+    caption = "(\\#tab:parameter-settings) Parameter setting of simulated data for comparison of estimation methods"
   )
 }
 ```
@@ -112,18 +112,20 @@ $$\underset{m \times m}{\boldsymbol{\alpha}} =
 \right) ^t \boldsymbol{\Sigma}_{xx}
 \left(
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
-\right) + \boldsymbol{\Sigma}_{Y|X}$$
+\right) + \boldsymbol{\Sigma}_{y|x}$$
 
-where, $\hat{\boldsymbol{\beta}}$ is an estimate of true regression coefficient $\boldsymbol{\beta}$ and $\boldsymbol{\Sigma}_{xx}$ is the true covariance structure of the predictor variables obtained from `simrel-m`. Also, $\boldsymbol{\Sigma}_{Y|X}$ is the true minimum error of the model. Here $\hat{\beta}$ varies accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the trace of $\boldsymbol{\alpha}$.
+where, $\hat{\boldsymbol{\beta}}$ is an estimate of true regression coefficient $\boldsymbol{\beta}$ and $\boldsymbol{\Sigma}_{xx}$ is the true covariance structure of the predictor variables obtained from `simrel`. Also, $\boldsymbol{\Sigma}_{y|x}$ is the true minimum error of the model. Here $\hat{\boldsymbol{\beta}}$ varies accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the trace of $\boldsymbol{\alpha}$.
 
-The minimimum prediction error (measured as discussed above) for nine estimation methods averaged over 20 replications of four designs are shown in Table \@ref(tab:min-error). The table also gives the number of predictor components a method has used in order to obtain the minimum of average prediciton error.
+The minimimum prediction error (measured as discussed above) for nine estimation methods averaged over 20 replications of four designs are shown in Table \@ref(tab:min-error). The table also gives the number of predictor components (response components in case of `Yenv`), a method has used in order to obtain the minimum of average prediciton error.
 
 ```{r Average-Prediction}
 avg_pred_err <- myData %>% 
   rename(pred_err = without_norm) %>% 
   group_by(Model, design, comp, R2, gamma) %>% 
   do(mean_se(.$pred_err)) %>% 
-  rename(pred_err = y, upper = ymax, lower = ymin)
+  rename(pred_err = y, upper = ymax, lower = ymin) %>% 
+  ungroup() %>% 
+  mutate(Model = gsub("\\<PLS\\>", "PLS2", Model))
 ```
 
 ```{r minimum-average-prediction}
@@ -151,19 +153,18 @@ avgPredErr_idx <- avgPredErr %>%
 avgPredErr_idx[, "col"] <- avgPredErr_idx[, "col"] + 1
 ```
 
-```{r min-error}
+```{r min-error, warning=FALSE}
 if (!knitr:::is_html_output()) {
-tbl <- as.data.frame(purrr::map_at(avgPredErr_lbl, 2:5, ~paste0("\\texttt{", .x, "}")))
-kable(tbl, booktabs = TRUE, align = "lcccc", escape = FALSE,
+kable(avgPredErr_lbl, booktabs = TRUE, align = "lcccc", escape = FALSE,
       caption = "Minimum average prediction error 
       (number of components corresponding to minimum prediction error, minimum prediction error) 
       (For $Y\\text{env}$, the number of response components is given)") %>% 
-  kable_styling(latex_options = 'striped', full_width = FALSE)%>%
-  column_spec(1, bold = TRUE, width = "10em") %>% 
-  column_spec(2, width = "7em") %>% 
-  column_spec(3, width = "7em") %>% 
-  column_spec(4, width = "7em") %>% 
-  column_spec(5, width = "7em") %>% 
+  kable_styling(latex_options = 'striped')%>%
+  column_spec(1, bold = TRUE, width = "7em") %>% 
+  column_spec(2, monospace = TRUE, width = "6em") %>% 
+  column_spec(3, monospace = TRUE, width = "6em") %>% 
+  column_spec(4, monospace = TRUE, width = "6em") %>% 
+  column_spec(5, monospace = TRUE, width = "6em") %>% 
   row_spec(0, bold = TRUE)
 } else {
   avgPredErr_lbl %>%
@@ -241,4 +242,4 @@ if (!file.exists("images/pred-plot.tiff")) {
 plot(plt)
 ```
 
-The analysis presented in Figure \@ref(fig:Average-Prediction-Plot) has addressed some questions such as how methods works when there exist a true reduced dimension in response space, but also arised other questions like why they perform differently. For example, what is the reason for the decreasing relative performance of the simultaneous envelope method as the $\rho^2$ values are reduced? Does this depend on the dimensions and spheric shape of the $\mathbf{y}$ envelopes? Since, the example is merely intended as a demonstration of how `simrel-m` can be used in scientific study, a more elaborative study would be necessary to answer such questions, but for this purpose `simrel-m` would be a powerful tool.
+The analysis presented in Figure \@ref(fig:Average-Prediction-Plot) has addressed some questions such as how methods work when there exist a true reduced dimension in response space, but also arised other questions like why they perform differently. For example, what is the reason for the decreasing relative performance of the simultaneous envelope method as the $\rho^2$ values are reduced? Does this depend on the dimensions and shape of the $\mathbf{y}$ envelopes? Since, the example is merely intended as a demonstration of how `simrel` can be used in scientific study, a more elaborative studies would be necessary to answer such questions, but for this purpose `simrel` would be a powerful tool.

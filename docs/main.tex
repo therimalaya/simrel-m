@@ -176,15 +176,15 @@ Sciences, Ås, Norway}
     \address[NMBU]{Prorector, Norwegian University of Life Sciences, Ås, Norway}
   
   \begin{abstract}
-  \normalsize Data science is generating enormous amounts of data, and new
-  and advanced analytical methods are constantly being developed to cope
-  with the challenge of extracting information from such ``big-data''.
+  Data science is generating enormous amounts of data, and new and
+  advanced analytical methods are constantly being developed to cope with
+  the challenge of extracting information from such ``big-data''.
   Researchers often use simulated data to assess and document the
   properties of these new methods, and in this paper we present
   \texttt{simrel-m}, which is a versatile and transparent tool for
   simulating linear model data with an extensive range of adjustable
   properties. The method is based on the concept of relevant components
-  \citep{helland1994comparison}, which is equivalent to the envelope model
+  \citep{helland1994comparison}, and is equivalent to the envelope model
   by Dennis Cook. It is a multi-response extension of R-package
   \texttt{simrel} which is availiable in R-package repository CRAN, and as
   \texttt{simrel} the new approach is essentially based on random
@@ -207,16 +207,16 @@ Sciences, Ås, Norway}
 
 Technological advancement has opened a door for complex and
 sophisticated scientific experiments that was not possible before. Due
-to this change, enormous amounts of raw data are generated which
-contains massive information but difficult to excavate. Finding
-information and performing scientific research on these raw data has now
-become another problem. In order to tackle this situation new methods
-are being developed. However, before implementing any method, it is
-essential to test its performance and explore its properties. Often,
-researchers use simulated data for the purpose which itself is a
-time-consuming process. The main focus of this paper is to present a
-simulation method, along with an r-package called \texttt{simrel-m},
-that is versatile in nature and yet simple to use.
+to this change, enormous amounts of raw data are generated which contain
+massive information but is difficult to excavate. Finding information
+and performing scientific research on these raw data has now become
+another problem. In order to tackle this situation new methods are being
+developed. However, before implementing any method, it is essential to
+test its performance and explore its properties. Often, researchers use
+simulated data for the purpose which itself is a time-consuming process.
+The main focus of this paper is to present a simulation method, along
+with an extension to the r-package called \texttt{simrel}, that is
+versatile in nature and yet simple to use.
 
 The simulation method we are presenting here is based on the principle
 of relevant space for prediction \citep{helland1994comparison} which
@@ -227,15 +227,15 @@ subspace in \(\mathbf{y}\) (material space) which contains the
 information that predictor space is relevant for. The concept of
 response reduction to the material space in response variable was
 introduced by \citet{cook2010envelope}. Our r-package based on this
-principle lets the user specify various population properties such as
-which latent components are relevant for a latent subspace of the
+principle lets the user to specify various population properties such
+as, which latent components are relevant for a latent subspace of the
 responses \(\mathbf{y}\) and the collinearity structure of
 \(\mathbf{x}\). This enables the possibility to construct data for
 evaluating estimation methods and methods developed for variable
 selection.
 
 Among several publications on simulation, \citet{ripley2009stochastic}
-and \citet{gamerman2006markov} has exhaustively discussed the topic. In
+and \citet{gamerman2006markov} have exhaustively discussed the topic. In
 addition, many publications have implemented simulated data in order to
 investigate new estimation methods and prediction strategies
 \citep[see:][]{cook2015simultaneous, cook2013envelopes, helland2012near}.
@@ -244,8 +244,7 @@ address their specific problem. A systematic tool for simulating linear
 model data with single response, which could serve as a general tool for
 all such comparisons, was presented in \citet{saebo2015simrel} and as
 the r-package \texttt{simrel}. This paper extends \texttt{simrel} in
-order to simulate linear model data with multivariate response with an
-r-package \texttt{simrel-m}.
+order to simulate linear model data with multivariate response.
 
 \section{Statistical Model}\label{statistical-model}
 
@@ -306,12 +305,12 @@ expressed in terms of covariance matrices in \eqref{eq:rand-reg-model}.
 The vector of regression coefficients is given by
 \[ \boldsymbol{\beta} = \boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\]
 \item[Coefficient of Determination]
-The diagonal elements of the coefficient of determination matrix
+The diagonal elements of the coefficient-of-determination matrix
 \(\boldsymbol{\rho}_y^2\) gives the amount of variation in each response
 variable that is explained by \(\mathbf{x}\).
 \[\boldsymbol{\rho}_y^2 = \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\]
 \item[Conditional variance]
-The conditional variance covariance matrix of \(\mathbf{y}\) given
+The conditional variance-covariance matrix of \(\mathbf{y}\) given
 \(\mathbf{x}\) is,
 \[\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.\]
 The diagonal elements of this matrix equals the theoretical least square
@@ -362,7 +361,7 @@ where \(\boldsymbol{\alpha}\) is the regression coefficient vector for
 the transformed model and
 \(\boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{w|z}\right)\).
 Further, if both \(\mathbf{Q}\) and \(\mathbf{R}\) are orthonormal
-matrices such that \(\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q\) and
+matrices, i.e., \(\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q\) and
 \(\mathbf{R}^t\mathbf{R} = \mathbf{I}_p\), the inverse transformation
 can be defined as,
 
@@ -385,16 +384,17 @@ properties of \eqref{eq:linear-model} and \eqref{eq:latent-model}.
 \[
   \begin{aligned}
   \boldsymbol{\alpha} &= \boldsymbol{\Sigma}_{wz} \boldsymbol{\Sigma}_{zz}^{-1}
-  = \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1}
+  = \boldsymbol{Q\Sigma}_{yz}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1}
   = \mathbf{Q}\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\right]\mathbf{R}^t
   = \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
   \end{aligned}
   \]
 \item[Conditional Variance]
-Further, the conditional variance covariance matrix of \(\mathbf{w}\)
+Further, the conditional variance-covariance matrix of \(\mathbf{w}\)
 given \(\mathbf{z}\) is, \[
   \begin{aligned}
 \boldsymbol{\Sigma}_{w|z}
+&= \boldsymbol{\Sigma}_{ww} - \boldsymbol{\Sigma}_{wz}\boldsymbol{\Sigma}_{zz}^{-1}\boldsymbol{\Sigma}_{zw} \\
 &= \boldsymbol{Q\Sigma}_{yy}\mathbf{Q}^t -
   \boldsymbol{Q \Sigma}_{yx}\mathbf{R}^t \left[\boldsymbol{R\Sigma}_{xx}\boldsymbol{R}^t\right]^{-1}
   \boldsymbol{R\Sigma}_{xy}\mathbf{Q}^t \nonumber \\
@@ -406,7 +406,7 @@ given \(\mathbf{z}\) is, \[
   \end{aligned}
   \]
 \item[Coefficient of Determination]
-The coefficient of determination matrix \eqref{eq:latent-model} is, \[
+The coefficient-of-determination matrix for \eqref{eq:latent-model} is, \[
   \begin{aligned}
 \boldsymbol{\rho}^2_w &= \boldsymbol{\Sigma}_{wz} 
 \boldsymbol{\Sigma}_{zz}^{-1} \boldsymbol{\Sigma}_{zw} 
@@ -428,7 +428,7 @@ then \(\mathbf{z}\) and \(\mathbf{w}\) can be interpreted as principal
 components of \(\mathbf{x}\) and \(\mathbf{y}\) respectively. In this
 paper, these principal components will be termed as \emph{predictor
 components} and \emph{response components} respectively. Here,
-\(\boldsymbol{\Sigma}\) and \(\boldsymbol{\Omega}\) are diagonal
+\(\boldsymbol{\Lambda}\) and \(\boldsymbol{\Omega}\) are diagonal
 matrices of eigenvalues of \(\boldsymbol{\Sigma}_{xx}\) and
 \(\boldsymbol{\Sigma}_{yy}\), respectively.
 
@@ -480,8 +480,8 @@ Here, as \(\gamma\) increases, the decline of eigenvalues becomes
 steeper, hence the parameter \(\gamma\) controls the level of
 multicollinearity in \(\mathbf{x}\).
 \item[\textbf{Parameterization of \(\boldsymbol{\Sigma}_{ww}\)}]
-Here we assume that \(\mathbf{w}\)'s are independent and mutinormal
-distributed with variances 1, hence
+Here we assume that \(\mathbf{w}\)'s are independent and has mutinormal
+distribution with variances 1, hence
 \(\boldsymbol{\Sigma}_{ww} = \mathbf{I}_m\).
 \item[\textbf{Parameterization of \(\boldsymbol{\Sigma}_{zw}\)}]
 After parameterization of \(\boldsymbol{\Sigma}_{zz}\) and
@@ -504,13 +504,13 @@ relevant for \(w_2\) and so on. Let the positions of these components be
 given by the index sets
 \(\mathcal{P}_1, \mathcal{P}_2, \ldots, \mathcal{P}_m\) respectively.
 Further, the covariance between \(w_j\) and \(z_i\) is non-zero only if
-\(\mathbf{z}_i\) is relevant for \(w_j\). If \(\sigma_{ij}\) is the
-covariance between \(w_j\) and \(z_i\) then \(\sigma_{ij} \ne 0\) if
+\(z_i\) is relevant for \(w_j\). If \(\sigma_{ij}\) is the covariance
+between \(w_j\) and \(z_i\) then \(\sigma_{ij} \ne 0\) if
 \(i \in \mathcal{P}_j\) where \(i = 1, \ldots, p\) and
 \(j = 1, \ldots, m\) and \(\sigma_{ij} = 0\) otherwise.
 
 In addition, the true regression coefficients for \(w_j\)
-(ref:\eqref{eq:latent-model}) is given by:
+{[}ref:\eqref{eq:latent-model}{]} is given by:
 
 \[
 \boldsymbol{\alpha}_j = \Lambda^{-1} \sigma_{ij} = \sum_{i \in \mathcal{P}_j}\frac{\sigma_{ij}}{\lambda_i},\qquad j = 1, 2, \ldots m
@@ -638,11 +638,11 @@ which is the minimum relevant space and equivalent to the x-envelope as
 discussed by \citet{cook2013envelopes}.
 
 Moreover, let \(q_1 = 3, q_2 = 3\) and \(q_3 = 2\) be the number of
-predictor variables we want to be relevant for \(w_1, w_2\) and \(w_3\)
-respectively. Then \(q_1 = 3\) predictors may be obtained by rotating
-the predictor components in \(\mathcal{P}_1\) along with one more
-irrelevant component. Similarly, \(q_2 = 3\) predictors, relevant for
-\(w_2\), can be obtained by rotating predictor components in
+predictor variables we want to have relevant for \(w_1, w_2\) and
+\(w_3\) respectively. Then \(q_1 = 3\) predictors may be obtained by
+rotating the predictor components in \(\mathcal{P}_1\) along with one
+more irrelevant component. Similarly, \(q_2 = 3\) predictors, relevant
+for \(w_2\), can be obtained by rotating predictor components in
 \(\mathcal{P}_2\) along with one more irrelevant component and finally,
 \(q_3 = 2\) predictors, relevant for \(w_3\), can be obtained by
 rotating the components in \(\mathcal{P}_3\) without any additional
@@ -661,14 +661,14 @@ relevant for \(\mathbf{w}\) and \(\mathcal{S}_{p - k}\) irrelevant for
 \(\mathbf{w}\).
 
 In the previous section, we discussed about the construction of a
-covariance matrix for the latent structure.
-Figure\textasciitilde{}\ref{fig:cov-plot-print} (left) shows a similar
-structure resembling the example here. The three colors represent the
-relevance with the three latent response components \((w_1, w_2\) and
-\(w_3)\). Here we can see that \(z_{1}\) and \(z_{2}\) (first and second
-predictor components of \(\mathbf{x}\)) have non-zero covariance with
-\(w_1\) (first latent component of response \(\mathbf{y}\)). In the
-similar manner other non-zero covariances are self-explanatory.
+covariance matrix for the latent structure. Figure
+\ref{fig:cov-plot-print1} shows a similar structure resembling the
+example here. The three colors represent the relevance with the three
+latent response components \((w_1, w_2\) and \(w_3)\). Here we can see
+that \(z_{1}\) and \(z_{2}\) (first and second predictor components of
+\(\mathbf{x}\)) have non-zero covariance with \(w_1\) (first latent
+component of response \(\mathbf{y}\)). In the similar manner other
+non-zero covariances are self-explanatory.
 
 \begin{figure}[!htb]
 \subfloat[Relevant Position\label{fig:cov-plot-print1}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print2}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print3}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print}
@@ -687,19 +687,19 @@ choose any \(\mathbf{R}\) that satisfied the properties of a real valued
 rotation matrix, i.e \(\mathbf{R}^{-1} = \mathbf{R}^t\) so that
 \(\mathbf{R}\) is orthonormal and its determinant becomes \(\pm 1\).
 Here the rotation matrix \(\mathbf{R}\) should be block diagonal as in
-figure\textasciitilde{}\ref{fig:cov-plot-print} (middle) in order to
-rotate spaces \(\mathcal{S}_1, \mathcal{S}_2 \ldots\) separately.
-Figure\textasciitilde{}\ref{fig:simulated-data} (left) shows the
-simulated predictor components \(\mathbf{z}\) that we are following in
-our example where we can see that the components \(z_{1}\) and \(z_{2}\)
-(relevant for \(w_1\)) is getting rotated together with an irrelevant
-component \(z_{8}\). The resultant predictors (Figure
-\ref{fig:simulated-data}, right) \(x_{1}, x_{2}\) and \(x_{8}\) will
-hence also be relevant for \(w_1\). In the figure, we can see that
-components \(z_{7}, z_{8}, z_{9}\) and \(z_{10}\) are not relevant for
-any responses before rotation, however, the \(x_{8}, x_{10}\) predictors
-become relevant after rotation keeping \(x_{7}\) and \(x_{9}\) still
-irrelevant.
+Figure \ref{fig:cov-plot-print2} in order to rotate spaces
+\(\mathcal{S}_1, \mathcal{S}_2 \ldots\) separately. Figure
+knitr:::is\_html\_output()) \ref{fig:simulated-data} else
+\ref{fig:simulated-data1}` shows the simulated predictor components
+\(\mathbf{z}\) that we are following in our example where we can see
+that the components \(z_{1}\) and \(z_{2}\) (relevant for \(w_1\)) is
+getting rotated together with an irrelevant component \(z_{8}\). The
+resultant predictors (Figure \ref{fig:simulated-data2}) \(x_{1}, x_{2}\)
+and \(x_{8}\) will hence also be relevant for \(w_1\). In the figure, we
+can see that components \(z_{7}, z_{8}, z_{9}\) and \(z_{10}\) are not
+relevant for any responses before rotation, however, the
+\(x_{8}, x_{10}\) predictors become relevant after rotation keeping
+\(x_{7}\) and \(x_{9}\) still irrelevant.
 
 \begin{figure}[!htb]
 
@@ -743,10 +743,10 @@ by a parameter \texttt{ypos}.
 
 \hypertarget{implementation}{\section{Implementation}\label{implementation}}
 
-This section demonstrates an application of \texttt{simrel-m} in order
-to compare different estimation methods on the basis of prediction
-error. For the comparison, we have considered four well established
-estimation methods.
+This section demonstrates an application of multi-response extension of
+\texttt{simrel} in order to compare different estimation methods on the
+basis of prediction error. For the comparison, we have considered four
+well established estimation methods.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -776,13 +776,13 @@ multi-response regression:
   Canonical Partial Least Squares regression (CPLS)
   \citep{indahl2009canonical},
 \item
-  Envelope estimation in predictor space (xenv)
+  Envelope estimation in predictor space (Xenv)
   \citep{cook2010envelope},
 \item
-  Envelope estimation in response space (yenv)
+  Envelope estimation in response space (Yenv)
   \citep{cook2015foundations} and
 \item
-  Simultaneous estimation of x- and y-envelope (senv)
+  Simultaneous estimation of x- and y-envelope (Senv)
   \citep{cook2015simultaneous}
 \end{enumerate}
 
@@ -795,28 +795,29 @@ predictor variables \((p = 16)\) were simulated using the method
 discussed in this paper. It was also assumed that three principle
 components of response variables (\(w_1, w_2\) and \(w_3\)) completely
 describe the variation present in five response variables
-(\(y_1 \ldots y_5\)). The four designs are presented in the
+(\(y_1 \ldots y_5\)). The four designs are presented in
 Table\textasciitilde{}\ref{tab:parameter-settings}. All datasets
 contained 100 sampled observations and out of 16 predictor variables,
 three disjoint set of five predictor variables are relevant for response
 components \(w_1, w_2\) and \(w_3\). Further, predictor components
 \(z_1\) and \(z_6\) were relevant for response component \(w_1\),
 predictor components \(z_2\) and \(z_5\) were relevant for response
-component \(w_2\) and predictor component \(z_3\) was relevant for
-response component \(w_3\). In addition, following the discussion about
-\protect\hyperlink{rotation-of-response-space}{rotation of response
-space}, \(w_1\) was rotated together with \(w_4\) and \(w_2\) was
-rotated together with \(w_5\). Figure \ref{fig:cov-plot-print-1}
-visualize the covariance structrue and relationship between the response
-and predictor variables for first design.
+component \(w_2\) and predictor component \(z_3\) and \(z_4\) was
+relevant for response component \(w_3\). In addition, following the
+discussion about \protect\hyperlink{rotation-of-response-space}{rotation
+of response space}, \(w_1\) was rotated together with \(w_4\) and
+\(w_2\) was rotated together with \(w_5\). Figure
+\ref{fig:cov-plot-print-1} visualize the covariance structrue and
+relationship between the response and predictor variables for first
+design.
 
 \begin{figure}[!htb]
-\subfloat[Relevant Position\label{fig:cov-plot-print-11}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print-12}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print-13}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-3} }\caption{Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print-1}
+\subfloat[Relevant Position\label{fig:cov-plot-print-11}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print-12}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print-13}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-3} }\caption{Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print-1}
 \end{figure}
 
 \begin{table}[!h]
 
-\caption{\label{tab:parameter-settings}Parameter setting of simulated data for model comparison}
+\caption{\label{tab:parameter-settings}Parameter setting of simulated data for comparison of estimation methods}
 \centering
 \begin{tabular}[t]{p{\dimexpr0.42\columnwidth-2\tabcolsep}p{\dimexpr0.14\columnwidth-2\tabcolsep}p{\dimexpr0.14\columnwidth-2\tabcolsep}p{\dimexpr0.14\columnwidth-2\tabcolsep}p{\dimexpr0.14\columnwidth-2\tabcolsep}}
 \toprule
@@ -836,13 +837,13 @@ For each method, an estimate of test prediction error was computed as,
 \right) ^t \boldsymbol{\Sigma}_{xx}
 \left(
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
-\right) + \boldsymbol{\Sigma}_{Y|X}\]
+\right) + \boldsymbol{\Sigma}_{y|x}\]
 
 where, \(\hat{\boldsymbol{\beta}}\) is an estimate of true regression
 coefficient \(\boldsymbol{\beta}\) and \(\boldsymbol{\Sigma}_{xx}\) is
 the true covariance structure of the predictor variables obtained from
-\texttt{simrel-m}. Also, \(\boldsymbol{\Sigma}_{Y|X}\) is the true
-minimum error of the model. Here \(\hat{\beta}\) varies accross
+\texttt{simrel}. Also, \(\boldsymbol{\Sigma}_{y|x}\) is the true minimum
+error of the model. Here \(\hat{\boldsymbol{\beta}}\) varies accross
 different estimation methods while the remaining terms are same for each
 dataset design. Further, an overall prediction error of all responses is
 measured by the trace of \(\boldsymbol{\alpha}\).
@@ -850,8 +851,9 @@ measured by the trace of \(\boldsymbol{\alpha}\).
 The minimimum prediction error (measured as discussed above) for nine
 estimation methods averaged over 20 replications of four designs are
 shown in Table \ref{tab:min-error}. The table also gives the number of
-predictor components a method has used in order to obtain the minimum of
-average prediciton error.
+predictor components (response components in case of \texttt{Yenv}), a
+method has used in order to obtain the minimum of average prediciton
+error.
 
 \rowcolors{2}{gray!6}{white}
 
@@ -861,20 +863,20 @@ average prediciton error.
       (number of components corresponding to minimum prediction error, minimum prediction error) 
       (For $Y\text{env}$, the number of response components is given)}
 \centering
-\begin{tabular}[t]{>{\bfseries\raggedright\arraybackslash}p{10em}>{\centering\arraybackslash}p{7em}>{\centering\arraybackslash}p{7em}>{\centering\arraybackslash}p{7em}>{\centering\arraybackslash}p{7em}lcccclcccclcccclcccc}
+\begin{tabular}[t]{>{\bfseries\raggedright\arraybackslash}p{7em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}lcccclcccclcccclcccc}
 \toprule
-\bfseries{Model} & \bfseries{Design..1} & \bfseries{Design..2} & \bfseries{Design..3} & \bfseries{Design..4}\\
+\bfseries{Model} & \bfseries{Design: 1} & \bfseries{Design: 2} & \bfseries{Design: 3} & \bfseries{Design: 4}\\
 \midrule
-CPLS & \texttt{(3, 3.24)} & \texttt{(4, 3.22)} & \texttt{(3, 4.09)} & \texttt{(3, 4.05)}\\
-CPPLS & \texttt{(3, 3.21)} & \texttt{(3, 3.17)} & \texttt{(3, 4.11)} & \texttt{(3, 4.04)}\\
-OLS & \texttt{(1, 3.60)} & \texttt{(1, 3.58)} & \texttt{(1, 4.57)} & \texttt{(1, 4.50)}\\
-PCR & \texttt{(7, 3.28)} & \texttt{(6, 3.19)} & \texttt{(6, 4.08)} & \texttt{(6, 4.04)}\\
-PLS & \texttt{(5, 3.29)} & \texttt{(6, 3.19)} & \texttt{(3, 4.11)} & \texttt{(6, 4.06)}\\
+CPLS & (3, 3.24) & (4, 3.22) & (3, 4.09) & (3, 4.05)\\
+CPPLS & (3, 3.21) & (3, 3.17) & (3, 4.11) & (3, 4.04)\\
+OLS & (1, 3.60) & (1, 3.58) & (1, 4.57) & (1, 4.50)\\
+PCR & (7, 3.28) & (6, 3.19) & (6, 4.08) & (6, 4.04)\\
+PLS1 & (2, 3.32) & (5, 3.20) & (1, 4.16) & (5, 4.07)\\
 \addlinespace
-PLS1 & \texttt{(2, 3.32)} & \texttt{(5, 3.20)} & \texttt{(1, 4.16)} & \texttt{(5, 4.07)}\\
-Senv & \texttt{(4, 3.17)} & \texttt{(5, 3.14)} & \texttt{(3, 4.35)} & \texttt{(5, 4.28)}\\
-Xenv & \texttt{(5, 3.23)} & \texttt{(6, 3.20)} & \texttt{(5, 4.10)} & \texttt{(6, 4.11)}\\
-Yenv & \texttt{(3, 3.24)} & \texttt{(3, 3.23)} & \texttt{(3, 4.29)} & \texttt{(3, 4.24)}\\
+PLS2 & (5, 3.29) & (6, 3.19) & (3, 4.11) & (6, 4.06)\\
+Senv & (4, 3.17) & (5, 3.14) & (3, 4.35) & (5, 4.28)\\
+Xenv & (5, 3.23) & (6, 3.20) & (5, 4.10) & (6, 4.11)\\
+Yenv & (3, 3.24) & (3, 3.23) & (3, 4.29) & (3, 4.24)\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -904,20 +906,20 @@ influenced by the multicollinearity problem.
 \end{figure}
 
 The analysis presented in Figure \ref{fig:Average-Prediction-Plot} has
-addressed some questions such as how methods works when there exist a
+addressed some questions such as how methods work when there exist a
 true reduced dimension in response space, but also arised other
 questions like why they perform differently. For example, what is the
 reason for the decreasing relative performance of the simultaneous
 envelope method as the \(\rho^2\) values are reduced? Does this depend
-on the dimensions and spheric shape of the \(\mathbf{y}\) envelopes?
-Since, the example is merely intended as a demonstration of how
-\texttt{simrel-m} can be used in scientific study, a more elaborative
-study would be necessary to answer such questions, but for this purpose
-\texttt{simrel-m} would be a powerful tool.
+on the dimensions and shape of the \(\mathbf{y}\) envelopes? Since, the
+example is merely intended as a demonstration of how \texttt{simrel} can
+be used in scientific study, a more elaborative studies would be
+necessary to answer such questions, but for this purpose \texttt{simrel}
+would be a powerful tool.
 
 \section{Web Interface}\label{web-interface}
 
-In order to give an alternative interface for \texttt{simrel-m}, we have
+In order to give an alternative interface for \texttt{simrel}, we have
 created a shiny app which allows users to input the simulation
 parameters through different input fields. Figure \ref{fig:AppSimulatr}
 shows a screenshot of the application. The application contains three
@@ -929,13 +931,13 @@ input panels where the user dependent parameters for simulation can be
 entered. Here the user also has the option to simulate univariate (uses
 \texttt{simrel} package in CRAN), bivariate (not yet available in CRAN)
 and multivariate simulation (\texttt{simrel-m}). In addition, a
-simulated R-object is comprised by the simulated data can be download as
+simulated R-object comprised by the simulated data can be download as
 \texttt{Rdata} format (section (e) in Figure \ref{fig:AppSimulatr}). The
 object holds the simulated data along with other properties such as
 coefficient of determination for each response, true regression
 coefficients and rotation matrices.
 
-All \texttt{simrel-m} parameters can be entered using a simple user
+All \texttt{simrel} parameters can be entered using a simple user
 interface where a vectors are separated with comma(,) and lists are
 separated with semicolon(;). For instance, the relevant position
 discussed in the \protect\hyperlink{implementation}{implementation}
@@ -1002,7 +1004,7 @@ Many scientific studies
 \citep{helland2012near, saebo2008lpls, cook2015simultaneous} are using
 simulated data in order to compare their findings with others or assess
 its properties. In many of these situations, a user-friendly and
-versitle simulation tool like \texttt{simrel-m} can play an important
+versitle simulation tool like \texttt{simrel} can play an important
 role. \citet{gangsei2016theoretical}; \citet{gangsei2016linear}; and
 \citet{saebo2015simrel} are some examples where the univariate and
 bivariate form of \texttt{simrel} have been used for such purposes.

@@ -38,11 +38,11 @@ Regression Coefficients
 $$ \boldsymbol{\beta} = \boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}$$
 
 Coefficient of Determination
-: The diagonal elements of the coefficient of determination matrix $\boldsymbol{\rho}_y^2$ gives the amount of variation in each response variable that is explained by $\mathbf{x}$.
+: The diagonal elements of the coefficient-of-determination matrix $\boldsymbol{\rho}_y^2$ gives the amount of variation in each response variable that is explained by $\mathbf{x}$.
 $$\boldsymbol{\rho}_y^2 = \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}$$
 
 Conditional variance
-: The conditional variance covariance matrix of $\mathbf{y}$ given $\mathbf{x}$ is, $$\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.$$ The diagonal elements of this matrix equals the theoretical least square error of prediction for each of the response variables.
+: The conditional variance-covariance matrix of $\mathbf{y}$ given $\mathbf{x}$ is, $$\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.$$ The diagonal elements of this matrix equals the theoretical least square error of prediction for each of the response variables.
 
 Let us define a transformation of $\mathbf{x}$ and $\mathbf{y}$ as, $\mathbf{z} = \mathbf{Rx}$ and $\mathbf{w} = \mathbf{Qy}$. Here, $\mathbf{R}_{p\times p}$ and $\mathbf{Q}_{m\times m}$ are rotation matrices that rotate $\mathbf{x}$ and $\mathbf{y}$ to yield $\mathbf{z}$ and $\mathbf{w}$, respectively. The model \@ref(eq:rand-reg-model) can be re-expressed in terms of these transformed variables as:
 
@@ -76,7 +76,7 @@ In addition, a linear model relating $\mathbf{w}$ and $\mathbf{z}$ can be writte
 \mathbf{w} = 	\boldsymbol{\mu}_w + \boldsymbol{\alpha}^t \left(\mathbf{z} - \boldsymbol{\mu}_z\right) + \boldsymbol{\tau}
 (\#eq:latent-model)
 \end{equation}
-where $\boldsymbol{\alpha}$ is the regression coefficient vector for the transformed model and $\boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{w|z}\right)$. Further, if both $\mathbf{Q}$ and $\mathbf{R}$ are orthonormal matrices such that $\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q$ and $\mathbf{R}^t\mathbf{R} = \mathbf{I}_p$, the inverse transformation can be defined as,
+where $\boldsymbol{\alpha}$ is the regression coefficient vector for the transformed model and $\boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{w|z}\right)$. Further, if both $\mathbf{Q}$ and $\mathbf{R}$ are orthonormal matrices, i.e., $\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q$ and $\mathbf{R}^t\mathbf{R} = \mathbf{I}_p$, the inverse transformation can be defined as,
 
 \begin{equation}
   \begin{matrix}
@@ -95,17 +95,18 @@ Regression Coefficients
   $$
   \begin{aligned}
   \boldsymbol{\alpha} &= \boldsymbol{\Sigma}_{wz} \boldsymbol{\Sigma}_{zz}^{-1}
-      = \boldsymbol{Q\Sigma}_{YZ}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1}
+      = \boldsymbol{Q\Sigma}_{yz}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1}
       = \mathbf{Q}\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\right]\mathbf{R}^t
       = \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
   \end{aligned}
   $$
 
 Conditional Variance
-  : Further, the conditional variance covariance matrix of $\mathbf{w}$ given $\mathbf{z}$ is,
+  : Further, the conditional variance-covariance matrix of $\mathbf{w}$ given $\mathbf{z}$ is,
   $$
   \begin{aligned}
     \boldsymbol{\Sigma}_{w|z}
+    &= \boldsymbol{\Sigma}_{ww} - \boldsymbol{\Sigma}_{wz}\boldsymbol{\Sigma}_{zz}^{-1}\boldsymbol{\Sigma}_{zw} \\
     &= \boldsymbol{Q\Sigma}_{yy}\mathbf{Q}^t -
       \boldsymbol{Q \Sigma}_{yx}\mathbf{R}^t \left[\boldsymbol{R\Sigma}_{xx}\boldsymbol{R}^t\right]^{-1}
       \boldsymbol{R\Sigma}_{xy}\mathbf{Q}^t \nonumber \\
@@ -118,7 +119,7 @@ Conditional Variance
   $$
 
 Coefficient of Determination
-  : The coefficient of determination matrix \@ref(eq:latent-model) is,
+  : The coefficient-of-determination matrix for \@ref(eq:latent-model) is,
   $$
   \begin{aligned}
     \boldsymbol{\rho}^2_w &= \boldsymbol{\Sigma}_{wz} 
@@ -132,7 +133,7 @@ Coefficient of Determination
   \end{aligned}
   $$
 
-From the eigenvalue decomposition principle, if $\boldsymbol{\Sigma}_{xx} = \mathbf{R}\boldsymbol{\Lambda}\mathbf{R}^t$ and $\boldsymbol{\Sigma}_{yy} = \mathbf{Q}\boldsymbol{\Omega}\mathbf{Q}^t$ then $\mathbf{z}$ and $\mathbf{w}$ can be interpreted as principal components of $\mathbf{x}$ and $\mathbf{y}$ respectively. In this paper, these principal components will be termed as _predictor components_ and _response components_ respectively.  Here, $\boldsymbol{\Sigma}$ and $\boldsymbol{\Omega}$ are diagonal matrices of eigenvalues of $\boldsymbol{\Sigma}_{xx}$ and $\boldsymbol{\Sigma}_{yy}$, respectively. 
+From the eigenvalue decomposition principle, if $\boldsymbol{\Sigma}_{xx} = \mathbf{R}\boldsymbol{\Lambda}\mathbf{R}^t$ and $\boldsymbol{\Sigma}_{yy} = \mathbf{Q}\boldsymbol{\Omega}\mathbf{Q}^t$ then $\mathbf{z}$ and $\mathbf{w}$ can be interpreted as principal components of $\mathbf{x}$ and $\mathbf{y}$ respectively. In this paper, these principal components will be termed as _predictor components_ and _response components_ respectively.  Here, $\boldsymbol{\Lambda}$ and $\boldsymbol{\Omega}$ are diagonal matrices of eigenvalues of $\boldsymbol{\Sigma}_{xx}$ and $\boldsymbol{\Sigma}_{yy}$, respectively. 
 
 # Relevant Components # 
 
@@ -154,16 +155,16 @@ $$\lambda_j = e^{-\gamma(j - 1)}, \gamma >0 \text{ and } j = 1, 2, \ldots, p$$
 Here, as $\gamma$ increases, the decline of eigenvalues becomes steeper, hence the parameter $\gamma$ controls the level of multicollinearity in $\mathbf{x}$.
 
 **Parameterization of $\boldsymbol{\Sigma}_{ww}$**
-: Here we assume that $\mathbf{w}$'s are independent and mutinormal distributed with variances 1, hence $\boldsymbol{\Sigma}_{ww} = \mathbf{I}_m$.
+: Here we assume that $\mathbf{w}$'s are independent and has mutinormal distribution with variances 1, hence $\boldsymbol{\Sigma}_{ww} = \mathbf{I}_m$.
 
 **Parameterization of $\boldsymbol{\Sigma}_{zw}$**
 : After parameterization of $\boldsymbol{\Sigma}_{zz}$ and $\boldsymbol{\Sigma}_{ww}$, we are left with $m \times p$ number of unknowns corresponding to $\boldsymbol{\Sigma}_{zw}$. Some of the elements of $\boldsymbol{\Sigma}_{zw}$ may be equal to zero, which implies that the given $z$ is irrelevant for the given variable $w$. The non-zero elements define which of the $z$ are relevant for $\mathbf{w}$. We typically refer to the indices of these $z$ variables as the positions of relevant components. In order to re-parameterize this covariance matrix, it is necessary to discuss the position of relevant components in detail.
 
 ### Position of relevant components ###
 
-Let $k_1$ components be relevant for $w_1$, $k_2$ components be relevant for $w_2$ and so on. Let the positions of these components be given by the index sets $\mathcal{P}_1, \mathcal{P}_2, \ldots, \mathcal{P}_m$ respectively. Further, the covariance between $w_j$ and $z_i$ is non-zero only if $\mathbf{z}_i$ is relevant for $w_j$. If $\sigma_{ij}$ is the covariance between $w_j$ and $z_i$ then $\sigma_{ij} \ne 0$ if $i \in \mathcal{P}_j$ where $i = 1, \ldots, p$ and $j = 1, \ldots, m$ and $\sigma_{ij} = 0$ otherwise.
+Let $k_1$ components be relevant for $w_1$, $k_2$ components be relevant for $w_2$ and so on. Let the positions of these components be given by the index sets $\mathcal{P}_1, \mathcal{P}_2, \ldots, \mathcal{P}_m$ respectively. Further, the covariance between $w_j$ and $z_i$ is non-zero only if $z_i$ is relevant for $w_j$. If $\sigma_{ij}$ is the covariance between $w_j$ and $z_i$ then $\sigma_{ij} \ne 0$ if $i \in \mathcal{P}_j$ where $i = 1, \ldots, p$ and $j = 1, \ldots, m$ and $\sigma_{ij} = 0$ otherwise.
 
-In addition, the true regression coefficients for $w_j$ (ref:\@ref(eq:latent-model)) is given by:
+In addition, the true regression coefficients for $w_j$ [ref:\@ref(eq:latent-model)] is given by:
 
 $$
 \boldsymbol{\alpha}_j = \Lambda^{-1} \sigma_{ij} = \sum_{i \in \mathcal{P}_j}\frac{\sigma_{ij}}{\lambda_i},\qquad j = 1, 2, \ldots m
@@ -245,9 +246,9 @@ irrel.x    <- paste0("x_{", setdiff(1:sim.obj$p, unlist(sim.obj$relpred)), "}")
 
 Initially, let us consider an example where a regression model with $p = 10$ predictors $(\mathbf{x})$ and $m = 4$ responses $(\mathbf{y})$. Let's assume that only three response components $(w_1, w_2$ and $w_3)$ are needed to describe all four response variables. Further, let the index sets $\mathcal{P}_1 = \{1, 2\}, \mathcal{P}_2 = \{3, 4\}$ and $\mathcal{P}_3 = \{5, 6\}$ define the positions of the predictor components of $\mathbf{x}$ that are relevant for $w_1, w_2$ and $w_3$ respectively. Let $\mathcal{S}_1$, $\mathcal{S}_2$ and $\mathcal{S}_3$ be the orthogonal spaces spanned by each set of predictor components. These spaces together span $\mathcal{S}_k = \mathcal{S}_1 \oplus \mathcal{S}_2 \oplus \mathcal{S}_3$ which is the minimum relevant space and equivalent to the x-envelope as discussed by @cook2013envelopes.
 
-Moreover, let $q_1 = 3, q_2 = 3$ and $q_3 = 2$ be the number of predictor variables we want to be relevant for $w_1, w_2$ and $w_3$ respectively. Then $q_1 = 3$ predictors may be obtained by rotating the predictor components in $\mathcal{P}_1$ along with one more irrelevant component. Similarly, $q_2 = 3$ predictors, relevant for $w_2$, can be obtained by rotating predictor components in $\mathcal{P}_2$ along with one more irrelevant component and finally, $q_3 = 2$ predictors, relevant for $w_3$, can be obtained by rotating the components in $\mathcal{P}_3$ without any additional irrelevant component. Let the space spanned by the $q_1, q_2$ and $q_3$ number of predictors be $\mathcal{S}_{q_1}$, $\mathcal{S}_{q_2}$ and $\mathcal{S}_{q_3}$. Together they span a space $\mathcal{S}_q = \mathcal{S}_{q_1} \oplus \mathcal{S}_{q_2} \oplus \mathcal{S}_{q_3}$. This space is bigger than $\mathcal{S}_k$ since in the process two irrelevant components were included in the rotations. Here, $\mathcal{S}_k$ is orthogonal to $\mathcal{S}_{p - k}$ and $\mathcal{S}_q$ is orthogonal to $\mathcal{S}_{p - q}$. Generally speaking, here we are splitting the complete variable space $\mathcal{S}_p$ into two orthogonal spaces -- $\mathcal{S}_k$ relevant for $\mathbf{w}$ and $\mathcal{S}_{p - k}$ irrelevant for $\mathbf{w}$.
+Moreover, let $q_1 = 3, q_2 = 3$ and $q_3 = 2$ be the number of predictor variables we want to have relevant for $w_1, w_2$ and $w_3$ respectively. Then $q_1 = 3$ predictors may be obtained by rotating the predictor components in $\mathcal{P}_1$ along with one more irrelevant component. Similarly, $q_2 = 3$ predictors, relevant for $w_2$, can be obtained by rotating predictor components in $\mathcal{P}_2$ along with one more irrelevant component and finally, $q_3 = 2$ predictors, relevant for $w_3$, can be obtained by rotating the components in $\mathcal{P}_3$ without any additional irrelevant component. Let the space spanned by the $q_1, q_2$ and $q_3$ number of predictors be $\mathcal{S}_{q_1}$, $\mathcal{S}_{q_2}$ and $\mathcal{S}_{q_3}$. Together they span a space $\mathcal{S}_q = \mathcal{S}_{q_1} \oplus \mathcal{S}_{q_2} \oplus \mathcal{S}_{q_3}$. This space is bigger than $\mathcal{S}_k$ since in the process two irrelevant components were included in the rotations. Here, $\mathcal{S}_k$ is orthogonal to $\mathcal{S}_{p - k}$ and $\mathcal{S}_q$ is orthogonal to $\mathcal{S}_{p - q}$. Generally speaking, here we are splitting the complete variable space $\mathcal{S}_p$ into two orthogonal spaces -- $\mathcal{S}_k$ relevant for $\mathbf{w}$ and $\mathcal{S}_{p - k}$ irrelevant for $\mathbf{w}$.
 
-In the previous section, we discussed about the construction of a covariance matrix for the latent structure. Figure~\@ref(fig:cov-plot-print) (left) shows a similar structure resembling the example here. The three colors represent the relevance with the three latent response components $(w_1, w_2$ and $w_3)$. Here we can see that $`r rel.z[[1]][1]`$ and $`r rel.z[[1]][2]`$ (first and second predictor components of $\mathbf{x}$) have non-zero covariance with $w_1$ (first latent component of response $\mathbf{y}$). In the similar manner other non-zero covariances are self-explanatory. 
+In the previous section, we discussed about the construction of a covariance matrix for the latent structure. Figure \@ref(fig:cov-plot-print1) shows a similar structure resembling the example here. The three colors represent the relevance with the three latent response components $(w_1, w_2$ and $w_3)$. Here we can see that $`r rel.z[[1]][1]`$ and $`r rel.z[[1]][2]`$ (first and second predictor components of $\mathbf{x}$) have non-zero covariance with $w_1$ (first latent component of response $\mathbf{y}$). In the similar manner other non-zero covariances are self-explanatory. 
 
 ```{r cov-plot-print, echo = FALSE, warning = FALSE, message = FALSE, out.width = '33%', fig.asp = 1.2, fig.subcap=c("Relevant Position", "Rotation Matrix", "Relevant Predictors"), fig.cap = 'Simulation of predictor and response variables after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).', fig.width=1.5, dpi = 800, fig.pos = "!htb"}
 plt1 <- plot(cov.df(sim.obj, type = "relpos", ordering = TRUE), "relpos")
@@ -285,7 +286,7 @@ if (!file.exists("images/cov-plot-print-3.tiff")) {
 }
 ```
 
-In order to simulate predictor variables $(\mathbf{x})$,  we construct matrix $\mathbf{R}$ which then is used for orthogonal rotation of the predictor components $\mathbf{z}$. This defines a new basis for the same space as is spanned by the predictor components. In principle, there are many possible options for defining a rotation matrix. Among them, the eigenvector matrix of $\boldsymbol{\Sigma}_{xx}$ can be a candidate. However, in this reverse engineering approach both rotation matrices $\mathbf{R}$ and $\mathbf{Q}$ along with the covariance matrices $\boldsymbol{\Sigma}_{xx}$ are unknown. So, we are free to choose any $\mathbf{R}$ that satisfied the properties of a real valued rotation matrix, i.e $\mathbf{R}^{-1} = \mathbf{R}^t$ so that $\mathbf{R}$ is orthonormal and its determinant becomes $\pm 1$. Here the rotation matrix $\mathbf{R}$ should be block diagonal as in figure~\@ref(fig:cov-plot-print) (middle) in order to rotate spaces $\mathcal{S}_1, \mathcal{S}_2 \ldots$ separately. Figure~\@ref(fig:simulated-data) (left) shows the simulated predictor components $\mathbf{z}$ that we are following in our example where we can see that the components $`r rel.z[[1]][1]`$ and $`r rel.z[[1]][2]`$ (relevant for $w_1$) is getting rotated together with an irrelevant component $`r rel.z[[1]][3]`$. The resultant predictors (Figure \@ref(fig:simulated-data), right) $`r rel.x[[1]][-3]`$ and $`r rel.x[[1]][3]`$ will hence also be relevant for $w_1$. In the figure, we can see that components $`r irrelpos.z[-4]`$ and $`r irrelpos.z[4]`$ are not relevant for any responses before rotation, however, the $`r setdiff(irrelpos.x, irrel.x)`$ predictors become relevant after rotation keeping $`r irrel.x[1]`$ and $`r irrel.x[2]`$ still irrelevant.
+In order to simulate predictor variables $(\mathbf{x})$,  we construct matrix $\mathbf{R}$ which then is used for orthogonal rotation of the predictor components $\mathbf{z}$. This defines a new basis for the same space as is spanned by the predictor components. In principle, there are many possible options for defining a rotation matrix. Among them, the eigenvector matrix of $\boldsymbol{\Sigma}_{xx}$ can be a candidate. However, in this reverse engineering approach both rotation matrices $\mathbf{R}$ and $\mathbf{Q}$ along with the covariance matrices $\boldsymbol{\Sigma}_{xx}$ are unknown. So, we are free to choose any $\mathbf{R}$ that satisfied the properties of a real valued rotation matrix, i.e $\mathbf{R}^{-1} = \mathbf{R}^t$ so that $\mathbf{R}$ is orthonormal and its determinant becomes $\pm 1$. Here the rotation matrix $\mathbf{R}$ should be block diagonal as in Figure \@ref(fig:cov-plot-print2) in order to rotate spaces $\mathcal{S}_1, \mathcal{S}_2 \ldots$ separately. Figure knitr:::is_html_output()) \@ref(fig:simulated-data) else \@ref(fig:simulated-data1)` shows the simulated predictor components $\mathbf{z}$ that we are following in our example where we can see that the components $`r rel.z[[1]][1]`$ and $`r rel.z[[1]][2]`$ (relevant for $w_1$) is getting rotated together with an irrelevant component $`r rel.z[[1]][3]`$. The resultant predictors (Figure \@ref(fig:simulated-data2)) $`r rel.x[[1]][-3]`$ and $`r rel.x[[1]][3]`$ will hence also be relevant for $w_1$. In the figure, we can see that components $`r irrelpos.z[-4]`$ and $`r irrelpos.z[4]`$ are not relevant for any responses before rotation, however, the $`r setdiff(irrelpos.x, irrel.x)`$ predictors become relevant after rotation keeping $`r irrel.x[1]`$ and $`r irrel.x[2]`$ still irrelevant.
 
 ```{r simulated-data, echo = FALSE, warning = FALSE, message = FALSE, out.width = '45%', fig.cap = 'Simulated Data before', fig.align='center', fig.subcap=c("Before Rotation", "After Rotation"), fig.pos='!htb', fig.width=1.7, fig.asp=0.8}
 obsPlt1 <- get_obsplot(sim.obj, base.size = 8,  point.size = 0.5)
