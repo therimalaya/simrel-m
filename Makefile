@@ -19,7 +19,7 @@ serve:
 	browser-sync start --server $(DIR) --files $(DIR) --no-open --no-ui
 
 all:
-	Rscript --quiet _render.R
+	Rscript --quiet _render.R && mv main.html public/index.html
 
 clean:
 	rm -rf $(DIR)

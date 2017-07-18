@@ -662,7 +662,7 @@ relevant for \(\mathbf{w}\) and \(\mathcal{S}_{p - k}\) irrelevant for
 
 In the previous section, we discussed about the construction of a
 covariance matrix for the latent structure. Figure
-\ref{fig:cov-plot-print1} shows a similar structure resembling the
+\ref{fig:cov-plot-print}(a) shows a similar structure resembling the
 example here. The three colors represent the relevance with the three
 latent response components \((w_1, w_2\) and \(w_3)\). Here we can see
 that \(z_{1}\) and \(z_{2}\) (first and second predictor components of
@@ -687,18 +687,17 @@ choose any \(\mathbf{R}\) that satisfied the properties of a real valued
 rotation matrix, i.e \(\mathbf{R}^{-1} = \mathbf{R}^t\) so that
 \(\mathbf{R}\) is orthonormal and its determinant becomes \(\pm 1\).
 Here the rotation matrix \(\mathbf{R}\) should be block diagonal as in
-Figure \ref{fig:cov-plot-print2} in order to rotate spaces
+Figure \ref{fig:cov-plot-print}(b) in order to rotate spaces
 \(\mathcal{S}_1, \mathcal{S}_2 \ldots\) separately. Figure
-knitr:::is\_html\_output()) \ref{fig:simulated-data} else
-\ref{fig:simulated-data1}` shows the simulated predictor components
+\ref{fig:simulated-data}(a) shows the simulated predictor components
 \(\mathbf{z}\) that we are following in our example where we can see
 that the components \(z_{1}\) and \(z_{2}\) (relevant for \(w_1\)) is
 getting rotated together with an irrelevant component \(z_{8}\). The
-resultant predictors (Figure \ref{fig:simulated-data2}) \(x_{1}, x_{2}\)
-and \(x_{8}\) will hence also be relevant for \(w_1\). In the figure, we
-can see that components \(z_{7}, z_{8}, z_{9}\) and \(z_{10}\) are not
-relevant for any responses before rotation, however, the
-\(x_{8}, x_{10}\) predictors become relevant after rotation keeping
+resultant predictors (Figure \ref{fig:simulated-data}(b))
+\(x_{1}, x_{2}\) and \(x_{8}\) will hence also be relevant for \(w_1\).
+In the figure, we can see that components \(z_{7}, z_{8}, z_{9}\) and
+\(z_{10}\) are not relevant for any responses before rotation, however,
+the \(x_{8}, x_{10}\) predictors become relevant after rotation keeping
 \(x_{7}\) and \(x_{9}\) still irrelevant.
 
 \begin{figure}[!htb]
