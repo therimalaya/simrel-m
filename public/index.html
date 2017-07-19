@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2017-07-18" />
+<meta name="date" content="2017-07-19" />
 
 <title>A tool for simulating multi-response linear model data</title>
 
@@ -77,7 +77,7 @@ h6 {
 }
 </style>
 
-<link href="data:text/css;charset=utf-8,%2Econtainer%2Dfluid%2Emain%2Dcontainer%20p%2C%20div%20p%2C%20p%2C%20dl%20%3E%20dd%7B%0Apadding%3A%2015px%200px%3B%0Atext%2Dalign%3A%20justify%3B%0Aline%2Dheight%3A%202%2E8rem%3B%0A%7D%0A%2Econtainer%2Dfluid%2Emain%2Dcontainer%2C%20%2Etable%2Etable%2Dcondensed%2C%20pre%2C%20code%2C%20table%20%7B%0Afont%2Dsize%3A%20large%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
+<link href="data:text/css;charset=utf-8,%2Econtainer%2Dfluid%2Emain%2Dcontainer%20p%2C%20div%20p%2C%20p%2C%20dl%20%3E%20dd%7B%0Apadding%3A%2015px%200px%3B%0Atext%2Dalign%3A%20justify%3B%0Aline%2Dheight%3A%202%2E8rem%3B%0A%7D%0A%2Econtainer%2Dfluid%2Emain%2Dcontainer%2C%20%2Etable%2Etable%2Dcondensed%2C%20pre%2C%20code%2C%20table%20%7B%0Afont%2Dsize%3A%20large%3B%0A%7D%0A%23header%7B%0Adisplay%3Agrid%3B%0Agrid%2Dtemplate%2Dareas%3A%0A%22title%20title%20title%22%20%22author%2D1%20author%2D2%20author%2D3%22%20%22affil%2D1%20affil%2D2%20affil%2D3%22%20%22date%20date%20date%22%20%22abstract%20abstract%20abstract%22%3B%0A%7D%0A%23header%20%3E%20%2Etitle%7B%0Agrid%2Darea%3A%20title%3B%0A%7D%0A%23header%20%3E%20%2Edate%7B%0Agrid%2Darea%3A%20date%3B%0A%7D%0A%2Eabstract%7B%0Agrid%2Darea%3A%20abstract%0A%7D%0A%23header%20h4%3Anth%2Dof%2Dtype%281%29%7B%0Agrid%2Darea%3A%20author%2D1%3B%0A%7D%0A%23header%20h4%3Anth%2Dof%2Dtype%282%29%7B%0Agrid%2Darea%3A%20author%2D2%3B%0A%7D%0A%23header%20h4%3Anth%2Dof%2Dtype%283%29%7B%0Agrid%2Darea%3A%20author%2D3%3B%0A%7D%0A%23header%20address%3Anth%2Dof%2Dtype%281%29%7B%0Agrid%2Darea%3A%20affil%2D1%3B%0A%7D%0A%23header%20address%3Anth%2Dof%2Dtype%282%29%7B%0Agrid%2Darea%3A%20affil%2D2%3B%0A%7D%0A%23header%20address%3Anth%2Dof%2Dtype%283%29%7B%0Agrid%2Darea%3A%20affil%2D3%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -140,7 +140,7 @@ KBM<br><a class="author_email" href="mailto:#"><a href="mailto:trygve.almoy@nmbu
 <address class="author_afil">
 NMBU<br><a class="author_email" href="mailto:#"><a href="mailto:solve.sabo@nmbu.no">solve.sabo@nmbu.no</a></a>
 </address>
-<h4 class="date"><em>2017-07-18</em></h4>
+<h4 class="date"><em>2017-07-19</em></h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such “big-data”. Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present <code>simrel-m</code>, which is a versatile and transparent tool for simulating linear model data with an extensive range of adjustable properties. The method is based on the concept of relevant components <span class="citation">(Helland and Almøy 1994)</span>, and is equivalent to the envelope model by Dennis Cook. It is a multi-response extension of R-package <code>simrel</code> which is availiable in R-package repository CRAN, and as <code>simrel</code> the new approach is essentially based on random rotations of latent relevant components to obtain a predictor matrix <span class="math inline">\(\mathbf{X}\)</span>, but in addition we introduce random rotations of latent components spanning a response space in order to obtain a multivariate response matrix <span class="math inline">\(\mathbf{Y}\)</span>. The properties of the linear relation between <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> are defined by a small set of input parameters which allow versatile and adjustable simulations. Sub-space rotations also allow for generating data suitable for testing variable selection methods in multi-response settings. The method is implemented as an update to the R-package <code>simrel</code>.</p>
