@@ -713,7 +713,7 @@ Among several methods
 \citep{anderson1987generation, heiberger1978algorithm} for generating
 random orthogonal matrix, in this paper we are using orthogonal matrix
 \(\mathcal{Q}\) obtained from QR-decomposition of a matrix filled with
-standard normal variates. The rotation here can be a) restricted and b)
+standard normal variate. The rotation here can be a) restricted and b)
 unrestricted. The latter rotates all components \(\mathbf{z}\) together
 and makes all predictor variables somewhat relevant for all response
 components. However, the former performs a block-wise rotation so that
@@ -806,7 +806,7 @@ relevant for response component \(w_3\). In addition, following the
 discussion about \protect\hyperlink{rotation-of-response-space}{rotation
 of response space}, \(w_1\) was rotated together with \(w_4\) and
 \(w_2\) was rotated together with \(w_5\). Figure
-\ref{fig:cov-plot-print-1} visualize the covariance structrue and
+\ref{fig:cov-plot-print-1} visualize the covariance structure and
 relationship between the response and predictor variables for first
 design.
 
@@ -843,16 +843,16 @@ where, \(\hat{\boldsymbol{\beta}}\) is an estimate of true regression
 coefficient \(\boldsymbol{\beta}\) and \(\boldsymbol{\Sigma}_{xx}\) is
 the true covariance structure of the predictor variables obtained from
 \texttt{simrel}. Also, \(\boldsymbol{\Sigma}_{y|x}\) is the true minimum
-error of the model. Here \(\hat{\boldsymbol{\beta}}\) varies accross
+error of the model. Here \(\hat{\boldsymbol{\beta}}\) varies across
 different estimation methods while the remaining terms are same for each
 dataset design. Further, an overall prediction error of all responses is
 measured by the trace of \(\boldsymbol{\vartheta}\).
 
-The minimimum prediction error (measured as discussed above) for nine
+The minimum prediction error (measured as discussed above) for nine
 estimation methods averaged over 20 replications of four designs are
 shown in Table \ref{tab:min-error}. The table also gives the number of
 predictor components (response components in case of \texttt{Yenv}), a
-method has used in order to obtain the minimum of average prediciton
+method has used in order to obtain the minimum of average prediction
 error.
 
 \rowcolors{2}{gray!6}{white}
@@ -883,7 +883,7 @@ Yenv & (3, 3.24) & (3, 3.23) & (3, 4.29) & (3, 4.24)\\
 
 \rowcolors{2}{white}{white}
 
-Table \ref{tab:min-error} shows that the simulteneous envelope has
+Table \ref{tab:min-error} shows that the simultaneous envelope has
 prediction error of 3.17 and 3.14 in design 1 (with 4 components) and
 design 2 (with 5 components), respectively, which is smaller than other
 methods. However the method was not able to show the same performance in
@@ -892,7 +892,7 @@ design 3 and design 4. The PCR model has the smallest prediction error
 minimum prediction error (4.04) from 3 components in design 4. In design
 3, we can also see that the Canonical PLS method has second best
 performance with only three components. The number of components vary
-accross different replicated dataset but the component corresponding to
+across different replicated dataset but the component corresponding to
 minimum prediction error is discussed here. A detailed picture of
 prediction error for each estimation method obtained for each additional
 component is shown in Figure \ref{fig:Average-Prediction-Plot}. Although
@@ -907,15 +907,15 @@ influenced by the multicollinearity problem.
 
 The analysis presented in Figure \ref{fig:Average-Prediction-Plot} has
 addressed some questions such as how methods work when there exist a
-true reduced dimension in response space, but also arised other
-questions like why they perform differently. For example, what is the
-reason for the decreasing relative performance of the simultaneous
-envelope method as the \(\rho^2\) values are reduced? Does this depend
-on the dimensions and shape of the \(\mathbf{y}\) envelopes? Since, the
-example is merely intended as a demonstration of how \texttt{simrel} can
-be used in scientific study, a more elaborative studies would be
-necessary to answer such questions, but for this purpose \texttt{simrel}
-would be a powerful tool.
+true reduced dimension in response space, but also arose other questions
+like why they perform differently. For example, what is the reason for
+the decreasing relative performance of the simultaneous envelope method
+as the \(\rho^2\) values are reduced? Does this depend on the dimensions
+and shape of the \(\mathbf{y}\) envelopes? Since, the example is merely
+intended as a demonstration of how \texttt{simrel} can be used in
+scientific study, a more elaborative studies would be necessary to
+answer such questions, but for this purpose \texttt{simrel} would be a
+powerful tool.
 
 \section{Web Interface}\label{web-interface}
 
@@ -1004,7 +1004,7 @@ Many scientific studies
 \citep{helland2012near, saebo2008lpls, cook2015simultaneous} are using
 simulated data in order to compare their findings with others or assess
 its properties. In many of these situations, a user-friendly and
-versitle simulation tool like \texttt{simrel} can play an important
+versatile simulation tool like \texttt{simrel} can play an important
 role. \citet{gangsei2016theoretical}; \citet{gangsei2016linear}; and
 \citet{saebo2015simrel} are some examples where the univariate and
 bivariate form of \texttt{simrel} have been used for such purposes.
