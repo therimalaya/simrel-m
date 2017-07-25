@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-07-19">
+<meta name="date" content="2017-07-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -167,15 +167,15 @@ Figure 3: Simulation of predictor and response variables for design one after or
 </tr>
 </tbody>
 </table>
-<p>For each method, an estimate of test prediction error was computed as,</p>
-<p><span class="math display">\[\underset{m \times m}{\boldsymbol{\alpha}} = 
-\left(
+<p>For each method, an estimate of expected squared prediction error was computed as,</p>
+<p><span class="math display">\[\underset{m \times m}{\boldsymbol{\vartheta}} = 
+\mathrm{E}\left[\left(
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
 \right) ^t \boldsymbol{\Sigma}_{xx}
 \left(
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
-\right) + \boldsymbol{\Sigma}_{y|x}\]</span></p>
-<p>where, <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is an estimate of true regression coefficient <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span> is the true covariance structure of the predictor variables obtained from <code>simrel</code>. Also, <span class="math inline">\(\boldsymbol{\Sigma}_{y|x}\)</span> is the true minimum error of the model. Here <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> varies accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the trace of <span class="math inline">\(\boldsymbol{\alpha}\)</span>.</p>
+\right)\right] + \boldsymbol{\Sigma}_{y|x}\]</span></p>
+<p>where, <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> is an estimate of true regression coefficient <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span> is the true covariance structure of the predictor variables obtained from <code>simrel</code>. Also, <span class="math inline">\(\boldsymbol{\Sigma}_{y|x}\)</span> is the true minimum error of the model. Here <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> varies accross different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the trace of <span class="math inline">\(\boldsymbol{\vartheta}\)</span>.</p>
 <p>The minimimum prediction error (measured as discussed above) for nine estimation methods averaged over 20 replications of four designs are shown in Table <a href="implementation.html#tab:min-error">2</a>. The table also gives the number of predictor components (response components in case of <code>Yenv</code>), a method has used in order to obtain the minimum of average prediciton error.</p>
 <table>
 <caption><span id="tab:min-error">Table 2: </span> Minimum average prediction error (number of components corresponding to minimum prediction error, minimum prediction error) (For <span class="math inline">\(Y\text{env}\)</span>, the number of response components is given)</caption>

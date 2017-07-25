@@ -1,5 +1,5 @@
 %review=doublespace preprint=single 5p=2 column
-\documentclass[3p,times,12pt,authoryear]{elsarticle}
+\documentclass[3p,times,review,12pt]{elsarticle}
 
 %% add packages %%
 %% ------------ %%
@@ -66,8 +66,6 @@
 
 %% Use Landscape Pages
 
-\usepackage{setspace}
-\setstretch{1.5}
 
 \usepackage{lmodern}
 
@@ -260,7 +258,7 @@ which is assumed throughout this paper. We assume:
     \end{bmatrix},
     \begin{bmatrix}
       \boldsymbol{\Sigma}_{yy} & \boldsymbol{\Sigma}_{yx} \\
-      \boldsymbol{\Sigma}_{xy} & \boldsymbol{\Sigma}_{xx}
+      \boldsymbol{\Sigma}_{yx}^t & \boldsymbol{\Sigma}_{xx}
     \end{bmatrix}
   \right)
   \label{eq:rand-reg-model}
@@ -273,12 +271,12 @@ where, \(\mathbf{y}\) is a response vector with \(m\) response variables
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule
-\(\boldsymbol{\Sigma}_{yy}\) & is the variance-covariance matrix of
-\(\mathbf{y}\)\tabularnewline
-\(\boldsymbol{\Sigma}_{xx}\) & is the variance-covariance matrix of
-variables \(\mathbf{x}\)\tabularnewline
-\(\boldsymbol{\Sigma}_{xy}\) & is the matrix of covariance between
-\(\mathbf{x}\) and \(\mathbf{y}\)\tabularnewline
+\(\boldsymbol{\Sigma}_{yy} (m \times m)\) & is the variance-covariance
+matrix of \(\mathbf{y}\)\tabularnewline
+\(\boldsymbol{\Sigma}_{xx} (p \times p)\) & is the variance-covariance
+matrix of variables \(\mathbf{x}\)\tabularnewline
+\(\boldsymbol{\Sigma}_{yx} (m \times p)\) & is the matrix of covariance
+between \(\mathbf{x}\) and \(\mathbf{y}\)\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -293,8 +291,9 @@ model,
   \label{eq:linear-model}
 \end{equation}
 
-where, \(\boldsymbol{\beta}^t\) is a matrix of regression coefficient
-and \(\boldsymbol{\varepsilon}\) is an error term such that
+where, \(\boldsymbol{\beta}^t\) is a \((m \times p)\) matrix of
+regression coefficient, and \(\boldsymbol{\varepsilon}\) is an error
+term such that
 \(\boldsymbol{\varepsilon} \sim N\left(0, \boldsymbol{\Sigma}_{y|x}\right)\).
 The properties of the linear model \eqref{eq:linear-model} can be
 expressed in terms of covariance matrices in \eqref{eq:rand-reg-model}.
@@ -302,19 +301,20 @@ expressed in terms of covariance matrices in \eqref{eq:rand-reg-model}.
 \begin{description}
 \tightlist
 \item[Regression Coefficients]
-The vector of regression coefficients is given by
+The matrix of regression coefficients is given by
 \[ \boldsymbol{\beta} = \boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\]
 \item[Coefficient of Determination]
 The diagonal elements of the coefficient-of-determination matrix
-\(\boldsymbol{\rho}_y^2\) gives the amount of variation in each response
-variable that is explained by \(\mathbf{x}\).
+\(\boldsymbol{\rho}_y^2 (m \times m)\) gives the amount of variation in
+each response variable that is explained by \(\mathbf{x}\).
 \[\boldsymbol{\rho}_y^2 = \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\]
 \item[Conditional variance]
 The conditional variance-covariance matrix of \(\mathbf{y}\) given
 \(\mathbf{x}\) is,
 \[\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.\]
-The diagonal elements of this matrix equals the theoretical least square
-error of prediction for each of the response variables.
+The diagonal elements of this matrix equals the minimum least square
+error of prediction \(\left[\mathrm{E}(y - \hat{y})^2\right]\) for each
+of the response variables.
 \end{description}
 
 Let us define a transformation of \(\mathbf{x}\) and \(\mathbf{y}\) as,
@@ -349,8 +349,8 @@ transformed variables as:
   \label{eq:model3}
 \end{align}
 
-In addition, a linear model relating \(\mathbf{w}\) and \(\mathbf{z}\)
-can be written as,
+In addition, a linear model relating \(\mathbf{w}\) conditioned on
+\(\mathbf{z}\) can be written as,
 
 \begin{equation}
 \mathbf{w} =    \boldsymbol{\mu}_w + \boldsymbol{\alpha}^t \left(\mathbf{z} - \boldsymbol{\mu}_z\right) + \boldsymbol{\tau}
@@ -438,10 +438,11 @@ Consider a single response linear model with \(p\) predictors.
 
 \[y = \mu_y + \boldsymbol{\beta}^t\left(\mathbf{x} - \mu_x\right) + \epsilon\]
 
-where, \(\epsilon \sim N(0, \sigma^2)\) and \(\mathbf{x}\) are random
-predictors. Following the principal of relevant space and irrelevant
-space which are discussed extensively in \citet{helland1994comparison},
-\citet{Helland2000}, \citet{helland2012near}, \citet{cook2013envelopes},
+where, \(\epsilon \sim N(0, \sigma^2)\) and \(\mathbf{x}\) is a vector
+of random predictors. Following the concept of relevant space and
+irrelevant space which is discussed extensively in
+\citet{helland1994comparison}, \citet{Helland2000},
+\citet{helland2012near}, \citet{cook2013envelopes},
 \citet{saebo2015simrel} and \citet{helland2017}, we can assume that
 there exists a subspace of the full predictor space which is relevant
 for \(y\). An orthogonal space to this space does not contain any
@@ -527,7 +528,7 @@ model parameters are held constant. For example, if the first and second
 components, \(z_1\) and \(z_2\), are relevant for \(w_1\) and fifth and
 sixth components, \(z_5\) and \(z_6\), are relevant for \(w_2\), it is
 relatively easier to predict \(w_1\) than \(w_2\), other properties
-being similar. This is so, because the first and second principal
+being similar. This might be so, because the first and second principal
 components have larger variances than the fifth and sixth components.
 
 Although the covariance matrix may depend on few relevant components, we
@@ -546,7 +547,7 @@ following two conditions:
 
 We have the relation,
 \[\boldsymbol{\rho}_w^2 = \boldsymbol{\Sigma}_{zw}^t\boldsymbol{\Sigma}_{zz}^{-1}\boldsymbol{\Sigma}_{zw}\boldsymbol{\Sigma}_{ww}^{-1}\]
-Applying our above given assumptions that,
+Applying our assumptions that,
 \(\boldsymbol{\Sigma_{ww}} = \mathbf{I}_m\) and
 \(\boldsymbol{\Sigma}_{zz} = \Lambda\), we obtain,
 
@@ -605,8 +606,8 @@ simulation of a single observation of \((\mathbf{w, z})\) let us define
 \(\mathbf{g} = \boldsymbol{\Sigma}^{-1/2}\mathbf{u}\) such that
 \(\text{cov}(\mathbf{g}) = \boldsymbol{\Sigma}\). Here
 \(\boldsymbol{\Sigma}^{-1/2}\) is obtained from Choleskey decomposition
-of \(\boldsymbol{\Sigma}\) and \(\mathbf{u}\) is simulated from standard
-normal distribution and has covariance \(\text{cov}(u) = \mathbf{I}\).
+of \(\boldsymbol{\Sigma}\), and \(\mathbf{u}\) is simulated from
+independent standard normal distribution.
 
 Similarly, in order to simulate \(n\) observations, we define
 \(\underset{n \times (m + p)}{\mathbf{G}} = \mathbf{U}\boldsymbol{\Sigma}^{-1/2}\).
@@ -685,15 +686,14 @@ matrices \(\mathbf{R}\) and \(\mathbf{Q}\) along with the covariance
 matrices \(\boldsymbol{\Sigma}_{xx}\) are unknown. So, we are free to
 choose any \(\mathbf{R}\) that satisfied the properties of a real valued
 rotation matrix, i.e \(\mathbf{R}^{-1} = \mathbf{R}^t\) so that
-\(\mathbf{R}\) is orthonormal and its determinant becomes \(\pm 1\).
-Here the rotation matrix \(\mathbf{R}\) should be block diagonal as in
-Figure \ref{fig:cov-plot-print}(b) in order to rotate spaces
-\(\mathcal{S}_1, \mathcal{S}_2 \ldots\) separately. Figure
-\ref{fig:simulated-data}(a) shows the simulated predictor components
-\(\mathbf{z}\) that we are following in our example where we can see
-that the components \(z_{1}\) and \(z_{2}\) (relevant for \(w_1\)) is
-getting rotated together with an irrelevant component \(z_{8}\). The
-resultant predictors (Figure \ref{fig:simulated-data}(b))
+\(\mathbf{R}\) is orthonormal. Here the rotation matrix \(\mathbf{R}\)
+should be block diagonal as in Figure \ref{fig:cov-plot-print}(b) in
+order to rotate spaces \(\mathcal{S}_1, \mathcal{S}_2 \ldots\)
+separately. Figure \ref{fig:simulated-data}(a) shows the simulated
+predictor components \(\mathbf{z}\) that we are following in our example
+where we can see that the components \(z_{1}\) and \(z_{2}\) (relevant
+for \(w_1\)) is getting rotated together with an irrelevant component
+\(z_{8}\). The resultant predictors (Figure \ref{fig:simulated-data}(b))
 \(x_{1}, x_{2}\) and \(x_{8}\) will hence also be relevant for \(w_1\).
 In the figure, we can see that components \(z_{7}, z_{8}, z_{9}\) and
 \(z_{10}\) are not relevant for any responses before rotation, however,
@@ -828,15 +828,16 @@ Coef. of Determination $(\rho^2_{w_j})$ & 0.8, 0.8, 0.4 & 0.8, 0.8, 0.4 & 0.4, 0
 \end{tabular}
 \end{table}
 
-For each method, an estimate of test prediction error was computed as,
+For each method, an estimate of expected squared prediction error was
+computed as,
 
-\[\underset{m \times m}{\boldsymbol{\alpha}} = 
-\left(
+\[\underset{m \times m}{\boldsymbol{\vartheta}} = 
+\mathrm{E}\left[\left(
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
 \right) ^t \boldsymbol{\Sigma}_{xx}
 \left(
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
-\right) + \boldsymbol{\Sigma}_{y|x}\]
+\right)\right] + \boldsymbol{\Sigma}_{y|x}\]
 
 where, \(\hat{\boldsymbol{\beta}}\) is an estimate of true regression
 coefficient \(\boldsymbol{\beta}\) and \(\boldsymbol{\Sigma}_{xx}\) is
@@ -845,7 +846,7 @@ the true covariance structure of the predictor variables obtained from
 error of the model. Here \(\hat{\boldsymbol{\beta}}\) varies accross
 different estimation methods while the remaining terms are same for each
 dataset design. Further, an overall prediction error of all responses is
-measured by the trace of \(\boldsymbol{\alpha}\).
+measured by the trace of \(\boldsymbol{\vartheta}\).
 
 The minimimum prediction error (measured as discussed above) for nine
 estimation methods averaged over 20 replications of four designs are

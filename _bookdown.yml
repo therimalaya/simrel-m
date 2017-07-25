@@ -8,7 +8,6 @@ rmd_files: [
   "Includes/02-StatisticalModel.Rmd",
   "Includes/03-Implementation.Rmd",
   "Includes/04-WebInterface.Rmd",
-  # "Includes/05-appendix.Rmd",
   "Includes/06-references.Rmd",
   ]
 language:

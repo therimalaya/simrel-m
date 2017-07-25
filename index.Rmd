@@ -20,11 +20,11 @@ address:
   - code: NMBU
     address: Prorector, Norwegian University of Life Sciences, Ås, Norway
 # Template Options
-classoption: ['3p', 'times', '12pt', 'authoryear']
+classoption: ['3p', 'times', 'review', '12pt']
 monofont: 'sourcecodepro'
 monofontoptions: "Scale=0.7"
 colorlinks: true
-linespacing: 1.5
+# linespacing: 1.5
 # Bibliography Setup
 bibliography: ['ref-db.bib', 'packages.bib']
 biblio-title: References

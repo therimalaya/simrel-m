@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-07-19">
+<meta name="date" content="2017-07-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -120,7 +120,7 @@ In this section we describe the model and the model parameterization which is as
     \end{bmatrix},
     \begin{bmatrix}
       \boldsymbol{\Sigma}_{yy} &amp; \boldsymbol{\Sigma}_{yx} \\
-      \boldsymbol{\Sigma}_{xy} &amp; \boldsymbol{\Sigma}_{xx}
+      \boldsymbol{\Sigma}_{yx}^t &amp; \boldsymbol{\Sigma}_{xx}
     \end{bmatrix}
   \right)
   \tag{1}
@@ -129,15 +129,15 @@ In this section we describe the model and the model parameterization which is as
 <table>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(\boldsymbol{\Sigma}_{yy}\)</span></td>
+<td><span class="math inline">\(\boldsymbol{\Sigma}_{yy} (m \times m)\)</span></td>
 <td align="left">is the variance-covariance matrix of <span class="math inline">\(\mathbf{y}\)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span></td>
+<td><span class="math inline">\(\boldsymbol{\Sigma}_{xx} (p \times p)\)</span></td>
 <td align="left">is the variance-covariance matrix of variables <span class="math inline">\(\mathbf{x}\)</span></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(\boldsymbol{\Sigma}_{xy}\)</span></td>
+<td><span class="math inline">\(\boldsymbol{\Sigma}_{yx} (m \times p)\)</span></td>
 <td align="left">is the matrix of covariance between <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span></td>
 </tr>
 </tbody>
@@ -148,16 +148,16 @@ In this section we describe the model and the model parameterization which is as
 \mathbf{y} = \boldsymbol{\mu}_y + \boldsymbol{\beta}^t (\mathbf{x} - \boldsymbol{\mu}_x) + \boldsymbol{\varepsilon}
   \tag{2}
 \end{equation}\]</span>
-<p>where, <span class="math inline">\(\boldsymbol{\beta}^t\)</span> is a matrix of regression coefficient and <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> is an error term such that <span class="math inline">\(\boldsymbol{\varepsilon} \sim N\left(0, \boldsymbol{\Sigma}_{y|x}\right)\)</span>. The properties of the linear model <a href="statistical-model.html#eq:linear-model">(2)</a> can be expressed in terms of covariance matrices in <a href="statistical-model.html#eq:rand-reg-model">(1)</a>.</p>
+<p>where, <span class="math inline">\(\boldsymbol{\beta}^t\)</span> is a <span class="math inline">\((m \times p)\)</span> matrix of regression coefficient, and <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> is an error term such that <span class="math inline">\(\boldsymbol{\varepsilon} \sim N\left(0, \boldsymbol{\Sigma}_{y|x}\right)\)</span>. The properties of the linear model <a href="statistical-model.html#eq:linear-model">(2)</a> can be expressed in terms of covariance matrices in <a href="statistical-model.html#eq:rand-reg-model">(1)</a>.</p>
 <dl>
 <dt>Regression Coefficients</dt>
-<dd>The vector of regression coefficients is given by <span class="math display">\[ \boldsymbol{\beta} = \boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\]</span>
+<dd>The matrix of regression coefficients is given by <span class="math display">\[ \boldsymbol{\beta} = \boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\]</span>
 </dd>
 <dt>Coefficient of Determination</dt>
-<dd>The diagonal elements of the coefficient-of-determination matrix <span class="math inline">\(\boldsymbol{\rho}_y^2\)</span> gives the amount of variation in each response variable that is explained by <span class="math inline">\(\mathbf{x}\)</span>. <span class="math display">\[\boldsymbol{\rho}_y^2 = \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\]</span>
+<dd>The diagonal elements of the coefficient-of-determination matrix <span class="math inline">\(\boldsymbol{\rho}_y^2 (m \times m)\)</span> gives the amount of variation in each response variable that is explained by <span class="math inline">\(\mathbf{x}\)</span>. <span class="math display">\[\boldsymbol{\rho}_y^2 = \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\]</span>
 </dd>
 <dt>Conditional variance</dt>
-<dd>The conditional variance-covariance matrix of <span class="math inline">\(\mathbf{y}\)</span> given <span class="math inline">\(\mathbf{x}\)</span> is, <span class="math display">\[\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.\]</span> The diagonal elements of this matrix equals the theoretical least square error of prediction for each of the response variables.
+<dd>The conditional variance-covariance matrix of <span class="math inline">\(\mathbf{y}\)</span> given <span class="math inline">\(\mathbf{x}\)</span> is, <span class="math display">\[\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.\]</span> The diagonal elements of this matrix equals the minimum least square error of prediction <span class="math inline">\(\left[\mathrm{E}(y - \hat{y})^2\right]\)</span> for each of the response variables.
 </dd>
 </dl>
 <p>Let us define a transformation of <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> as, <span class="math inline">\(\mathbf{z} = \mathbf{Rx}\)</span> and <span class="math inline">\(\mathbf{w} = \mathbf{Qy}\)</span>. Here, <span class="math inline">\(\mathbf{R}_{p\times p}\)</span> and <span class="math inline">\(\mathbf{Q}_{m\times m}\)</span> are rotation matrices that rotate <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> to yield <span class="math inline">\(\mathbf{z}\)</span> and <span class="math inline">\(\mathbf{w}\)</span>, respectively. The model <a href="statistical-model.html#eq:rand-reg-model">(1)</a> can be re-expressed in terms of these transformed variables as:</p>
@@ -184,7 +184,7 @@ In this section we describe the model and the model parameterization which is as
   \right)
   \tag{3}
 \end{align}\]</span>
-<p>In addition, a linear model relating <span class="math inline">\(\mathbf{w}\)</span> and <span class="math inline">\(\mathbf{z}\)</span> can be written as,</p>
+<p>In addition, a linear model relating <span class="math inline">\(\mathbf{w}\)</span> conditioned on <span class="math inline">\(\mathbf{z}\)</span> can be written as,</p>
 <span class="math display" id="eq:latent-model">\[\begin{equation}
 \mathbf{w} =    \boldsymbol{\mu}_w + \boldsymbol{\alpha}^t \left(\mathbf{z} - \boldsymbol{\mu}_z\right) + \boldsymbol{\tau}
 \tag{4}
