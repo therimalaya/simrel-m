@@ -20,7 +20,7 @@ address:
   - code: NMBU
     address: Prorector, Norwegian University of Life Sciences, Ås, Norway
 # Template Options
-classoption: ['3p', 'times', 'review', '12pt']
+classoption: ['review']
 monofont: 'sourcecodepro'
 monofontoptions: "Scale=0.7"
 colorlinks: true
@@ -34,10 +34,10 @@ github-repo: therimalaya/simrel-m
 url: 'http\://therimalaya.github.io/simrel-m'
 knit: 'bookdown::render_book'
 # Abstract and Keywords
-keywords: ['`simrel` package in r, data simulation, linear model, `simrel-m`']
+keywords: ['`simrel` package in r', 'data simulation', 'linear model']
 abstract: |
-  Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such "big-data". Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present `simrel-m`, which is a versatile and transparent tool for simulating linear model data with an extensive range of adjustable properties.
-  The method is based on the concept of relevant components [@helland1994comparison], and is equivalent to the envelope model by Dennis Cook. It is a multi-response extension of R-package `simrel` which is availiable in R-package repository CRAN, and as `simrel` the new approach is essentially based on random rotations of latent relevant components to obtain a predictor matrix $\mathbf{X}$, but in addition we introduce random rotations of latent components spanning a response space in order to obtain a multivariate response matrix $\mathbf{Y}$.
+  Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such "big-data". Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present an extension to the R-package `simrel`, which is a versatile and transparent tool for simulating linear model data with an extensive range of adjustable properties.
+  The method is based on the concept of relevant components [@helland1994comparison], and is equivalent to the envelope model by Dennis Cook. It is a multi-response extension of R-package `simrel` which is available in R-package repository CRAN, and as `simrel` the new approach is essentially based on random rotations of latent relevant components to obtain a predictor matrix $\mathbf{X}$, but in addition we introduce random rotations of latent components spanning a response space in order to obtain a multivariate response matrix $\mathbf{Y}$.
   The properties of the linear relation between $\mathbf{X}$ and $\mathbf{Y}$ are defined by a small set of input parameters which allow versatile and adjustable simulations. Sub-space rotations also allow for generating data suitable for testing variable selection methods in multi-response settings.
   The method is implemented as an update to the R-package `simrel`.
 ---
