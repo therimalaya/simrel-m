@@ -152,8 +152,11 @@
 \newtheorem{proposition}{Proposition}[section]
 \theoremstyle{definition}
 \newtheorem{example}{Example}[section]
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[section]
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
 \begin{document}
 %% --- Front Matter Start --- %%
 \begin{frontmatter}
@@ -863,9 +866,11 @@ error.
       (For $Y\text{env}$, the number of response components is given)}
 \centering
 \begin{tabular}[t]{>{\bfseries\raggedright\arraybackslash}p{7em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}lcccclcccclcccclcccc}
+\hiderowcolors
 \toprule
 \bfseries{Model} & \bfseries{Design: 1} & \bfseries{Design: 2} & \bfseries{Design: 3} & \bfseries{Design: 4}\\
 \midrule
+\showrowcolors
 CPLS & (3, 3.24) & (4, 3.22) & (3, 4.09) & (3, 4.05)\\
 CPPLS & (3, 3.21) & (3, 3.17) & (3, 4.11) & (3, 4.04)\\
 OLS & (1, 3.60) & (1, 3.58) & (1, 4.57) & (1, 4.50)\\

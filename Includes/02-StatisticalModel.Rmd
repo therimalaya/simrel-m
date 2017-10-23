@@ -15,7 +15,7 @@ In this section we describe the model and the model parameterization which is as
   \right)
   (\#eq:rand-reg-model)
 \end{equation}
-where, $\mathbf{y}$ is a response vector with $m$ response variables $y_1, y_2, \ldots y_m$ with mean vector $\boldsymbol{\mu}_y$, and $\mathbf{x}$ is vector of $p$ predictor variables with mean vector $\boldsymbol{\mu}_x$. Further, 
+where, $\mathbf{y}$ is a response vector with $m$ response variables $y_1, y_2, \ldots y_m$ with mean vector $\boldsymbol{\mu}_y$, and $\mathbf{x}$ is vector of $p$ predictor variables with mean vector $\boldsymbol{\mu}_x$. Further,
 
 --------------------------------------- -----------------------------------------------------------------
 $\boldsymbol{\Sigma}_{yy} (m \times m)$ is the variance-covariance matrix of $\mathbf{y}$
