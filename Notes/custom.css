@@ -1,0 +1,23 @@
+.todo.TODO{
+    font-size: 0.6em;
+    background-color: #3b5998;
+    color: white;
+    padding: 0px 10px;
+    float: right;
+}
+ul {
+    padding-left: 0em;
+    list-style: none;
+}
+li:before { 
+    content: "\25A2";
+    padding-right: 10px;
+}
+h1+ul>li:before{
+    content: "";
+    padding-right: 0px;
+}
+#refs p{
+    width: 100%;
+}
+
