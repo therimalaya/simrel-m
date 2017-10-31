@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A tool for simulating multi-response linear model data</title>
   <meta name="description" content="A tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.4.1 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="A tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-07-25">
+<meta name="date" content="2017-10-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,6 +58,43 @@ div.abstract{
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -87,6 +124,7 @@ div.abstract{
 </ul></li>
 <li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a></li>
 <li class="chapter" data-level="" data-path="web-interface.html"><a href="web-interface.html"><i class="fa fa-check"></i>Web Interface</a></li>
+<li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>
@@ -162,7 +200,7 @@ In this section we describe the model and the model parameterization which is as
 </dl>
 <p>Let us define a transformation of <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> as, <span class="math inline">\(\mathbf{z} = \mathbf{Rx}\)</span> and <span class="math inline">\(\mathbf{w} = \mathbf{Qy}\)</span>. Here, <span class="math inline">\(\mathbf{R}_{p\times p}\)</span> and <span class="math inline">\(\mathbf{Q}_{m\times m}\)</span> are rotation matrices that rotate <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> to yield <span class="math inline">\(\mathbf{z}\)</span> and <span class="math inline">\(\mathbf{w}\)</span>, respectively. The model <a href="statistical-model.html#eq:rand-reg-model">(1)</a> can be re-expressed in terms of these transformed variables as:</p>
 <span class="math display" id="eq:model3">\[\begin{align}
-  \begin{bmatrix}\mathbf{w} \\ 
+  \begin{bmatrix}\mathbf{w} \\
   \mathbf{z}\end{bmatrix}  &amp; \sim N \left(\boldsymbol{\mu}, \boldsymbol{\Sigma}\right)
   = N \left(
     \begin{bmatrix}
@@ -186,7 +224,7 @@ In this section we describe the model and the model parameterization which is as
 \end{align}\]</span>
 <p>In addition, a linear model relating <span class="math inline">\(\mathbf{w}\)</span> conditioned on <span class="math inline">\(\mathbf{z}\)</span> can be written as,</p>
 <span class="math display" id="eq:latent-model">\[\begin{equation}
-\mathbf{w} =    \boldsymbol{\mu}_w + \boldsymbol{\alpha}^t \left(\mathbf{z} - \boldsymbol{\mu}_z\right) + \boldsymbol{\tau}
+\mathbf{w} =  \boldsymbol{\mu}_w + \boldsymbol{\alpha}^t \left(\mathbf{z} - \boldsymbol{\mu}_z\right) + \boldsymbol{\tau}
 \tag{4}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(\boldsymbol{\alpha}\)</span> is the regression coefficient vector for the transformed model and <span class="math inline">\(\boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{w|z}\right)\)</span>. Further, if both <span class="math inline">\(\mathbf{Q}\)</span> and <span class="math inline">\(\mathbf{R}\)</span> are orthonormal matrices, i.e., <span class="math inline">\(\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q\)</span> and <span class="math inline">\(\mathbf{R}^t\mathbf{R} = \mathbf{I}_p\)</span>, the inverse transformation can be defined as,</p>
@@ -200,17 +238,15 @@ In this section we describe the model and the model parameterization which is as
   \tag{5}
 \end{equation}\]</span>
 <p>From this, we can find a direct connection between different population properties of <a href="statistical-model.html#eq:linear-model">(2)</a> and <a href="statistical-model.html#eq:latent-model">(4)</a>.</p>
-<dl>
-<dt>Regression Coefficients</dt>
-<dd><span class="math display">\[
+<p>Regression Coefficients : <span class="math display">\[
   \begin{aligned}
   \boldsymbol{\alpha} &amp;= \boldsymbol{\Sigma}_{wz} \boldsymbol{\Sigma}_{zz}^{-1}
-  = \boldsymbol{Q\Sigma}_{yz}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1}
-  = \mathbf{Q}\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\right]\mathbf{R}^t
-  = \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
+      = \boldsymbol{Q\Sigma}_{yz}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1}
+      = \mathbf{Q}\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\right]\mathbf{R}^t
+      = \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
   \end{aligned}
-  \]</span>
-</dd>
+  \]</span></p>
+<dl>
 <dt>Conditional Variance</dt>
 <dd>Further, the conditional variance-covariance matrix of <span class="math inline">\(\mathbf{w}\)</span> given <span class="math inline">\(\mathbf{z}\)</span> is, <span class="math display">\[
   \begin{aligned}
@@ -219,7 +255,7 @@ In this section we describe the model and the model parameterization which is as
 &amp;= \boldsymbol{Q\Sigma}_{yy}\mathbf{Q}^t -
   \boldsymbol{Q \Sigma}_{yx}\mathbf{R}^t \left[\boldsymbol{R\Sigma}_{xx}\boldsymbol{R}^t\right]^{-1}
   \boldsymbol{R\Sigma}_{xy}\mathbf{Q}^t \nonumber \\
-&amp;= \boldsymbol{Q\Sigma}_{yy}\mathbf{Q}^t - 
+&amp;= \boldsymbol{Q\Sigma}_{yy}\mathbf{Q}^t -
   \boldsymbol{Q \Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\mathbf{Q}^t \\
 &amp;= \mathbf{Q}\left[\boldsymbol{\Sigma}_{yy} -
   \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\right]\mathbf{Q}^{t}
@@ -230,8 +266,8 @@ In this section we describe the model and the model parameterization which is as
 <dt>Coefficient of Determination</dt>
 <dd>The coefficient-of-determination matrix for <a href="statistical-model.html#eq:latent-model">(4)</a> is, <span class="math display">\[
   \begin{aligned}
-\boldsymbol{\rho}^2_w &amp;= \boldsymbol{\Sigma}_{wz} 
-\boldsymbol{\Sigma}_{zz}^{-1} \boldsymbol{\Sigma}_{zw} 
+\boldsymbol{\rho}^2_w &amp;= \boldsymbol{\Sigma}_{wz}
+\boldsymbol{\Sigma}_{zz}^{-1} \boldsymbol{\Sigma}_{zw}
 \boldsymbol{\Sigma}_{ww}^{-1} \\
   &amp;=\mathbf{Q}^t
   \boldsymbol{\Sigma}_{yx}\mathbf{R}^t \left(\mathbf{R}\boldsymbol{\Sigma}_{xx}\mathbf{R}^t\right)^{-1}

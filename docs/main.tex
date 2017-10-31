@@ -54,6 +54,46 @@
 
 
 
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
 
 
 \usepackage{longtable}
@@ -234,8 +274,13 @@ responses \(\mathbf{y}\) and the collinearity structure of
 evaluating estimation methods and methods developed for variable
 selection.
 
-Among several publications on simulation, \citet{ripley2009stochastic}
-and \citet{gamerman2006markov} have exhaustively discussed the topic. In
+Among several publications on simulation,
+\citet{johnson2013multivariate}; \citet{ripley2009stochastic} and
+\citet{gamerman2006markov} have exhaustively discussed the topic. In
+particular, methods based on covariance structure has been discussed by
+\citet{arteaga2010simulate}; \citet{arteaga2013building} and
+\citet{camacho2017generation}, which follows an algorithmic approach to
+find simulated data satisfying the desired correlation structure. In
 addition, many publications have implemented simulated data in order to
 investigate new estimation methods and prediction strategies
 \citep[see:][]{cook2015simultaneous, cook2013envelopes, helland2012near}.
@@ -244,7 +289,18 @@ address their specific problem. A systematic tool for simulating linear
 model data with single response, which could serve as a general tool for
 all such comparisons, was presented in \citet{saebo2015simrel} and as
 the r-package \texttt{simrel}. This paper extends \texttt{simrel} in
-order to simulate linear model data with multivariate response.
+order to simulate linear model data with multivariate response. The
+github repository of the package at http://github.com/simulatr/simrel
+has rich documentation with many examples and cases along with detail
+description on simulation parameters. In the following two section,
+discussion encircle the mathematical framework behind. In addition,
+\protect\hyperlink{implementation}{section-\ref{implementation}} and
+\protect\hyperlink{web-interface}{\ref{web-interface}} have also
+discussed about the input parameters needed for simrel function in
+brief. In \protect\hyperlink{implementation}{section
+\ref{implementation}}, an implementation is presented as an example of
+use-cases and the \protect\hyperlink{web-interface}{final section}
+introduce shiny web application for this tool.
 
 \section{Statistical Model}\label{statistical-model}
 
@@ -328,7 +384,7 @@ matrices that rotate \(\mathbf{x}\) and \(\mathbf{y}\) to yield
 transformed variables as:
 
 \begin{align}
-  \begin{bmatrix}\mathbf{w} \\ 
+  \begin{bmatrix}\mathbf{w} \\
   \mathbf{z}\end{bmatrix}  & \sim N \left(\boldsymbol{\mu}, \boldsymbol{\Sigma}\right)
   = N \left(
     \begin{bmatrix}
@@ -355,7 +411,7 @@ In addition, a linear model relating \(\mathbf{w}\) conditioned on
 \(\mathbf{z}\) can be written as,
 
 \begin{equation}
-\mathbf{w} =    \boldsymbol{\mu}_w + \boldsymbol{\alpha}^t \left(\mathbf{z} - \boldsymbol{\mu}_z\right) + \boldsymbol{\tau}
+\mathbf{w} =  \boldsymbol{\mu}_w + \boldsymbol{\alpha}^t \left(\mathbf{z} - \boldsymbol{\mu}_z\right) + \boldsymbol{\tau}
 \label{eq:latent-model}
 \end{equation}
 
@@ -380,17 +436,17 @@ can be defined as,
 From this, we can find a direct connection between different population
 properties of \eqref{eq:linear-model} and \eqref{eq:latent-model}.
 
-\begin{description}
-\tightlist
-\item[Regression Coefficients]
-\[
+Regression Coefficients : \[
   \begin{aligned}
   \boldsymbol{\alpha} &= \boldsymbol{\Sigma}_{wz} \boldsymbol{\Sigma}_{zz}^{-1}
-  = \boldsymbol{Q\Sigma}_{yz}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1}
-  = \mathbf{Q}\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\right]\mathbf{R}^t
-  = \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
+      = \boldsymbol{Q\Sigma}_{yz}\mathbf{R}^t\left[\boldsymbol{R\Sigma}_{xx}\mathbf{R}^t\right]^{-1}
+      = \mathbf{Q}\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\right]\mathbf{R}^t
+      = \mathbf{Q}\boldsymbol{\beta}\mathbf{R}^t
   \end{aligned}
   \]
+
+\begin{description}
+\tightlist
 \item[Conditional Variance]
 Further, the conditional variance-covariance matrix of \(\mathbf{w}\)
 given \(\mathbf{z}\) is, \[
@@ -400,7 +456,7 @@ given \(\mathbf{z}\) is, \[
 &= \boldsymbol{Q\Sigma}_{yy}\mathbf{Q}^t -
   \boldsymbol{Q \Sigma}_{yx}\mathbf{R}^t \left[\boldsymbol{R\Sigma}_{xx}\boldsymbol{R}^t\right]^{-1}
   \boldsymbol{R\Sigma}_{xy}\mathbf{Q}^t \nonumber \\
-&= \boldsymbol{Q\Sigma}_{yy}\mathbf{Q}^t - 
+&= \boldsymbol{Q\Sigma}_{yy}\mathbf{Q}^t -
   \boldsymbol{Q \Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\mathbf{Q}^t \\
 &= \mathbf{Q}\left[\boldsymbol{\Sigma}_{yy} -
   \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\right]\mathbf{Q}^{t}
@@ -410,8 +466,8 @@ given \(\mathbf{z}\) is, \[
 \item[Coefficient of Determination]
 The coefficient-of-determination matrix for \eqref{eq:latent-model} is, \[
   \begin{aligned}
-\boldsymbol{\rho}^2_w &= \boldsymbol{\Sigma}_{wz} 
-\boldsymbol{\Sigma}_{zz}^{-1} \boldsymbol{\Sigma}_{zw} 
+\boldsymbol{\rho}^2_w &= \boldsymbol{\Sigma}_{wz}
+\boldsymbol{\Sigma}_{zz}^{-1} \boldsymbol{\Sigma}_{zw}
 \boldsymbol{\Sigma}_{ww}^{-1} \\
   &=\mathbf{Q}^t
   \boldsymbol{\Sigma}_{yx}\mathbf{R}^t \left(\mathbf{R}\boldsymbol{\Sigma}_{xx}\mathbf{R}^t\right)^{-1}
@@ -478,14 +534,28 @@ becomes the set of principal components of \(\mathbf{x}\). In that case
 \(\boldsymbol{\Sigma}_{zz}\) is a diagonal matrix with eigenvalues
 \(\lambda_1, \ldots, \lambda_p\). Further, we adopt the same parametric
 representation as \citet{saebo2015simrel} for these eigenvalues:
-\[\lambda_j = e^{-\gamma(j - 1)}, \gamma >0 \text{ and } j = 1, 2, \ldots, p\]
+
+\begin{equation}
+  \lambda_i = e^{-\gamma(i - 1)}, \gamma >0 \text{ and } i = 1, 2, \ldots, p
+  \label{eq:gamma-parameter}
+  \end{equation}
+
 Here, as \(\gamma\) increases, the decline of eigenvalues becomes
 steeper, hence the parameter \(\gamma\) controls the level of
-multicollinearity in \(\mathbf{x}\).
+multicollinearity in \(\mathbf{x}\). Hence, we can write
+\(\Sigma_{zz} = \Lambda = \text{diag}(\lambda_1, \ldots, \lambda_p)\).
 \item[\textbf{Parameterization of \(\boldsymbol{\Sigma}_{ww}\)}]
-Here we assume that \(\mathbf{w}\)'s are independent and has mutinormal
-distribution with variances 1, hence
-\(\boldsymbol{\Sigma}_{ww} = \mathbf{I}_m\).
+In similar manner, a parametric representation of eigenvalues
+corresponding to \(\Sigma_{ww}\) is adopted as,
+
+\begin{equation}
+  \kappa_j = e^{-\eta(j - 1)}, \eta >0 \text{ and } j = 1, 2, \ldots, m
+  \label{eq:eta-parameter}
+  \end{equation}
+
+Here, the decline of eigenvalues becomes steeper as \(\eta\) gets far
+from zero. At \(\eta = 0\), all \(w\) will have equal variance. Hence we
+can write \(\Sigma_{ww} = \text{diag}(\kappa_1, \ldots, \kappa_m)\).
 \item[\textbf{Parameterization of \(\boldsymbol{\Sigma}_{zw}\)}]
 After parameterization of \(\boldsymbol{\Sigma}_{zz}\) and
 \(\boldsymbol{\Sigma}_{ww}\), we are left with \(m \times p\) number of
@@ -550,18 +620,18 @@ following two conditions:
 We have the relation,
 \[\boldsymbol{\rho}_w^2 = \boldsymbol{\Sigma}_{zw}^t\boldsymbol{\Sigma}_{zz}^{-1}\boldsymbol{\Sigma}_{zw}\boldsymbol{\Sigma}_{ww}^{-1}\]
 Applying our assumptions that,
-\(\boldsymbol{\Sigma_{ww}} = \mathbf{I}_m\) and
-\(\boldsymbol{\Sigma}_{zz} = \Lambda\), we obtain,
+\(\boldsymbol{\Sigma_{ww}} = \text{diag}(\kappa_1, \ldots, \kappa_m)\)
+\eqref{eq:eta-parameter} and
+\(\boldsymbol{\Sigma}_{zz} = \Lambda = \text{diag}(\lambda_1, \ldots, \lambda_p)\)
+\eqref{eq:gamma-parameter}, we obtain,
 
 \[
-\begin{aligned}
-\boldsymbol{\rho}_w^2 &= \boldsymbol{\Sigma}_{zw}^t \Lambda^{-1} \boldsymbol{\Sigma}_{zw} \mathbf{I}_m \\
-&= \begin{bmatrix}
-\sum_{i = 1}^p \sigma_{i1}^2/\lambda_i          & \ldots & \sum_{i = 1}^p \sigma_{i1}\sigma_{im}/\lambda_i \\
-\vdots                                          & \ddots & \vdots \\
-\sum_{i = 1}^p \sigma_{i1}\sigma_{im}/\lambda_i & \ldots & \sum_{i = 1}^p \sigma_{im}^2/\lambda_i
-\end{bmatrix}
-\end{aligned}
+  \rho_{w}^2 = \Sigma_{zw}^t\Lambda^{-1}\Sigma_{zw}\Sigma_{ww}^{-1} =
+  \begin{bmatrix}
+    \sum_{i = 1}^p\frac{\sigma_{i1}^2}{\lambda_i\kappa_1} & \ldots & \sum_{i=1}^p\frac{\sigma_{i1}\sigma_{im}}{\lambda_i\kappa_1} \\
+    \vdots & \ddots & \vdots \\
+    \sum_{i=1}^p\frac{\sigma_{i1}\sigma_{im}}{\lambda_i\kappa_m} & \ldots & \sum_{i = 1}^p\frac{\sigma_{im}^2}{\lambda_i\kappa_m}
+  \end{bmatrix}
 \]
 
 Furthermore, we assume that there are no overlapping relevant components
@@ -573,14 +643,14 @@ with user specified coefficients of determination for \(\mathbf{w}\).
 i.e, \(\rho_{wj}^2\) is,
 
 \[
-\rho_{wj}^2 = \sum_{i = 1}^p\frac{\sigma_{ij}^2}{\lambda_i}
+\rho_{w_j}^2 = \sum_{i = 1}^p\frac{\sigma_{ij}^2}{\lambda_i\kappa_j}
 \]
 
 Here, only the relevant components have non-zero covariances with
 \(w_j\), so,
 
 \[
-\rho_{wj}^2 = \sum_{i \in \mathcal{P}_j}\frac{\sigma_{ij}^2}{\lambda_i}
+\rho_{w_j}^2 = \sum_{i \in \mathcal{P}_j} \frac{\sigma_{ij}^2}{\lambda_i\kappa_j}
 \]
 
 For some user defined \(\rho_{jw}^2\) the \(\sigma_{ij}^2\) is
@@ -595,8 +665,8 @@ determined as follows,
   \(\mathcal{S}_{\mathcal{P}_1}, \ldots, \mathcal{S}_{\mathcal{P}_{k_j}}\).
 \item
   Define,
-  \[\sigma_{ij} = \text{Sign}\left(\mathcal{S}_i\right)\sqrt{\frac{\rho_{wj}^2\left|\mathcal{S}_i\right|}{\sum_{k\in \mathcal{P}_j}\left|\mathcal{S}_k\right|} \lambda_i}\]
-  for \(i \in \mathcal{P}_j\) and \(j = 1, \ldots, m\)
+  \[\sigma_{ij} = \text{Sign}(\mathcal{S}_i)\sqrt{\frac{\rho_{wj}^2\left|\mathcal{S}_i\right|}{\sum_{k\in\mathcal{P}_j}\left|\mathcal{S}_k\right|}\lambda_i\kappa_j}\]
+  for \(i \in \mathcal{P}_j\) and \(j = 1, \ldots m\)
 \end{enumerate}
 
 \subsubsection{Data Simulation}\label{data-simulation}
@@ -704,7 +774,7 @@ the \(x_{8}, x_{10}\) predictors become relevant after rotation keeping
 
 \begin{figure}[!htb]
 
-{\centering \subfloat[Before Rotation\label{fig:simulated-data1}]{\includegraphics[width=0.45\linewidth]{main_files/figure-latex/simulated-data-1} }\subfloat[After Rotation\label{fig:simulated-data2}]{\includegraphics[width=0.45\linewidth]{main_files/figure-latex/simulated-data-2} }
+{\centering \subfloat[Before Rotation\label{fig:simulated-data1}]{\includegraphics[width=0.48\linewidth]{main_files/figure-latex/simulated-data-1} }\subfloat[After Rotation\label{fig:simulated-data2}]{\includegraphics[width=0.48\linewidth]{main_files/figure-latex/simulated-data-2} }
 
 }
 
@@ -788,32 +858,49 @@ multi-response regression:
 \end{enumerate}
 
 From the possible combinations of two levels of coefficient of
-determination \((R^2)\) and two levels of \texttt{gamma} (the factor
-that controls the multicollinearity in predictor variables), four
-simulation designs (design 1-4) were prepared. Replicating each design
-20 times, 80 datasets with five response variables \((m=5)\) and 16
-predictor variables \((p = 16)\) were simulated using the method
-discussed in this paper. It was also assumed that three principle
-components of response variables (\(w_1, w_2\) and \(w_3\)) completely
-describe the variation present in five response variables
-(\(y_1 \ldots y_5\)). The four designs are presented in
+determination \((R^2)\) and two levels of \(\gamma\)
+\eqref{eq:gamma-parameter} (the factor that controls the multicollinearity
+in predictor variables), four simulation designs (design 1-4) were
+prepared. Replicating each design 20 times, 80 datasets with five
+response variables \((m=5)\) and 16 predictor variables \((p = 16)\)
+were simulated using the method discussed in this paper. It was also
+assumed that three principle components of response variables
+(\(w_1, w_2\) and \(w_3\)) completely describe the variation present in
+five response variables (\(y_1 \ldots y_5\)). Here, in this example we
+have assumed that all \(w\)'s have equal variance, i.e.
+\(\Sigma_{ww} = \mathbf{I}_m\). The four designs are presented in
 Table\textasciitilde{}\ref{tab:parameter-settings}. All datasets
 contained 100 sampled observations and out of 16 predictor variables,
 three disjoint set of five predictor variables are relevant for response
-components \(w_1, w_2\) and \(w_3\). Further, predictor components
-\(z_1\) and \(z_6\) were relevant for response component \(w_1\),
-predictor components \(z_2\) and \(z_5\) were relevant for response
-component \(w_2\) and predictor component \(z_3\) and \(z_4\) was
-relevant for response component \(w_3\). In addition, following the
-discussion about \protect\hyperlink{rotation-of-response-space}{rotation
-of response space}, \(w_1\) was rotated together with \(w_4\) and
-\(w_2\) was rotated together with \(w_5\). Figure
-\ref{fig:cov-plot-print-1} visualize the covariance structure and
-relationship between the response and predictor variables for first
-design.
+components \(w_1, w_2\) and \(w_3\). Although the simulation method is
+well equipped to simulate data with \(p \gg n\), for incorporating
+envelope estimation methods which are based on maximization of
+likelihood, we have chosen \(n > p\) situation in the example. Further,
+predictor components \(z_1\) and \(z_6\) were relevant for response
+component \(w_1\), predictor components \(z_2\) and \(z_5\) were
+relevant for response component \(w_2\) and predictor component \(z_3\)
+and \(z_4\) was relevant for response component \(w_3\). In addition,
+following the discussion about
+\protect\hyperlink{rotation-of-response-space}{rotation of response
+space}, \(w_1\) was rotated together with \(w_4\) and \(w_2\) was
+rotated together with \(w_5\). Figure \ref{fig:cov-plot-print-1}
+visualize the covariance structure and relationship between the response
+and predictor variables for first design.
+
+
+
+
+
+
+
 
 \begin{figure}[!htb]
-\subfloat[Relevant Position\label{fig:cov-plot-print-11}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print-12}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print-13}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-3} }\caption{Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).}\label{fig:cov-plot-print-1}
+\subfloat[Relevant Position\label{fig:cov-plot-print-11}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-1} }\subfloat[Rotation Matrix\label{fig:cov-plot-print-12}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-2} }\subfloat[Relevant Predictors\label{fig:cov-plot-print-13}]{\includegraphics[width=0.33\linewidth]{main_files/figure-latex/cov-plot-print-1-3} }\caption{Simulation of predictor and response variables for design
+one after orthogonal transformation of predictor and response components
+by rotation matrices \(Q\) and \(R\) shown as the upper left and the
+lower right block matrices in (b). Here (a) is the covariance structure
+of latent space which is rotated by the block diagonal rotation matrix
+in (b) resulting the covariance structure of simulated data in (c).}\label{fig:cov-plot-print-1}
 \end{figure}
 
 \begin{table}[!h]
@@ -833,7 +920,7 @@ Coef. of Determination $(\rho^2_{w_j})$ & 0.8, 0.8, 0.4 & 0.8, 0.8, 0.4 & 0.4, 0
 For each method, an estimate of expected squared prediction error was
 computed as,
 
-\[\underset{m \times m}{\boldsymbol{\vartheta}} = 
+\[\underset{m \times m}{\boldsymbol{\vartheta}} =
 \mathrm{E}\left[\left(
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
 \right) ^t \boldsymbol{\Sigma}_{xx}
@@ -861,8 +948,8 @@ error.
 
 \begin{table}
 
-\caption{\label{tab:min-error}Minimum average prediction error 
-      (number of components corresponding to minimum prediction error, minimum prediction error) 
+\caption{\label{tab:min-error}Minimum average prediction error
+      (number of components corresponding to minimum prediction error, minimum prediction error)
       (For $Y\text{env}$, the number of response components is given)}
 \centering
 \begin{tabular}[t]{>{\bfseries\raggedright\arraybackslash}p{7em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}lcccclcccclcccclcccc}
@@ -921,7 +1008,8 @@ scientific study, a more elaborative studies would be necessary to
 answer such questions, but for this purpose \texttt{simrel} would be a
 powerful tool.
 
-\section{Web Interface}\label{web-interface}
+\hypertarget{web-interface}{\section{Web
+Interface}\label{web-interface}}
 
 In order to give an alternative interface for \texttt{simrel}, we have
 created a shiny app which allows users to input the simulation
@@ -932,14 +1020,14 @@ approach. A random seed can be selected using section Figure
 \ref{fig:AppSimulatr} (a) so that a particular set of data can be
 re-simulated if needed. Figure \ref{fig:AppSimulatr} (b) has all the
 input panels where the user dependent parameters for simulation can be
-entered. Here the user also has the option to simulate univariate (uses
-\texttt{simrel} package in CRAN), bivariate (not yet available in CRAN)
-and multivariate simulation (\texttt{simrel-m}). In addition, a
-simulated R-object comprised by the simulated data can be download as
-\texttt{Rdata} format (section (e) in Figure \ref{fig:AppSimulatr}). The
-object holds the simulated data along with other properties such as
-coefficient of determination for each response, true regression
-coefficients and rotation matrices.
+entered. Here the user also has the option to simulate univariate,
+bivariate and multivariate simulation. In addition, a simulated R-object
+comprised by the simulated data can be download as \texttt{Rdata} format
+(section (e) in Figure \ref{fig:AppSimulatr}). The object holds the
+simulated data along with other properties such as coefficient of
+determination for each response, true regression coefficients and
+rotation matrices. Users can also download simulated data in JSON and
+CSV format.
 
 All \texttt{simrel} parameters can be entered using a simple user
 interface where a vectors are separated with comma(,) and lists are
@@ -947,58 +1035,101 @@ separated with semicolon(;). For instance, the relevant position
 discussed in the \protect\hyperlink{implementation}{implementation}
 section of this paper can be entered as \texttt{1,\ 6;\ 2,\ 5;\ 3,\ 4}
 which is equivalent to R syntax
-\texttt{list(c(1,\ 6),\ c(2,\ 5),\ c(3,\ 4))}.
+\texttt{list(c(1,\ 6),\ c(2,\ 5),\ c(3,\ 4))}. An R expression
+equivalent to the input parameters as shown in Figure - 5(b) can be
+written as,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{simrel}\NormalTok{(}
+  \DataTypeTok{n      =} \DecValTok{200}\NormalTok{, }\CommentTok{# Number of training observations}
+  \DataTypeTok{ntest  =} \DecValTok{50}\NormalTok{, }\CommentTok{# Number of test observations}
+  \DataTypeTok{p      =} \DecValTok{15}\NormalTok{, }\CommentTok{# Number of predictor variables}
+  \DataTypeTok{q      =} \KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{), }\CommentTok{# Number of relevant predictors}
+  \DataTypeTok{relpos =} \KeywordTok{list}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{)),}
+         \CommentTok{# Relevant predictor components}
+  \DataTypeTok{R2     =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.8}\NormalTok{, }\FloatTok{0.7}\NormalTok{), }\CommentTok{# Rsq for each response components}
+  \DataTypeTok{m      =} \DecValTok{4}\NormalTok{, }\CommentTok{# Number of response variables}
+  \DataTypeTok{gamma  =} \FloatTok{0.6}\NormalTok{, }\CommentTok{# Decay factor of eigenvalues of predictors}
+  \DataTypeTok{eta    =} \DecValTok{0}\NormalTok{, }\CommentTok{# Decay factor of eigenvalues of responses}
+  \DataTypeTok{ypos   =} \KeywordTok{list}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{), }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{)),}
+         \CommentTok{# Combination of response components on rotation}
+  \DataTypeTok{type   =} \StringTok{"multivariate"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+
+
+
+
+
 
 \begin{figure}[!htb]
 
-{\centering \includegraphics[width=0.95\linewidth]{images/AppSimulatr} 
+{\centering \includegraphics[width=1\linewidth]{images/AppSimulatr} 
 
 }
 
-\caption{Application interface of `simulatr`. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data}\label{fig:AppSimulatr}
+\caption{Web interface of shiny application of \texttt{simrel}:
+(\textbf{a}) Buttons to trigger simulation, (\textbf{b}) Parameters for
+simulation, (\textbf{c}) Visualization of the true properties of
+simulated data (regression coefficients, true and estimated covariance
+between response and predictors components) (\textbf{d}) Additional
+analysis (\textbf{e}) Download option of simulated data.}\label{fig:AppSimulatr}
 \end{figure}
 
+With the parameters for simulation in the screenshot
+(Figure-\ref{fig:AppSimulatr}) 200 training sets (\texttt{n}) and 50
+test sets (\texttt{ntest}) will be simulated with 15 predictor variables
+(\texttt{p}) and 4 response variables (\texttt{m}). The 4 response
+variables will have 2 true latent dimension which is referred as
+\emph{response components}. The first response component is rotated
+together with third (uninformative) response component and second
+response component is rotated together with fourth (uninformative)
+response components (\texttt{ypos}). Out of 15 predictors, 5 will be
+relevant for first response component and 4 will be relevant for second
+response component (\texttt{q}). The relevant principal components of
+the predictor variables are \emph{predictor components}. The 5 predictor
+variables which are relevant for first response components span the same
+space as the predictor components at position 1 and 2. Similarly, the 4
+predictor variables which are relevant for second response components
+span the same space as the predictor components at position 3, 4 and 6
+(\texttt{relpos}). The coefficient of determination for first response
+component is 0.8 and second response component is 0.7 (\texttt{R2}). The
+eigenvalues of predictor components decay exponentially by the factor of
+0.6 (\texttt{gamma}) but the eigenvalues of response components are
+constant (but can be set to exponential decay) (\texttt{eta}).
+
 The application not only allows users to simulate data, but also gives
-some insight into simulated data properties. The example used in the
-screenshot has simulated 200 training and 50 test samples with 15
-predictor and 4 response variables. There are two latent variables
-(response components) that completely span the informative response
-space. Five predictor variables are relevant for the first response
-component and explains 80 percent of the variation in \(\mathbf{x}\). In
-addition, the first and second predictor components span the same space
-as spanned by these five relevant predictors. Similarly, another set of
-four predictor variables are relevant for second response component and
-explains 70 percent of the variation. Here, third, fourth and sixth
-predictor components span the same space as spanned by these four
-relevant predictors. Further, the first response component is rotated
-together with a normally distributed random vector to obtain first and
-third response variable and second response components are rotated
-together with another normally distributed random vector to obtain
-second and fourth response variable.
+some insight into simulated data properties. Section (c) in Figure
+\ref{fig:AppSimulatr} contains three plots -- a) true regression
+coefficients b) relevant components and c) estimated relevant
+components. In the first plot (Figure-\ref{fig:AppSimulatr}(c) top) we
+can see that predictor variables (1, 2, 8, 9 and 13) are relevant for
+the first and third response variable (red and blue line) by their
+non-zero coefficients, whereas predictor variables (3, 4, 6 and 15) are
+relevant for the second and fourth response variables (purple and green
+line). The second plot (Figure \ref{fig:AppSimulatr}(c) middle) shows
+the covariances between the response components and the predictor
+components along with the corresponding eigenvalues in the background
+(bar plot). In the plot the absolute value of the covariances after
+scaling with the largest covariance are shown. As in our parameter
+setting, the plot shows that first (red line) and second (green line)
+predictor components have non-zero covariance with first response
+component and third, fourth and sixth predictor components have non-zero
+covariance with second response component. The third plot
+(Figure-\ref{fig:AppSimulatr}(c) bottom) is the estimated covariance
+between predictor components and the response variables, for the
+simulated data. Since the first and third response components are
+rotated together, in the plot, the covariance between predictor
+components and first and third response variables (red and blue line)
+are following similar pattern. This also suggests that the predictor
+components which were relevant for first response component gets
+relevant for first and third response variables after rotation.
 
-Section (c) in Figure \ref{fig:AppSimulatr} contains three plots -- a)
-true regression coefficients b) relevant components and c) estimated
-relevant components. In the first plot we can see that predictor
-variables (1, 2, 8, 9 and 13) are relevant for the first and third
-response variable by their non-zero coefficients, whereas predictor
-variables (3, 4, 6 and 15) are relevant for the second and fourth
-response variable. The second plot shows the covariances between the
-response components and the predictor components along with the
-corresponding eigenvalues in the background (bar plot). In the plot the
-absolute value of the covariances after scaling with the largest
-covariance are shown. As in our parameter setting, the plot shows that
-first and second predictor components have non-zero covariance with
-first response component and third, fourth and sixth predictor
-components have non-zero covariance with second response component. The
-third plot is the estimated covariance between predictor components and
-the response variables, for the simulated data. Since the first and
-third response components are rotated together, in the plot, the
-covariance between predictor components and first and third response
-variable is following similar pattern. This also suggests that the
-predictor components which were relevant for first response components
-gets relevant for first and third response variables after rotation.
-
-Along with these main sections, section (d) in the figure contains
+Along with these main sections, section (d) in the same figure contains
 additional analysis performed with the simulated data such as its
 estimation with different methods. This section is intended for
 educational purposes to show how changing the data properties influences
@@ -1012,6 +1143,16 @@ versatile simulation tool like \texttt{simrel} can play an important
 role. \citet{gangsei2016theoretical} and \citet{saebo2015simrel} are
 some examples where the univariate and bivariate form of \texttt{simrel}
 have been used for such purposes.
+
+\section{Conclusion}\label{conclusion}
+
+Whether comparing methods or assessing and understanding properties of
+any methods, tools or procedure; simulated data allows controlled tests
+for researchers. However, researchers spend enormous amount of time for
+creating such simulation tools so that they can obtain particular nature
+of data. We believe that this tool along with R-package and the easy to
+use shiny web interface will become an assistive tool for researchers in
+this respect.
 
 \section{References}\label{references}
 

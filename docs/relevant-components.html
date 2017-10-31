@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A tool for simulating multi-response linear model data</title>
   <meta name="description" content="A tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.4.1 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="A tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-07-25">
+<meta name="date" content="2017-10-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,6 +58,43 @@ div.abstract{
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -87,6 +124,7 @@ div.abstract{
 </ul></li>
 <li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a></li>
 <li class="chapter" data-level="" data-path="web-interface.html"><a href="web-interface.html"><i class="fa fa-check"></i>Web Interface</a></li>
+<li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>
@@ -119,10 +157,20 @@ div.abstract{
 <p>In order to construct a fully specified and unrestricted covariance matrix of <span class="math inline">\(\mathbf{z}\)</span> and <span class="math inline">\(\mathbf{w}\)</span> for the model in equation <a href="statistical-model.html#eq:model3">(3)</a>, we need to identify <span class="math inline">\(1/2 (p+m)(p+m+1)\)</span> unknown parameters. For the purpose of simulation, we implement some assumptions to re-parameterize and simplify the model. This enables us to construct a wide range of model properties from only few key parameters.</p>
 <dl>
 <dt><strong>Parameterization of <span class="math inline">\(\boldsymbol{\Sigma}_{zz}\)</span></strong></dt>
-<dd>If we let the rotation matrix <span class="math inline">\(\mathbf{R}\)</span> correspond to the eigenvectors of <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span>, then <span class="math inline">\(\mathbf{z}\)</span> becomes the set of principal components of <span class="math inline">\(\mathbf{x}\)</span>. In that case <span class="math inline">\(\boldsymbol{\Sigma}_{zz}\)</span> is a diagonal matrix with eigenvalues <span class="math inline">\(\lambda_1, \ldots, \lambda_p\)</span>. Further, we adopt the same parametric representation as <span class="citation">Sæbø, Almøy, and Helland (2015)</span> for these eigenvalues: <span class="math display">\[\lambda_j = e^{-\gamma(j - 1)}, \gamma &gt;0 \text{ and } j = 1, 2, \ldots, p\]</span> Here, as <span class="math inline">\(\gamma\)</span> increases, the decline of eigenvalues becomes steeper, hence the parameter <span class="math inline">\(\gamma\)</span> controls the level of multicollinearity in <span class="math inline">\(\mathbf{x}\)</span>.
+<dd>If we let the rotation matrix <span class="math inline">\(\mathbf{R}\)</span> correspond to the eigenvectors of <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span>, then <span class="math inline">\(\mathbf{z}\)</span> becomes the set of principal components of <span class="math inline">\(\mathbf{x}\)</span>. In that case <span class="math inline">\(\boldsymbol{\Sigma}_{zz}\)</span> is a diagonal matrix with eigenvalues <span class="math inline">\(\lambda_1, \ldots, \lambda_p\)</span>. Further, we adopt the same parametric representation as <span class="citation">Sæbø, Almøy, and Helland (2015)</span> for these eigenvalues:
+<span class="math display" id="eq:gamma-parameter">\[\begin{equation}
+  \lambda_i = e^{-\gamma(i - 1)}, \gamma &gt;0 \text{ and } i = 1, 2, \ldots, p
+  \tag{6}
+  \end{equation}\]</span>
+Here, as <span class="math inline">\(\gamma\)</span> increases, the decline of eigenvalues becomes steeper, hence the parameter <span class="math inline">\(\gamma\)</span> controls the level of multicollinearity in <span class="math inline">\(\mathbf{x}\)</span>. Hence, we can write <span class="math inline">\(\Sigma_{zz} = \Lambda = \text{diag}(\lambda_1, \ldots, \lambda_p)\)</span>.
 </dd>
 <dt><strong>Parameterization of <span class="math inline">\(\boldsymbol{\Sigma}_{ww}\)</span></strong></dt>
-<dd>Here we assume that <span class="math inline">\(\mathbf{w}\)</span>’s are independent and has mutinormal distribution with variances 1, hence <span class="math inline">\(\boldsymbol{\Sigma}_{ww} = \mathbf{I}_m\)</span>.
+<dd>In similar manner, a parametric representation of eigenvalues corresponding to <span class="math inline">\(\Sigma_{ww}\)</span> is adopted as,
+<span class="math display" id="eq:eta-parameter">\[\begin{equation}
+  \kappa_j = e^{-\eta(j - 1)}, \eta &gt;0 \text{ and } j = 1, 2, \ldots, m
+  \tag{7}
+  \end{equation}\]</span>
+Here, the decline of eigenvalues becomes steeper as <span class="math inline">\(\eta\)</span> gets far from zero. At <span class="math inline">\(\eta = 0\)</span>, all <span class="math inline">\(w\)</span> will have equal variance. Hence we can write <span class="math inline">\(\Sigma_{ww} = \text{diag}(\kappa_1, \ldots, \kappa_m)\)</span>.
 </dd>
 <dt><strong>Parameterization of <span class="math inline">\(\boldsymbol{\Sigma}_{zw}\)</span></strong></dt>
 <dd>After parameterization of <span class="math inline">\(\boldsymbol{\Sigma}_{zz}\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}_{ww}\)</span>, we are left with <span class="math inline">\(m \times p\)</span> number of unknowns corresponding to <span class="math inline">\(\boldsymbol{\Sigma}_{zw}\)</span>. Some of the elements of <span class="math inline">\(\boldsymbol{\Sigma}_{zw}\)</span> may be equal to zero, which implies that the given <span class="math inline">\(z\)</span> is irrelevant for the given variable <span class="math inline">\(w\)</span>. The non-zero elements define which of the <span class="math inline">\(z\)</span> are relevant for <span class="math inline">\(\mathbf{w}\)</span>. We typically refer to the indices of these <span class="math inline">\(z\)</span> variables as the positions of relevant components. In order to re-parameterize this covariance matrix, it is necessary to discuss the position of relevant components in detail.
@@ -141,29 +189,27 @@ div.abstract{
 <li>The covariance matrices <span class="math inline">\(\Sigma_{zz}\)</span>, <span class="math inline">\(\Sigma_{ww}\)</span> and <span class="math inline">\(\Sigma\)</span> must be positive definite</li>
 <li>The covariance <span class="math inline">\(\sigma_{ij}\)</span> must satisfy user defined coefficient of determination</li>
 </ul>
-<p>We have the relation, <span class="math display">\[\boldsymbol{\rho}_w^2 = \boldsymbol{\Sigma}_{zw}^t\boldsymbol{\Sigma}_{zz}^{-1}\boldsymbol{\Sigma}_{zw}\boldsymbol{\Sigma}_{ww}^{-1}\]</span> Applying our assumptions that, <span class="math inline">\(\boldsymbol{\Sigma_{ww}} = \mathbf{I}_m\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}_{zz} = \Lambda\)</span>, we obtain,</p>
+<p>We have the relation, <span class="math display">\[\boldsymbol{\rho}_w^2 = \boldsymbol{\Sigma}_{zw}^t\boldsymbol{\Sigma}_{zz}^{-1}\boldsymbol{\Sigma}_{zw}\boldsymbol{\Sigma}_{ww}^{-1}\]</span> Applying our assumptions that, <span class="math inline">\(\boldsymbol{\Sigma_{ww}} = \text{diag}(\kappa_1, \ldots, \kappa_m)\)</span> (<a href="relevant-components.html#eq:eta-parameter">(7)</a>) and <span class="math inline">\(\boldsymbol{\Sigma}_{zz} = \Lambda = \text{diag}(\lambda_1, \ldots, \lambda_p)\)</span> (<a href="relevant-components.html#eq:gamma-parameter">(6)</a>), we obtain,</p>
 <p><span class="math display">\[
-\begin{aligned}
-\boldsymbol{\rho}_w^2 &amp;= \boldsymbol{\Sigma}_{zw}^t \Lambda^{-1} \boldsymbol{\Sigma}_{zw} \mathbf{I}_m \\
-&amp;= \begin{bmatrix}
-\sum_{i = 1}^p \sigma_{i1}^2/\lambda_i          &amp; \ldots &amp; \sum_{i = 1}^p \sigma_{i1}\sigma_{im}/\lambda_i \\
-\vdots                                          &amp; \ddots &amp; \vdots \\
-\sum_{i = 1}^p \sigma_{i1}\sigma_{im}/\lambda_i &amp; \ldots &amp; \sum_{i = 1}^p \sigma_{im}^2/\lambda_i
-\end{bmatrix}
-\end{aligned}
+  \rho_{w}^2 = \Sigma_{zw}^t\Lambda^{-1}\Sigma_{zw}\Sigma_{ww}^{-1} =
+  \begin{bmatrix}
+    \sum_{i = 1}^p\frac{\sigma_{i1}^2}{\lambda_i\kappa_1} &amp; \ldots &amp; \sum_{i=1}^p\frac{\sigma_{i1}\sigma_{im}}{\lambda_i\kappa_1} \\
+    \vdots &amp; \ddots &amp; \vdots \\
+    \sum_{i=1}^p\frac{\sigma_{i1}\sigma_{im}}{\lambda_i\kappa_m} &amp; \ldots &amp; \sum_{i = 1}^p\frac{\sigma_{im}^2}{\lambda_i\kappa_m}
+  \end{bmatrix}
 \]</span></p>
 <p>Furthermore, we assume that there are no overlapping relevant components for any two <span class="math inline">\(w\)</span>, i.e, <span class="math inline">\(\mathcal{P}_j \cap \mathcal{P}_{j*} = \varnothing\)</span> or <span class="math inline">\(\sigma_{ij}\sigma_{ij*} = 0\)</span> for <span class="math inline">\(j\ne j*\)</span>. The additional unknown parameters in the diagonal of <span class="math inline">\(\boldsymbol{\rho}_w^2\)</span> should agree with user specified coefficients of determination for <span class="math inline">\(\mathbf{w}\)</span>. i.e, <span class="math inline">\(\rho_{wj}^2\)</span> is,</p>
 <p><span class="math display">\[
-\rho_{wj}^2 = \sum_{i = 1}^p\frac{\sigma_{ij}^2}{\lambda_i}
+\rho_{w_j}^2 = \sum_{i = 1}^p\frac{\sigma_{ij}^2}{\lambda_i\kappa_j}
 \]</span></p>
 <p>Here, only the relevant components have non-zero covariances with <span class="math inline">\(w_j\)</span>, so,</p>
 <p><span class="math display">\[
-\rho_{wj}^2 = \sum_{i \in \mathcal{P}_j}\frac{\sigma_{ij}^2}{\lambda_i}
+\rho_{w_j}^2 = \sum_{i \in \mathcal{P}_j} \frac{\sigma_{ij}^2}{\lambda_i\kappa_j}
 \]</span></p>
 <p>For some user defined <span class="math inline">\(\rho_{jw}^2\)</span> the <span class="math inline">\(\sigma_{ij}^2\)</span> is determined as follows,</p>
 <ol style="list-style-type: decimal">
 <li>Sample <span class="math inline">\(k_j\)</span> values from a uniform distribution <span class="math inline">\(\mathcal{U}(-1, 1)\)</span> distribution. Let them be denoted <span class="math inline">\(\mathcal{S}_{\mathcal{P}_1}, \ldots, \mathcal{S}_{\mathcal{P}_{k_j}}\)</span>.</li>
-<li>Define, <span class="math display">\[\sigma_{ij} = \text{Sign}\left(\mathcal{S}_i\right)\sqrt{\frac{\rho_{wj}^2\left|\mathcal{S}_i\right|}{\sum_{k\in \mathcal{P}_j}\left|\mathcal{S}_k\right|} \lambda_i}\]</span> for <span class="math inline">\(i \in \mathcal{P}_j\)</span> and <span class="math inline">\(j = 1, \ldots, m\)</span></li>
+<li>Define, <span class="math display">\[\sigma_{ij} = \text{Sign}(\mathcal{S}_i)\sqrt{\frac{\rho_{wj}^2\left|\mathcal{S}_i\right|}{\sum_{k\in\mathcal{P}_j}\left|\mathcal{S}_k\right|}\lambda_i\kappa_j}\]</span> for <span class="math inline">\(i \in \mathcal{P}_j\)</span> and <span class="math inline">\(j = 1, \ldots m\)</span></li>
 </ol>
 </div>
 <div id="data-simulation" class="section level3">
@@ -185,7 +231,7 @@ Figure 1: Simulation of predictor and response variables after orthogonal transf
 </div>
 <p>In order to simulate predictor variables <span class="math inline">\((\mathbf{x})\)</span>, we construct matrix <span class="math inline">\(\mathbf{R}\)</span> which then is used for orthogonal rotation of the predictor components <span class="math inline">\(\mathbf{z}\)</span>. This defines a new basis for the same space as is spanned by the predictor components. In principle, there are many possible options for defining a rotation matrix. Among them, the eigenvector matrix of <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span> can be a candidate. However, in this reverse engineering approach both rotation matrices <span class="math inline">\(\mathbf{R}\)</span> and <span class="math inline">\(\mathbf{Q}\)</span> along with the covariance matrices <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span> are unknown. So, we are free to choose any <span class="math inline">\(\mathbf{R}\)</span> that satisfied the properties of a real valued rotation matrix, i.e <span class="math inline">\(\mathbf{R}^{-1} = \mathbf{R}^t\)</span> so that <span class="math inline">\(\mathbf{R}\)</span> is orthonormal. Here the rotation matrix <span class="math inline">\(\mathbf{R}\)</span> should be block diagonal as in Figure <a href="relevant-components.html#fig:cov-plot-print">1</a>(b) in order to rotate spaces <span class="math inline">\(\mathcal{S}_1, \mathcal{S}_2 \ldots\)</span> separately. Figure <a href="relevant-components.html#fig:simulated-data">2</a>(a) shows the simulated predictor components <span class="math inline">\(\mathbf{z}\)</span> that we are following in our example where we can see that the components <span class="math inline">\(z_{1}\)</span> and <span class="math inline">\(z_{2}\)</span> (relevant for <span class="math inline">\(w_1\)</span>) is getting rotated together with an irrelevant component <span class="math inline">\(z_{8}\)</span>. The resultant predictors (Figure <a href="relevant-components.html#fig:simulated-data">2</a>(b)) <span class="math inline">\(x_{1}, x_{2}\)</span> and <span class="math inline">\(x_{8}\)</span> will hence also be relevant for <span class="math inline">\(w_1\)</span>. In the figure, we can see that components <span class="math inline">\(z_{7}, z_{8}, z_{9}\)</span> and <span class="math inline">\(z_{10}\)</span> are not relevant for any responses before rotation, however, the <span class="math inline">\(x_{8}, x_{10}\)</span> predictors become relevant after rotation keeping <span class="math inline">\(x_{7}\)</span> and <span class="math inline">\(x_{9}\)</span> still irrelevant.</p>
 <div class="figure" style="text-align: center"><span id="fig:simulated-data"></span>
-<img src="main_files/figure-html/simulated-data-1.svg" alt="Simulated Data before" width="45%" /><img src="main_files/figure-html/simulated-data-2.svg" alt="Simulated Data before" width="45%" />
+<img src="main_files/figure-html/simulated-data-1.svg" alt="Simulated Data before" width="48%" /><img src="main_files/figure-html/simulated-data-2.svg" alt="Simulated Data before" width="48%" />
 <p class="caption">
 Figure 2: Simulated Data before
 </p>

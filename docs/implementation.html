@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A tool for simulating multi-response linear model data</title>
   <meta name="description" content="A tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.4.1 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="A tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-07-25">
+<meta name="date" content="2017-10-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -58,6 +58,43 @@ div.abstract{
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -87,6 +124,7 @@ div.abstract{
 </ul></li>
 <li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a></li>
 <li class="chapter" data-level="" data-path="web-interface.html"><a href="web-interface.html"><i class="fa fa-check"></i>Web Interface</a></li>
+<li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>
@@ -125,11 +163,12 @@ div.abstract{
 <li>Envelope estimation in response space (Yenv) <span class="citation">(R Dennis Cook and Zhang 2015)</span> and</li>
 <li>Simultaneous estimation of x- and y-envelope (Senv) <span class="citation">(R. Dennis Cook and Zhang 2015)</span></li>
 </ol>
-<p>From the possible combinations of two levels of coefficient of determination <span class="math inline">\((R^2)\)</span> and two levels of <code>gamma</code> (the factor that controls the multicollinearity in predictor variables), four simulation designs (design 1-4) were prepared. Replicating each design 20 times, 80 datasets with five response variables <span class="math inline">\((m=5)\)</span> and 16 predictor variables <span class="math inline">\((p = 16)\)</span> were simulated using the method discussed in this paper. It was also assumed that three principle components of response variables (<span class="math inline">\(w_1, w_2\)</span> and <span class="math inline">\(w_3\)</span>) completely describe the variation present in five response variables (<span class="math inline">\(y_1 \ldots y_5\)</span>). The four designs are presented in Table~<a href="implementation.html#tab:parameter-settings">1</a>. All datasets contained 100 sampled observations and out of 16 predictor variables, three disjoint set of five predictor variables are relevant for response components <span class="math inline">\(w_1, w_2\)</span> and <span class="math inline">\(w_3\)</span>. Further, predictor components <span class="math inline">\(z_1\)</span> and <span class="math inline">\(z_6\)</span> were relevant for response component <span class="math inline">\(w_1\)</span>, predictor components <span class="math inline">\(z_2\)</span> and <span class="math inline">\(z_5\)</span> were relevant for response component <span class="math inline">\(w_2\)</span> and predictor component <span class="math inline">\(z_3\)</span> and <span class="math inline">\(z_4\)</span> was relevant for response component <span class="math inline">\(w_3\)</span>. In addition, following the discussion about <a href="relevant-components.html#rotation-of-response-space">rotation of response space</a>, <span class="math inline">\(w_1\)</span> was rotated together with <span class="math inline">\(w_4\)</span> and <span class="math inline">\(w_2\)</span> was rotated together with <span class="math inline">\(w_5\)</span>. Figure <a href="implementation.html#fig:cov-plot-print-1">3</a> visualize the covariance structure and relationship between the response and predictor variables for first design.</p>
+<p>From the possible combinations of two levels of coefficient of determination <span class="math inline">\((R^2)\)</span> and two levels of <span class="math inline">\(\gamma\)</span> (<a href="relevant-components.html#eq:gamma-parameter">(6)</a>) (the factor that controls the multicollinearity in predictor variables), four simulation designs (design 1-4) were prepared. Replicating each design 20 times, 80 datasets with five response variables <span class="math inline">\((m=5)\)</span> and 16 predictor variables <span class="math inline">\((p = 16)\)</span> were simulated using the method discussed in this paper. It was also assumed that three principle components of response variables (<span class="math inline">\(w_1, w_2\)</span> and <span class="math inline">\(w_3\)</span>) completely describe the variation present in five response variables (<span class="math inline">\(y_1 \ldots y_5\)</span>). Here, in this example we have assumed that all <span class="math inline">\(w\)</span>’s have equal variance, i.e. <span class="math inline">\(\Sigma_{ww} = \mathbf{I}_m\)</span>. The four designs are presented in Table~<a href="implementation.html#tab:parameter-settings">1</a>. All datasets contained 100 sampled observations and out of 16 predictor variables, three disjoint set of five predictor variables are relevant for response components <span class="math inline">\(w_1, w_2\)</span> and <span class="math inline">\(w_3\)</span>. Although the simulation method is well equipped to simulate data with <span class="math inline">\(p \gg n\)</span>, for incorporating envelope estimation methods which are based on maximization of likelihood, we have chosen <span class="math inline">\(n &gt; p\)</span> situation in the example. Further, predictor components <span class="math inline">\(z_1\)</span> and <span class="math inline">\(z_6\)</span> were relevant for response component <span class="math inline">\(w_1\)</span>, predictor components <span class="math inline">\(z_2\)</span> and <span class="math inline">\(z_5\)</span> were relevant for response component <span class="math inline">\(w_2\)</span> and predictor component <span class="math inline">\(z_3\)</span> and <span class="math inline">\(z_4\)</span> was relevant for response component <span class="math inline">\(w_3\)</span>. In addition, following the discussion about <a href="relevant-components.html#rotation-of-response-space">rotation of response space</a>, <span class="math inline">\(w_1\)</span> was rotated together with <span class="math inline">\(w_4\)</span> and <span class="math inline">\(w_2\)</span> was rotated together with <span class="math inline">\(w_5\)</span>. Figure <a href="implementation.html#fig:cov-plot-print-1">3</a> visualize the covariance structure and relationship between the response and predictor variables for first design.</p>
+
 <div class="figure"><span id="fig:cov-plot-print-1"></span>
-<img src="main_files/figure-html/cov-plot-print-1-1.svg" alt="Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b)." width="33%" /><img src="main_files/figure-html/cov-plot-print-1-2.svg" alt="Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b)." width="33%" /><img src="main_files/figure-html/cov-plot-print-1-3.svg" alt="Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b)." width="33%" />
+<img src="main_files/figure-html/cov-plot-print-1-1.svg" alt="Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices \(Q\) and \(R\) shown as the upper left and the lower right block matrices in (b). Here (a) is the covariance structure of latent space which is rotated by the block diagonal rotation matrix in (b) resulting the covariance structure of simulated data in (c)." width="33%" /><img src="main_files/figure-html/cov-plot-print-1-2.svg" alt="Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices \(Q\) and \(R\) shown as the upper left and the lower right block matrices in (b). Here (a) is the covariance structure of latent space which is rotated by the block diagonal rotation matrix in (b) resulting the covariance structure of simulated data in (c)." width="33%" /><img src="main_files/figure-html/cov-plot-print-1-3.svg" alt="Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices \(Q\) and \(R\) shown as the upper left and the lower right block matrices in (b). Here (a) is the covariance structure of latent space which is rotated by the block diagonal rotation matrix in (b) resulting the covariance structure of simulated data in (c)." width="33%" />
 <p class="caption">
-Figure 3: Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span> shown as the upper left and the lower right block matrices in (b).
+Figure 3: Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices <span class="math inline">\(Q\)</span> and <span class="math inline">\(R\)</span> shown as the upper left and the lower right block matrices in (b). Here (a) is the covariance structure of latent space which is rotated by the block diagonal rotation matrix in (b) resulting the covariance structure of simulated data in (c).
 </p>
 </div>
 <table style="width:100%;">
@@ -168,7 +207,7 @@ Figure 3: Simulation of predictor and response variables for design one after or
 </tbody>
 </table>
 <p>For each method, an estimate of expected squared prediction error was computed as,</p>
-<p><span class="math display">\[\underset{m \times m}{\boldsymbol{\vartheta}} = 
+<p><span class="math display">\[\underset{m \times m}{\boldsymbol{\vartheta}} =
 \mathrm{E}\left[\left(
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
 \right) ^t \boldsymbol{\Sigma}_{xx}
