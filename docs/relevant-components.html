@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-10-31">
+<meta name="date" content="2017-11-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -170,7 +170,7 @@ Here, as <span class="math inline">\(\gamma\)</span> increases, the decline of e
   \kappa_j = e^{-\eta(j - 1)}, \eta &gt;0 \text{ and } j = 1, 2, \ldots, m
   \tag{7}
   \end{equation}\]</span>
-Here, the decline of eigenvalues becomes steeper as <span class="math inline">\(\eta\)</span> gets far from zero. At <span class="math inline">\(\eta = 0\)</span>, all <span class="math inline">\(w\)</span> will have equal variance. Hence we can write <span class="math inline">\(\Sigma_{ww} = \text{diag}(\kappa_1, \ldots, \kappa_m)\)</span>.
+Here, the decline of eigenvalues becomes steeper as <span class="math inline">\(\eta\)</span> increases from zero. At <span class="math inline">\(\eta = 0\)</span>, all <span class="math inline">\(w\)</span> will have equal variance. Hence we can write <span class="math inline">\(\Sigma_{ww} = \text{diag}(\kappa_1, \ldots, \kappa_m)\)</span>.
 </dd>
 <dt><strong>Parameterization of <span class="math inline">\(\boldsymbol{\Sigma}_{zw}\)</span></strong></dt>
 <dd>After parameterization of <span class="math inline">\(\boldsymbol{\Sigma}_{zz}\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}_{ww}\)</span>, we are left with <span class="math inline">\(m \times p\)</span> number of unknowns corresponding to <span class="math inline">\(\boldsymbol{\Sigma}_{zw}\)</span>. Some of the elements of <span class="math inline">\(\boldsymbol{\Sigma}_{zw}\)</span> may be equal to zero, which implies that the given <span class="math inline">\(z\)</span> is irrelevant for the given variable <span class="math inline">\(w\)</span>. The non-zero elements define which of the <span class="math inline">\(z\)</span> are relevant for <span class="math inline">\(\mathbf{w}\)</span>. We typically refer to the indices of these <span class="math inline">\(z\)</span> variables as the positions of relevant components. In order to re-parameterize this covariance matrix, it is necessary to discuss the position of relevant components in detail.
@@ -179,7 +179,7 @@ Here, the decline of eigenvalues becomes steeper as <span class="math inline">\(
 <div id="position-of-relevant-components" class="section level3">
 <h3>Position of relevant components</h3>
 <p>Let <span class="math inline">\(k_1\)</span> components be relevant for <span class="math inline">\(w_1\)</span>, <span class="math inline">\(k_2\)</span> components be relevant for <span class="math inline">\(w_2\)</span> and so on. Let the positions of these components be given by the index sets <span class="math inline">\(\mathcal{P}_1, \mathcal{P}_2, \ldots, \mathcal{P}_m\)</span> respectively. Further, the covariance between <span class="math inline">\(w_j\)</span> and <span class="math inline">\(z_i\)</span> is non-zero only if <span class="math inline">\(z_i\)</span> is relevant for <span class="math inline">\(w_j\)</span>. If <span class="math inline">\(\sigma_{ij}\)</span> is the covariance between <span class="math inline">\(w_j\)</span> and <span class="math inline">\(z_i\)</span> then <span class="math inline">\(\sigma_{ij} \ne 0\)</span> if <span class="math inline">\(i \in \mathcal{P}_j\)</span> where <span class="math inline">\(i = 1, \ldots, p\)</span> and <span class="math inline">\(j = 1, \ldots, m\)</span> and <span class="math inline">\(\sigma_{ij} = 0\)</span> otherwise.</p>
-<p>In addition, the true regression coefficients for <span class="math inline">\(w_j\)</span> [ref:<a href="statistical-model.html#eq:latent-model">(4)</a>] is given by:</p>
+<p>In addition, the true regression coefficients <span class="math inline">\(\alpha\)</span> for <span class="math inline">\(w_j\)</span> <a href="statistical-model.html#eq:latent-model">(4)</a> is given by:</p>
 <p><span class="math display">\[
 \boldsymbol{\alpha}_j = \Lambda^{-1} \sigma_{ij} = \sum_{i \in \mathcal{P}_j}\frac{\sigma_{ij}}{\lambda_i},\qquad j = 1, 2, \ldots m
 \]</span></p>
@@ -189,16 +189,31 @@ Here, the decline of eigenvalues becomes steeper as <span class="math inline">\(
 <li>The covariance matrices <span class="math inline">\(\Sigma_{zz}\)</span>, <span class="math inline">\(\Sigma_{ww}\)</span> and <span class="math inline">\(\Sigma\)</span> must be positive definite</li>
 <li>The covariance <span class="math inline">\(\sigma_{ij}\)</span> must satisfy user defined coefficient of determination</li>
 </ul>
-<p>We have the relation, <span class="math display">\[\boldsymbol{\rho}_w^2 = \boldsymbol{\Sigma}_{zw}^t\boldsymbol{\Sigma}_{zz}^{-1}\boldsymbol{\Sigma}_{zw}\boldsymbol{\Sigma}_{ww}^{-1}\]</span> Applying our assumptions that, <span class="math inline">\(\boldsymbol{\Sigma_{ww}} = \text{diag}(\kappa_1, \ldots, \kappa_m)\)</span> <a href="relevant-components.html#eq:eta-parameter">(7)</a> and <span class="math inline">\(\boldsymbol{\Sigma}_{zz} = \Lambda = \text{diag}(\lambda_1, \ldots, \lambda_p)\)</span> <a href="relevant-components.html#eq:gamma-parameter">(6)</a>, we obtain,</p>
+<p>We have the relation, <span class="math display">\[
+  \begin{aligned}
+    \boldsymbol{\rho}_w^2 &amp;= 
+    \boldsymbol{\Sigma}_{ww}^{-1/2}
+    \boldsymbol{\Sigma}_{zw}^t
+    \boldsymbol{\Sigma}_{zz}^{-1}
+    \boldsymbol{\Sigma}_{zw}
+    \boldsymbol{\Sigma}_{ww}^{-1/2} \\ &amp;=
+    \frac{\sigma_{ij}^t\Lambda^{-1}\sigma_{ij&#39;}}
+        {\sqrt{\sigma_{j}^2\sigma_{j&#39;}^2}} \forall j, {j&#39;} = 1 \ldots m
+  \end{aligned}
+\]</span> Applying our assumptions that, <span class="math inline">\(\boldsymbol{\Sigma_{ww}} = \text{diag}(\kappa_1, \ldots, \kappa_m)\)</span> <a href="relevant-components.html#eq:eta-parameter">(7)</a> and <span class="math inline">\(\boldsymbol{\Sigma}_{zz} = \Lambda = \text{diag}(\lambda_1, \ldots, \lambda_p)\)</span> <a href="relevant-components.html#eq:gamma-parameter">(6)</a>, we obtain,</p>
 <p><span class="math display">\[
-  \rho_{w}^2 = \Sigma_{zw}^t\Lambda^{-1}\Sigma_{zw}\Sigma_{ww}^{-1} =
+  \rho_{w}^2 = \Sigma_{ww}^{-1/2}\Sigma_{zw}^t\Lambda^{-1}\Sigma_{zw}\Sigma_{ww}^{-1/2} = 
   \begin{bmatrix}
-    \sum_{i = 1}^p\frac{\sigma_{i1}^2}{\lambda_i\kappa_1} &amp; \ldots &amp; \sum_{i=1}^p\frac{\sigma_{i1}\sigma_{im}}{\lambda_i\kappa_1} \\
+    \displaystyle\sum_{i = 1}^p\dfrac{\sigma_{i1}^2}{\lambda_i\kappa_1} &amp; 
+    \ldots &amp;
+    \displaystyle\sum_{i=1}^p\dfrac{\sigma_{i1}\sigma_{im}}{\lambda_i\sqrt{\kappa_1\kappa_m}} \\
     \vdots &amp; \ddots &amp; \vdots \\
-    \sum_{i=1}^p\frac{\sigma_{i1}\sigma_{im}}{\lambda_i\kappa_m} &amp; \ldots &amp; \sum_{i = 1}^p\frac{\sigma_{im}^2}{\lambda_i\kappa_m}
-  \end{bmatrix}
+    \displaystyle\sum_{i=1}^p\dfrac{\sigma_{i1}\sigma_{im}}{\lambda_i\sqrt{\kappa_1\kappa_m}} &amp; 
+    \ldots &amp; 
+    \displaystyle\sum_{i = 1}^p\dfrac{\sigma_{im}^2}{\lambda_i\kappa_m}
+  \end{bmatrix} 
 \]</span></p>
-<p>Furthermore, we assume that there are no overlapping relevant components for any two <span class="math inline">\(w\)</span>, i.e, <span class="math inline">\(\mathcal{P}_j \cap \mathcal{P}_{j*} = \varnothing\)</span> or <span class="math inline">\(\sigma_{ij}\sigma_{ij*} = 0\)</span> for <span class="math inline">\(j\ne j*\)</span>. The additional unknown parameters in the diagonal of <span class="math inline">\(\boldsymbol{\rho}_w^2\)</span> should agree with user specified coefficients of determination for <span class="math inline">\(\mathbf{w}\)</span>. i.e, <span class="math inline">\(\rho_{wj}^2\)</span> is,</p>
+<p>Furthermore, we assume that there are no overlapping relevant components for any two <span class="math inline">\(w\)</span>, i.e, <span class="math inline">\(\mathcal{P}_j \cap \mathcal{P}_{j*} = \varnothing\)</span> or <span class="math inline">\(\sigma_{ij}\sigma_{ij*} = 0\)</span> for <span class="math inline">\(j\ne j*\)</span>. The additional unknown parameters in the diagonal of <span class="math inline">\(\boldsymbol{\rho}_w^2\)</span> should agree with user specified coefficients of determination for <span class="math inline">\(\mathbf{w}\)</span>. i.e, <span class="math inline">\(\rho_{w_j}^2\)</span> is,</p>
 <p><span class="math display">\[
 \rho_{w_j}^2 = \sum_{i = 1}^p\frac{\sigma_{ij}^2}{\lambda_i\kappa_j}
 \]</span></p>
@@ -206,10 +221,10 @@ Here, the decline of eigenvalues becomes steeper as <span class="math inline">\(
 <p><span class="math display">\[
 \rho_{w_j}^2 = \sum_{i \in \mathcal{P}_j} \frac{\sigma_{ij}^2}{\lambda_i\kappa_j}
 \]</span></p>
-<p>For some user defined <span class="math inline">\(\rho_{jw}^2\)</span> the <span class="math inline">\(\sigma_{ij}^2\)</span> is determined as follows,</p>
+<p>For some user defined <span class="math inline">\(\rho_{w_j}^2\)</span> the <span class="math inline">\(\sigma_{ij}^2\)</span> is determined as follows,</p>
 <ol style="list-style-type: decimal">
 <li>Sample <span class="math inline">\(k_j\)</span> values from a uniform distribution <span class="math inline">\(\mathcal{U}(-1, 1)\)</span> distribution. Let them be denoted <span class="math inline">\(\mathcal{S}_{\mathcal{P}_1}, \ldots, \mathcal{S}_{\mathcal{P}_{k_j}}\)</span>.</li>
-<li>Define, <span class="math display">\[\sigma_{ij} = \text{Sign}(\mathcal{S}_i)\sqrt{\frac{\rho_{wj}^2\left|\mathcal{S}_i\right|}{\sum_{k\in\mathcal{P}_j}\left|\mathcal{S}_k\right|}\lambda_i\kappa_j}\]</span> for <span class="math inline">\(i \in \mathcal{P}_j\)</span> and <span class="math inline">\(j = 1, \ldots m\)</span></li>
+<li>Define, <span class="math display">\[\sigma_{ij} = \text{Sign}(\mathcal{S}_i)\sqrt{\frac{\rho_{w_j}^2\left|\mathcal{S}_i\right|}{\sum_{k\in\mathcal{P}_j}\left|\mathcal{S}_k\right|}\lambda_i\kappa_j}\]</span> for <span class="math inline">\(i \in \mathcal{P}_j\)</span> and <span class="math inline">\(j = 1, \ldots m\)</span></li>
 </ol>
 </div>
 <div id="data-simulation" class="section level3">

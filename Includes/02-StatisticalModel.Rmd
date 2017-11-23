@@ -31,18 +31,25 @@ Standard theory in multivariate statistics may be used to show that $\mathbf{y}$
 \mathbf{y} = \boldsymbol{\mu}_y + \boldsymbol{\beta}^t (\mathbf{x} - \boldsymbol{\mu}_x) + \boldsymbol{\varepsilon}
   (\#eq:linear-model)
 \end{equation}
-where, $\boldsymbol{\beta}^t$ is a $(m \times p)$ matrix of regression coefficient, and $\boldsymbol{\varepsilon}$ is an error term such that $\boldsymbol{\varepsilon} \sim N\left(0, \boldsymbol{\Sigma}_{y|x}\right)$. The properties of the linear model \@ref(eq:linear-model) can be expressed in terms of covariance matrices in \@ref(eq:rand-reg-model).
+where, $\boldsymbol{\beta}^t$ is a $(m \times p)$ matrix of regression coefficients, and $\boldsymbol{\varepsilon}$ is an error term such that $\boldsymbol{\varepsilon} \sim N\left(0, \boldsymbol{\Sigma}_{y|x}\right)$. The properties of the linear model \@ref(eq:linear-model) can be expressed in terms of covariance matrices in \@ref(eq:rand-reg-model).
 
 Regression Coefficients
-: The matrix of regression coefficients is given by
-$$ \boldsymbol{\beta} = \boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}$$
+  : The matrix of regression coefficients is given by
+    $$\boldsymbol{\beta} = \boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}$$
 
 Coefficient of Determination
-: The diagonal elements of the coefficient-of-determination matrix $\boldsymbol{\rho}_y^2 (m \times m)$ gives the amount of variation in each response variable that is explained by $\mathbf{x}$.
-$$\boldsymbol{\rho}_y^2 = \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}$$
+  : Since, a matrix of coefficient-of-determination represents the proportion of variation explained by the predictors, we can write this matrix as,
+    $$
+    \left(\rho_y^2\right)_{jj'} =
+    \frac{\sigma_{xy_j}^t\Sigma_{xx}^{-1}\sigma_{xy_{j'}}}
+        {\sqrt{\sigma_{y_j}^2\sigma_{y_{j'}}^2}} \forall j, j' = 1 \ldots m
+    $$ 
+    where, $\sigma_{xy_j}$, $\sigma_{xy_{j'}}$ are covariance between $\mathbf{x}$ and $y_j$, $y_{j'}$ respectively. Also, $\sigma_{y_j}^2$ and $\sigma_{y_{j'}}^2$ are unconditional variances of $y_j$ and $y_{j'}$.
+
+    Here the numerator gives the variation that $\mathbf{x}$ explained which is equivalent to the covariance of fitted $\mathbf{y}$ in sample space. The denominator gives the total variation present in $\mathbf{y}$. The diagonal element of this matrix is the proportion of variation in a response $y_j, j = 1, \ldots m$ explained by the predictor.
 
 Conditional variance
-: The conditional variance-covariance matrix of $\mathbf{y}$ given $\mathbf{x}$ is, $$\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.$$ The diagonal elements of this matrix equals the minimum least square error of prediction $\left[\mathrm{E}(y - \hat{y})^2\right]$ for each of the response variables.
+  : The conditional variance-covariance matrix of $\mathbf{y}$ given $\mathbf{x}$ is, $$\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.$$ The diagonal elements of this matrix equals the minimum least square error of prediction $\left[\mathrm{E}(y - \hat{y})^2\right]$ for each of the response variables.
 
 Let us define a transformation of $\mathbf{x}$ and $\mathbf{y}$ as, $\mathbf{z} = \mathbf{Rx}$ and $\mathbf{w} = \mathbf{Qy}$. Here, $\mathbf{R}_{p\times p}$ and $\mathbf{Q}_{m\times m}$ are rotation matrices that rotate $\mathbf{x}$ and $\mathbf{y}$ to yield $\mathbf{z}$ and $\mathbf{w}$, respectively. The model \@ref(eq:rand-reg-model) can be re-expressed in terms of these transformed variables as:
 
@@ -76,7 +83,7 @@ In addition, a linear model relating $\mathbf{w}$ conditioned on $\mathbf{z}$ ca
 \mathbf{w} =  \boldsymbol{\mu}_w + \boldsymbol{\alpha}^t \left(\mathbf{z} - \boldsymbol{\mu}_z\right) + \boldsymbol{\tau}
 (\#eq:latent-model)
 \end{equation}
-where $\boldsymbol{\alpha}$ is the regression coefficient vector for the transformed model and $\boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{w|z}\right)$. Further, if both $\mathbf{Q}$ and $\mathbf{R}$ are orthonormal matrices, i.e., $\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q$ and $\mathbf{R}^t\mathbf{R} = \mathbf{I}_p$, the inverse transformation can be defined as,
+where $\boldsymbol{\alpha}$ is the regression coefficient vector for the transformed model and $\boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{w|z}\right)$. Further, if both $\mathbf{Q}$ and $\mathbf{R}$ are orthonormal matrices, i.e., $\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_m$ and $\mathbf{R}^t\mathbf{R} = \mathbf{I}_p$, the inverse transformation can be defined as,
 
 \begin{equation}
   \begin{matrix}
@@ -118,20 +125,23 @@ Conditional Variance
   \end{aligned}
   $$
 
-Coefficient of Determination
-  : The coefficient-of-determination matrix for \@ref(eq:latent-model) is,
+Coefficient of Determination 
+  : The coefficient-of-determination matrix corresponding to $\mathbf{w}$ can be written as,
   $$
   \begin{aligned}
-    \boldsymbol{\rho}^2_w &= \boldsymbol{\Sigma}_{wz}
-    \boldsymbol{\Sigma}_{zz}^{-1} \boldsymbol{\Sigma}_{zw}
-    \boldsymbol{\Sigma}_{ww}^{-1} \\
-  &=\mathbf{Q}^t
-  \boldsymbol{\Sigma}_{yx}\mathbf{R}^t \left(\mathbf{R}\boldsymbol{\Sigma}_{xx}\mathbf{R}^t\right)^{-1}
-  \mathbf{R}\boldsymbol{\Sigma}_{xy}\mathbf{Q}^t \left(\mathbf{Q} \boldsymbol{\Sigma}_{yy}^{-1} \mathbf{Q}^t\right) \nonumber \\
-  &=\mathbf{Q}^t\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\right]\mathbf{Q}
-  = \mathbf{Q}\boldsymbol{\rho}_{Y}^2 \mathbf{Q}^t
+  \left(\rho_w^2\right)_{j{j'}} &=
+    \boldsymbol{\Sigma}_{ww}^{-1/2}
+    \boldsymbol{\Sigma}_{wz}
+    \boldsymbol{\Sigma}_{zz}^{-1} 
+    \boldsymbol{\Sigma}_{zw}
+    \boldsymbol{\Sigma}_{ww}^{-1/2} \\ &=
+  \frac{\sigma_{zw_i}^t\Sigma_{zz}^{-1}\sigma_{zw_{j'}}}
+      {\sqrt{\sigma_{w_i}^2\sigma_{w_{j'}}^2}} \forall j, {j'} = 1 \ldots m
   \end{aligned}
-  $$
+  $$ 
+  where, $\sigma_{zw_j}$ and $\sigma_{zw_{j'}}$ are covariances of $\mathbf{z}$ with $w_j$ and $w_{j'}$ respectively. Also, $\sigma_{w_j}^2$ and $\sigma_{w_{j'}}^2$ are unconditional variances of $w_j$ and $w_{j'}$. For simplicity, we will denote $\sigma_{z_iw_j}$ by $\sigma_{ij}$.
+
+  Since the rotation matrices gives direct connection between the covariance of \@ref(eq:rand-reg-model) and \@ref(eq:model3), a straight forward relationship can be imagined between the termes in above matrix with their counterpart covariance matrices of $\mathbf{xy}$-space.
 
 From the eigenvalue decomposition principle, if $\boldsymbol{\Sigma}_{xx} = \mathbf{R}\boldsymbol{\Lambda}\mathbf{R}^t$ and $\boldsymbol{\Sigma}_{yy} = \mathbf{Q}\boldsymbol{\Omega}\mathbf{Q}^t$ then $\mathbf{z}$ and $\mathbf{w}$ can be interpreted as principal components of $\mathbf{x}$ and $\mathbf{y}$ respectively. In this paper, these principal components will be termed as _predictor components_ and _response components_ respectively.  Here, $\boldsymbol{\Lambda}$ and $\boldsymbol{\Omega}$ are diagonal matrices of eigenvalues of $\boldsymbol{\Sigma}_{xx}$ and $\boldsymbol{\Sigma}_{yy}$, respectively.
 
@@ -163,7 +173,7 @@ In order to construct a fully specified and unrestricted covariance matrix of $\
   \kappa_j = e^{-\eta(j - 1)}, \eta >0 \text{ and } j = 1, 2, \ldots, m
   (\#eq:eta-parameter)
   \end{equation}
-  Here, the decline of eigenvalues becomes steeper as $\eta$ gets far from zero. At $\eta = 0$, all $w$ will have equal variance. Hence we can write $\Sigma_{ww} = \text{diag}(\kappa_1, \ldots, \kappa_m)$.
+  Here, the decline of eigenvalues becomes steeper as $\eta$ increases from zero. At $\eta = 0$, all $w$ will have equal variance. Hence we can write $\Sigma_{ww} = \text{diag}(\kappa_1, \ldots, \kappa_m)$.
 
 **Parameterization of $\boldsymbol{\Sigma}_{zw}$**
 : After parameterization of $\boldsymbol{\Sigma}_{zz}$ and $\boldsymbol{\Sigma}_{ww}$, we are left with $m \times p$ number of unknowns corresponding to $\boldsymbol{\Sigma}_{zw}$. Some of the elements of $\boldsymbol{\Sigma}_{zw}$ may be equal to zero, which implies that the given $z$ is irrelevant for the given variable $w$. The non-zero elements define which of the $z$ are relevant for $\mathbf{w}$. We typically refer to the indices of these $z$ variables as the positions of relevant components. In order to re-parameterize this covariance matrix, it is necessary to discuss the position of relevant components in detail.
@@ -172,7 +182,7 @@ In order to construct a fully specified and unrestricted covariance matrix of $\
 
 Let $k_1$ components be relevant for $w_1$, $k_2$ components be relevant for $w_2$ and so on. Let the positions of these components be given by the index sets $\mathcal{P}_1, \mathcal{P}_2, \ldots, \mathcal{P}_m$ respectively. Further, the covariance between $w_j$ and $z_i$ is non-zero only if $z_i$ is relevant for $w_j$. If $\sigma_{ij}$ is the covariance between $w_j$ and $z_i$ then $\sigma_{ij} \ne 0$ if $i \in \mathcal{P}_j$ where $i = 1, \ldots, p$ and $j = 1, \ldots, m$ and $\sigma_{ij} = 0$ otherwise.
 
-In addition, the true regression coefficients for $w_j$ [ref:\@ref(eq:latent-model)] is given by:
+In addition, the true regression coefficients $\alpha$ for $w_j$ \@ref(eq:latent-model) is given by:
 
 $$
 \boldsymbol{\alpha}_j = \Lambda^{-1} \sigma_{ij} = \sum_{i \in \mathcal{P}_j}\frac{\sigma_{ij}}{\lambda_i},\qquad j = 1, 2, \ldots m
@@ -185,18 +195,36 @@ Although the covariance matrix may depend on few relevant components, we can not
 * The covariance matrices $\Sigma_{zz}$, $\Sigma_{ww}$ and $\Sigma$ must be positive definite
 * The covariance $\sigma_{ij}$ must satisfy user defined coefficient of determination
 
-We have the relation, $$\boldsymbol{\rho}_w^2 = \boldsymbol{\Sigma}_{zw}^t\boldsymbol{\Sigma}_{zz}^{-1}\boldsymbol{\Sigma}_{zw}\boldsymbol{\Sigma}_{ww}^{-1}$$ Applying our assumptions that, $\boldsymbol{\Sigma_{ww}} = \text{diag}(\kappa_1, \ldots, \kappa_m)$ \@ref(eq:eta-parameter) and $\boldsymbol{\Sigma}_{zz} = \Lambda = \text{diag}(\lambda_1, \ldots, \lambda_p)$ \@ref(eq:gamma-parameter), we obtain,
+We have the relation, 
+$$
+  \begin{aligned}
+    \boldsymbol{\rho}_w^2 &= 
+    \boldsymbol{\Sigma}_{ww}^{-1/2}
+    \boldsymbol{\Sigma}_{zw}^t
+    \boldsymbol{\Sigma}_{zz}^{-1}
+    \boldsymbol{\Sigma}_{zw}
+    \boldsymbol{\Sigma}_{ww}^{-1/2} \\ &=
+    \frac{\sigma_{ij}^t\Lambda^{-1}\sigma_{ij'}}
+        {\sqrt{\sigma_{j}^2\sigma_{j'}^2}} \forall j, {j'} = 1 \ldots m
+  \end{aligned}
+$$ 
+Applying our assumptions that, $\boldsymbol{\Sigma_{ww}} = \text{diag}(\kappa_1, \ldots, \kappa_m)$ \@ref(eq:eta-parameter) and $\boldsymbol{\Sigma}_{zz} = \Lambda = \text{diag}(\lambda_1, \ldots, \lambda_p)$ \@ref(eq:gamma-parameter), we obtain,
+
 
 $$
-  \rho_{w}^2 = \Sigma_{zw}^t\Lambda^{-1}\Sigma_{zw}\Sigma_{ww}^{-1} =
+  \rho_{w}^2 = \Sigma_{ww}^{-1/2}\Sigma_{zw}^t\Lambda^{-1}\Sigma_{zw}\Sigma_{ww}^{-1/2} = 
   \begin{bmatrix}
-    \sum_{i = 1}^p\frac{\sigma_{i1}^2}{\lambda_i\kappa_1} & \ldots & \sum_{i=1}^p\frac{\sigma_{i1}\sigma_{im}}{\lambda_i\kappa_1} \\
+    \displaystyle\sum_{i = 1}^p\dfrac{\sigma_{i1}^2}{\lambda_i\kappa_1} & 
+    \ldots &
+    \displaystyle\sum_{i=1}^p\dfrac{\sigma_{i1}\sigma_{im}}{\lambda_i\sqrt{\kappa_1\kappa_m}} \\
     \vdots & \ddots & \vdots \\
-    \sum_{i=1}^p\frac{\sigma_{i1}\sigma_{im}}{\lambda_i\kappa_m} & \ldots & \sum_{i = 1}^p\frac{\sigma_{im}^2}{\lambda_i\kappa_m}
-  \end{bmatrix}
+    \displaystyle\sum_{i=1}^p\dfrac{\sigma_{i1}\sigma_{im}}{\lambda_i\sqrt{\kappa_1\kappa_m}} & 
+    \ldots & 
+    \displaystyle\sum_{i = 1}^p\dfrac{\sigma_{im}^2}{\lambda_i\kappa_m}
+  \end{bmatrix} 
 $$
 
-Furthermore, we assume that there are no overlapping relevant components for any two $w$, i.e, $\mathcal{P}_j \cap \mathcal{P}_{j*} = \varnothing$ or $\sigma_{ij}\sigma_{ij*} = 0$ for $j\ne j*$. The additional unknown parameters in the diagonal of $\boldsymbol{\rho}_w^2$ should agree with user specified coefficients of determination for $\mathbf{w}$. i.e, $\rho_{wj}^2$ is,
+Furthermore, we assume that there are no overlapping relevant components for any two $w$, i.e, $\mathcal{P}_j \cap \mathcal{P}_{j*} = \varnothing$ or $\sigma_{ij}\sigma_{ij*} = 0$ for $j\ne j*$. The additional unknown parameters in the diagonal of $\boldsymbol{\rho}_w^2$ should agree with user specified coefficients of determination for $\mathbf{w}$. i.e, $\rho_{w_j}^2$ is,
 
 $$
 \rho_{w_j}^2 = \sum_{i = 1}^p\frac{\sigma_{ij}^2}{\lambda_i\kappa_j}
@@ -208,10 +236,10 @@ $$
 \rho_{w_j}^2 = \sum_{i \in \mathcal{P}_j} \frac{\sigma_{ij}^2}{\lambda_i\kappa_j}
 $$
 
-For some user defined $\rho_{jw}^2$ the $\sigma_{ij}^2$ is determined as follows,
+For some user defined $\rho_{w_j}^2$ the $\sigma_{ij}^2$ is determined as follows,
 
 1. Sample $k_j$ values from a uniform distribution $\mathcal{U}(-1, 1)$ distribution. Let them be denoted $\mathcal{S}_{\mathcal{P}_1}, \ldots, \mathcal{S}_{\mathcal{P}_{k_j}}$.
-2. Define, $$\sigma_{ij} = \text{Sign}(\mathcal{S}_i)\sqrt{\frac{\rho_{wj}^2\left|\mathcal{S}_i\right|}{\sum_{k\in\mathcal{P}_j}\left|\mathcal{S}_k\right|}\lambda_i\kappa_j}$$
+2. Define, $$\sigma_{ij} = \text{Sign}(\mathcal{S}_i)\sqrt{\frac{\rho_{w_j}^2\left|\mathcal{S}_i\right|}{\sum_{k\in\mathcal{P}_j}\left|\mathcal{S}_k\right|}\lambda_i\kappa_j}$$
 for $i \in \mathcal{P}_j$ and $j = 1, \ldots m$
 
 
@@ -223,10 +251,6 @@ Similarly, in order to simulate $n$ observations, we define $\underset{n \times 
 
 ## Rotation of predictor space
 ```{r basic-simulation, message=FALSE, warning=FALSE, echo = FALSE}
-pkgs <- c("simrel", "ggplot2", "reshape2")
-for (pkg in pkgs) require(pkg, character.only = T)
-
-source(file.path(getwd(), "scripts/00-plot-function.R"))
 set.seed(123)
 pars <- list(
   n      = 25,

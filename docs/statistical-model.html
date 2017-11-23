@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-10-31">
+<meta name="date" content="2017-11-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -186,13 +186,18 @@ In this section we describe the model and the model parameterization which is as
 \mathbf{y} = \boldsymbol{\mu}_y + \boldsymbol{\beta}^t (\mathbf{x} - \boldsymbol{\mu}_x) + \boldsymbol{\varepsilon}
   \tag{2}
 \end{equation}\]</span>
-<p>where, <span class="math inline">\(\boldsymbol{\beta}^t\)</span> is a <span class="math inline">\((m \times p)\)</span> matrix of regression coefficient, and <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> is an error term such that <span class="math inline">\(\boldsymbol{\varepsilon} \sim N\left(0, \boldsymbol{\Sigma}_{y|x}\right)\)</span>. The properties of the linear model <a href="statistical-model.html#eq:linear-model">(2)</a> can be expressed in terms of covariance matrices in <a href="statistical-model.html#eq:rand-reg-model">(1)</a>.</p>
+<p>where, <span class="math inline">\(\boldsymbol{\beta}^t\)</span> is a <span class="math inline">\((m \times p)\)</span> matrix of regression coefficients, and <span class="math inline">\(\boldsymbol{\varepsilon}\)</span> is an error term such that <span class="math inline">\(\boldsymbol{\varepsilon} \sim N\left(0, \boldsymbol{\Sigma}_{y|x}\right)\)</span>. The properties of the linear model <a href="statistical-model.html#eq:linear-model">(2)</a> can be expressed in terms of covariance matrices in <a href="statistical-model.html#eq:rand-reg-model">(1)</a>.</p>
 <dl>
 <dt>Regression Coefficients</dt>
-<dd>The matrix of regression coefficients is given by <span class="math display">\[ \boldsymbol{\beta} = \boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\]</span>
+<dd>The matrix of regression coefficients is given by <span class="math display">\[\boldsymbol{\beta} = \boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\]</span>
 </dd>
 <dt>Coefficient of Determination</dt>
-<dd>The diagonal elements of the coefficient-of-determination matrix <span class="math inline">\(\boldsymbol{\rho}_y^2 (m \times m)\)</span> gives the amount of variation in each response variable that is explained by <span class="math inline">\(\mathbf{x}\)</span>. <span class="math display">\[\boldsymbol{\rho}_y^2 = \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\]</span>
+<dd><p>Since, a matrix of coefficient-of-determination represents the proportion of variation explained by the predictors, we can write this matrix as, <span class="math display">\[
+\left(\rho_y^2\right)_{jj&#39;} =
+\frac{\sigma_{xy_j}^t\Sigma_{xx}^{-1}\sigma_{xy_{j&#39;}}}
+    {\sqrt{\sigma_{y_j}^2\sigma_{y_{j&#39;}}^2}} \forall j, j&#39; = 1 \ldots m
+\]</span> where, <span class="math inline">\(\sigma_{xy_j}\)</span>, <span class="math inline">\(\sigma_{xy_{j&#39;}}\)</span> are covariance between <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(y_j\)</span>, <span class="math inline">\(y_{j&#39;}\)</span> respectively. Also, <span class="math inline">\(\sigma_{y_j}^2\)</span> and <span class="math inline">\(\sigma_{y_{j&#39;}}^2\)</span> are unconditional variances of <span class="math inline">\(y_j\)</span> and <span class="math inline">\(y_{j&#39;}\)</span>.</p>
+<p>Here the numerator gives the variation that <span class="math inline">\(\mathbf{x}\)</span> explained which is equivalent to the covariance of fitted <span class="math inline">\(\mathbf{y}\)</span> in sample space. The denominator gives the total variation present in <span class="math inline">\(\mathbf{y}\)</span>. The diagonal element of this matrix is the proportion of variation in a response <span class="math inline">\(y_j, j = 1, \ldots m\)</span> explained by the predictor.</p>
 </dd>
 <dt>Conditional variance</dt>
 <dd>The conditional variance-covariance matrix of <span class="math inline">\(\mathbf{y}\)</span> given <span class="math inline">\(\mathbf{x}\)</span> is, <span class="math display">\[\boldsymbol{\Sigma}_{y|x} = \boldsymbol{\Sigma}_{yy} - \boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}^{-1}\boldsymbol{\Sigma}_{xy}.\]</span> The diagonal elements of this matrix equals the minimum least square error of prediction <span class="math inline">\(\left[\mathrm{E}(y - \hat{y})^2\right]\)</span> for each of the response variables.
@@ -227,7 +232,7 @@ In this section we describe the model and the model parameterization which is as
 \mathbf{w} =  \boldsymbol{\mu}_w + \boldsymbol{\alpha}^t \left(\mathbf{z} - \boldsymbol{\mu}_z\right) + \boldsymbol{\tau}
 \tag{4}
 \end{equation}\]</span>
-<p>where <span class="math inline">\(\boldsymbol{\alpha}\)</span> is the regression coefficient vector for the transformed model and <span class="math inline">\(\boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{w|z}\right)\)</span>. Further, if both <span class="math inline">\(\mathbf{Q}\)</span> and <span class="math inline">\(\mathbf{R}\)</span> are orthonormal matrices, i.e., <span class="math inline">\(\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_q\)</span> and <span class="math inline">\(\mathbf{R}^t\mathbf{R} = \mathbf{I}_p\)</span>, the inverse transformation can be defined as,</p>
+<p>where <span class="math inline">\(\boldsymbol{\alpha}\)</span> is the regression coefficient vector for the transformed model and <span class="math inline">\(\boldsymbol{\tau} \sim N\left(\mathbf{0}, \boldsymbol{\Sigma}_{w|z}\right)\)</span>. Further, if both <span class="math inline">\(\mathbf{Q}\)</span> and <span class="math inline">\(\mathbf{R}\)</span> are orthonormal matrices, i.e., <span class="math inline">\(\mathbf{Q}^t\mathbf{Q} = \mathbf{I}_m\)</span> and <span class="math inline">\(\mathbf{R}^t\mathbf{R} = \mathbf{I}_p\)</span>, the inverse transformation can be defined as,</p>
 <span class="math display" id="eq:cov-yx-wz">\[\begin{equation}
   \begin{matrix}
     \boldsymbol{\Sigma}_{yy} = \mathbf{Q}^t \boldsymbol{\Sigma}_{ww} \mathbf{Q} &amp;
@@ -264,20 +269,21 @@ In this section we describe the model and the model parameterization which is as
   \]</span>
 </dd>
 <dt>Coefficient of Determination</dt>
-<dd>The coefficient-of-determination matrix for <a href="statistical-model.html#eq:latent-model">(4)</a> is, <span class="math display">\[
+<dd>The coefficient-of-determination matrix corresponding to <span class="math inline">\(\mathbf{w}\)</span> can be written as, <span class="math display">\[
   \begin{aligned}
-\boldsymbol{\rho}^2_w &amp;= \boldsymbol{\Sigma}_{wz}
-\boldsymbol{\Sigma}_{zz}^{-1} \boldsymbol{\Sigma}_{zw}
-\boldsymbol{\Sigma}_{ww}^{-1} \\
-  &amp;=\mathbf{Q}^t
-  \boldsymbol{\Sigma}_{yx}\mathbf{R}^t \left(\mathbf{R}\boldsymbol{\Sigma}_{xx}\mathbf{R}^t\right)^{-1}
-  \mathbf{R}\boldsymbol{\Sigma}_{xy}\mathbf{Q}^t \left(\mathbf{Q} \boldsymbol{\Sigma}_{yy}^{-1} \mathbf{Q}^t\right) \nonumber \\
-  &amp;=\mathbf{Q}^t\left[\boldsymbol{\Sigma}_{yx}\boldsymbol{\Sigma}_{xx}\boldsymbol{\Sigma}_{xy}\boldsymbol{\Sigma}_{yy}^{-1}\right]\mathbf{Q}
-  = \mathbf{Q}\boldsymbol{\rho}_{Y}^2 \mathbf{Q}^t
+  \left(\rho_w^2\right)_{j{j&#39;}} &amp;=
+\boldsymbol{\Sigma}_{ww}^{-1/2}
+\boldsymbol{\Sigma}_{wz}
+\boldsymbol{\Sigma}_{zz}^{-1} 
+\boldsymbol{\Sigma}_{zw}
+\boldsymbol{\Sigma}_{ww}^{-1/2} \\ &amp;=
+  \frac{\sigma_{zw_i}^t\Sigma_{zz}^{-1}\sigma_{zw_{j&#39;}}}
+  {\sqrt{\sigma_{w_i}^2\sigma_{w_{j&#39;}}^2}} \forall j, {j&#39;} = 1 \ldots m
   \end{aligned}
-  \]</span>
+  \]</span> where, <span class="math inline">\(\sigma_{zw_j}\)</span> and <span class="math inline">\(\sigma_{zw_{j&#39;}}\)</span> are covariances of <span class="math inline">\(\mathbf{z}\)</span> with <span class="math inline">\(w_j\)</span> and <span class="math inline">\(w_{j&#39;}\)</span> respectively. Also, <span class="math inline">\(\sigma_{w_j}^2\)</span> and <span class="math inline">\(\sigma_{w_{j&#39;}}^2\)</span> are unconditional variances of <span class="math inline">\(w_j\)</span> and <span class="math inline">\(w_{j&#39;}\)</span>. For simplicity, we will denote <span class="math inline">\(\sigma_{z_iw_j}\)</span> by <span class="math inline">\(\sigma_{ij}\)</span>.
 </dd>
 </dl>
+<p>Since the rotation matrices gives direct connection between the covariance of <a href="statistical-model.html#eq:rand-reg-model">(1)</a> and <a href="statistical-model.html#eq:model3">(3)</a>, a straight forward relationship can be imagined between the termes in above matrix with their counterpart covariance matrices of <span class="math inline">\(\mathbf{xy}\)</span>-space.</p>
 <p>From the eigenvalue decomposition principle, if <span class="math inline">\(\boldsymbol{\Sigma}_{xx} = \mathbf{R}\boldsymbol{\Lambda}\mathbf{R}^t\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}_{yy} = \mathbf{Q}\boldsymbol{\Omega}\mathbf{Q}^t\)</span> then <span class="math inline">\(\mathbf{z}\)</span> and <span class="math inline">\(\mathbf{w}\)</span> can be interpreted as principal components of <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> respectively. In this paper, these principal components will be termed as <em>predictor components</em> and <em>response components</em> respectively. Here, <span class="math inline">\(\boldsymbol{\Lambda}\)</span> and <span class="math inline">\(\boldsymbol{\Omega}\)</span> are diagonal matrices of eigenvalues of <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}_{yy}\)</span>, respectively.</p>
 </div>
             </section>

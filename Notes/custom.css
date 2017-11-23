@@ -2,8 +2,17 @@
     font-size: 0.6em;
     background-color: #3b5998;
     color: white;
-    padding: 0px 10px;
-    float: right;
+    padding: 5px 10px;
+    float: left;
+    margin-right: 10px;
+}
+.done.DONE{
+    font-size: 0.6em;
+    background-color: #2e8645;
+    color: white;
+    padding: 5px 10px;
+    float: left;
+    margin-right: 10px;
 }
 ul {
     padding-left: 0em;
@@ -16,8 +25,5 @@ li:before {
 h1+ul>li:before{
     content: "";
     padding-right: 0px;
-}
-#refs p{
-    width: 100%;
 }
 
