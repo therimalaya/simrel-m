@@ -1,0 +1,42 @@
+---
+date: '`r format(Sys.time(), "%B %d, %Y")`'
+## Author Details
+authors:
+  - author:
+    - Raju Rimal
+## To whome you are writing
+address: 
+  - Romà Tauler,
+  - Editor in Chief
+  - Chemometrics and Intelligent Laboratory Systems
+## Opening of Letter
+opening: Dear Mr. Tauler,
+## Closing of Letter
+closing: Sincerely,
+## Other template variables
+fontsize: 11pt
+linestretch: 1.15
+geometry: margin=1in
+blockquote: true
+signature-space: 1.5cm
+closing-indentation: 0pt
+links-as-notes: true
+colorlinks: true
+papersize: a4
+fontfamily: mathpazo
+...
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+library(RefManageR)
+bib <- ReadBib("ref-db.bib")
+```
+
+I am pleased to submit an original research article entitled "**A tool for simulating multi-response linear model data**" on behalf of the authors. This manuscript is an extension to the R-package "_simrel_" ^[`r paste(substring(capture.output(bib["saebo2015simrel"]), 5), collapse = "")`] previously published in Chemometrics and Intelligent Laboratory System. The extension is to incorporate simulation of multiple response variables.
+
+Many methods have been developed for handling multivariate data, and usually one is using simulated data to access various properties of the methods. The tool presented in this manuscript will accelerate the process by simulating multi-response multivariate data. This enables researchers not only to study method-data interaction but also facilitate them to make extensive comparison with other similar methods.
+
+We believe that this manuscript is appropriate for publication in _software description_ section in Chemometrics and Intelligent Laboratory System. Many research articles in chemometrics and related fields have multi-response variables with few underlying latent structure. Since the tool described in this manuscript is based on the underlying latent structure, researchers can simulate data with control over few parameters. We believe that this tool can help researchers in various parts of their research process.
+
+This manuscript has not been published and is not under consideration for publication elsewhere. We have no conflict of interest to disclose.
+
+Thank you for your consideration.

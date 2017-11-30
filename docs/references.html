@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A tool for simulating multi-response linear model data</title>
   <meta name="description" content="A tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.4.1 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="A tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -24,14 +24,14 @@
 
 
 
-<meta name="date" content="2017-07-25">
+<meta name="date" content="2017-11-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="web-interface.html">
+<link rel="prev" href="conclusion.html">
 
 <style type="text/css">
 p.abstract{
@@ -58,6 +58,43 @@ div.abstract{
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -87,6 +124,7 @@ div.abstract{
 </ul></li>
 <li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a></li>
 <li class="chapter" data-level="" data-path="web-interface.html"><a href="web-interface.html"><i class="fa fa-check"></i>Web Interface</a></li>
+<li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>
@@ -114,6 +152,15 @@ div.abstract{
 <div id="refs" class="references">
 <div>
 <p>Anderson, Theodore W, Ingram Olkin, and Les G Underhill. 1987. “Generation of Random Orthogonal Matrices.” <em>SIAM Journal on Scientific and Statistical Computing</em> 8 (4). SIAM: 625–29.</p>
+</div>
+<div>
+<p>Arteaga, Francisco, and Alberto Ferrer. 2010. “How to Simulate Normal Data Sets with the Desired Correlation Structure.” <em>Chemometrics and Intelligent Laboratory Systems</em> 101 (1). Elsevier: 38–42.</p>
+</div>
+<div>
+<p>———. 2013. “Building Covariance Matrices with the Desired Structure.” <em>Chemometrics and Intelligent Laboratory Systems</em> 127. Elsevier: 80–88.</p>
+</div>
+<div>
+<p>Camacho, José. 2017. “On the Generation of Random Multivariate Data.” <em>Chemometrics and Intelligent Laboratory Systems</em> 160. Elsevier: 40–51.</p>
 </div>
 <div>
 <p>Cook, R Dennis, and Xin Zhang. 2015. “Foundations for Envelope Models and Methods.” <em>Journal of the American Statistical Association</em> 110 (510). Taylor &amp; Francis: 599–611.</p>
@@ -149,6 +196,9 @@ div.abstract{
 <p>Indahl, Ulf G, Kristian Hovde Liland, and Tormod Næs. 2009. “Canonical Partial Least Squares–a Unified Pls Approach to Classification and Regression Problems.” <em>Journal of Chemometrics</em> 23 (9). Wiley Online Library: 495–504.</p>
 </div>
 <div>
+<p>Johnson, Mark E. 2013. <em>Multivariate Statistical Simulation: A Guide to Selecting and Generating Continuous Multivariate Distributions</em>. John Wiley &amp;amp; Sons.</p>
+</div>
+<div>
 <p>Ripley, Brian D. 2009. <em>Stochastic Simulation</em>. Vol. 316. John Wiley &amp; Sons.</p>
 </div>
 <div>
@@ -164,7 +214,7 @@ div.abstract{
           </div>
         </div>
       </div>
-<a href="web-interface.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conclusion.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>

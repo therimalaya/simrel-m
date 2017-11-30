@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 evl <- !file.exists('scripts/output/pred-err.rdata')
 source("scripts/01-setup.r")
 if (evl) {
-  source("08-final-data.r") 
+  source("08-final-data.r")
 } else {
   load('output/pred-err.rdata')
   setwd(owd)
@@ -35,31 +35,33 @@ c) Envelope estimation in predictor space (Xenv) [@cook2010envelope],
 d) Envelope estimation in response space (Yenv) [@cook2015foundations] and
 e) Simultaneous estimation of x- and y-envelope (Senv) [@cook2015simultaneous]
 
-From the possible combinations of two levels of coefficient of determination $(R^2)$ and two levels of `gamma` (the factor that controls the multicollinearity in predictor variables), four simulation designs (design 1-4) were prepared. Replicating each design 20 times, 80 datasets with five response variables $(m=5)$ and 16 predictor variables $(p = 16)$ were simulated using the method discussed in this paper. It was also assumed that three principle components of response variables ($w_1, w_2$ and $w_3$) completely describe the variation present in five response variables ($y_1 \ldots y_5$). The four designs are presented in Table~\@ref(tab:parameter-settings). All datasets contained 100 sampled observations and out of 16 predictor variables, three disjoint set of five predictor variables are relevant for response components $w_1, w_2$ and $w_3$. Further, predictor components $z_1$ and $z_6$ were relevant for response component $w_1$, predictor components $z_2$ and $z_5$ were relevant for response component $w_2$ and predictor component $z_3$ and $z_4$ was relevant for response component $w_3$. In addition, following the discussion about [rotation of response space](#rotation-of-response-space), $w_1$ was rotated together with $w_4$ and $w_2$ was rotated together with $w_5$. Figure \@ref(fig:cov-plot-print-1) visualize the covariance structure and relationship between the response and predictor variables for first design.
+From the possible combinations of two levels of coefficient of determination $(\rho^2)$ and two levels of $\gamma$ \@ref(eq:gamma-parameter) (the factor that controls the multicollinearity in predictor variables), four simulation designs (design 1-4) were prepared. Replicating each design 20 times, 80 datasets with five response variables $(m=5)$ and 16 predictor variables $(p = 16)$ were simulated using the method discussed in this paper. It was also assumed that three response components ($w_1, w_2$ and $w_3$) completely describe the variation present in five response variables ($y_1 \ldots y_5$). Here, in this example we have assumed that all $w$'s have equal variance, i.e. $\Sigma_{ww} = \mathbf{I}_m$, that is, $\eta = 0$ in \@ref(eq:eta-parameter). The four designs are presented in Table~\@ref(tab:parameter-settings). All datasets contained 100 sampled observations and out of 16 predictor variables, three disjoint sets of five predictor variables each are relevant for response components $w_1, w_2$ and $w_3$. Although the simulation method is well equipped to simulate data with $p \gg n$, for incorporating envelope estimation methods, which are based on maximization of likelihood, we have chosen a $n > p$ situation in the example. Further, predictor components $z_1$ and $z_6$ were relevant for response component $w_1$, predictor components $z_2$ and $z_5$ were relevant for response component $w_2$ and predictor component $z_3$ and $z_4$ were relevant for response component $w_3$. In addition, following the discussion about [rotation of response space](#rotation-of-response-space) (section \@ref(rotation-of-response-space)), $w_1$ was rotated together with $w_4$ and $w_2$ was rotated together with $w_5$. Figure \@ref(fig:cov-plot-print-1) visualizes the covariance structure and relationship between the response and predictor variables for the first design.
 
 ```{r}
 dgn <- lapply(opts, function(x) x[[1]])
-dgn <- lapply(dgn, function(x) simulatr::parse_parm(as.character(x)))
+dgn <- lapply(dgn, function(x) simrel::parse_parm(as.character(x)))
 dgn$type <- "multivariate"
-sobj <- do.call(simulatr, dgn)
+sobj <- do.call(simrel, dgn)
 ```
 
-```{r cov-plot-print-1, echo = FALSE, warning = FALSE, message = FALSE, out.width = '33%', fig.asp = 1.2, fig.subcap=c("Relevant Position", "Rotation Matrix", "Relevant Predictors"), fig.cap = 'Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b).', fig.width=1.8, dpi = 800, fig.pos='!htb'}
+(ref:cov-plot) Simulation of predictor and response variables for design one after orthogonal transformation of predictor and response components by rotation matrices $Q$ and $R$ shown as the upper left and the lower right block matrices in (b). Here (a) is the covariance structure of the latent space, which is rotated by the block diagonal rotation matrix in (b) resulting the covariance structure of simulated data in (c).
+
+```{r cov-plot-print-1, echo = FALSE, warning = FALSE, message = FALSE, out.width = '33%', fig.asp = 1.2, fig.subcap=c("Relevant Position", "Rotation Matrix", "Relevant Predictors"), fig.cap = '(ref:cov-plot)', fig.width=1.8, dpi = 800, fig.pos='!htb'}
 plt11 <- plot(cov.df(sobj, type = "relpos", ordering = TRUE), "relpos") +
   ggtitle("PC Covariance Matrix")
 plt12 <- plot(cov.df(sobj, type = "rotation"), "relpred") +
   ggtitle("Rotation Matrix")
 plt13 <- plot(cov.df(sobj, type = "relpred"), "relpred") +
   ggtitle("simulated data cov. matrix")
-plusTheme <- theme_grey(base_size = 6.5) + 
-  theme(text = element_text(size = 5.3), 
-        legend.title = element_blank(), 
-        legend.position = "top", 
+plusTheme <- theme_grey(base_size = 6.7) +
+  theme(text = element_text(size = 5.5),
+        legend.title = element_blank(),
+        legend.position = "top",
         plot.title = element_blank(),
-        legend.key.size = unit(0.25, "cm"),
+        legend.key.size = unit(0.23, "cm"),
         legend.margin = margin(2, 2, 0, 2),
         plot.margin = margin(2, 2, 1, 1),
-        panel.grid = element_line(size = 0.03),
+        panel.grid = element_blank(),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
         axis.ticks = element_line(size = 0.05))
 (plt11 <- plt11 + plusTheme)
@@ -78,9 +80,6 @@ if (!file.exists("images/cov-plot-print-1-3.tiff")) {
 }
 ```
 
-
-
-
 ```{r design-table}
 design_table <- do.call(rbind, opts[c("gamma", "R2")])
 dimnames(design_table) <- list(
@@ -89,11 +88,15 @@ dimnames(design_table) <- list(
   paste0("Design", 1:4))
 ```
 
-```{r parameter-settings}
+```{r parameter-settings, message=FALSE, warning=FALSE}
 if (!knitr:::is_html_output()) {
-knitr::kable(design_table, escape = FALSE, booktabs = TRUE,
-      caption = "Parameter setting of simulated data for comparison of estimation methods") %>% 
-  kable_styling(full_width = TRUE, latex_options = "hold_position")
+  t(design_table) %>%
+    knitr::kable(escape = FALSE, booktabs = TRUE,
+                 caption = "Parameter setting of simulated data for comparison of estimation methods") %>%
+    kable_styling(full_width = TRUE, latex_options = c('hold_position', 'striped')) %>%
+    row_spec(0, bold = TRUE) %>%
+    column_spec(1, bold = TRUE) %>%
+    row_spec(1:4, monospace = TRUE)
 } else {
   pander::pander(
     design_table, type = "rmarkdown",
@@ -104,27 +107,29 @@ knitr::kable(design_table, escape = FALSE, booktabs = TRUE,
 }
 ```
 
-For each method, an estimate of expected squared prediction error was computed as,
+For each method, we can write an expected squared prediction error as,
 
-$$\underset{m \times m}{\boldsymbol{\vartheta}} = 
+\begin{equation}
+\underset{m \times m}{\boldsymbol{\vartheta}} =
 \mathrm{E}\left[\left(
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
 \right) ^t \boldsymbol{\Sigma}_{xx}
 \left(
 \hat{\boldsymbol{\beta}} - \boldsymbol{\beta}
-\right)\right] + \boldsymbol{\Sigma}_{y|x}$$
-
-where, $\hat{\boldsymbol{\beta}}$ is an estimate of true regression coefficient $\boldsymbol{\beta}$ and $\boldsymbol{\Sigma}_{xx}$ is the true covariance structure of the predictor variables obtained from `simrel`. Also, $\boldsymbol{\Sigma}_{y|x}$ is the true minimum error of the model. Here $\hat{\boldsymbol{\beta}}$ varies across different estimation methods while the remaining terms are same for each dataset design. Further, an overall prediction error of all responses is measured by the trace of $\boldsymbol{\vartheta}$.
+\right)\right] + \boldsymbol{\Sigma}_{y|x}
+(\#eq:error-formula)
+\end{equation}
+where, $\hat{\boldsymbol{\beta}}$ is an estimate of the true regression coefficient $\boldsymbol{\beta}$ and $\boldsymbol{\Sigma}_{xx}$ is the true covariance structure of the predictor variables obtained from `simrel`. Also, $\boldsymbol{\Sigma}_{y|x}$ is the true minimum error of the model. Here $\hat{\boldsymbol{\beta}}$ varies across different estimation methods while the remaining terms are the same for each dataset design. The expression in \@ref(eq:error-formula) is estimated from 20 replicated calibration sets. Further, an overall prediction error of all responses is measured by the trace of $\boldsymbol{\vartheta}$ \@ref(eq:error-formula).
 
 The minimum prediction error (measured as discussed above) for nine estimation methods averaged over 20 replications of four designs are shown in Table \@ref(tab:min-error). The table also gives the number of predictor components (response components in case of `Yenv`), a method has used in order to obtain the minimum of average prediction error.
 
 ```{r Average-Prediction}
-avg_pred_err <- myData %>% 
-  rename(pred_err = without_norm) %>% 
-  group_by(Model, design, comp, R2, gamma) %>% 
-  do(mean_se(.$pred_err)) %>% 
-  rename(pred_err = y, upper = ymax, lower = ymin) %>% 
-  ungroup() %>% 
+avg_pred_err <- myData %>%
+  rename(pred_err = without_norm) %>%
+  group_by(Model, design, comp, R2, gamma) %>%
+  do(mean_se(.$pred_err)) %>%
+  rename(pred_err = y, upper = ymax, lower = ymin) %>%
+  ungroup() %>%
   mutate(Model = gsub("\\<PLS\\>", "PLS2", Model))
 ```
 
@@ -136,35 +141,35 @@ avgPredErr <- avg_pred_err %>%
     pred_err = min(pred_err),
     label = paste0("(", comp, ", ", format(round(pred_err, 2), nsmall = 2), ")")
   )
-avgPredErr_lbl <- avgPredErr %>% 
+avgPredErr_lbl <- avgPredErr %>%
   select(-comp, -pred_err) %>%
-  mutate(design = paste0("Design: ", design)) %>% 
+  mutate(design = paste0("Design: ", design)) %>%
   spread(design, label)
 
-avgPredErr_idx <- avgPredErr %>% 
-  select(-comp, -label) %>% 
-  mutate(design = paste0("Design: ", design)) %>% 
-  spread(design, pred_err) %>% 
-  ungroup() %>% 
-  select(-Model) %>% 
+avgPredErr_idx <- avgPredErr %>%
+  select(-comp, -label) %>%
+  mutate(design = paste0("Design: ", design)) %>%
+  spread(design, pred_err) %>%
+  ungroup() %>%
+  select(-Model) %>%
   do({sapply(., function(x) x == min(x)) %>% as_tibble()}) %>%
-  as.matrix() %>% 
+  as.matrix() %>%
   which(arr.ind = TRUE)
 avgPredErr_idx[, "col"] <- avgPredErr_idx[, "col"] + 1
 ```
 
-```{r min-error, warning=FALSE}
+```{r min-error, message=FALSE, warning=FALSE}
 if (!knitr:::is_html_output()) {
 kable(avgPredErr_lbl, booktabs = TRUE, align = "lcccc", escape = FALSE,
-      caption = "Minimum average prediction error 
-      (number of components corresponding to minimum prediction error, minimum prediction error) 
-      (For $Y\\text{env}$, the number of response components is given)") %>% 
-  kable_styling(latex_options = 'striped')%>%
-  column_spec(1, bold = TRUE, width = "7em") %>% 
-  column_spec(2, monospace = TRUE, width = "6em") %>% 
-  column_spec(3, monospace = TRUE, width = "6em") %>% 
-  column_spec(4, monospace = TRUE, width = "6em") %>% 
-  column_spec(5, monospace = TRUE, width = "6em") %>% 
+      caption = "Minimum average prediction error
+      (number of components corresponding to minimum prediction error, minimum prediction error)
+      (For $Y\\text{env}$, the number of response components is given)") %>%
+  kable_styling(latex_options = c('striped', 'scale_down'), full_width = TRUE)%>%
+  column_spec(1, bold = TRUE, width = "7em") %>%
+  column_spec(2, monospace = TRUE, width = "6em") %>%
+  column_spec(3, monospace = TRUE, width = "6em") %>%
+  column_spec(4, monospace = TRUE, width = "6em") %>%
+  column_spec(5, monospace = TRUE, width = "6em") %>%
   row_spec(0, bold = TRUE)
 } else {
   avgPredErr_lbl %>%
@@ -173,17 +178,17 @@ kable(avgPredErr_lbl, booktabs = TRUE, align = "lcccc", escape = FALSE,
            emphasize.verbatim.cols = 2:ncol(.),
            emphasize.italics.cells = avgPredErr_idx,
            emphasize.italics.cols = 1, justify = "lcccc",
-           caption = "(\\#tab:min-error) Minimum average prediction error 
-           (number of components corresponding to minimum prediction error, minimum prediction error) 
+           caption = "(\\#tab:min-error) Minimum average prediction error
+           (number of components corresponding to minimum prediction error, minimum prediction error)
            (For $Y\\text{env}$, the number of response components is given)")
 }
 ```
 
 
 ```{r}
-topBest <- avgPredErr %>% 
-  ungroup() %>% 
-  group_by(design) %>% 
+topBest <- avgPredErr %>%
+  ungroup() %>%
+  group_by(design) %>%
   summarize(
     Model = Model[which.min(pred_err)],
     comp = comp[which.min(pred_err)],
@@ -191,49 +196,49 @@ topBest <- avgPredErr %>%
   )
 ```
 
-Table \@ref(tab:min-error) shows that the simultaneous envelope has prediction error of `r paste(round(topBest[["pred_err"]][1:2], 2), collapse = " and ")` in design 1 (with `r topBest[["comp"]][1]` components) and design 2 (with `r topBest[["comp"]][2]` components), respectively, which is smaller than other methods. However the method was not able to show the same performance in design 3 and design 4. The PCR model has the smallest prediction error (`r round(topBest[["pred_err"]][3], 2)`) from `r topBest[["comp"]][3]` components in design 3 and Canonically Powered PLS has minimum prediction error (`r round(topBest[["pred_err"]][4], 2)`) from `r topBest[["comp"]][4]` components in design 4. In design 3, we can also see that the Canonical PLS method has second best performance with only three components. The number of components vary across different replicated dataset but the component corresponding to minimum prediction error is discussed here. A detailed picture of prediction error for each estimation method obtained for each additional component is shown in Figure \@ref(fig:Average-Prediction-Plot). Although designs 2 and 4 have higher levels of multicollinearity, the performance of the estimation methods is indifferent to its effect. Since all the methods, except OLS, are based on shrinking of estimates, they are less influenced by the multicollinearity problem.
+Table \@ref(tab:min-error) shows that the simultaneous envelope has prediction error of `r paste(round(topBest[["pred_err"]][1:2], 2), collapse = " and ")` in design 1 (with `r topBest[["comp"]][1]` components) and design 2 (with `r topBest[["comp"]][2]` components), respectively, which is smaller than other methods. However, the method was not able to show the same performance in design 3 and design 4. The PCR model has the smallest prediction error (`r round(topBest[["pred_err"]][3], 2)`) from `r topBest[["comp"]][3]` components in design 3 and Canonically Powered PLS has minimum prediction error (`r round(topBest[["pred_err"]][4], 2)`) from `r topBest[["comp"]][4]` components in design 4. In design 3, we can also see that the Canonical PLS method has second best performance with only three components. The number of components vary across different replicated dataset, but the component corresponding to minimum prediction error is discussed here. A detailed picture of prediction error for each estimation method obtained for each additional component is shown in Figure \@ref(fig:Average-Prediction-Plot). Although designs 2 and 4 have higher levels of multicollinearity, the performance of the estimation methods is indifferent to its effect. Since all methods, except OLS, are based on shrinking of estimates, they are less influenced by the multicollinearity problem.
 
 ```{r Average-Prediction-Plot, fig.cap="Minimum of Average Prediction Error", fig.asp=0.7, out.width='100%', fig.width=6, fig.pos='!htb', dpi=800}
-plot_label <- avg_pred_err %>% 
-  ungroup() %>% 
-  select(R2, gamma, design) %>% 
-  unique() %>% 
+plot_label <- avg_pred_err %>%
+  ungroup() %>%
+  select(R2, gamma, design) %>%
+  unique() %>%
   transmute(
     design = unique(design),
     Model = NA,
-    x = Inf, y = c(Inf, Inf, -Inf, -Inf), 
+    x = Inf, y = c(Inf, Inf, -Inf, -Inf),
     label = paste0("R2: ", R2, "\ngamma: ", gamma),
     type = "Properties",
     v = c(1.2, 1.2, -1.2, -1)
   )
-plt <- avg_pred_err %>% 
-  filter(Model != "OLS") %>% 
-  mutate(type = "Plot") %>% 
+plt <- avg_pred_err %>%
+  filter(Model != "OLS") %>%
+  mutate(type = "Plot") %>%
   ggplot(aes(comp, pred_err, fill = Model)) +
   geom_ribbon(aes(ymax = upper, ymin = lower), alpha = 0.1) +
   geom_line(aes(color = Model), size = 0.20) +
   geom_point(shape = 21, size = 0.7, aes(color = Model)) +
-  geom_hline(data = avg_pred_err %>% 
+  geom_hline(data = avg_pred_err %>%
                filter(Model == "OLS", comp == 1),
-             aes(yintercept = pred_err, color = Model), 
+             aes(yintercept = pred_err, color = Model),
              linetype = 2, size = 0.15) +
-  geom_point(data = avg_pred_err %>% 
+  geom_point(data = avg_pred_err %>%
                filter(Model == "OLS", comp == 1),
              aes(y = pred_err, color = Model), size = 0.7) +
-  geom_text(aes(label = label, x = Inf, y = y, vjust = v), 
+  geom_text(aes(label = label, x = Inf, y = y, vjust = v),
             data = plot_label,
             hjust = 1, family = "mono", size = rel(3)) +
   scale_size_continuous(range = c(0.1, 2), breaks = NULL) +
   scale_fill_discrete(l = 40) +
-  labs(x = "Number of Components", 
-       y = expression(paste('Prediction Error (||', alpha, '||'[F], ")"))) +
+  labs(x = "Number of Components",
+       y = expression(paste('Prediction Error trace(', vartheta, ')'))) +
   facet_wrap( ~ design, labeller = label_both) +
   theme_gray(base_size = 10) +
   theme(legend.position = "bottom") +
   scale_x_continuous(breaks = seq(0, 10, 1)) +
-  ggtitle("Prediction Error", 
+  ggtitle("Prediction Error",
           sub = "Averaged over 20 replicated Datasets of same properties") +
-  guides(color = guide_legend(nrow = 1), 
+  guides(color = guide_legend(nrow = 1),
          fill = guide_legend(nrow = 1))
 if (!file.exists("images/pred-plot.tiff")) {
   ggsave(plt, filename = "images/pred-plot.tiff", device = "tiff",
@@ -242,4 +247,4 @@ if (!file.exists("images/pred-plot.tiff")) {
 plot(plt)
 ```
 
-The analysis presented in Figure \@ref(fig:Average-Prediction-Plot) has addressed some questions such as how methods work when there exist a true reduced dimension in response space, but also arose other questions like why they perform differently. For example, what is the reason for the decreasing relative performance of the simultaneous envelope method as the $\rho^2$ values are reduced? Does this depend on the dimensions and shape of the $\mathbf{y}$ envelopes? Since, the example is merely intended as a demonstration of how `simrel` can be used in scientific study, a more elaborative studies would be necessary to answer such questions, but for this purpose `simrel` would be a powerful tool.
+The analysis presented in Figure \@ref(fig:Average-Prediction-Plot) has addressed some questions such as how methods work when there exist a true reduced dimension in response space, but also raised other questions like why they perform differently. For example, what is the reason for the decreasing relative performance of the simultaneous envelope method as the $\rho^2$ values are reduced? Does this depend on the dimensions and shape of the $\mathbf{y}$ envelopes? Since the example is merely intended as a demonstration of how `simrel` can be used in scientific study, a more elaborative studies would be necessary to answer such questions, but for this purpose `simrel` would be a powerful tool.

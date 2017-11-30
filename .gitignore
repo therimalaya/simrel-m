@@ -6,3 +6,4 @@ MatlabServer.m
 *.class
 .Rproj.user
 scripts/output/unsync
+Notes/ltx*
