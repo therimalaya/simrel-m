@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A tool for simulating multi-response linear model data</title>
   <meta name="description" content="A tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.4.1 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="A tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-07-25">
+<meta name="date" content="2017-11-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="implementation.html">
-<link rel="next" href="references.html">
+<link rel="next" href="conclusion.html">
 <style type="text/css">
 p.abstract{
   text-align: center;
@@ -58,6 +58,43 @@ div.abstract{
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -87,6 +124,7 @@ div.abstract{
 </ul></li>
 <li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a></li>
 <li class="chapter" data-level="" data-path="web-interface.html"><a href="web-interface.html"><i class="fa fa-check"></i>Web Interface</a></li>
+<li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li class="toc-footer"><a href="https://bookdown.org" target="blank">Published with BookDown</a></li>
@@ -110,20 +148,34 @@ div.abstract{
             <section class="normal" id="section-">
 <div id="web-interface" class="section level1">
 <h1>Web Interface</h1>
-<p>In order to give an alternative interface for <code>simrel</code>, we have created a shiny app which allows users to input the simulation parameters through different input fields. Figure <a href="web-interface.html#fig:AppSimulatr">5</a> shows a screenshot of the application. The application contains three main sections through which the user can interact with this simulation approach. A random seed can be selected using section Figure <a href="web-interface.html#fig:AppSimulatr">5</a> (a) so that a particular set of data can be re-simulated if needed. Figure <a href="web-interface.html#fig:AppSimulatr">5</a> (b) has all the input panels where the user dependent parameters for simulation can be entered. Here the user also has the option to simulate univariate (uses <code>simrel</code> package in CRAN), bivariate (not yet available in CRAN) and multivariate simulation (<code>simrel-m</code>). In addition, a simulated R-object comprised by the simulated data can be download as <code>Rdata</code> format (section (e) in Figure <a href="web-interface.html#fig:AppSimulatr">5</a>). The object holds the simulated data along with other properties such as coefficient of determination for each response, true regression coefficients and rotation matrices.</p>
-<p>All <code>simrel</code> parameters can be entered using a simple user interface where a vectors are separated with comma(,) and lists are separated with semicolon(;). For instance, the relevant position discussed in the <a href="implementation.html#implementation">implementation</a> section of this paper can be entered as <code>1, 6; 2, 5; 3, 4</code> which is equivalent to R syntax <code>list(c(1, 6), c(2, 5), c(3, 4))</code>.</p>
+<p>In order to give an alternative interface for <code>simrel</code>, we have created a shiny app which allows users to provide the simulation parameters through different input fields. Figure <a href="web-interface.html#fig:AppSimulatr">5</a> shows a screenshot of the application. The application contains three main sections through which the user can interact with this simulation approach. A random seed can be selected using section Figure <a href="web-interface.html#fig:AppSimulatr">5</a> (a) so that a particular set of data can be re-simulated if needed. Figure <a href="web-interface.html#fig:AppSimulatr">5</a> (b) has all the input panels where the user-dependent parameters for simulation can be entered. Here the user also has the option to simulate univariate, bivariate or multivariate response data. In addition, a simulated R-object comprising the simulated data can be downloaded in <code>Rdata</code> format (section (e) in Figure <a href="web-interface.html#fig:AppSimulatr">5</a>). The object holds the simulated data along with other properties such as coefficient of determination for each response, true regression coefficients and rotation matrices. Users can also download simulated data in JSON and CSV format.</p>
+<p>All <code>simrel</code> parameters can be entered using a simple user interface where vector elements are separated with comma(,) and list elements are separated with semicolon(;). For instance, the relevant position discussed in the <a href="implementation.html#implementation">implementation</a> (section <a href="implementation.html#implementation"><strong>??</strong></a>) of this paper can be entered as <code>1, 6; 2, 5; 3, 4</code> which is equivalent to R syntax <code>list(c(1, 6), c(2, 5), c(3, 4))</code>. An R expression equivalent to the input parameters as shown in Figure - 5(b) can be written as,</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">simrel</span>(
+  <span class="dt">n      =</span> <span class="dv">200</span>, <span class="co"># Number of training observations</span>
+  <span class="dt">ntest  =</span> <span class="dv">50</span>, <span class="co"># Number of test observations</span>
+  <span class="dt">p      =</span> <span class="dv">15</span>, <span class="co"># Number of predictor variables</span>
+  <span class="dt">q      =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">4</span>), <span class="co"># Number of relevant predictors</span>
+  <span class="dt">relpos =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">6</span>)),
+         <span class="co"># Relevant predictor components</span>
+  <span class="dt">R2     =</span> <span class="kw">c</span>(<span class="fl">0.8</span>, <span class="fl">0.7</span>), <span class="co"># Rsq for each response component</span>
+  <span class="dt">m      =</span> <span class="dv">4</span>, <span class="co"># Number of response variables</span>
+  <span class="dt">gamma  =</span> <span class="fl">0.6</span>, <span class="co"># Decay factor of eigenvalues of predictors</span>
+  <span class="dt">eta    =</span> <span class="dv">0</span>, <span class="co"># Decay factor of eigenvalues of responses</span>
+  <span class="dt">ypos   =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)),
+         <span class="co"># Combination of response components on rotation</span>
+  <span class="dt">type   =</span> <span class="st">&quot;multivariate&quot;</span>
+)</code></pre></div>
+<p>With the parameters for simulation in the screenshot (Figure-<a href="web-interface.html#fig:AppSimulatr">5</a>) 200 training sets (<code>n</code>) and 50 test sets (<code>ntest</code>) will be simulated with 15 predictor variables (<code>p</code>) and 4 response variables (<code>m</code>). The 4 response variables will have a true latent dimension of two, which is spanned by the relevant <em>response components</em>. The first response component is rotated together with the third (irrelevant) response component and the second response component is rotated together with the fourth (irrelevant) response component as set in <code>ypos</code>. Out of 15 predictors, 5 will be relevant for the first response component and 4 will be relevant for the second response component, as set by <code>q</code>. The 5 predictor variables, that are relevant for the first response component, span the same space as the predictor components at position 1 and 2. Similarly, the 4 predictor variables that are relevant for the second response component, span the same space as the predictor components at position 3, 4 and 6 (<code>relpos</code>). The coefficient of determination for the first and second response components are 0.8 and 0.7, respectively (<code>R2</code>). The eigenvalues of the predictor components decay exponentially by the factor of 0.6 (<code>gamma</code>), whereas the eigenvalues of response components are constant (but can be set to exponential decay) (<code>eta</code>).</p>
+
 <div class="figure" style="text-align: center"><span id="fig:AppSimulatr"></span>
-<img src="images/AppSimulatr.png" alt="Application interface of `simulatr`. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data" width="95%" />
+<img src="images/AppSimrel.pdf" alt="Web interface of shiny application of simrel: (a) Buttons to trigger simulation, (b) Parameters for simulation, (c) Visualization of the true properties of simulated data (regression coefficients, true and estimated covariance between response and predictors components) (d) Additional analysis (e) Download option of simulated data." width="98%" />
 <p class="caption">
-Figure 5: Application interface of <code>simulatr</code>. (a) Seed and simulation button (b) Parameter control panel (c) Properties of simulated data (d) Additional analysis (e) Download option of simulated data
+Figure 5: Web interface of shiny application of <code>simrel</code>: (<strong>a</strong>) Buttons to trigger simulation, (<strong>b</strong>) Parameters for simulation, (<strong>c</strong>) Visualization of the true properties of simulated data (regression coefficients, true and estimated covariance between response and predictors components) (<strong>d</strong>) Additional analysis (<strong>e</strong>) Download option of simulated data.
 </p>
 </div>
-<p>The application not only allows users to simulate data, but also gives some insight into simulated data properties. The example used in the screenshot has simulated 200 training and 50 test samples with 15 predictor and 4 response variables. There are two latent variables (response components) that completely span the informative response space. Five predictor variables are relevant for the first response component and explains 80 percent of the variation in <span class="math inline">\(\mathbf{x}\)</span>. In addition, the first and second predictor components span the same space as spanned by these five relevant predictors. Similarly, another set of four predictor variables are relevant for second response component and explains 70 percent of the variation. Here, third, fourth and sixth predictor components span the same space as spanned by these four relevant predictors. Further, the first response component is rotated together with a normally distributed random vector to obtain first and third response variable and second response components are rotated together with another normally distributed random vector to obtain second and fourth response variable.</p>
-<p>Section (c) in Figure <a href="web-interface.html#fig:AppSimulatr">5</a> contains three plots – a) true regression coefficients b) relevant components and c) estimated relevant components. In the first plot we can see that predictor variables (1, 2, 8, 9 and 13) are relevant for the first and third response variable by their non-zero coefficients, whereas predictor variables (3, 4, 6 and 15) are relevant for the second and fourth response variable. The second plot shows the covariances between the response components and the predictor components along with the corresponding eigenvalues in the background (bar plot). In the plot the absolute value of the covariances after scaling with the largest covariance are shown. As in our parameter setting, the plot shows that first and second predictor components have non-zero covariance with first response component and third, fourth and sixth predictor components have non-zero covariance with second response component. The third plot is the estimated covariance between predictor components and the response variables, for the simulated data. Since the first and third response components are rotated together, in the plot, the covariance between predictor components and first and third response variable is following similar pattern. This also suggests that the predictor components which were relevant for first response components gets relevant for first and third response variables after rotation.</p>
-<p>Along with these main sections, section (d) in the figure contains additional analysis performed with the simulated data such as its estimation with different methods. This section is intended for educational purposes to show how changing the data properties influences the performances of different estimation and prediction methods.</p>
+<p>The application not only allows users to simulate data, but also gives some insight into simulated data properties. Section (c) in Figure <a href="web-interface.html#fig:AppSimulatr">5</a> contains three plots – a) true regression coefficients b) relevant components and c) estimated relevant components. In the first plot (Figure-<a href="web-interface.html#fig:AppSimulatr">5</a>(c) top) we can see that predictor variables (1, 2, 8, 9 and 13) are relevant for the first and third response variables (red and blue line) by their non-zero coefficients, whereas predictor variables (3, 4, 6 and 15) are relevant for the second and fourth response variables (purple and green line). The second plot (Figure <a href="web-interface.html#fig:AppSimulatr">5</a>(c) middle) shows the covariances between the response components and the predictor components along with the corresponding eigenvalues in the background (bar plot). In the plot the absolute value of the covariances after scaling with the largest covariance are shown. As in our parameter setting, the plot shows that the first (red line) and second (green line) predictor components have non-zero covariance with the first and third response components, and the fourth and sixth predictor components have non-zero covariance with the second response component. The third plot (Figure-<a href="web-interface.html#fig:AppSimulatr">5</a>(c) bottom) is the estimated covariances between the predictor components and the response variables, for the simulated data. Since the first and third response components are rotated together, in the plot, the covariance between the predictor components and the first and third response variables (red and blue line) are following similar patterns as the theoretical (<a href="web-interface.html#fig:AppSimulatr">5</a>(c) middle). This also suggests that the predictor components which were relevant for the first response component, becomes relevant for the first and third response variables after rotation.</p>
+<p>Along with these main sections, section (d) in the same figure contains additional analysis performed on the simulated data such as its estimation with different methods. This section is intended for educational purposes to show how changing the data properties influences the performances of different estimation and prediction methods. Beside this application, for Rstudio users, a gadget will be available after installing the r-package. This gadget provides an interface enabling users to input simulation parameters and access some of the properties.</p>
 <p>Many scientific studies <span class="citation">(Helland et al. 2012; Sæbø et al. 2008; R. Dennis Cook and Zhang 2015)</span> are using simulated data in order to compare their findings with others or assess its properties. In many of these situations, a user-friendly and versatile simulation tool like <code>simrel</code> can play an important role. <span class="citation">Gangsei, Almøy, and Sæbø (2016)</span> and <span class="citation">Sæbø, Almøy, and Helland (2015)</span> are some examples where the univariate and bivariate form of <code>simrel</code> have been used for such purposes.</p>
-
-<!-- # References {-} -->
 </div>
             </section>
 
@@ -131,7 +183,7 @@ Figure 5: Application interface of <code>simulatr</code>. (a) Seed and simulatio
         </div>
       </div>
 <a href="implementation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="conclusion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -1,0 +1,15 @@
+---
+author:
+- Raju Rimal
+- Norwegian University of Life Sciences
+address:
+- Professor Beata Walczak
+- Editor
+- Chemometrics and Intelligent Laboratory Systems
+opening: Dear Professor Walczak,
+closing: Sincerely,
+output: linl::linl
+papersize: A4
+---
+
+We are pleased to receive constructive comments from the reviewer on our manuscript entitled "A tool for simulating multi-response linear model data" (Ref: CHEMOLAB_2017_377). The reviews have helped us to make significant improvements to our manuscript. We have made major revisions in order to address the reviewer's concerns. A separate document with detailed revisions is attached herewith.
