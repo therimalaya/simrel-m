@@ -8,13 +8,12 @@ knitr::opts_chunk$set(
   echo    = FALSE,
   fig.pos = 'H'
 )
-evl <- !file.exists('scripts/output/pred-err.rdata')
-source("scripts/01-setup.r")
+evl <- !file.exists('scripts/example1/output/pred-err.rdata')
+source("scripts/example1/01-setup.r")
 if (evl) {
-  source("08-final-data.r")
+  source("scripts/example1/08-final-data.r")
 } else {
-  load('output/pred-err.rdata')
-  setwd(owd)
+  load('scripts/example1/output/pred-err.rdata')
 }
 library(knitr)
 library(kableExtra)

@@ -51,8 +51,12 @@ The simulation method we are presenting here is based on the principle of releva
 Among several publications on simulation, @johnson2013multivariate; @ripley2009stochastic and @gamerman2006markov have exhaustively discussed the topic. In particular, methods based on covariance structure has been discussed by @arteaga2010simulate; @arteaga2013building and @camacho2017generation, following approaches to find simulated data satisfying the desired correlation structure. In addition, many publications have implemented simulated data in order to investigate new estimation methods and prediction strategies [see: @cook2015simultaneous; @cook2013envelopes; @helland2012near]. However, most of the simulations in these studies were developed to address their specific problem. A systematic tool for simulating linear model data with single response, which could serve as a general tool for all such comparisons, was presented in @saebo2015simrel and as the r-package `simrel`. This paper extends `simrel` in order to simulate linear model data with multivariate response. The github repository of the package at [http://github.com/simulatr/simrel](http://github.com/simulatr/simrel) has rich documentation with many examples and cases along with detailed descriptions of simulation parameters. In the following two sections, the discussion encircle the mathematical framework behind. In addition, in [section \@ref(implementation)](#implementation) and [\@ref(web-interface)](#web-interface) we have also discussed the input parameters needed for simrel function in brief. In [section \@ref(implementation)](#implementation), an implementation is presented as a case example and the [final section](#web-interface) introduces the shiny web application for this tool.
 
 ```{r load-packages, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_knit$set(
+  root.dir = "/Users/therimalaya/Dropbox/Papers/01-simrel-m/"
+)
 pkgs <- c("simrel", "ggplot2", "reshape2")
 for (pkg in pkgs) require(pkg, character.only = T)
+source(file.path(getwd(), "scripts/00-function.R"))
 source(file.path(getwd(), "scripts/00-plot-function.R"))
 ```
 
