@@ -19,7 +19,11 @@ library(knitr)
 library(kableExtra)
 ```
 
-This section demonstrates an application of multi-response extension of `simrel` in order to compare different estimation methods on the basis of prediction error. For the comparison, we have considered four well established estimation methods.
+This section demonstrates an application of multi-response extension of `simrel` with two examples in order to compare different estimation methods on the basis of prediction error.
+
+## Example 1
+
+For the comparison, we have considered four well established estimation methods.
 
 a) Ordinary Least Squares (OLS),
 b) Principal Component Regression (PCR),

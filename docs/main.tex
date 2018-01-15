@@ -20,6 +20,7 @@
 \usepackage[unicode=true, colorlinks]{hyperref}
 \usepackage{cleveref}
 \usepackage{tabu}
+\usepackage{multirow}
 %% ------------ %%
 
 %% Conditional Packages %%
@@ -864,9 +865,13 @@ specified by a parameter \texttt{ypos}.
 \hypertarget{implementation}{\section{Implementation}\label{implementation}}
 
 This section demonstrates an application of multi-response extension of
-\texttt{simrel} in order to compare different estimation methods on the
-basis of prediction error. For the comparison, we have considered four
-well established estimation methods.
+\texttt{simrel} with two examples in order to compare different
+estimation methods on the basis of prediction error.
+
+\subsection{Example 1}\label{example-1}
+
+For the comparison, we have considered four well established estimation
+methods.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -1072,6 +1077,98 @@ example is merely intended as a demonstration of how \texttt{simrel} can
 be used in scientific study, a more elaborative studies would be
 necessary to answer such questions, but for this purpose \texttt{simrel}
 would be a powerful tool.
+
+\subsection{Example 2}\label{example-2}
+
+In this second example, wide matrices with 100 observations and 1000
+predictor variables are simulated. Since wide matrices are common in
+various fields such as genomics, spectroscopy and chemometrics, we have
+setup this second example to compare two variants of partial least
+square regression -- PLS1 and PLS2. PLS1 estimates each response
+variables separately and PLS2 estimates all the response variables
+simulteneously. A simulation design is constructed as in Table
+\ref{tab:parm-setting-2}. With each design six replicated datasets are
+simulated having five response variables and a moderate level of
+multicollinearity in predictor variables (\(\gamma = 0.5\)).
+
+\begin{table}
+
+\caption{\label{tab:parm-setting-2}Simulation Design of second example}
+\centering
+\begin{tabular}[t]{>{\em}l>{\em}lll}
+\toprule
+\bfseries{eta:0.1} & \bfseries{eta:0.8} & \bfseries{Parameter} & \bfseries{Value}\\
+\midrule
+\addlinespace[0.3em]
+\multicolumn{4}{l}{\textbf{Single Informative Response Component}}\\
+ &  & relpos & 2, 3, 5, 7\\
+\cmidrule{3-4}
+ &  & q & 1000\\
+\cmidrule{3-4}
+\multirow{-3}{*}{\raggedright\arraybackslash \hspace{1em}Design 1} & \multirow{-3}{*}{\raggedright\arraybackslash Design 2} & R2 & 0.8\\
+\cmidrule{1-4}
+\addlinespace[0.3em]
+\multicolumn{4}{l}{\textbf{Two Informative Response Components}}\\
+ &  & relpos & 2; 3\\
+\cmidrule{3-4}
+ &  & q & 500; 500\\
+\cmidrule{3-4}
+\multirow{-3}{*}{\raggedright\arraybackslash \hspace{1em}Design 3} & \multirow{-3}{*}{\raggedright\arraybackslash Design 4} & R2 & 0.6; 0.6\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The comparison will be based on prediction error measured by root mean
+squares of prediction (RMSEP). In order to approximate the error to
+theoritically computed error, a large test dataset with 10,000
+observations are also simulated for each design.
+
+With the simulated data one to ten components model is fitted and the
+prediction error is recored for each response variables and each
+additional components.
+
+The first and second design in Table \ref{tab:parm-setting-2} has one
+informative response component for which four predictor components are
+relevent and has 0.8 coefficient of determination. Since the informative
+response component is rotated together with four uninformative response
+components, the information is shared among all five response variables.
+
+The third and fourth design has two informative response components. For
+the first one has four relevant predictor components and has 0.6
+coefficient of determination. Similarly, the second response component
+has two relevant predictor components ans has 0.6 coefficient of
+determination.
+
+In addition to having one and two response component model, two levels
+of variance structure of response components is considered that is
+monitored by \(\eta\) paramters with values 0.1 and 0.8. In first and
+third design, all response components varies in similar manner
+(\(\eta = 0.1\)) while in second and fourth design the informative
+response components have higher variation (\(\eta = 0.8\)) than the
+uninformative one.
+
+\begin{figure}[H]
+\includegraphics[width=1\linewidth]{main_files/figure-latex/rmsep-plot-1} \caption{Root mean square of error of prediction of test observation.}\label{fig:rmsep-plot}
+\end{figure}
+
+Figure \ref{fig:rmsep-plot} shows the prediction error of test
+observation modelled by PLS1 and PLS2 methods for all four design. The
+prediction error are averaged over all six replicated datasets. Two
+major outcome of the plot are,
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  In the designs with single response component models, PLS1 approaches
+  faster to the minimim prediction error using fewer number of
+  components. While in the designs with two response components models,
+  PLS2 are better in that context. However, PLS2 has attained minimum
+  prediction error in overall.
+\item
+  Designs having informative response components with higher variation
+  than uninformative response components have smaller prediction error.
+\end{enumerate}
 
 \hypertarget{web-interface}{\section{Web
 Interface}\label{web-interface}}

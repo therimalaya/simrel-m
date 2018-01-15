@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-12-29">
+<meta name="date" content="2018-01-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -122,7 +122,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html#rotation-of-predictor-space"><i class="fa fa-check"></i>Rotation of predictor space</a></li>
 <li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html#rotation-of-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a></li>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a><ul>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#example-1"><i class="fa fa-check"></i>Example 1</a></li>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#example-2"><i class="fa fa-check"></i>Example 2</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="web-interface.html"><a href="web-interface.html"><i class="fa fa-check"></i>Web Interface</a></li>
 <li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -148,7 +151,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="implementation" class="section level1">
 <h1>Implementation</h1>
-<p>This section demonstrates an application of multi-response extension of <code>simrel</code> in order to compare different estimation methods on the basis of prediction error. For the comparison, we have considered four well established estimation methods.</p>
+<p>This section demonstrates an application of multi-response extension of <code>simrel</code> with two examples in order to compare different estimation methods on the basis of prediction error.</p>
+<div id="example-1" class="section level2">
+<h2>Example 1</h2>
+<p>For the comparison, we have considered four well established estimation methods.</p>
 <ol style="list-style-type: lower-alpha">
 <li>Ordinary Least Squares (OLS),</li>
 <li>Principal Component Regression (PCR),</li>
@@ -341,6 +347,77 @@ Figure 4: Minimum of Average Prediction Error
 <p>The analysis presented in Figure <a href="implementation.html#fig:Average-Prediction-Plot">4</a> has addressed some questions such as how methods work when there exist a true reduced dimension in response space, but also raised other questions like why they perform differently. For example, what is the reason for the decreasing relative performance of the simultaneous envelope method as the <span class="math inline">\(\rho^2\)</span> values are reduced? Does this depend on the dimensions and shape of the <span class="math inline">\(\mathbf{y}\)</span> envelopes? Since the example is merely intended as a demonstration of how <code>simrel</code> can be used in scientific study, a more elaborative studies would be necessary to answer such questions, but for this purpose <code>simrel</code> would be a powerful tool.</p>
 
 </div>
+<div id="example-2" class="section level2">
+<h2>Example 2</h2>
+<p>In this second example, wide matrices with 100 observations and 1000 predictor variables are simulated. Since wide matrices are common in various fields such as genomics, spectroscopy and chemometrics, we have setup this second example to compare two variants of partial least square regression – PLS1 and PLS2. PLS1 estimates each response variables separately and PLS2 estimates all the response variables simulteneously. A simulation design is constructed as in Table <a href="implementation.html#tab:parm-setting-2">3</a>. With each design six replicated datasets are simulated having five response variables and a moderate level of multicollinearity in predictor variables (<span class="math inline">\(\gamma = 0.5\)</span>).</p>
+<table>
+<caption><span id="tab:parm-setting-2">Table 3: </span>Simulation Design of second example</caption>
+<thead>
+<tr class="header">
+<th align="left">eta:0.1</th>
+<th align="left">eta:0.8</th>
+<th align="left">Parameter</th>
+<th align="left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Design 1</td>
+<td align="left">Design 2</td>
+<td align="left">relpos</td>
+<td align="left">2, 3, 5, 7</td>
+</tr>
+<tr class="even">
+<td align="left">Design 1</td>
+<td align="left">Design 2</td>
+<td align="left">q</td>
+<td align="left">1000</td>
+</tr>
+<tr class="odd">
+<td align="left">Design 1</td>
+<td align="left">Design 2</td>
+<td align="left">R2</td>
+<td align="left">0.8</td>
+</tr>
+<tr class="even">
+<td align="left">Design 3</td>
+<td align="left">Design 4</td>
+<td align="left">relpos</td>
+<td align="left">2; 3</td>
+</tr>
+<tr class="odd">
+<td align="left">Design 3</td>
+<td align="left">Design 4</td>
+<td align="left">q</td>
+<td align="left">500; 500</td>
+</tr>
+<tr class="even">
+<td align="left">Design 3</td>
+<td align="left">Design 4</td>
+<td align="left">R2</td>
+<td align="left">0.6; 0.6</td>
+</tr>
+</tbody>
+</table>
+<p>The comparison will be based on prediction error measured by root mean squares of prediction (RMSEP). In order to approximate the error to theoritically computed error, a large test dataset with 10,000 observations are also simulated for each design.</p>
+<p>With the simulated data one to ten components model is fitted and the prediction error is recored for each response variables and each additional components.</p>
+<p>The first and second design in Table <a href="implementation.html#tab:parm-setting-2">3</a> has one informative response component for which four predictor components are relevent and has 0.8 coefficient of determination. Since the informative response component is rotated together with four uninformative response components, the information is shared among all five response variables.</p>
+<p>The third and fourth design has two informative response components. For the first one has four relevant predictor components and has 0.6 coefficient of determination. Similarly, the second response component has two relevant predictor components ans has 0.6 coefficient of determination.</p>
+<p>In addition to having one and two response component model, two levels of variance structure of response components is considered that is monitored by <span class="math inline">\(\eta\)</span> paramters with values 0.1 and 0.8. In first and third design, all response components varies in similar manner (<span class="math inline">\(\eta = 0.1\)</span>) while in second and fourth design the informative response components have higher variation (<span class="math inline">\(\eta = 0.8\)</span>) than the uninformative one.</p>
+<div class="figure"><span id="fig:rmsep-plot"></span>
+<img src="main_files/figure-html/rmsep-plot-1.svg" alt="Root mean square of error of prediction of test observation." width="100%" />
+<p class="caption">
+Figure 5: Root mean square of error of prediction of test observation.
+</p>
+</div>
+<p>Figure <a href="implementation.html#fig:rmsep-plot">5</a> shows the prediction error of test observation modelled by PLS1 and PLS2 methods for all four design. The prediction error are averaged over all six replicated datasets. Two major outcome of the plot are,</p>
+<ol style="list-style-type: decimal">
+<li>In the designs with single response component models, PLS1 approaches faster to the minimim prediction error using fewer number of components. While in the designs with two response components models, PLS2 are better in that context. However, PLS2 has attained minimum prediction error in overall.</li>
+<li>Designs having informative response components with higher variation than uninformative response components have smaller prediction error.</li>
+</ol>
+
+</div>
+</div>
             </section>
 
           </div>
@@ -376,7 +453,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/therimalaya/simrel-m/edit/master/Includes/03-Implementation.Rmd",
+"link": "https://github.com/therimalaya/simrel-m/edit/master/Includes/03-Implementation-1.Rmd",
 "text": "Edit"
 },
 "download": ["main.epub", "main.pdf"],

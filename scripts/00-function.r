@@ -122,3 +122,60 @@ shared_legend <-
       )
     return(combined)
   }
+
+getIndivPredErr <-
+  function(coef, minerr, trueBeta, sigma){
+    out <- map_df(0:dim(coef)[3], function(cmp){
+      bdf <- if (cmp == 0) matrix(0, nrow = nrow(coef[, , cmp + 1]), ncol = ncol(coef[, , cmp + 1])) else coef[, , cmp]
+      beta    <- if (dim(sigma)[1] + 1 == nrow(bdf)) bdf[-1, ] else bdf
+      err_out <- t(beta - trueBeta) %*% sigma %*% (beta - trueBeta)
+      out <- as_tibble(
+        as.list(
+          `names<-`(
+            diag(err_out + minerr), 
+            paste0("Y", 1:ncol(minerr))
+          )
+        )
+      )
+      out <- gather(out, Response, PredErr)
+      # out <- tibble(
+      #   without_norm = sum(diag(err_out + minerr)),
+      #   with_norm = norm(err_out + minerr, type = "F")
+      # )
+      return(out)
+    })
+    mutate(out, comp = 0:(n() - 1))
+  }
+
+get_rmsep_df <- function(mdl, new_data){
+  if (class(mdl) == "list") {
+    rmsep <- map_df(seq_along(mdl), function(response){
+      new_data <- within(new_data, y <- y[, response])
+      out <- get_rmsep_df(mdl[[response]], new_data) %>% select(-response)
+      return(out)
+    }, .id = "response")
+    rmsep_df <- rmsep %>%
+      mutate(response = paste0("Y", response))
+    return(rmsep_df[, c(2, 1, 3:ncol(rmsep_df))])
+  }
+  rmsep <- RMSEP(mdl, newdata = new_data, estimate = "all")
+  rmsep_df <- reshape2::melt(unclass(rmsep)[["val"]], 
+                             value.name = "RMSEP", as.is = TRUE)
+  return(rmsep_df)
+}
+
+list2chr <- function(list) {
+  paste(
+    str_replace_all(
+      as.character(list), "[a-zA-Z()]", ""), 
+    collapse = "; "
+  )
+}
+
+source_if_not <- function(obj_file, source_file) {
+  if(file.exists(obj_file)) {
+    load(obj_file, envir = .GlobalEnv)
+  } else {
+    source(source_file, local = TRUE)
+  }
+}

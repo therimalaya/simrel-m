@@ -1,0 +1,91 @@
+## Example 2
+
+In this second example, wide matrices with 100 observations and 1000 predictor variables are simulated. Since wide matrices are common in various fields such as genomics, spectroscopy and chemometrics, we have setup this second example to compare two variants of partial least square regression -- PLS1 and PLS2. PLS1 estimates each response variables separately and PLS2 estimates all the response variables simulteneously. A simulation design is constructed as in Table \@ref(tab:parm-setting-2). With each design six replicated datasets are simulated having five response variables and a moderate level of multicollinearity in predictor variables ($\gamma = 0.5$).
+
+```{r}
+dta <- data_frame(
+  obj_file = c("design.Rdata", "sim-obj.Rdata", 
+               "fit.Rdata", "coef.Rdata", "true-value.Rdata", 
+               "pred-error.Rdata", "final-data.Rdata"),
+  source_file = c("01-setup.r", "02-simulation.r",
+                  "03-model-fitting.r", "04-get-coefficients.r",
+                  "05-true-values.r", "06-prediction-error.r",
+                  "07-final-data.r")
+)
+dta <- dta %>% 
+    mutate(obj_file = paste0("scripts/example2/output/", obj_file),
+           source_file = paste0("scripts/example2/", source_file))
+# pwalk(dta, source_if_not)
+pwalk(dta[c(1, 7), ], source_if_not)
+```
+
+```{r parm-setting-2}
+library(kableExtra)
+dgn <- design %>% 
+  mutate_if(is_list, map_chr, list2chr)
+dgn %>% 
+  group_by(eta) %>% 
+  select(relpos, q, R2) %>% 
+  ungroup() %>% 
+  mutate(
+    eta = paste0("eta:", eta),
+    design = paste("Design", 1:n())
+  ) %>% 
+  spread(eta, design) %>% 
+  gather(Parameter, Value, 1:3) %>% 
+  arrange(`eta:0.1`, `eta:0.8`) %>% 
+  knitr::kable(
+    booktabs = TRUE,
+    caption = "Simulation Design of second example") %>% 
+  kable_styling() %>% 
+  group_rows("Single Informative Response Component", 1, 3) %>% 
+  group_rows("Two Informative Response Components", 4, 6) %>% 
+  column_spec(1:2, italic = TRUE) %>% 
+  row_spec(0, bold = TRUE) %>% 
+  collapse_rows(columns = 1:2)
+```
+
+The comparison will be based on prediction error measured by root mean squares of prediction (RMSEP). In order to approximate the error to theoritically computed error, a large test dataset with 10,000 observations are also simulated for each design.
+
+With the simulated data one to ten components model is fitted and the prediction error is recored for each response variables and each additional components.
+
+The first and second design in Table \@ref(tab:parm-setting-2) has one informative response component for which four predictor components are relevent and has 0.8 coefficient of determination. Since the informative response component is rotated together with four uninformative response components, the information is shared among all five response variables. 
+
+The third and fourth design has two informative response components. For the first one has four relevant predictor components and has 0.6 coefficient of determination. Similarly, the second response component has two relevant predictor components ans has 0.6 coefficient of determination.
+
+In addition to having one and two response component model, two levels of variance structure of response components is considered that is monitored by $\eta$ paramters with values 0.1 and 0.8. In first and third design, all response components varies in similar manner ($\eta = 0.1$) while in second and fourth design the informative response components have higher variation ($\eta = 0.8$) than the uninformative one.
+
+```{r rmsep-plot, fig.asp=1, out.width="100%", fig.cap="Root mean square of error of prediction of test observation."}
+# rmsep_plt <- function(data){
+#   ggplot(data, 
+#          aes(comp, RMSEP, color = Model, 
+#              group = Model, fill = Model)) +
+#   stat_summary(fun.y = mean, geom = "line") +
+#   stat_summary(fun.y = mean, geom = "point", 
+#                size = 1, shape = 21, color = "black", stroke = 0.2) +
+#   facet_grid(design + eta + relpos + R2 ~ Response, 
+#              scales = 'free_y', labeller = label_both) +
+#   scale_x_continuous(breaks = seq(0, 10, 2)) +
+#   labs(x = "Components", y = "RMSEP") +
+#   theme(legend.position = "top")
+# }
+plt_dt <- myData %>% 
+  filter(ErrorType == "test",  Model != "PCR") %>% 
+  ggplot(aes(comp, RMSEP, color = Model, 
+             group = Model, fill = Model)) +
+  stat_summary(fun.y = mean, geom = "line") +
+  stat_summary(fun.y = mean, geom = "point", 
+               size = 1, shape = 21, color = "black", stroke = 0.2) +
+  facet_grid(design + eta + relpos + R2 ~ Response, 
+             scales = 'free_y', labeller = label_both) +
+  scale_x_continuous(breaks = seq(0, 10, 2)) +
+  labs(x = "Components", y = "RMSEP", 
+       fill = "Method", color = "Method") +
+  theme(legend.position = "top")
+plt_dt
+```
+
+Figure \@ref(fig:rmsep-plot) shows the prediction error of test observation modelled by PLS1 and PLS2 methods for all four design. The prediction error are averaged over all six replicated datasets. Two major outcome of the plot are,
+
+1) In the designs with single response component models, PLS1 approaches faster to the minimim prediction error using fewer number of components. While in the designs with two response components models, PLS2 are better in that context. However, PLS2 has attained minimum prediction error in overall.
+2) Designs having informative response components with higher variation than uninformative response components have smaller prediction error.
