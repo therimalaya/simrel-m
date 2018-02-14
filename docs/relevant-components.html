@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A tool for simulating multi-response linear model data</title>
   <meta name="description" content="A tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.6.2 and GitBook 2.6.7">
 
   <meta property="og:title" content="A tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-01-15">
+<meta name="date" content="2018-02-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -154,7 +154,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Consider a single response linear model with <span class="math inline">\(p\)</span> predictors.</p>
 <p><span class="math display">\[y = \mu_y + \boldsymbol{\beta}^t\left(\mathbf{x} - \mu_x\right) + \epsilon\]</span></p>
 <p>where, <span class="math inline">\(\epsilon \sim N(0, \sigma^2)\)</span> and <span class="math inline">\(\mathbf{x}\)</span> is a vector of random predictors. Following the concept of relevant space and irrelevant space which is discussed extensively in <span class="citation">Helland and Almøy (1994)</span>, <span class="citation">Helland (2000)</span>, <span class="citation">Helland et al. (2012)</span>, <span class="citation">Cook, Helland, and Su (2013)</span>, and <span class="citation">Sæbø, Almøy, and Helland (2015)</span>, we can assume that there exists a subspace of the full predictor space which is relevant for <span class="math inline">\(y\)</span>. An orthogonal space to this space does not contain any information about <span class="math inline">\(y\)</span> and is considered as irrelevant. Here, the <span class="math inline">\(y-\)</span>relevant subspace of <span class="math inline">\(\mathbf{x}\)</span> is spanned by a subset of the principal components defined by the eigenvectors of the covariance matrix of <span class="math inline">\(\mathbf{x}\)</span>, i.e. <span class="math inline">\(\boldsymbol{\Sigma}_{xx}\)</span>.</p>
-<p>This concept can be extended to <span class="math inline">\(m\)</span> responses so that the subspace of <span class="math inline">\(\mathbf{x}\)</span> is relevant for a subspace of <span class="math inline">\(\mathbf{y}\)</span>. This corresponds to the concept of simultaneous envelopes <span class="citation">(R. Dennis Cook and Zhang 2015)</span> where relevant (material) and irrelevant (immaterial) space were discussed for both response and predictor variables.</p>
+<p>This concept can be extended to <span class="math inline">\(m\)</span> responses so that the subspace of <span class="math inline">\(\mathbf{x}\)</span> is relevant for a subspace of <span class="math inline">\(\mathbf{y}\)</span>. This corresponds to the concept of simultaneous envelopes <span class="citation">(R. D. Cook and Zhang 2015b)</span> where relevant (material) and irrelevant (immaterial) space were discussed for both response and predictor variables.</p>
 <div id="model-parameterization" class="section level2">
 <h2>Model Parameterization</h2>
 <p>In order to construct a fully specified and unrestricted covariance matrix of <span class="math inline">\(\mathbf{z}\)</span> and <span class="math inline">\(\mathbf{w}\)</span> for the model in equation <a href="statistical-model.html#eq:model3">(3)</a>, we need to identify <span class="math inline">\(1/2 (p+m)(p+m+1)\)</span> unknown parameters. For the purpose of simulation, we implement some assumptions to re-parameterize and simplify the model. This enables us to construct a wide range of model properties from only few key parameters.</p>
@@ -287,10 +287,11 @@ gitbook.start({
 "facebook": false,
 "twitter": true,
 "google": true,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -314,9 +315,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

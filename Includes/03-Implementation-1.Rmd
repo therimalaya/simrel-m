@@ -19,7 +19,7 @@ library(knitr)
 library(kableExtra)
 ```
 
-This section demonstrates an application of multi-response extension of `simrel` with two examples in order to compare different estimation methods on the basis of prediction error.
+This section demonstrates an application of multi-response extension of `simrel` with two examples in order to compare different estimation methods on the basis of prediction error. These example are simply a demonstration of the use of `simrel` package rather than an extensive comparison of methods.
 
 ## Example 1
 

@@ -15,7 +15,7 @@ design <- expand.grid(tibble::as_tibble(opts)) %>%
     ypos = list(list(1:5)),
     m = 5,
     gamma = 0.5,
-    ntest = 10000,
+    ntest = 1000,
     type = "multivariate",
     q = rep(list(1000, c(500, 500)), each = 2),
     R2 = rep(list(0.8, c(0.6, 0.6)), each = 2)

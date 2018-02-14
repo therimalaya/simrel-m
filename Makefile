@@ -8,6 +8,9 @@ gitbook:
 
 tufte:
 	Rscript --quiet _render.R "bookdown::tufte_html_book"
+	
+epub:
+	Rscript --quiet _render.R "bookdown::epub_book"
 
 htmlbook:
 	Rscript --quiet _render.R "bookdown::html_book"

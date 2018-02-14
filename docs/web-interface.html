@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A tool for simulating multi-response linear model data</title>
   <meta name="description" content="A tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.6.2 and GitBook 2.6.7">
 
   <meta property="og:title" content="A tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-01-15">
+<meta name="date" content="2018-02-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -178,7 +178,7 @@ Figure 6: Web interface of shiny application of <code>simrel</code>: (<strong>a<
 </div>
 <p>The application not only allows users to simulate data, but also gives some insight into simulated data properties. Section (c) in Figure <a href="web-interface.html#fig:AppSimulatr">6</a> contains three plots – a) true regression coefficients b) relevant components and c) estimated relevant components. In the first plot (Figure-<a href="web-interface.html#fig:AppSimulatr">6</a>(c) top) we can see that predictor variables (1, 2, 8, 9 and 13) are relevant for the first and third response variables (red and blue line) by their non-zero coefficients, whereas predictor variables (3, 4, 6 and 15) are relevant for the second and fourth response variables (purple and green line). The second plot (Figure <a href="web-interface.html#fig:AppSimulatr">6</a>(c) middle) shows the covariances between the response components and the predictor components along with the corresponding eigenvalues in the background (bar plot). In the plot the absolute value of the covariances after scaling with the largest covariance are shown. As in our parameter setting, the plot shows that the first (red line) and second (green line) predictor components have non-zero covariance with the first and third response components, and the fourth and sixth predictor components have non-zero covariance with the second response component. The third plot (Figure-<a href="web-interface.html#fig:AppSimulatr">6</a>(c) bottom) is the estimated covariances between the predictor components and the response variables, for the simulated data. Since the first and third response components are rotated together, in the plot, the covariance between the predictor components and the first and third response variables (red and blue line) are following similar patterns as the theoretical (<a href="web-interface.html#fig:AppSimulatr">6</a>(c) middle). This also suggests that the predictor components which were relevant for the first response component, becomes relevant for the first and third response variables after rotation.</p>
 <p>Along with these main sections, section (d) in the same figure contains additional analysis performed on the simulated data such as its estimation with different methods. This section is intended for educational purposes to show how changing the data properties influences the performances of different estimation and prediction methods. Beside this application, for Rstudio users, a gadget will be available after installing the r-package. This gadget provides an interface enabling users to input simulation parameters and access some of the properties.</p>
-<p>Many scientific studies <span class="citation">(Helland et al. 2012; Sæbø et al. 2008; R. Dennis Cook and Zhang 2015)</span> are using simulated data in order to compare their findings with others or assess its properties. In many of these situations, a user-friendly and versatile simulation tool like <code>simrel</code> can play an important role. <span class="citation">Gangsei, Almøy, and Sæbø (2016)</span> and <span class="citation">Sæbø, Almøy, and Helland (2015)</span> are some examples where the univariate and bivariate form of <code>simrel</code> have been used for such purposes.</p>
+<p>Many scientific studies <span class="citation">(Helland et al. 2012; Sæbø et al. 2008; R. D. Cook and Zhang 2015b)</span> are using simulated data in order to compare their findings with others or assess its properties. In many of these situations, a user-friendly and versatile simulation tool like <code>simrel</code> can play an important role. <span class="citation">Gangsei, Almøy, and Sæbø (2016)</span> and <span class="citation">Sæbø, Almøy, and Helland (2015)</span> are some examples where the univariate and bivariate form of <code>simrel</code> have been used for such purposes.</p>
 </div>
             </section>
 
@@ -204,10 +204,11 @@ gitbook.start({
 "facebook": false,
 "twitter": true,
 "google": true,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -231,9 +232,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A tool for simulating multi-response linear model data</title>
   <meta name="description" content="A tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.6.2 and GitBook 2.6.7">
 
   <meta property="og:title" content="A tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-01-15">
+<meta name="date" content="2018-02-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -166,13 +166,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Camacho, José. 2017. “On the Generation of Random Multivariate Data.” <em>Chemometrics and Intelligent Laboratory Systems</em> 160. Elsevier: 40–51.</p>
 </div>
 <div>
-<p>Cook, R Dennis, and Xin Zhang. 2015. “Foundations for Envelope Models and Methods.” <em>Journal of the American Statistical Association</em> 110 (510). Taylor &amp; Francis: 599–611.</p>
+<p>Cook, R Dennis, and Xin Zhang. 2015a. “Foundations for Envelope Models and Methods.” <em>Journal of the American Statistical Association</em> 110 (510). Taylor &amp; Francis: 599–611.</p>
+</div>
+<div>
+<p>———. 2015b. “Simultaneous Envelopes for Multivariate Linear Regression.” <em>Technometrics</em> 57 (1). Taylor &amp;amp; Francis: 11–25.</p>
 </div>
 <div>
 <p>Cook, R Dennis, Bing Li, and Francesca Chiaromonte. 2010. “Envelope Models for Parsimonious and Efficient Multivariate Linear Regression.” <em>Statistica Sinica</em>. JSTOR, 927–60.</p>
-</div>
-<div>
-<p>Cook, R. Dennis, and Xin Zhang. 2015. “Simultaneous Envelopes for Multivariate Linear Regression.” <em>Technometrics</em> 57 (1): 11–25. doi:<a href="https://doi.org/10.1080/00401706.2013.872700">10.1080/00401706.2013.872700</a>.</p>
 </div>
 <div>
 <p>Cook, RD, IS Helland, and Z Su. 2013. “Envelopes and Partial Least Squares Regression.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 75 (5). Wiley Online Library: 851–77.</p>
@@ -236,10 +236,11 @@ gitbook.start({
 "facebook": false,
 "twitter": true,
 "google": true,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -263,9 +264,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
