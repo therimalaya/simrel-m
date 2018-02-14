@@ -20,6 +20,7 @@
 \usepackage[unicode=true, colorlinks]{hyperref}
 \usepackage{cleveref}
 \usepackage{tabu}
+\usepackage{multirow}
 %% ------------ %%
 
 %% Conditional Packages %%
@@ -864,9 +865,15 @@ specified by a parameter \texttt{ypos}.
 \hypertarget{implementation}{\section{Implementation}\label{implementation}}
 
 This section demonstrates an application of multi-response extension of
-\texttt{simrel} in order to compare different estimation methods on the
-basis of prediction error. For the comparison, we have considered four
-well established estimation methods.
+\texttt{simrel} with two examples in order to compare different
+estimation methods on the basis of prediction error. These example are
+simply a demonstration of the use of \texttt{simrel} package rather than
+an extensive comparison of methods.
+
+\subsection{Example 1}\label{example-1}
+
+For the comparison, we have considered four well established estimation
+methods.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -1020,7 +1027,7 @@ error.
 \resizebox{\linewidth}{!}{\begin{tabu} to \linewidth {>{\bfseries\raggedright\arraybackslash}p{7em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}>{\ttfamily\centering\arraybackslash}p{6em}>{\raggedright}X>{\centering}X>{\centering}X>{\centering}X>{\centering}X>{\raggedright}X>{\centering}X>{\centering}X>{\centering}X>{\centering}X>{\raggedright}X>{\centering}X>{\centering}X>{\centering}X>{\centering}X>{\raggedright}X>{\centering}X>{\centering}X>{\centering}X>{\centering}X}
 \hiderowcolors
 \toprule
-\bfseries{Model} & \bfseries{Design: 1} & \bfseries{Design: 2} & \bfseries{Design: 3} & \bfseries{Design: 4}\\
+\textbf{Model} & \textbf{Design: 1} & \textbf{Design: 2} & \textbf{Design: 3} & \textbf{Design: 4}\\
 \midrule
 \showrowcolors
 CPLS & (3, 3.24) & (4, 3.22) & (3, 4.09) & (3, 4.05)\\
@@ -1072,6 +1079,95 @@ example is merely intended as a demonstration of how \texttt{simrel} can
 be used in scientific study, a more elaborative studies would be
 necessary to answer such questions, but for this purpose \texttt{simrel}
 would be a powerful tool.
+
+\subsection{Example 2}\label{example-2}
+
+In this second example, wide matrices with 100 observations and 1000
+predictor variables were simulated. Since wide matrices are common in
+various fields such as genomics, spectroscopy and chemometrics, we set
+up this second example to compare two variants of partial least square
+regression -- PLS1 and PLS2. While estimating regression coefficients
+PLS1 uses each response variable separately, while PLS2 uses them all
+simultaneously. A simulation design was constructed as in Table
+\ref{tab:parm-setting-2}. With each design, 20 replicated datasets were
+simulated having five response variables and a moderate level of
+multicollinearity within the predictor variables (\(\gamma = 0.5\)).
+
+\begin{table}
+
+\caption{\label{tab:parm-setting-2}Simulation Design of second example}
+\centering
+\begin{tabular}[t]{>{\em}l>{\em}lll}
+\toprule
+$\eta:0.1$ & $\eta:0.8$ & Parameter & Value\\
+\midrule
+\addlinespace[0.3em]
+\multicolumn{4}{l}{\textbf{Single Informative Response Component}}\\
+ &  & relpos & 2, 3, 5, 7\\
+\cmidrule{3-4}
+ &  & q & 1000\\
+\cmidrule{3-4}
+\multirow{-3}{*}{\raggedright\arraybackslash \hspace{1em}Design 1} & \multirow{-3}{*}{\raggedright\arraybackslash Design 2} & R2 & 0.8\\
+\cmidrule{1-4}
+\addlinespace[0.3em]
+\multicolumn{4}{l}{\textbf{Two Informative Response Components}}\\
+ &  & relpos & 2; 3\\
+\cmidrule{3-4}
+ &  & q & 500; 500\\
+\cmidrule{3-4}
+\multirow{-3}{*}{\raggedright\arraybackslash \hspace{1em}Design 3} & \multirow{-3}{*}{\raggedright\arraybackslash Design 4} & R2 & 0.6; 0.6\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The comparison were based on the prediction error measured by root mean
+squares of prediction (RMSEP). In order to approximate the error to
+theoretically computed error, 1000 extra test samples were drawn from
+the same distribution as the training samples during simulation.
+
+With the simulated data models with one to ten components were fitted
+and the prediction error was recorded for each response variable and
+each additional component.
+
+The first and second design in Table \ref{tab:parm-setting-2} has one
+informative response component for which four predictor components are
+relevant at positions 2, 3, 5 and 7, and the coefficient of
+determination is 0.8. Since the informative response component is
+rotated together with four uninformative response components, the
+information is shared among all five response variables after rotation.
+
+The third and fourth design has two informative response components. The
+first response component has one relevant predictor component at
+position 2 and a coefficient of determination of 0.6. Similarly, the
+second response component has one relevant predictor component at
+position 3 and also here the coefficient of determination is 0.6.
+
+In addition to having one and two response component models, two levels
+of variance structure of the response components is considered and
+defined by \(\eta\) parameters with values 0.1 and 0.8 respectively. In
+the first and third design, all response components vary in similar
+manner (\(\eta = 0.1\)), while in the second and fourth design the
+informative response components have higher variance (\(\eta = 0.8\))
+than the uninformative ones as the eigenvalues of \(\Sigma_{ww}\) drop
+faster in this case.
+
+\begin{figure}[H]
+\includegraphics[width=1\linewidth]{main_files/figure-latex/rmsep-plot-1} \caption{Root mean square of error of prediction of test observation averaged over all response variables.}\label{fig:rmsep-plot}
+\end{figure}
+
+Figure \ref{fig:rmsep-plot} shows the average prediction error of test
+observations modelled by PLS1 and PLS2 for all four designs. The
+prediction errors are averaged over all 20 replicated datasets.
+
+In general, PLS2 dominates PLS1 with regard to minimum error achieved
+for these simulated designs. The difference is largest for the designs
+with \(\eta = 0.1\) in which case the response are moderately correlated
+and prediction appears to be more difficult than for \(\eta = 0.8\). The
+effect of number of relevant response and predictor components appears
+to have less influence on the results than the covariance structure of
+\(\Sigma_{yy}\). This small example of the use of simrel indicates that
+a more elaborate comparison study should be done on PLS1 and PLS2 in
+this respect.
 
 \hypertarget{web-interface}{\section{Web
 Interface}\label{web-interface}}

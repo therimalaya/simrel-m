@@ -1,0 +1,23 @@
+---
+title: Second Review on Simrel Paper
+author: Raju Rimal, Trygve Almøy and Solve Sæbø
+bibliography: '../ref-db.bib'
+fontfamily: palatino
+fontsize: 12pt
+linestretch: 1.5
+geometry: margin=1in
+header-includes:
+  - '\usepackage[utf8]{inputenc}'
+  - '\usepackage[T1]{fontenc}'
+  - '\usepackage{cancel}'
+  - '\usepackage[style=authoryear,dashed=false]{biblatex}'
+  - '\usepackage[usenames, dvipsnames]{xcolor}'
+papersize: A4
+output: pdf_document
+---
+
+As being a journal related to chemometrics, it is desirable to present an example that are more common in the field. We are thankful for your proposal of an example with a wide predictor matrix. We have now added a second example with wide predictor matrix where $(p > n)$. In this current revision, we have subdivided section 4 (Implementation) (now starts page 13) into two parts: Example 1 and Example 2. Before Example 1, we have changed a sentence as follows,
+
+> _This section demonstrates an application of multi-response extension of `simrel` with two examples in order to compare different estimation methods on the basis of prediction error. These example are simply a demonstration of the use of `simrel` package rather than an extensive comparison of methods._
+
+After the first example, we have added a second example starting from page 17 until page 20. The "Web Interface" section starts from page 20 now. In addition, Figure-4 is now at the top of page 18. A new figure has been added relevant to second example is on page 20. 

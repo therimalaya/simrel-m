@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A tool for simulating multi-response linear model data</title>
   <meta name="description" content="A tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.6.2 and GitBook 2.6.7">
 
   <meta property="og:title" content="A tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-12-29">
+<meta name="date" content="2018-02-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -122,7 +122,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html#rotation-of-predictor-space"><i class="fa fa-check"></i>Rotation of predictor space</a></li>
 <li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html#rotation-of-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a></li>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a><ul>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#example-1"><i class="fa fa-check"></i>Example 1</a></li>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#example-2"><i class="fa fa-check"></i>Example 2</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="web-interface.html"><a href="web-interface.html"><i class="fa fa-check"></i>Web Interface</a></li>
 <li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -160,7 +163,7 @@ KBM<br><a class="author_email" href="mailto:#"><a href="mailto:trygve.almoy@nmbu
 <address class="author_afil">
 NMBU<br><a class="author_email" href="mailto:#"><a href="mailto:solve.sabo@nmbu.no">solve.sabo@nmbu.no</a></a>
 </address>
-<h4 class="date"><em>2017-12-29</em></h4>
+<h4 class="date"><em>2018-02-14</em></h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>Data science is generating enormous amounts of data, and new and advanced analytical methods are constantly being developed to cope with the challenge of extracting information from such “big-data”. Researchers often use simulated data to assess and document the properties of these new methods, and in this paper we present an extension to the R-package <code>simrel</code>, which is a versatile and transparent tool for simulating linear model data with an extensive range of adjustable properties. The method is based on the concept of relevant components, and is equivalent to the newly developed envelope model. It is a multi-response extension of R-package <code>simrel</code> which is available in R-package repository CRAN, and as <code>simrel</code> the new approach is essentially based on random rotations of latent relevant components to obtain a predictor matrix <span class="math inline">\(\mathbf{X}\)</span>, but in addition we introduce random rotations of latent components spanning a response space in order to obtain a multivariate response matrix <span class="math inline">\(\mathbf{Y}\)</span>. The properties of the linear relation between <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> are defined by a small set of input parameters which allow versatile and adjustable simulations. Sub-space rotations also allow for generating data suitable for testing variable selection methods in multi-response settings. The method is implemented as an update to the R-package <code>simrel</code>.</p>
@@ -170,7 +173,7 @@ NMBU<br><a class="author_email" href="mailto:#"><a href="mailto:solve.sabo@nmbu.
 <h1>Introduction</h1>
 <p>Technological advancement has opened a door for complex and sophisticated scientific experiments that were not possible before. Due to this change, enormous amounts of raw data are generated which contain massive information but is difficult to excavate. Finding information and performing scientific research on these raw data has now become another problem. In order to tackle this situation new methods are being developed. However, before implementing any method, it is essential to test its performance and explore its properties. Often, researchers use simulated data for the purpose which itself is a time-consuming process. The main focus of this paper is to present a simulation method, along with an extension to the r-package called <code>simrel</code>, that is versatile in nature and yet simple to use.</p>
 <p>The simulation method we are presenting here is based on the principle of relevant space for prediction <span class="citation">(Helland and Almøy 1994)</span> which assumes that there exists a y-relevant subspace in the complete space of predictor variables that is spanned by a subset of eigenvectors of these predictor variables. Our extension to this principle is to introduce a subspace in <span class="math inline">\(\mathbf{y}\)</span> (material space) which contains the information that predictor space is relevant for. The concept of response reduction to the material space in response variable was introduced by <span class="citation">Cook, Li, and Chiaromonte (2010)</span>. Our r-package based on this principle lets the user specify various population properties such as; which latent components in <span class="math inline">\(\mathbf{x}\)</span> are relevant for a latent subspace of the responses <span class="math inline">\(\mathbf{y}\)</span> and the collinearity structure of <span class="math inline">\(\mathbf{x}\)</span>. This enables the possibility to construct data for evaluating estimation methods and methods developed for variable selection.</p>
-<p>Among several publications on simulation, <span class="citation">Johnson (2013)</span>; <span class="citation">Ripley (2009)</span> and <span class="citation">Gamerman and Lopes (2006)</span> have exhaustively discussed the topic. In particular, methods based on covariance structure has been discussed by <span class="citation">Arteaga and Ferrer (2010)</span>; <span class="citation">Arteaga and Ferrer (2013)</span> and <span class="citation">Camacho (2017)</span>, following approaches to find simulated data satisfying the desired correlation structure. In addition, many publications have implemented simulated data in order to investigate new estimation methods and prediction strategies <span class="citation">(see: R. Dennis Cook and Zhang 2015; Cook, Helland, and Su 2013; Helland et al. 2012)</span>. However, most of the simulations in these studies were developed to address their specific problem. A systematic tool for simulating linear model data with single response, which could serve as a general tool for all such comparisons, was presented in <span class="citation">Sæbø, Almøy, and Helland (2015)</span> and as the r-package <code>simrel</code>. This paper extends <code>simrel</code> in order to simulate linear model data with multivariate response. The github repository of the package at <a href="http://github.com/simulatr/simrel" class="uri">http://github.com/simulatr/simrel</a> has rich documentation with many examples and cases along with detailed descriptions of simulation parameters. In the following two sections, the discussion encircle the mathematical framework behind. In addition, in <a href="implementation.html#implementation">section <a href="implementation.html#implementation"><strong>??</strong></a></a> and <a href="web-interface.html#web-interface"><a href="web-interface.html#web-interface"><strong>??</strong></a></a> we have also discussed the input parameters needed for simrel function in brief. In <a href="implementation.html#implementation">section <a href="implementation.html#implementation"><strong>??</strong></a></a>, an implementation is presented as a case example and the <a href="web-interface.html#web-interface">final section</a> introduces the shiny web application for this tool.</p>
+<p>Among several publications on simulation, <span class="citation">Johnson (2013)</span>; <span class="citation">Ripley (2009)</span> and <span class="citation">Gamerman and Lopes (2006)</span> have exhaustively discussed the topic. In particular, methods based on covariance structure has been discussed by <span class="citation">Arteaga and Ferrer (2010)</span>; <span class="citation">Arteaga and Ferrer (2013)</span> and <span class="citation">Camacho (2017)</span>, following approaches to find simulated data satisfying the desired correlation structure. In addition, many publications have implemented simulated data in order to investigate new estimation methods and prediction strategies <span class="citation">(see: R. D. Cook and Zhang 2015b; Cook, Helland, and Su 2013; Helland et al. 2012)</span>. However, most of the simulations in these studies were developed to address their specific problem. A systematic tool for simulating linear model data with single response, which could serve as a general tool for all such comparisons, was presented in <span class="citation">Sæbø, Almøy, and Helland (2015)</span> and as the r-package <code>simrel</code>. This paper extends <code>simrel</code> in order to simulate linear model data with multivariate response. The github repository of the package at <a href="http://github.com/simulatr/simrel" class="uri">http://github.com/simulatr/simrel</a> has rich documentation with many examples and cases along with detailed descriptions of simulation parameters. In the following two sections, the discussion encircle the mathematical framework behind. In addition, in <a href="implementation.html#implementation">section <a href="implementation.html#implementation"><strong>??</strong></a></a> and <a href="web-interface.html#web-interface"><a href="web-interface.html#web-interface"><strong>??</strong></a></a> we have also discussed the input parameters needed for simrel function in brief. In <a href="implementation.html#implementation">section <a href="implementation.html#implementation"><strong>??</strong></a></a>, an implementation is presented as a case example and the <a href="web-interface.html#web-interface">final section</a> introduces the shiny web application for this tool.</p>
 
 </div>
             </section>
@@ -197,10 +200,11 @@ gitbook.start({
 "facebook": false,
 "twitter": true,
 "google": true,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -224,9 +228,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

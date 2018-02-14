@@ -1,0 +1,166 @@
+---
+title: "Multivariate Simulation"
+author: Raju Rimal
+runtime: shiny
+output: 
+  rmarkdown::html_document: 
+    theme: cosmo
+---
+
+```{r setup, include = FALSE}
+library(simrel)
+library(reshape2)
+library(tidyverse)
+library(pls)
+library(shiny)
+source("../../00-function.r")
+knitr::opts_chunk$set(comment = NULL, echo = FALSE)
+```
+
+# Simulation Parameters {.tabset .tabset-pills}
+
+```{r bivariate-option}
+fluidRow(
+  column(4, numericInput("seed", "Seed", 123, min = -9999, max = 9999, width = "100%")),
+  column(4, numericInput("n", "Number of observation", 100, min = 10, width = "100%")),
+  column(4, numericInput("p", "Number of predictors", 500, min = 2, width = "100%")),
+  column(4, numericInput("m", "Number of responses", 5, min = 2, width = "100%")),
+  column(4, textInput("q", "Number of relevant predictors", value = "250, 250", width = "100%")),
+  column(4, textInput("relpos", "Position of Relevant components", value = "2; 3", width = '100%')),
+  column(4, textInput("ypos", "Position of response components", value = "1, 2, 3, 4, 5", width = '100%')),
+  column(4, numericInput("ntest", "Number of Test Obs.", 500, min = 10, width = "100%")),
+  column(4, sliderInput("gamma", "Decay factor of eigenvector of predictors", 
+                        value = 0.6, min = 0, max = 4, width = '100%', step = 0.01)),
+  column(4, sliderInput("eta", "Decay factor of eigenvector of response", 
+                        value = 0.1, min = 0, max = 1, width = '100%', step = 0.01)),
+  column(4, textInput("R2", "Coefficient of Determination", value = "0.8, 0.7", width = '100%')),
+  column(3, actionLink("simulate", "Simulate Now", icon = icon("random"), class = "btn btn-primary btn-lg")),
+  column(1, bookmarkButton())
+)
+
+opts <- reactive({
+  need_list <- is.numeric(simrel::parse_parm(input$ypos)) & 
+    !is.list(simrel::parse_parm(input$relpos))
+  lst <- list(
+    n = input$n,
+    p = input$p,
+    q = simrel::parse_parm(input$q),
+    relpos = simrel::parse_parm(input$relpos),
+    gamma = input$gamma,
+    eta = input$eta,
+    R2 = simrel::parse_parm(input$R2),
+    ypos = simrel::parse_parm(input$ypos),
+    m = input$m,
+    ntest = input$ntest,
+    type = "multivariate"
+  )
+  if (need_list) {
+    lst <- within(lst, {
+      relpos <- list(relpos)
+      ypos <- list(ypos)
+    })
+  } else {
+    if (is.numeric(lst$ypos)) lst$ypos <- list(lst$ypos)
+  }
+  return(lst)
+})
+observe({
+  query <- parseQueryString(session$clientData$url_search)
+  if (!is.null(query[['n']])) {
+    updateNumericInput(session, "n", value = query[['n']])
+  }
+  if (!is.null(query[["p"]])) {
+    updateNumericInput(session, "p", value = query[['p']])
+  }
+  if (!is.null(query[["q"]])) {
+    updateTextInput(session, "q", value = query[['q']])
+  }
+  if (!is.null(query[["relpos"]])) {
+    updateTextInput(session, "relpos", value = query[['relpos']])
+  }
+  if (!is.null(query[["gamma"]])) {
+    updateSliderInput(session, "gamma", value = query[['gamma']])
+  }
+  if (!is.null(query[["eta"]])) {
+    updateSliderInput(session, "eta", value = query[['eta']])
+  }
+  if (!is.null(query[["R2"]])) {
+    updateTextInput(session, "R2", value = query[['R2']])
+  }
+  if (!is.null(query[["ypos"]])) {
+    updateTextInput(session, "ypos", value = query[['ypos']])
+  }
+  if (!is.null(query[["m"]])) {
+    updateNumericInput(session, "m", value = query[['m']])
+  }
+  if (!is.null(query[["ntest"]])) {
+    updateNumericInput(session, "ntest", value = query[['ntest']])
+  }
+})
+```
+
+## Summary Statistics {.tabset}
+
+```{r}
+dta <- eventReactive(sobj(), {
+  data.frame(x = I(sobj()[["X"]]), y = I(sobj()[["Y"]]))
+})
+test <- eventReactive(sobj(), {
+  data.frame(x = I(sobj()[["testX"]]), y = I(sobj()[["testY"]]))
+})
+pls2_mdl <- eventReactive(dta(), {
+  dta <- dta()
+  mdl <- plsr(y ~ x, data = dta, ncomp = min(10, input$p, input$n))
+  return(mdl)
+})
+pcr_mdl <- eventReactive(dta(), {
+  dta <- dta()
+  mdl <- pcr(y ~ x, data = dta, ncomp = min(10, input$p, input$n))
+  return(mdl)
+})
+pls1_mdl <- eventReactive(dta(), {
+  dta <- dta()
+  mdl <- lapply(1:input$m, function(yi){
+    dta$y <- unclass(dta$y)[, yi]
+    plsr(y ~ x, data = dta, ncomp = min(10, input$p, input$n))
+  })
+})
+ols_mdl <- eventReactive(dta(), {
+  mdl <- lm(y ~ x, data = dta())
+  return(mdl)
+})
+column(12, renderPlot({
+  pls2_err <- get_rmsep_df(pls2_mdl(), test())
+  pcr_err <- get_rmsep_df(pcr_mdl(), test())
+  pls1_err <- get_rmsep_df(pls1_mdl(), test())
+  err_dt <- bind_rows(list(PLS2 = pls2_err, PCR = pcr_err, PLS1 = pls1_err), .id = "Method")
+  names(err_dt) <- c("Method", "ErrorType", "Response", "Comp", "RMSEP")
+  ggplot(err_dt %>% filter(ErrorType == "test", Method != "PCR"),
+         aes(Comp, RMSEP, group = Method, color = Method)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~Response) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          legend.position = "top")
+}, height = 600, res = 120))
+column(12, renderPrint({
+  purrr::map_dbl(summary(ols_mdl()), "r.squared")
+}))
+```
+
+## Simulation and Modelling {.tabset}
+```{r}
+sobj <- eventReactive(input$simulate, {
+  set.seed(input$seed)
+  sobj <- do.call(simrel::simrel, opts())
+  return(sobj)
+})
+column(6, renderPrint({
+  round(sobj()$RsqW, 2)
+}))
+column(6, renderPrint({
+  round(sobj()$RsqY, 2)
+}))
+```
+
+

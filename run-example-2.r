@@ -1,0 +1,8 @@
+source("scripts/00-function.r")
+source("scripts/example2/01-setup.r")
+source("scripts/example2/02-simulation.r")
+source("scripts/example2/03-model-fitting.r")
+source("scripts/example2/04-get-coefficients.r")
+source("scripts/example2/05-true-values.r")
+source("scripts/example2/06-prediction-error.r")
+source("scripts/example2/07-final-data.r")

@@ -1,0 +1,108 @@
+## Example 2
+
+In this second example, wide matrices with 100 observations and 1000 predictor variables were simulated. Since wide matrices are common in various fields such as genomics, spectroscopy and chemometrics, we set up this second example to compare two variants of partial least square regression -- PLS1 and PLS2. While estimating regression coefficients PLS1 uses each response variable separately, while PLS2 uses them all simultaneously. A simulation design was constructed as in Table \@ref(tab:parm-setting-2). With each design, 20 replicated datasets were simulated having five response variables and a moderate level of multicollinearity within the predictor variables ($\gamma = 0.5$).
+
+```{r}
+dta <- data_frame(
+  obj_file = c("design.Rdata", "sim-obj.Rdata", 
+               "fit.Rdata", "coef.Rdata", "true-value.Rdata", 
+               "pred-error.Rdata", "final-data.Rdata"),
+  source_file = c("01-setup.r", "02-simulation.r",
+                  "03-model-fitting.r", "04-get-coefficients.r",
+                  "05-true-values.r", "06-prediction-error.r",
+                  "07-final-data.r")
+)
+dta <- dta %>% 
+    mutate(obj_file = paste0("scripts/example2/output/", obj_file),
+           source_file = paste0("scripts/example2/", source_file))
+# pwalk(dta, source_if_not)
+pwalk(dta[c(1, 7), ], source_if_not)
+```
+
+```{r parm-setting-2}
+library(kableExtra)
+dgn <- design %>% 
+  mutate_if(is_list, map_chr, list2chr)
+out <- dgn %>% 
+  group_by(eta) %>% 
+  select(relpos, q, R2) %>% 
+  ungroup() %>% 
+  mutate(
+    eta = paste0("$\\eta:", eta, "$"),
+    design = paste("Design", 1:n())
+  ) %>% 
+  spread(eta, design) %>% 
+  gather(Parameter, Value, 1:3) %>% 
+  arrange(`$\\eta:0.1$`, `$\\eta:0.8$`)
+if (knitr::is_latex_output()) {
+  out %>% 
+    knitr::kable(
+      escape = FALSE,
+      format = "latex",
+      booktabs = TRUE,
+      caption = "Simulation Design of second example") %>% 
+    kable_styling() %>% 
+    group_rows("Single Informative Response Component", 1, 3) %>% 
+    group_rows("Two Informative Response Components", 4, 6) %>% 
+    column_spec(1:2, italic = TRUE) %>% 
+    collapse_rows(columns = 1:2)
+} else {
+  out %>% 
+    knitr::kable(
+      escape = FALSE,
+      format = "html",
+      booktabs = TRUE,
+      caption = "Simulation Design of second example") %>% 
+    kable_styling() %>% 
+    group_rows("Single Informative Response Component", 1, 3) %>% 
+    group_rows("Two Informative Response Components", 4, 6) %>% 
+    column_spec(1:2, italic = TRUE)
+}
+```
+
+The comparison were based on the prediction error measured by root mean squares of prediction (RMSEP). In order to approximate the error to theoretically computed error, 1000 extra test samples were drawn from the same distribution as the training samples during simulation.
+
+With the simulated data models with one to ten components were fitted and the prediction error was recorded for each response variable and each additional component.
+
+The first and second design in Table \@ref(tab:parm-setting-2) has one informative response component for which four predictor components are relevant at positions 2, 3, 5 and 7, and the coefficient of determination is 0.8. Since the informative response component is rotated together with four uninformative response components, the information is shared among all five response variables after rotation. 
+
+The third and fourth design has two informative response components. The first response component has one relevant predictor component at position 2 and a coefficient of determination of 0.6. Similarly, the second response component has one relevant predictor component at position 3 and also here the coefficient of determination is 0.6.
+
+In addition to having one and two response component models, two levels of variance structure of the response components is considered and defined by $\eta$ parameters with values 0.1 and 0.8 respectively. In the first and third design, all response components vary in similar manner ($\eta = 0.1$), while in the second and fourth design the informative response components have higher variance ($\eta = 0.8$) than the uninformative ones as the eigenvalues of $\Sigma_{ww}$ drop faster in this case.
+
+```{r rmsep-plot, fig.asp=0.6, out.width="100%", fig.cap="Root mean square of error of prediction of test observation averaged over all response variables."}
+# rmsep_plt <- function(data){
+#   ggplot(data, 
+#          aes(comp, RMSEP, color = Model, 
+#              group = Model, fill = Model)) +
+#   stat_summary(fun.y = mean, geom = "line") +
+#   stat_summary(fun.y = mean, geom = "point", 
+#                size = 1, shape = 21, color = "black", stroke = 0.2) +
+#   facet_grid(design + eta + relpos + R2 ~ Response, 
+#              scales = 'free_y', labeller = label_both) +
+#   scale_x_continuous(breaks = seq(0, 10, 2)) +
+#   labs(x = "Components", y = "RMSEP") +
+#   theme(legend.position = "top")
+# }
+plt_dt <- myData %>% 
+  filter(ErrorType == "test",  Model != "PCR") %>% 
+  ggplot(aes(comp, RMSEP, color = Model, 
+             group = Model, fill = Model)) +
+  stat_summary(fun.y = mean, geom = "line") +
+  stat_summary(fun.y = mean, geom = "point", 
+               size = 1.3, shape = 21, color = "#333333", stroke = 0.05) +
+  facet_grid( eta ~ relpos + R2, 
+             scales = 'free_y', labeller = label_both) +
+  scale_x_continuous(breaks = seq(0, 10, 2)) +
+  labs(x = "Components", y = "RMSEP", 
+       fill = "Method", color = "Method") +
+  theme(legend.position = "top") +
+  geom_text(aes(label = paste0("Design:", design)), x = Inf, y = Inf, 
+            inherit.aes = FALSE, stat = "unique", 
+            hjust = 1, vjust = 1, color = "#444444", size = rel(3.5))
+plt_dt
+```
+
+Figure \@ref(fig:rmsep-plot) shows the average prediction error of test observations modelled by PLS1 and PLS2 for all four designs. The prediction errors are averaged over all 20 replicated datasets.
+
+In general, PLS2 dominates PLS1 with regard to minimum error achieved for these simulated designs. The difference is largest for the designs with $\eta = 0.1$ in which case the response are moderately correlated and prediction appears to be more difficult than for $\eta = 0.8$. The effect of number of relevant response and predictor components appears to have less influence on the results than the covariance structure of $\Sigma_{yy}$. This small example of the use of simrel indicates that a more elaborate comparison study should be done on PLS1 and PLS2 in this respect.

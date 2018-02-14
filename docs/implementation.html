@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A tool for simulating multi-response linear model data</title>
   <meta name="description" content="A tool for simulating multi-response linear model data">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.6.2 and GitBook 2.6.7">
 
   <meta property="og:title" content="A tool for simulating multi-response linear model data" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2017-12-29">
+<meta name="date" content="2018-02-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -122,7 +122,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html#rotation-of-predictor-space"><i class="fa fa-check"></i>Rotation of predictor space</a></li>
 <li class="chapter" data-level="" data-path="relevant-components.html"><a href="relevant-components.html#rotation-of-response-space"><i class="fa fa-check"></i>Rotation of response space</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a></li>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html"><i class="fa fa-check"></i>Implementation</a><ul>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#example-1"><i class="fa fa-check"></i>Example 1</a></li>
+<li class="chapter" data-level="" data-path="implementation.html"><a href="implementation.html#example-2"><i class="fa fa-check"></i>Example 2</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="web-interface.html"><a href="web-interface.html"><i class="fa fa-check"></i>Web Interface</a></li>
 <li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -148,7 +151,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="implementation" class="section level1">
 <h1>Implementation</h1>
-<p>This section demonstrates an application of multi-response extension of <code>simrel</code> in order to compare different estimation methods on the basis of prediction error. For the comparison, we have considered four well established estimation methods.</p>
+<p>This section demonstrates an application of multi-response extension of <code>simrel</code> with two examples in order to compare different estimation methods on the basis of prediction error. These example are simply a demonstration of the use of <code>simrel</code> package rather than an extensive comparison of methods.</p>
+<div id="example-1" class="section level2">
+<h2>Example 1</h2>
+<p>For the comparison, we have considered four well established estimation methods.</p>
 <ol style="list-style-type: lower-alpha">
 <li>Ordinary Least Squares (OLS),</li>
 <li>Principal Component Regression (PCR),</li>
@@ -160,8 +166,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Canonically Powered Partial Least Squares regression (CPPLS) <span class="citation">(Indahl, Liland, and Næs 2009)</span>,</li>
 <li>Canonical Partial Least Squares regression (CPLS) <span class="citation">(Indahl, Liland, and Næs 2009)</span>,</li>
 <li>Envelope estimation in predictor space (Xenv) <span class="citation">(Cook, Li, and Chiaromonte 2010)</span>,</li>
-<li>Envelope estimation in response space (Yenv) <span class="citation">(R Dennis Cook and Zhang 2015)</span> and</li>
-<li>Simultaneous estimation of x- and y-envelope (Senv) <span class="citation">(R. Dennis Cook and Zhang 2015)</span></li>
+<li>Envelope estimation in response space (Yenv) <span class="citation">(R. D. Cook and Zhang 2015a)</span> and</li>
+<li>Simultaneous estimation of x- and y-envelope (Senv) <span class="citation">(R. D. Cook and Zhang 2015b)</span></li>
 </ol>
 <p>From the possible combinations of two levels of coefficient of determination <span class="math inline">\((\rho^2)\)</span> and two levels of <span class="math inline">\(\gamma\)</span> <a href="relevant-components.html#eq:gamma-parameter">(6)</a> (the factor that controls the multicollinearity in predictor variables), four simulation designs (design 1-4) were prepared. Replicating each design 20 times, 80 datasets with five response variables <span class="math inline">\((m=5)\)</span> and 16 predictor variables <span class="math inline">\((p = 16)\)</span> were simulated using the method discussed in this paper. It was also assumed that three response components (<span class="math inline">\(w_1, w_2\)</span> and <span class="math inline">\(w_3\)</span>) completely describe the variation present in five response variables (<span class="math inline">\(y_1 \ldots y_5\)</span>). Here, in this example we have assumed that all <span class="math inline">\(w\)</span>’s have equal variance, i.e. <span class="math inline">\(\Sigma_{ww} = \mathbf{I}_m\)</span>, that is, <span class="math inline">\(\eta = 0\)</span> in <a href="relevant-components.html#eq:eta-parameter">(7)</a>. The four designs are presented in Table~<a href="implementation.html#tab:parameter-settings">1</a>. All datasets contained 100 sampled observations and out of 16 predictor variables, three disjoint sets of five predictor variables each are relevant for response components <span class="math inline">\(w_1, w_2\)</span> and <span class="math inline">\(w_3\)</span>. Although the simulation method is well equipped to simulate data with <span class="math inline">\(p \gg n\)</span>, for incorporating envelope estimation methods, which are based on maximization of likelihood, we have chosen a <span class="math inline">\(n &gt; p\)</span> situation in the example. Further, predictor components <span class="math inline">\(z_1\)</span> and <span class="math inline">\(z_6\)</span> were relevant for response component <span class="math inline">\(w_1\)</span>, predictor components <span class="math inline">\(z_2\)</span> and <span class="math inline">\(z_5\)</span> were relevant for response component <span class="math inline">\(w_2\)</span> and predictor component <span class="math inline">\(z_3\)</span> and <span class="math inline">\(z_4\)</span> were relevant for response component <span class="math inline">\(w_3\)</span>. In addition, following the discussion about <a href="relevant-components.html#rotation-of-response-space">rotation of response space</a> (section <a href="relevant-components.html#rotation-of-response-space"><strong>??</strong></a>), <span class="math inline">\(w_1\)</span> was rotated together with <span class="math inline">\(w_4\)</span> and <span class="math inline">\(w_2\)</span> was rotated together with <span class="math inline">\(w_5\)</span>. Figure <a href="implementation.html#fig:cov-plot-print-1">3</a> visualizes the covariance structure and relationship between the response and predictor variables for the first design.</p>
 
@@ -341,6 +347,142 @@ Figure 4: Minimum of Average Prediction Error
 <p>The analysis presented in Figure <a href="implementation.html#fig:Average-Prediction-Plot">4</a> has addressed some questions such as how methods work when there exist a true reduced dimension in response space, but also raised other questions like why they perform differently. For example, what is the reason for the decreasing relative performance of the simultaneous envelope method as the <span class="math inline">\(\rho^2\)</span> values are reduced? Does this depend on the dimensions and shape of the <span class="math inline">\(\mathbf{y}\)</span> envelopes? Since the example is merely intended as a demonstration of how <code>simrel</code> can be used in scientific study, a more elaborative studies would be necessary to answer such questions, but for this purpose <code>simrel</code> would be a powerful tool.</p>
 
 </div>
+<div id="example-2" class="section level2">
+<h2>Example 2</h2>
+<p>In this second example, wide matrices with 100 observations and 1000 predictor variables were simulated. Since wide matrices are common in various fields such as genomics, spectroscopy and chemometrics, we set up this second example to compare two variants of partial least square regression – PLS1 and PLS2. While estimating regression coefficients PLS1 uses each response variable separately, while PLS2 uses them all simultaneously. A simulation design was constructed as in Table <a href="implementation.html#tab:parm-setting-2">3</a>. With each design, 20 replicated datasets were simulated having five response variables and a moderate level of multicollinearity within the predictor variables (<span class="math inline">\(\gamma = 0.5\)</span>).</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:parm-setting-2">Table 3: </span>Simulation Design of second example
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+<span class="math inline">\(\eta:0.1\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(\eta:0.8\)</span>
+</th>
+<th style="text-align:left;">
+Parameter
+</th>
+<th style="text-align:left;">
+Value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="3">
+<td colspan="4" style="border-bottom: 1px solid;">
+<strong>Single Informative Response Component</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;font-style: italic;" indentlevel="1">
+Design 1
+</td>
+<td style="text-align:left;font-style: italic;">
+Design 2
+</td>
+<td style="text-align:left;">
+relpos
+</td>
+<td style="text-align:left;">
+2, 3, 5, 7
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;font-style: italic;" indentlevel="1">
+Design 1
+</td>
+<td style="text-align:left;font-style: italic;">
+Design 2
+</td>
+<td style="text-align:left;">
+q
+</td>
+<td style="text-align:left;">
+1000
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;font-style: italic;" indentlevel="1">
+Design 1
+</td>
+<td style="text-align:left;font-style: italic;">
+Design 2
+</td>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:left;">
+0.8
+</td>
+</tr>
+<tr grouplength="3">
+<td colspan="4" style="border-bottom: 1px solid;">
+<strong>Two Informative Response Components</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;font-style: italic;" indentlevel="1">
+Design 3
+</td>
+<td style="text-align:left;font-style: italic;">
+Design 4
+</td>
+<td style="text-align:left;">
+relpos
+</td>
+<td style="text-align:left;">
+2; 3
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;font-style: italic;" indentlevel="1">
+Design 3
+</td>
+<td style="text-align:left;font-style: italic;">
+Design 4
+</td>
+<td style="text-align:left;">
+q
+</td>
+<td style="text-align:left;">
+500; 500
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left: 2em;font-style: italic;" indentlevel="1">
+Design 3
+</td>
+<td style="text-align:left;font-style: italic;">
+Design 4
+</td>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:left;">
+0.6; 0.6
+</td>
+</tr>
+</tbody>
+</table>
+<p>The comparison were based on the prediction error measured by root mean squares of prediction (RMSEP). In order to approximate the error to theoretically computed error, 1000 extra test samples were drawn from the same distribution as the training samples during simulation.</p>
+<p>With the simulated data models with one to ten components were fitted and the prediction error was recorded for each response variable and each additional component.</p>
+<p>The first and second design in Table <a href="implementation.html#tab:parm-setting-2">3</a> has one informative response component for which four predictor components are relevant at positions 2, 3, 5 and 7, and the coefficient of determination is 0.8. Since the informative response component is rotated together with four uninformative response components, the information is shared among all five response variables after rotation.</p>
+<p>The third and fourth design has two informative response components. The first response component has one relevant predictor component at position 2 and a coefficient of determination of 0.6. Similarly, the second response component has one relevant predictor component at position 3 and also here the coefficient of determination is 0.6.</p>
+<p>In addition to having one and two response component models, two levels of variance structure of the response components is considered and defined by <span class="math inline">\(\eta\)</span> parameters with values 0.1 and 0.8 respectively. In the first and third design, all response components vary in similar manner (<span class="math inline">\(\eta = 0.1\)</span>), while in the second and fourth design the informative response components have higher variance (<span class="math inline">\(\eta = 0.8\)</span>) than the uninformative ones as the eigenvalues of <span class="math inline">\(\Sigma_{ww}\)</span> drop faster in this case.</p>
+<div class="figure"><span id="fig:rmsep-plot"></span>
+<img src="main_files/figure-html/rmsep-plot-1.svg" alt="Root mean square of error of prediction of test observation averaged over all response variables." width="100%" />
+<p class="caption">
+Figure 5: Root mean square of error of prediction of test observation averaged over all response variables.
+</p>
+</div>
+<p>Figure <a href="implementation.html#fig:rmsep-plot">5</a> shows the average prediction error of test observations modelled by PLS1 and PLS2 for all four designs. The prediction errors are averaged over all 20 replicated datasets.</p>
+<p>In general, PLS2 dominates PLS1 with regard to minimum error achieved for these simulated designs. The difference is largest for the designs with <span class="math inline">\(\eta = 0.1\)</span> in which case the response are moderately correlated and prediction appears to be more difficult than for <span class="math inline">\(\eta = 0.8\)</span>. The effect of number of relevant response and predictor components appears to have less influence on the results than the covariance structure of <span class="math inline">\(\Sigma_{yy}\)</span>. This small example of the use of simrel indicates that a more elaborate comparison study should be done on PLS1 and PLS2 in this respect.</p>
+
+</div>
+</div>
             </section>
 
           </div>
@@ -365,10 +507,11 @@ gitbook.start({
 "facebook": false,
 "twitter": true,
 "google": true,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -376,7 +519,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/therimalaya/simrel-m/edit/master/Includes/03-Implementation.Rmd",
+"link": "https://github.com/therimalaya/simrel-m/edit/master/Includes/03-Implementation-1.Rmd",
 "text": "Edit"
 },
 "download": ["main.epub", "main.pdf"],
@@ -392,9 +535,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

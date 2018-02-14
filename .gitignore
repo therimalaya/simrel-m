@@ -6,4 +6,6 @@ MatlabServer.m
 *.class
 .Rproj.user
 scripts/example1/output/unsync
+scripts/example2/output
 Notes/ltx"*
+.Rhistory

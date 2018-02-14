@@ -6,8 +6,9 @@ clean: [packages.bib, bookdown.bbl]
 rmd_files: [
   "index.Rmd", 
   "Includes/02-StatisticalModel.Rmd",
-  "Includes/03-Implementation.Rmd",
-  "Includes/04-WebInterface.Rmd",
+  "Includes/03-Implementation-1.Rmd",
+  "Includes/04-Implementation-2.Rmd",
+  "Includes/05-WebInterface.Rmd",
   "Includes/06-references.Rmd",
   ]
 language:
